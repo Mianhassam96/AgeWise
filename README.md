@@ -2,7 +2,7 @@
 
 A fast, precise, and beautifully animated age calculator built with vanilla HTML, CSS, and JavaScript.
 
-🔗 **Live Demo:** [AgeWise on GitHub Pages](https://mianhassam96.github.io/AgeWise/)
+🔗 **Live Demo:** [AgeWise on GitHub Pages](https://age-calculator-woad-seven.vercel.app/)
 👨‍💻 **Author:** [MultiMian](https://github.com/Mianhassam96/)
 
 ---
@@ -38,26 +38,6 @@ npx serve .
 ```
 
 Then visit `http://localhost:3000`
-
----
-
-## 🗂 Project Structure
-
-```
-AgeWise/
-├── index.html   # Markup — header, calculator, contact, footer
-├── style.css    # All styles + animations
-├── index.js     # Age logic, live ticking, comparison
-└── README.md
-```
-
----
-
-## 🛠 Built With
-
-- HTML5
-- CSS3 (animations, gradients, glassmorphism)
-- Vanilla JavaScript (no frameworks)
 
 ---
 
