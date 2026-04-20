@@ -79,8 +79,41 @@
         <div class="card result-card hidden" id="single-result">
           <h2 id="sr-title"></h2>
           <div class="age-banner" id="sr-banner"></div>
+
+          <!-- Life Progress Ring -->
+          <div class="life-ring-wrap">
+            <div class="life-ring-container">
+              <svg class="life-ring-svg" viewBox="0 0 200 200" aria-hidden="true">
+                <defs>
+                  <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#a78bfa"/>
+                    <stop offset="100%" stop-color="#60a5fa"/>
+                  </linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="80"/>
+                <circle class="ring-fill" id="ring-fill" cx="100" cy="100" r="80"
+                  stroke-dasharray="502.65" stroke-dashoffset="502.65"/>
+              </svg>
+              <div class="ring-center">
+                <div class="ring-pct" id="ring-pct">0%</div>
+                <div class="ring-label">of avg life</div>
+              </div>
+            </div>
+            <p class="ring-sub" id="ring-sub"></p>
+          </div>
+
           <div class="stats-grid" id="sr-stats"></div>
+
+          <!-- Life in Numbers -->
+          <div class="life-numbers" id="life-numbers">
+            <h3 class="section-sub-title">Your Life in Numbers</h3>
+            <div class="life-bars" id="life-bars"></div>
+          </div>
+
           <div class="pills" id="sr-pills"></div>
+
+          <!-- Share Card Button -->
+          <button class="btn-share" id="btn-share-single">📸 Generate Share Card</button>
         </div>
       </section>
 
@@ -184,7 +217,23 @@
       </div>
     </footer>
 
-  </div>
+    <!-- ── SHARE CARD MODAL ── -->
+    <div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share Card">
+      <div class="share-modal-inner">
+        <button class="share-close" id="share-close" aria-label="Close">✕</button>
+        <div class="share-card" id="share-card">
+          <div class="sc-logo">⏳ AgeWise</div>
+          <div class="sc-name" id="sc-name"></div>
+          <div class="sc-age" id="sc-age"></div>
+          <div class="sc-stats" id="sc-stats"></div>
+          <div class="sc-footer">agewise · multimian.com</div>
+        </div>
+        <button class="btn-primary btn-download" id="btn-download">⬇️ Download Card</button>
+      </div>
+    </div>
+
+  </div><!-- end .wrapper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="index.js"></script>
   <script>
     // smooth scroll nav

@@ -734,3 +734,259 @@ main {
   .word { opacity: 1; transform: none; }
   .hero-sub, .hero-badges { opacity: 1; transform: none; }
 }
+
+/* ══════════════════════════════════════
+   LIFE PROGRESS RING
+══════════════════════════════════════ */
+.life-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0 28px;
+}
+
+.life-ring-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.life-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 14;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: url(#ringGradient);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 502.65;
+  stroke-dashoffset: 502.65;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1);
+  filter: drop-shadow(0 0 8px rgba(167,139,250,0.6));
+}
+
+/* inject SVG gradient via CSS trick — defined inline in SVG */
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-pct {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #a78bfa;
+  line-height: 1;
+}
+
+.ring-label {
+  font-size: 0.7rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+.ring-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 12px;
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════
+   LIFE IN NUMBERS
+══════════════════════════════════════ */
+.life-numbers {
+  margin: 4px 0 24px;
+}
+
+.section-sub-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  margin-bottom: 16px;
+}
+
+.life-bars { display: flex; flex-direction: column; gap: 14px; }
+
+.life-bar-item {}
+
+.lb-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lb-icon { font-size: 1rem; }
+
+.lb-label {
+  flex: 1;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.lb-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.lb-track {
+  height: 7px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.lb-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* ══════════════════════════════════════
+   SHARE BUTTON
+══════════════════════════════════════ */
+.btn-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  margin-top: 18px;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-share:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14,165,233,0.35);
+}
+
+/* ══════════════════════════════════════
+   SHARE MODAL
+══════════════════════════════════════ */
+.share-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fade-up 0.25s ease;
+}
+
+.share-modal.hidden { display: none !important; }
+
+.share-modal-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.share-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e2e8f0;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.share-close:hover { background: rgba(239,68,68,0.3); }
+
+/* the card itself — styled for screenshot */
+.share-card {
+  width: 100%;
+  background: linear-gradient(135deg, #1e1040 0%, #0f0c29 60%, #1a1040 100%);
+  border: 1px solid rgba(167,139,250,0.3);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(124,58,237,0.3);
+}
+
+.sc-logo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #a78bfa;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.sc-name {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #f1f5f9;
+  margin-bottom: 8px;
+}
+
+.sc-age {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a78bfa;
+  margin-bottom: 20px;
+}
+
+.sc-stats {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.8;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 16px;
+}
+
+.sc-footer {
+  margin-top: 20px;
+  font-size: 0.72rem;
+  color: #334155;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.btn-download {
+  width: 100%;
+  max-width: 420px;
+}
