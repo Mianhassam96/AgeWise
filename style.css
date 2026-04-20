@@ -1806,3 +1806,259 @@ main {
   .es-demo-number { font-size: 2.2rem; }
   .pw-sub { display: none; }
 }
+
+/* ══════════════════════════════════════
+   STEP-BASED RESULT FLOW
+══════════════════════════════════════ */
+.result-step {
+  margin-bottom: 28px;
+}
+
+/* Step 1 — Hero stat */
+.step-hero .hero-stat-row {
+  text-align: center;
+  padding: 24px 0 16px;
+}
+
+.hero-stat-days {
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 900;
+  color: #a78bfa;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #a78bfa;
+}
+
+.hero-stat-label {
+  font-size: 0.9rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 6px 0 12px;
+}
+
+.hero-stat-pct {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f87171;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: 999px;
+  padding: 6px 20px;
+  margin-bottom: 16px;
+}
+
+/* Step 2 — Ring + extras */
+.step-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Weeks left */
+.weeks-left-box {
+  text-align: center;
+  background: rgba(52,211,153,0.07);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: 16px;
+  padding: 16px 32px;
+  width: 100%;
+}
+
+.wl-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #34d399;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.wl-label {
+  font-size: 0.78rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Life Phase Bar */
+.phase-bar-wrap {
+  width: 100%;
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.phase-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.phase-seg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: flex 0.3s;
+}
+
+.phase-seg-lbl {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.phase-marker {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 28px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  transform: translateX(-50%);
+  transition: left 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+.phase-marker::after {
+  content: '▼ You';
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #fff;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.phase-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.65rem;
+  color: #334155;
+}
+
+/* Step 3 — Insights */
+.btn-expand {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px dashed rgba(167,139,250,0.25);
+  border-radius: 10px;
+  color: #7c3aed;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-expand:hover {
+  background: rgba(124,58,237,0.08);
+  border-color: rgba(167,139,250,0.4);
+}
+
+/* Step 4 — Expand */
+.result-expand {
+  animation: fade-up 0.35s ease;
+}
+
+/* Calendar mini-preview */
+.cal-preview-wrap {
+  margin: 20px 0;
+}
+
+.cal-preview-hint {
+  font-size: 0.72rem;
+  color: #475569;
+  font-weight: 400;
+  margin-left: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.cal-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(52, 1fr);
+  gap: 2px;
+  margin: 12px 0 10px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.btn-cal-full {
+  background: none;
+  border: none;
+  color: #7c3aed;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.btn-cal-full:hover { color: #a78bfa; }
+
+/* Result actions row */
+.result-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.result-actions .btn-share,
+.result-actions .btn-challenge,
+.result-actions .btn-copy-link {
+  margin: 0;
+  padding: 11px 8px;
+  font-size: 0.82rem;
+}
+
+/* Viral loop tighter */
+.viral-loop {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(124,58,237,0.06);
+  border: 1px solid rgba(124,58,237,0.15);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.vl-proof { font-size: 0.8rem; color: #64748b; }
+.vl-proof strong { color: #a78bfa; }
+.vl-proof #vl-recent { color: #34d399; font-size: 0.75rem; }
+
+/* Share card subhead */
+.sc-subhead {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .result-actions { grid-template-columns: 1fr; }
+  .cal-preview-grid { grid-template-columns: repeat(26, 1fr); }
+  .phase-seg-lbl { display: none; }
+  .hero-stat-days { font-size: 2.8rem; }
+  .step-ring { gap: 14px; }
+}

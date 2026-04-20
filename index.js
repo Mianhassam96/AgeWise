@@ -286,6 +286,53 @@ function restoreInputs() {
 
 restoreInputs();
 
+// ─── Life Phase Bar ───────────────────────────────────────────
+function renderPhaseBar(ageYears) {
+  var phases = [
+    { label: 'Childhood', end: 13,  color: '#34d399' },
+    { label: 'Growth',    end: 25,  color: '#60a5fa' },
+    { label: 'Peak',      end: 40,  color: '#a78bfa' },
+    { label: 'Wisdom',    end: 60,  color: '#f97316' },
+    { label: 'Legacy',    end: 72,  color: '#f87171' }
+  ];
+  var barEl    = document.getElementById('phase-bar');
+  var markerEl = document.getElementById('phase-marker');
+  if (!barEl) return;
+
+  var html = '';
+  var prev = 0;
+  phases.forEach(function(p) {
+    var w = ((p.end - prev) / AVG_LIFESPAN_YEARS * 100).toFixed(2);
+    html += '<div class="phase-seg" style="width:' + w + '%;background:' + p.color + '" title="' + p.label + '">' +
+      '<span class="phase-seg-lbl">' + p.label + '</span></div>';
+    prev = p.end;
+  });
+  barEl.innerHTML = html;
+
+  var pct = Math.min(100, (ageYears / AVG_LIFESPAN_YEARS) * 100);
+  markerEl.style.left = pct + '%';
+  markerEl.title = 'You are here';
+}
+
+// ─── Calendar mini-preview ────────────────────────────────────
+function buildCalPreview(birth) {
+  var grid = document.getElementById('cal-preview-grid');
+  if (!grid) return;
+  var now        = new Date();
+  var msPerWeek  = 7 * 24 * 3600 * 1000;
+  var weeksLived = Math.floor((now - birth) / msPerWeek);
+  var totalWeeks = AVG_LIFESPAN_YEARS * 52;
+  var preview    = Math.min(totalWeeks, 52 * 10); // show first 10 years worth as preview
+  var frag = document.createDocumentFragment();
+  for (var w = 0; w < preview; w++) {
+    var cell = document.createElement('div');
+    cell.className = 'cal-cell ' + (w < weeksLived ? 'cal-lived' : w === weeksLived ? 'cal-now' : 'cal-future');
+    frag.appendChild(cell);
+  }
+  grid.innerHTML = '';
+  grid.appendChild(frag);
+}
+
 // ─── Single Age ───────────────────────────────────────────────
 document.getElementById('calc-single').addEventListener('click', function() {
   var name = document.getElementById('s-name').value;
@@ -299,59 +346,100 @@ document.getElementById('calc-single').addEventListener('click', function() {
   var card  = document.getElementById('single-result');
   window._shareData = { name: name.trim(), birth: birth };
 
+  // reset expand state
+  document.getElementById('result-expand').classList.add('hidden');
+  var expandBtn = document.getElementById('btn-expand-more');
+  if (expandBtn) { expandBtn.textContent = 'Show more insights ↓'; expandBtn.setAttribute('aria-expanded', 'false'); }
+
   initDailyHook(name.trim(), birth);
 
   function render() {
     var b = getBreakdown(birth);
     var t = getTotals(birth);
+    var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+    var weeksLeft = Math.max(0, Math.round((AVG_LIFESPAN_YEARS - (b.yy + b.mo / 12)) * 52));
 
+    // Step 1 — hero stat
     document.getElementById('sr-title').textContent = name.trim() + "'s Age";
+    document.getElementById('hero-stat-days').textContent = t.day.toLocaleString();
+    document.getElementById('hero-stat-pct').textContent  = 'I\'ve already used ' + pct + '% of my life 😳';
     document.getElementById('sr-banner').textContent =
-      'Age: ' + b.yy + ' Years  ' + b.mo + ' Months  ' + b.dd + ' Days  ' +
+      b.yy + ' Years  ' + b.mo + ' Months  ' + b.dd + ' Days  ' +
       b.hh + ' Hours  ' + b.mi + ' Minutes  ' + b.ss + ' Seconds';
 
+    // Step 2 — ring + phase + weeks left
     updateRing(b.yy + b.mo / 12);
+    document.getElementById('wl-number').textContent = weeksLeft.toLocaleString();
+    renderPhaseBar(b.yy + b.mo / 12);
 
+    // Step 3 — top 3 insights only
+    var allInsights = getInsights(b, t);
+    document.getElementById('insights-grid').innerHTML = insightsHTML(allInsights.slice(0, 3));
+
+    // Step 4 (expand) — full stats, bars, pills, calendar preview
     document.getElementById('sr-stats').innerHTML = statsHTML([
       [t.mon, 'Total Months'], [t.wk,  'Total Weeks'],
       [t.day, 'Total Days'],   [t.hr,  'Total Hours'],
       [t.min, 'Total Minutes'],[t.sec, 'Total Seconds']
     ]);
-
     document.getElementById('life-bars').innerHTML = lifeNumbersHTML(t.day);
-    document.getElementById('insights-grid').innerHTML = insightsHTML(getInsights(b, t));
-
     document.getElementById('sr-pills').innerHTML =
       '<div class="pill">📅 Born on ' + bornDay(birth) + '</div>' +
       '<div class="pill" id="s-bday">' + nextBirthday(birth) + '</div>';
+
+    buildCalPreview(birth);
   }
 
   render();
   card.classList.remove('hidden');
-  animateBars();
 
-  // count-up on stat boxes (first render only)
+  // count-up hero days
   setTimeout(function() {
-    document.querySelectorAll('#sr-stats .stat-val').forEach(function(el) {
-      var raw = parseInt(el.textContent.replace(/,/g, ''), 10);
-      if (!isNaN(raw)) countUp(el, raw, 800);
-    });
-  }, 50);
+    var t = getTotals(birth);
+    var el = document.getElementById('hero-stat-days');
+    if (el) countUp(el, t.day, 900);
+  }, 100);
+
+  // expand button
+  var expandBtn2 = document.getElementById('btn-expand-more');
+  if (expandBtn2) {
+    expandBtn2.onclick = function() {
+      var exp = document.getElementById('result-expand');
+      var open = exp.classList.toggle('hidden');
+      expandBtn2.textContent = open ? 'Show more insights ↓' : 'Show less ↑';
+      expandBtn2.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (!open) {
+        animateBars();
+        setTimeout(function() {
+          document.querySelectorAll('#sr-stats .stat-val').forEach(function(el) {
+            var raw = parseInt(el.textContent.replace(/,/g, ''), 10);
+            if (!isNaN(raw)) countUp(el, raw, 700);
+          });
+        }, 50);
+        exp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+  }
+
+  // full calendar button
+  var calFullBtn = document.getElementById('btn-cal-full');
+  if (calFullBtn) {
+    calFullBtn.onclick = function() {
+      buildLifeCalendar(birth, name.trim());
+    };
+  }
 
   clearInterval(window._sTimer);
   window._sTimer = setInterval(function() {
     if (card.classList.contains('hidden')) { clearInterval(window._sTimer); return; }
     var b = getBreakdown(birth);
     var t = getTotals(birth);
+    var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+    document.getElementById('hero-stat-pct').textContent = 'I\'ve already used ' + pct + '% of my life 😳';
     document.getElementById('sr-banner').textContent =
-      'Age: ' + b.yy + ' Years  ' + b.mo + ' Months  ' + b.dd + ' Days  ' +
+      b.yy + ' Years  ' + b.mo + ' Months  ' + b.dd + ' Days  ' +
       b.hh + ' Hours  ' + b.mi + ' Minutes  ' + b.ss + ' Seconds';
     updateRing(b.yy + b.mo / 12);
-    document.getElementById('sr-stats').innerHTML = statsHTML([
-      [t.mon, 'Total Months'], [t.wk,  'Total Weeks'],
-      [t.day, 'Total Days'],   [t.hr,  'Total Hours'],
-      [t.min, 'Total Minutes'],[t.sec, 'Total Seconds']
-    ]);
     var bdayEl = document.getElementById('s-bday');
     if (bdayEl) bdayEl.textContent = nextBirthday(birth);
   }, 1000);
@@ -462,7 +550,8 @@ function renderShareCard() {
 
   if (_shareStyle === 'classic') {
     card.className = 'share-card sc-classic';
-    headline.textContent = "I've lived " + t.day.toLocaleString() + " days 🚀";
+    headline.textContent = 'I\'ve already used ' + pct + '% of my life 😳';
+    document.getElementById('sc-subhead').textContent = data.name + ' · ' + t.day.toLocaleString() + ' days lived';
     ageEl.textContent = b.yy + ' years · ' + b.mo + ' months · ' + b.dd + ' days';
     statsEl.innerHTML = '❤️ ~' + (Math.floor(t.day * 24 * 60 * 70 / 1e9)).toFixed(1) + 'B heartbeats' +
       '  ·  😴 ~' + Math.floor(t.day * 8 / 365) + ' years sleeping' +
@@ -471,8 +560,9 @@ function renderShareCard() {
 
   } else if (_shareStyle === 'funny') {
     card.className = 'share-card sc-funny';
-    headline.textContent = "I've eaten ~" + Math.floor(t.day * 3).toLocaleString() + " meals 🍕";
-    ageEl.textContent = 'That\'s ' + b.yy + ' years of delicious life';
+    headline.textContent = 'I\'ve eaten ~' + Math.floor(t.day * 3).toLocaleString() + ' meals 🍕';
+    document.getElementById('sc-subhead').textContent = 'That\'s ' + b.yy + ' years of delicious life';
+    ageEl.textContent = data.name + ' · born on a ' + bornDay(data.birth);
     statsEl.innerHTML = '🚶 ~' + (Math.floor(t.day * 8000 / 1e6)).toFixed(0) + 'M steps taken' +
       '  ·  ☕ ~' + Math.floor(t.day * 1.5).toLocaleString() + ' coffees' +
       '  ·  💧 ~' + Math.floor(t.day * 8).toLocaleString() + ' glasses of water';
@@ -480,9 +570,10 @@ function renderShareCard() {
 
   } else {
     card.className = 'share-card sc-minimal';
-    headline.textContent = data.name + ' · ' + b.yy + ' years old';
-    ageEl.textContent = t.day.toLocaleString() + ' days · ' + t.wk.toLocaleString() + ' weeks · ' + t.mon.toLocaleString() + ' months';
-    statsEl.innerHTML = Math.round(pct) + '% of an average life lived';
+    headline.textContent = t.day.toLocaleString() + ' days';
+    document.getElementById('sc-subhead').textContent = data.name + ' · ' + b.yy + ' years old';
+    ageEl.textContent = t.wk.toLocaleString() + ' weeks · ' + t.mon.toLocaleString() + ' months';
+    statsEl.innerHTML = Math.round(pct) + '% of an average life lived · ' + Math.max(0, Math.round((AVG_LIFESPAN_YEARS - b.yy - b.mo/12) * 52)).toLocaleString() + ' weeks ahead';
     document.getElementById('sc-ring-wrap').style.display = 'flex';
   }
 }
@@ -796,7 +887,6 @@ loadProfile();
 
 // ─── Viral Loop — social proof counter ───────────────────────
 (function() {
-  // simulate a live-ish share count (seeded from localStorage so it grows)
   var base = parseInt(localStorage.getItem('aw_share_base') || '12482', 10);
   var today = new Date().toDateString();
   var lastDay = localStorage.getItem('aw_share_day') || '';
@@ -806,14 +896,22 @@ loadProfile();
     localStorage.setItem('aw_share_day', today);
   }
   var el = document.getElementById('vl-count');
+  var recentEl = document.getElementById('vl-recent');
   if (el) el.textContent = base.toLocaleString();
-  // tick up slowly while on page
-  setInterval(function() {
-    if (Math.random() < 0.3) {
-      base++;
+  var secondsAgo = Math.floor(Math.random() * 8 + 2);
+  if (recentEl) recentEl.textContent = 'someone shared ' + secondsAgo + 's ago';
+  function scheduleNext() {
+    setTimeout(function() {
+      var inc = Math.floor(Math.random() * 3 + 1);
+      base += inc;
+      localStorage.setItem('aw_share_base', base);
       if (el) el.textContent = base.toLocaleString();
-    }
-  }, 4000);
+      secondsAgo = Math.floor(Math.random() * 8 + 1);
+      if (recentEl) recentEl.textContent = 'someone shared ' + secondsAgo + 's ago';
+      scheduleNext();
+    }, Math.floor(Math.random() * 4000 + 3000));
+  }
+  scheduleNext();
 })();
 
 // ─── Challenge Mode ───────────────────────────────────────────

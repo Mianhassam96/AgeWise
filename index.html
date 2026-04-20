@@ -154,57 +154,99 @@
         </div>
 
         <div class="card result-card hidden" id="single-result">
-          <h2 id="sr-title"></h2>
-          <div class="age-banner" id="sr-banner"></div>
 
-          <!-- Life Progress Ring -->
-          <div class="life-ring-wrap">
-            <div class="life-ring-container">
-              <svg class="life-ring-svg" viewBox="0 0 200 200" aria-hidden="true">
-                <defs>
-                  <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#a78bfa"/>
-                    <stop offset="100%" stop-color="#60a5fa"/>
-                  </linearGradient>
-                </defs>
-                <circle class="ring-bg" cx="100" cy="100" r="80"/>
-                <circle class="ring-fill" id="ring-fill" cx="100" cy="100" r="80"
-                  stroke-dasharray="502.65" stroke-dashoffset="502.65"/>
-              </svg>
-              <div class="ring-center">
-                <div class="ring-pct" id="ring-pct">0%</div>
-                <div class="ring-label">of avg life</div>
+          <!-- ── STEP 1: Hero stat ── -->
+          <div class="result-step step-hero">
+            <h2 id="sr-title"></h2>
+            <div class="hero-stat-row">
+              <div class="hero-stat-days" id="hero-stat-days"></div>
+              <div class="hero-stat-label">days lived</div>
+              <div class="hero-stat-pct" id="hero-stat-pct"></div>
+            </div>
+            <div class="age-banner" id="sr-banner"></div>
+          </div>
+
+          <!-- ── STEP 2: Life Progress Ring + Phase Bar ── -->
+          <div class="result-step step-ring">
+            <div class="life-ring-wrap">
+              <div class="life-ring-container">
+                <svg class="life-ring-svg" viewBox="0 0 200 200" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#a78bfa"/>
+                      <stop offset="100%" stop-color="#60a5fa"/>
+                    </linearGradient>
+                  </defs>
+                  <circle class="ring-bg" cx="100" cy="100" r="80"/>
+                  <circle class="ring-fill" id="ring-fill" cx="100" cy="100" r="80"
+                    stroke-dasharray="502.65" stroke-dashoffset="502.65"/>
+                </svg>
+                <div class="ring-center">
+                  <div class="ring-pct" id="ring-pct">0%</div>
+                  <div class="ring-label">of avg life</div>
+                </div>
+              </div>
+              <p class="ring-sub" id="ring-sub"></p>
+            </div>
+
+            <!-- Weeks left big number -->
+            <div class="weeks-left-box">
+              <div class="wl-number" id="wl-number">—</div>
+              <div class="wl-label">weeks ahead of you</div>
+            </div>
+
+            <!-- Life Phase Bar -->
+            <div class="phase-bar-wrap">
+              <div class="phase-bar" id="phase-bar"></div>
+              <div class="phase-marker" id="phase-marker"></div>
+              <div class="phase-labels">
+                <span>Birth</span><span>25</span><span>40</span><span>60</span><span>72</span>
               </div>
             </div>
-            <p class="ring-sub" id="ring-sub"></p>
           </div>
 
-          <div class="stats-grid" id="sr-stats"></div>
-
-          <!-- Life in Numbers -->
-          <div class="life-numbers" id="life-numbers">
-            <h3 class="section-sub-title">Your Life in Numbers</h3>
-            <div class="life-bars" id="life-bars"></div>
-          </div>
-
-          <div class="pills" id="sr-pills"></div>
-
-          <!-- Smart Insights -->
-          <div class="insights-section" id="insights-section">
+          <!-- ── STEP 3: Key insights (top 3 only) ── -->
+          <div class="result-step step-insights">
             <h3 class="section-sub-title">✨ Smart Insights</h3>
             <div class="insights-grid" id="insights-grid"></div>
+            <button class="btn-expand" id="btn-expand-more" aria-expanded="false">
+              Show more insights ↓
+            </button>
           </div>
 
-          <!-- Share Card Button -->
-          <button class="btn-share" id="btn-share-single">📸 Generate Share Card</button>
+          <!-- ── STEP 4: Expand — full details ── -->
+          <div class="result-expand hidden" id="result-expand">
+
+            <div class="stats-grid" id="sr-stats"></div>
+
+            <div class="life-numbers">
+              <h3 class="section-sub-title">Your Life in Numbers</h3>
+              <div class="life-bars" id="life-bars"></div>
+            </div>
+
+            <div class="pills" id="sr-pills"></div>
+
+            <!-- Life Calendar preview (auto-shown) -->
+            <div class="cal-preview-wrap">
+              <h3 class="section-sub-title">�️ Your Life Calendar
+                <span class="cal-preview-hint">Each square = 1 week of your life</span>
+              </h3>
+              <div class="cal-preview-grid" id="cal-preview-grid"></div>
+              <button class="btn-cal-full" id="btn-cal-full">View Full Calendar →</button>
+            </div>
+
+          </div>
+
+          <!-- ── ACTIONS ── -->
+          <div class="result-actions">
+            <button class="btn-share" id="btn-share-single">📸 Share Card</button>
+            <button class="btn-challenge" id="btn-challenge">🏆 Challenge</button>
+            <button class="btn-copy-link" id="btn-copy-link">🔗 Copy Link</button>
+          </div>
 
           <!-- Viral loop -->
           <div class="viral-loop">
-            <div class="vl-proof">📸 <strong id="vl-count">12,482</strong> people shared their life stats today</div>
-            <div class="vl-actions">
-              <button class="btn-challenge" id="btn-challenge">🏆 Challenge a Friend</button>
-              <button class="btn-copy-link" id="btn-copy-link">🔗 Copy My Link</button>
-            </div>
+            <div class="vl-proof">📸 <strong id="vl-count">12,482</strong> people shared their life stats — <span id="vl-recent"></span></div>
           </div>
 
           <!-- Challenge link output -->
@@ -216,6 +258,7 @@
             </div>
             <div class="co-tag">Tag us <strong>@MultiMian</strong> when you share 🚀</div>
           </div>
+
         </div>
       </section>
 
@@ -356,6 +399,7 @@
         <div class="share-card" id="share-card">
           <div class="sc-logo">⏳ AgeWise</div>
           <div class="sc-headline" id="sc-headline"></div>
+          <div class="sc-subhead" id="sc-subhead"></div>
           <div class="sc-name" id="sc-name"></div>
           <div class="sc-age" id="sc-age"></div>
 
