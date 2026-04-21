@@ -2497,3 +2497,45 @@ main {
 @media (max-width: 640px) {
   .at-badge { display: none; }
 }
+
+/* ══════════════════════════════════════
+   CLOSING INSIGHT
+══════════════════════════════════════ */
+.closing-insight {
+  margin: 28px 0 20px;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(37,99,235,0.08));
+  border: 1px solid rgba(167,139,250,0.25);
+  border-radius: 20px;
+  text-align: center;
+  animation: fade-up 0.6s ease;
+}
+
+.ci-quote {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.ci-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════
+   PROGRESSIVE REVEAL CLASSES
+══════════════════════════════════════ */
+.reveal-first  { animation: fade-up 0.4s ease; }
+.reveal-second { transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal-third  { transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal-fourth { transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal-fifth  { animation: fade-up 0.6s ease; }
+
+@media (max-width: 640px) {
+  .ci-quote { font-size: 1.1rem; }
+}

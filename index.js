@@ -535,8 +535,16 @@ document.getElementById('calc-single').addEventListener('click', function() {
   render();
   card.classList.remove('hidden');
 
-  // progressive reveal — Life Spend visible immediately, insights fade in after
-  var stepInsights = card.querySelector('.reveal-second');
+  // progressive reveal — step-based emotional sequence
+  var stepLifeSpend = card.querySelector('.reveal-first');
+  var stepInsights  = card.querySelector('.reveal-fourth');
+  var stepTwins     = card.querySelectorAll('.reveal-third');
+  var stepClosing   = card.querySelector('.reveal-fifth');
+
+  // Life Spend visible immediately
+  if (stepLifeSpend) stepLifeSpend.style.opacity = '1';
+
+  // Insights fade in after 1.2s
   if (stepInsights) {
     stepInsights.style.opacity = '0';
     stepInsights.style.transform = 'translateY(16px)';
@@ -544,7 +552,38 @@ document.getElementById('calc-single').addEventListener('click', function() {
       stepInsights.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       stepInsights.style.opacity = '1';
       stepInsights.style.transform = 'translateY(0)';
-    }, 600);
+    }, 1200);
+  }
+
+  // Age Twin + Milestone fade in after 1.5s
+  stepTwins.forEach(function(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    setTimeout(function() {
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 1500);
+  });
+
+  // Closing insight after 2.5s
+  if (stepClosing) {
+    setTimeout(function() {
+      var b = getBreakdown(birth);
+      var t = getTotals(birth);
+      var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+      var age = b.yy;
+      var quote = '';
+
+      if (pct < 20) quote = 'You are not behind. You are living.';
+      else if (pct < 35) quote = 'Time is not visible until now.';
+      else if (pct < 50) quote = 'The hours behind you are gone. The ones ahead are yours.';
+      else if (pct < 70) quote = 'Every hour from here carries more weight than any before it.';
+      else quote = 'This is your life, simplified.';
+
+      document.getElementById('ci-quote').textContent = quote;
+      stepClosing.classList.remove('hidden');
+    }, 2500);
   }
 
   // 7-day return hook
@@ -766,6 +805,12 @@ document.getElementById('btn-share-single').addEventListener('click', function()
   renderShareCard();
   document.getElementById('share-modal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  track('share_card_open', _shareStyle);
+
+  // one-line share identity for clipboard
+  var b = getBreakdown(window._shareData.birth);
+  var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+  window._shareText = 'I\'ve used ' + pct + '% of my life — AgeWise';
 });
 
 document.getElementById('share-close').addEventListener('click', closeModal);
