@@ -639,11 +639,10 @@ document.getElementById('calc-single').addEventListener('click', function() {
     // Step 1 — hero stat
     document.getElementById('sr-title').textContent = name.trim() + "'s Age";
     document.getElementById('hero-stat-days').textContent = t.day.toLocaleString();
-    document.getElementById('hero-stat-pct').textContent  = 'I\'ve already used ' + pct + '% of my life 😳';
+    wordReveal(document.getElementById('hero-stat-pct'), 'I\'ve already used ' + pct + '% of my life 😳', 200);
     document.getElementById('sr-banner').textContent =
       b.yy + ' Years  ' + b.mo + ' Months  ' + b.dd + ' Days  ' +
       b.hh + ' Hours  ' + b.mi + ' Minutes  ' + b.ss + ' Seconds';
-
     // Step 2 — ring + phase + weeks left
     updateRing(b.yy + b.mo / 12);
     var weeksLeftEl = document.getElementById('wl-number');
@@ -782,6 +781,7 @@ document.getElementById('calc-single').addEventListener('click', function() {
       ];
       var quote = pct < 30 ? quotes[0] : pct < 50 ? quotes[1] : pct < 70 ? quotes[2] : quotes[3];
       document.getElementById('ci-quote').textContent = quote;
+      wordReveal(document.getElementById('ci-quote'), quote, 100);
       stepClosing.classList.remove('hidden');
 
       // show life question after closing insight appears
@@ -1445,6 +1445,91 @@ document.querySelectorAll('.pt-btn').forEach(function(btn) {
     _perceptionMode = btn.getAttribute('data-mode');
     if (window._shareData) renderPerceptionMsg(window._shareData.birth);
   });
+});
+
+// ─── Focus Glow System ───────────────────────────────────────
+function applyFocusGlow(activeEl) {
+  var sections = document.querySelectorAll(
+    '.result-step, .age-twin, .next-milestone, .closing-insight, .life-question, .send-someone, .bday-wrap'
+  );
+  sections.forEach(function(el) {
+    if (el === activeEl || el.contains(activeEl)) {
+      el.classList.remove('section-dimmed');
+      el.classList.add('section-focused');
+    } else {
+      el.classList.remove('section-focused');
+      el.classList.add('section-dimmed');
+    }
+  });
+}
+
+function clearFocusGlow() {
+  document.querySelectorAll('.section-dimmed, .section-focused').forEach(function(el) {
+    el.classList.remove('section-dimmed', 'section-focused');
+  });
+}
+
+// apply glow on scroll — focus whichever section is most visible
+var _glowTimer = null;
+window.addEventListener('scroll', function() {
+  clearTimeout(_glowTimer);
+  _glowTimer = setTimeout(function() {
+    var card = document.getElementById('single-result');
+    if (!card || card.classList.contains('hidden')) return;
+    var sections = card.querySelectorAll(
+      '.result-step, .age-twin, .next-milestone, .closing-insight, .life-question'
+    );
+    var best = null, bestVis = 0;
+    sections.forEach(function(el) {
+      if (el.classList.contains('hidden')) return;
+      var r = el.getBoundingClientRect();
+      var vis = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+      if (vis > bestVis) { bestVis = vis; best = el; }
+    });
+    if (best) applyFocusGlow(best); else clearFocusGlow();
+  }, 80);
+}, { passive: true });
+
+// ─── Word-by-word reveal ──────────────────────────────────────
+function wordReveal(el, text, delayBase) {
+  el.classList.add('word-reveal');
+  el.innerHTML = '';
+  text.split(' ').forEach(function(word, i) {
+    var span = document.createElement('span');
+    span.textContent = word + ' ';
+    span.style.animationDelay = (delayBase + i * 80) + 'ms';
+    el.appendChild(span);
+  });
+}
+
+// ─── Life Question interaction feedback ──────────────────────
+document.getElementById('lq-yes').addEventListener('click', function() {
+  this.classList.add('glow');
+  var self = this;
+  setTimeout(function() { self.classList.remove('glow'); }, 600);
+});
+
+document.getElementById('lq-no').addEventListener('click', function() {
+  this.classList.add('shake');
+  var self = this;
+  setTimeout(function() { self.classList.remove('shake'); }, 500);
+});
+
+// ─── Tap ripple ───────────────────────────────────────────────
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest(
+    '.btn-primary, .lq-btn, .ss-btn, .btn-remember, .btn-bday-trigger, .btn-gen-msg'
+  );
+  if (!btn) return;
+  var r = btn.getBoundingClientRect();
+  var ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  var size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  ripple.style.cssText = 'width:' + size + 'px;height:' + size + 'px;' +
+    'left:' + (e.clientX - r.left - size / 2) + 'px;' +
+    'top:'  + (e.clientY - r.top  - size / 2) + 'px;';
+  btn.appendChild(ripple);
+  setTimeout(function() { ripple.remove(); }, 600);
 });
 
 // ─── Share nudge popup ────────────────────────────────────────

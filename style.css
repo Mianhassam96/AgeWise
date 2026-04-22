@@ -2989,3 +2989,194 @@ main {
 @media (max-width: 640px) {
   .bday-actions { flex-direction: column; }
 }
+
+/* ══════════════════════════════════════
+   FOCUS GLOW SYSTEM
+══════════════════════════════════════ */
+.result-step,
+.age-twin,
+.next-milestone,
+.closing-insight,
+.life-question,
+.send-someone,
+.bday-wrap {
+  transition: opacity 0.6s ease;
+}
+
+.section-dimmed {
+  opacity: 0.45;
+}
+
+.section-focused {
+  opacity: 1;
+}
+
+.step-hero.section-focused .hero-stat-days {
+  filter: drop-shadow(0 0 24px rgba(167,139,250,0.5));
+}
+
+.step-budget.section-focused .budget-bar-fill {
+  box-shadow: 0 0 12px rgba(124,58,237,0.6);
+}
+
+/* ══════════════════════════════════════
+   TEXT REVEAL — WORD BY WORD
+══════════════════════════════════════ */
+.word-reveal span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: word-build 0.35s ease forwards;
+}
+
+@keyframes word-build {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════
+   LIFE SPEND — BREATHING BAR
+══════════════════════════════════════ */
+.budget-bar-fill {
+  animation: bar-breathe 4s ease-in-out infinite;
+}
+
+@keyframes bar-breathe {
+  0%, 100% { filter: brightness(1);   box-shadow: 0 0 6px rgba(124,58,237,0.3); }
+  50%       { filter: brightness(1.2); box-shadow: 0 0 16px rgba(124,58,237,0.6); }
+}
+
+/* ══════════════════════════════════════
+   LIFE QUESTION — INTERACTION FEEDBACK
+══════════════════════════════════════ */
+.lq-btn {
+  transition: all 0.15s ease;
+}
+
+@keyframes btn-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+@keyframes btn-glow-expand {
+  0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+  70%  { box-shadow: 0 0 0 12px rgba(52,211,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+}
+
+.lq-btn.shake  { animation: btn-shake 0.4s ease; }
+.lq-btn.glow   { animation: btn-glow-expand 0.5s ease; }
+
+/* ══════════════════════════════════════
+   CLOSING INSIGHT — CINEMATIC
+══════════════════════════════════════ */
+.closing-insight {
+  animation: ci-cinematic 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+@keyframes ci-cinematic {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closing-insight::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(37,99,235,0.3));
+  z-index: -1;
+  filter: blur(12px);
+  opacity: 0;
+  animation: ci-glow-in 1s 0.4s ease forwards;
+}
+
+.closing-insight { position: relative; }
+
+@keyframes ci-glow-in {
+  to { opacity: 1; }
+}
+
+/* ══════════════════════════════════════
+   CARD UI UPGRADE — SPOTIFY-LEVEL
+══════════════════════════════════════ */
+.bday-card,
+.share-card {
+  background: linear-gradient(160deg, #1a0e3a 0%, #0d0b22 50%, #0f1a2e 100%);
+  border: 1px solid rgba(167,139,250,0.25);
+  box-shadow:
+    0 0 0 1px rgba(167,139,250,0.1),
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.bc-name,
+.sc-name {
+  background: linear-gradient(135deg, #f1f5f9, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bc-days {
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 0.88rem;
+}
+
+/* ══════════════════════════════════════
+   TAP RIPPLE
+══════════════════════════════════════ */
+.btn-primary,
+.lq-btn,
+.ss-btn,
+.btn-remember,
+.btn-bday-trigger,
+.btn-gen-msg {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: scale(0);
+  animation: ripple-out 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple-out {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ══════════════════════════════════════
+   MICRO HOVER STATES
+══════════════════════════════════════ */
+.stat-box,
+.insight-card,
+.age-twin,
+.next-milestone {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-box:hover,
+.insight-card:hover {
+  box-shadow: 0 4px 20px rgba(124,58,237,0.15);
+}
+
+.age-twin:hover,
+.next-milestone:hover {
+  box-shadow: 0 4px 20px rgba(124,58,237,0.12);
+  border-color: rgba(167,139,250,0.3);
+}
