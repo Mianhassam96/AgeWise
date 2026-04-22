@@ -3222,3 +3222,19 @@ main {
 .hero-stat-pct {
   animation-delay: 200ms;
 }
+
+/* ══════════════════════════════════════
+   POPUP CLOSE BUTTON — EASIER TAP
+══════════════════════════════════════ */
+.pwa-dismiss,
+.sn-close,
+.rt-close,
+.dh-dismiss {
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}

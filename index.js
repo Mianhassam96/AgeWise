@@ -1259,9 +1259,19 @@ document.getElementById('pwa-install').addEventListener('click', function() {
 });
 
 document.getElementById('pwa-dismiss').addEventListener('click', function() {
-  document.getElementById('pwa-banner').classList.add('hidden');
-  // session-only dismiss — banner can show again next visit
+  var banner = document.getElementById('pwa-banner');
+  banner.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+  banner.style.opacity = '0';
+  banner.style.transform = 'translateY(12px)';
+  setTimeout(function() {
+    banner.classList.add('hidden');
+    banner.style.opacity = '';
+    banner.style.transform = '';
+  }, 300);
+  // session-only — shows again next visit so user can still install
   sessionStorage.setItem('aw_pwa_dismissed', '1');
+  // clear any old permanent dismissal
+  localStorage.removeItem('aw_pwa_dismissed');
 });
 
 // ─── Return Trigger ───────────────────────────────────────────
@@ -1279,7 +1289,13 @@ function showReturnTrigger(birth) {
 }
 
 document.getElementById('rt-close').addEventListener('click', function() {
-  document.getElementById('return-trigger').classList.add('hidden');
+  var rt = document.getElementById('return-trigger');
+  rt.style.transition = 'opacity 0.25s ease';
+  rt.style.opacity = '0';
+  setTimeout(function() {
+    rt.classList.add('hidden');
+    rt.style.opacity = '';
+  }, 250);
 });
 
 // patch showReturnTrigger into daily hook init
@@ -1574,7 +1590,15 @@ document.addEventListener('click', function(e) {
 
 // ─── Share nudge popup ────────────────────────────────────────
 document.getElementById('sn-close').addEventListener('click', function() {
-  document.getElementById('share-nudge').classList.add('hidden');
+  var nudge = document.getElementById('share-nudge');
+  nudge.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+  nudge.style.opacity = '0';
+  nudge.style.transform = 'translateY(8px)';
+  setTimeout(function() {
+    nudge.classList.add('hidden');
+    nudge.style.opacity = '';
+    nudge.style.transform = '';
+  }, 250);
 });
 document.getElementById('sn-share-btn').addEventListener('click', function() {
   document.getElementById('share-nudge').classList.add('hidden');
