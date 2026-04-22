@@ -780,16 +780,27 @@ document.getElementById('calc-single').addEventListener('click', function() {
         'This is your life, simplified.'
       ];
       var quote = pct < 30 ? quotes[0] : pct < 50 ? quotes[1] : pct < 70 ? quotes[2] : quotes[3];
-      document.getElementById('ci-quote').textContent = quote;
-      wordReveal(document.getElementById('ci-quote'), quote, 100);
-      stepClosing.classList.remove('hidden');
 
-      // show life question after closing insight appears
-      stepClosing.addEventListener('animationend', function() {
-        showLifeQuestion();
-      }, { once: true });
-      // fallback if animationend doesn't fire
-      setTimeout(showLifeQuestion, 800);
+      // 400ms silence — then fade in container, then word reveal
+      stepClosing.classList.remove('hidden');
+      stepClosing.style.opacity = '0';
+      var quoteEl = document.getElementById('ci-quote');
+      quoteEl.innerHTML = '';
+
+      setTimeout(function() {
+        stepClosing.style.transition = 'opacity 1.2s ease';
+        stepClosing.style.opacity = '1';
+        // word reveal starts after container fades in
+        setTimeout(function() {
+          wordReveal(quoteEl, quote, 100);
+        }, 500);
+        // life question after closing settles
+        stepClosing.addEventListener('transitionend', function onCI() {
+          stepClosing.removeEventListener('transitionend', onCI);
+          showLifeQuestion();
+        }, { once: true });
+        setTimeout(showLifeQuestion, 1800); // fallback
+      }, 400);
     }
   }
 

@@ -1233,13 +1233,8 @@ main {
 .sc-ring-pct { font-size: 1.3rem; font-weight: 900; color: #a78bfa; }
 .sc-ring-lbl { font-size: 0.6rem; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; }
 
-/* ring pulse loop */
-@keyframes ring-pulse {
-  0%, 100% { filter: drop-shadow(0 0 6px rgba(167,139,250,0.5)); }
-  50%       { filter: drop-shadow(0 0 14px rgba(167,139,250,0.9)); }
-}
-
-.ring-fill { animation: ring-pulse 3s ease-in-out infinite; }
+/* ring — static, no pulse */
+.ring-fill { filter: drop-shadow(0 0 6px rgba(167,139,250,0.4)); }
 
 /* ── Responsive additions ── */
 @media (max-width: 640px) {
@@ -3012,11 +3007,11 @@ main {
 }
 
 .step-hero.section-focused .hero-stat-days {
-  filter: drop-shadow(0 0 24px rgba(167,139,250,0.5));
+  filter: drop-shadow(0 0 12px rgba(167,139,250,0.25));
 }
 
 .step-budget.section-focused .budget-bar-fill {
-  box-shadow: 0 0 12px rgba(124,58,237,0.6);
+  box-shadow: 0 0 6px rgba(124,58,237,0.35);
 }
 
 /* ══════════════════════════════════════
@@ -3036,13 +3031,14 @@ main {
 /* ══════════════════════════════════════
    LIFE SPEND — BREATHING BAR
 ══════════════════════════════════════ */
+/* Life Spend bar — near-static, barely alive */
 .budget-bar-fill {
-  animation: bar-breathe 4s ease-in-out infinite;
+  animation: bar-breathe 8s ease-in-out infinite;
 }
 
 @keyframes bar-breathe {
-  0%, 100% { filter: brightness(1);   box-shadow: 0 0 6px rgba(124,58,237,0.3); }
-  50%       { filter: brightness(1.2); box-shadow: 0 0 16px rgba(124,58,237,0.6); }
+  0%, 100% { box-shadow: 0 0 4px rgba(124,58,237,0.25); }
+  50%       { box-shadow: 0 0 8px rgba(124,58,237,0.4); }
 }
 
 /* ══════════════════════════════════════
@@ -3061,8 +3057,8 @@ main {
 }
 
 @keyframes btn-glow-expand {
-  0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
-  70%  { box-shadow: 0 0 0 12px rgba(52,211,153,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(52,211,153,0); }
   100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
 }
 
@@ -3070,40 +3066,20 @@ main {
 .lq-btn.glow   { animation: btn-glow-expand 0.5s ease; }
 
 /* ══════════════════════════════════════
-   CLOSING INSIGHT — CINEMATIC
+   CLOSING INSIGHT — STILLNESS
+   One effect only: fade into presence
 ══════════════════════════════════════ */
 .closing-insight {
-  animation: ci-cinematic 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+  animation: ci-still 1.2s ease forwards;
 }
 
-@keyframes ci-cinematic {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes ci-still {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-.closing-insight::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 26px;
-  background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(37,99,235,0.3));
-  z-index: -1;
-  filter: blur(12px);
-  opacity: 0;
-  animation: ci-glow-in 1s 0.4s ease forwards;
-}
-
-.closing-insight { position: relative; }
-
-@keyframes ci-glow-in {
-  to { opacity: 1; }
-}
+/* remove competing glow pseudo-element */
+.closing-insight::before { display: none; }
 
 /* ══════════════════════════════════════
    CARD UI UPGRADE — SPOTIFY-LEVEL
