@@ -1,7 +1,8 @@
-var CACHE = 'agewise-v1';
+var CACHE = 'agewise-v2';
 var ASSETS = [
   '/AgeWise/',
   '/AgeWise/index.html',
+  '/AgeWise/contact.html',
   '/AgeWise/style.css',
   '/AgeWise/index.js',
   '/AgeWise/favicon.svg',

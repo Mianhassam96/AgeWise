@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — AgeWise</title>
+  <meta name="description" content="Get in touch with AgeWise. Share feedback, ideas, or just say hi." />
+  <meta name="theme-color" content="#0f0c29" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="orbs" aria-hidden="true">
+    <span class="orb orb1"></span>
+    <span class="orb orb2"></span>
+  </div>
+
+  <div class="wrapper">
+    <header class="contact-page-header">
+      <a href="index.html" class="contact-back">← Back to AgeWise</a>
+    </header>
+
+    <main class="contact-page-main">
+      <div class="contact-inner">
+        <div class="contact-glow" aria-hidden="true"></div>
+        <h1 class="contact-title">Get in Touch</h1>
+        <p class="contact-sub">Have feedback, a feature idea, or just want to say hi? Drop a message.</p>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="cf-row">
+            <div class="cf-group">
+              <label for="cf-name">Your Name</label>
+              <input type="text" id="cf-name" placeholder="e.g. Hassam" autocomplete="off" />
+            </div>
+            <div class="cf-group">
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" placeholder="you@example.com" autocomplete="off" />
+            </div>
+          </div>
+          <div class="cf-group">
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" rows="5" placeholder="Your message here..."></textarea>
+          </div>
+          <div class="error hidden" id="cf-error"></div>
+          <button type="submit" class="btn-primary btn-send">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-icon">🚀</span>
+          </button>
+          <div class="cf-success hidden" id="cf-success">✅ Message sent! We'll get back to you soon.</div>
+        </form>
+
+        <div class="contact-links">
+          <a href="mailto:mianhassan96@gmail.com" class="c-link">📧 mianhassan96@gmail.com</a>
+          <a href="https://twitter.com/MultiMian" class="c-link" target="_blank" rel="noopener noreferrer">🐦 @MultiMian</a>
+          <a href="https://www.linkedin.com/in/multimian" class="c-link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <p>© 2026 AgeWise &nbsp;·&nbsp; by <a href="https://github.com/Mianhassam96/" target="_blank" rel="noopener noreferrer" class="footer-author">MultiMian</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name  = document.getElementById('cf-name').value.trim();
+      var email = document.getElementById('cf-email').value.trim();
+      var msg   = document.getElementById('cf-msg').value.trim();
+      var errEl = document.getElementById('cf-error');
+      var okEl  = document.getElementById('cf-success');
+      errEl.classList.add('hidden'); okEl.classList.add('hidden');
+      if (!name || !email || !msg) {
+        errEl.textContent = 'Please fill in all fields.';
+        errEl.classList.remove('hidden'); return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.classList.remove('hidden'); return;
+      }
+      // open mailto as fallback (no backend)
+      window.location.href = 'mailto:mianhassan96@gmail.com'
+        + '?subject=' + encodeURIComponent('AgeWise feedback from ' + name)
+        + '&body=' + encodeURIComponent(msg + '\n\nFrom: ' + name + ' <' + email + '>');
+      okEl.classList.remove('hidden');
+      document.getElementById('contact-form').reset();
+    });
+  </script>
+</body>
+</html>

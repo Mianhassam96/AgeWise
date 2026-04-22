@@ -470,57 +470,21 @@
       </div>
     </section>
 
-    <!-- ── CONTACT ── -->
-    <section id="contact" class="contact-section">
-      <div class="contact-inner">
-        <div class="contact-glow" aria-hidden="true"></div>
-        <h2 class="contact-title">Get in Touch</h2>
-        <p class="contact-sub">Have feedback, a feature idea, or just want to say hi? Drop a message.</p>
-        <form class="contact-form" id="contact-form" novalidate>
-          <div class="cf-row">
-            <div class="cf-group">
-              <label for="cf-name">Your Name</label>
-              <input type="text" id="cf-name" placeholder="e.g. Hassam" autocomplete="off" />
-            </div>
-            <div class="cf-group">
-              <label for="cf-email">Email Address</label>
-              <input type="email" id="cf-email" placeholder="you@example.com" autocomplete="off" />
-            </div>
-          </div>
-          <div class="cf-group">
-            <label for="cf-msg">Message</label>
-            <textarea id="cf-msg" rows="4" placeholder="Your message here..."></textarea>
-          </div>
-          <div class="error hidden" id="cf-error"></div>
-          <button type="submit" class="btn-primary btn-send">
-            <span class="btn-text">Send Message</span>
-            <span class="btn-icon">🚀</span>
-          </button>
-          <div class="cf-success hidden" id="cf-success">✅ Message sent! We'll get back to you soon.</div>
-        </form>
-        <div class="contact-links">
-          <a href="mailto:mianhassan96@gmail.com" class="c-link" target="_blank" rel="noopener noreferrer">📧 mianhassan96@gmail.com</a>
-          <a href="https://twitter.com/MultiMian" class="c-link" target="_blank" rel="noopener noreferrer">🐦 @MultiMian</a>
-          <a href="https://www.linkedin.com/in/multimian" class="c-link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
-        </div>
-      </div>
-    </section>
-
     <!-- ── FOOTER ── -->
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
           <span class="footer-logo">⏳ AgeWise</span>
-          <p>Precise age calculation, beautifully simple.</p>
+          <p>A quiet system that makes people aware of time passing.</p>
         </div>
         <div class="footer-links-col">
           <span class="footer-col-title">Tool</span>
-          <a href="#calculator">Single Age Check</a>
-          <a href="#calculator">Age Comparison</a>
+          <a href="#calculator">Calculator</a>
+          <a href="#life-calendar" id="footer-cal-link">Life Calendar</a>
         </div>
         <div class="footer-links-col">
           <span class="footer-col-title">Connect</span>
-          <a href="mailto:mianhassan96@gmail.com" target="_blank" rel="noopener noreferrer">Contact Us</a>
+          <a href="contact.html" target="_blank" rel="noopener noreferrer">Contact Us</a>
           <a href="https://multimian.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <a href="https://multimian.com/" target="_blank" rel="noopener noreferrer">🌐 MultiMian</a>
         </div>
@@ -621,20 +585,26 @@
       a.addEventListener('click', function(e) {
         var href = a.getAttribute('href');
         if (href === '#life-calendar') {
-          // if life calendar not visible yet, trigger it from last calculated birth
+          e.preventDefault();
           var section = document.getElementById('life-calendar');
-          if (section && section.classList.contains('hidden') && window._shareData) {
-            e.preventDefault();
+          if (section && !section.classList.contains('hidden')) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          } else if (window._shareData) {
             buildLifeCalendar(window._shareData.birth, window._shareData.name);
-            return;
+          } else {
+            // no data yet — scroll to calculator and hint
+            var calc = document.getElementById('calculator');
+            if (calc) calc.scrollIntoView({ behavior: 'smooth' });
+            var dob = document.getElementById('s-dob');
+            if (dob) { dob.focus(); dob.style.boxShadow = '0 0 0 3px rgba(167,139,250,0.4)'; setTimeout(function(){ dob.style.boxShadow = ''; }, 2000); }
           }
+          document.getElementById('mobile-nav').classList.remove('open');
+          document.getElementById('hamburger').classList.remove('open');
+          document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
+          return;
         }
         var target = document.querySelector(href);
-        if (target) { 
-          e.preventDefault(); 
-          target.scrollIntoView({ behavior: 'smooth' }); 
-        }
-        // close mobile nav on link click
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
         document.getElementById('mobile-nav').classList.remove('open');
         document.getElementById('hamburger').classList.remove('open');
         document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
@@ -647,26 +617,6 @@
       var isOpen = nav.classList.toggle('open');
       btn.classList.toggle('open', isOpen);
       btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    // contact form
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var name  = document.getElementById('cf-name').value.trim();
-      var email = document.getElementById('cf-email').value.trim();
-      var msg   = document.getElementById('cf-msg').value.trim();
-      var errEl = document.getElementById('cf-error');
-      var okEl  = document.getElementById('cf-success');
-      errEl.classList.add('hidden'); okEl.classList.add('hidden');
-      if (!name || !email || !msg) {
-        errEl.textContent = 'Please fill in all fields.';
-        errEl.classList.remove('hidden'); return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errEl.textContent = 'Please enter a valid email address.';
-        errEl.classList.remove('hidden'); return;
-      }
-      okEl.classList.remove('hidden');
-      document.getElementById('contact-form').reset();
     });
   </script>
 </body>

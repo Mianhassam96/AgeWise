@@ -3156,3 +3156,56 @@ main {
   box-shadow: 0 4px 20px rgba(124,58,237,0.12);
   border-color: rgba(167,139,250,0.3);
 }
+
+/* ══════════════════════════════════════
+   CONTACT PAGE
+══════════════════════════════════════ */
+.contact-page-header {
+  padding: 20px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-back {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.contact-back:hover { color: #a78bfa; }
+
+.contact-page-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════
+   EMOTIONAL POLISH — REDUCE HOVER NOISE
+   Keep hover only on primary interactive
+══════════════════════════════════════ */
+.stat-box:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(167,139,250,0.2);
+}
+
+.insight-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* focus glow — almost invisible */
+.section-dimmed  { opacity: 0.6; }
+.section-focused { opacity: 1; }
+
+/* hero pause — 200ms delay before pct line appears */
+.hero-stat-pct {
+  animation-delay: 200ms;
+}
