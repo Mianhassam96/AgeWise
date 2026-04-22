@@ -2762,3 +2762,170 @@ main {
   .ss-actions { flex-direction: column; }
   .ss-btn { width: 100%; }
 }
+
+/* ══════════════════════════════════════
+   BIRTHDAY MESSAGE GENERATOR
+══════════════════════════════════════ */
+.bday-wrap {
+  margin: 8px 0 16px;
+  text-align: center;
+}
+
+.btn-bday-trigger {
+  background: none;
+  border: 1px dashed rgba(167,139,250,0.3);
+  color: #7c3aed;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.btn-bday-trigger:hover {
+  background: rgba(124,58,237,0.08);
+  border-color: rgba(167,139,250,0.5);
+  color: #a78bfa;
+}
+
+.bday-form {
+  margin-top: 16px;
+  text-align: left;
+  animation: fade-up 0.35s ease;
+}
+
+.bf-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.bf-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+
+.bf-input {
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color-scheme: dark;
+}
+
+.bf-input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129,140,248,0.15);
+}
+
+.bf-relations {
+  display: flex;
+  gap: 8px;
+}
+
+.bf-rel {
+  flex: 1;
+  padding: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #64748b;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bf-rel.active {
+  background: rgba(167,139,250,0.15);
+  border-color: rgba(167,139,250,0.4);
+  color: #c4b5fd;
+}
+
+.bf-rel:hover:not(.active) { background: rgba(255,255,255,0.07); color: #94a3b8; }
+
+.btn-gen-msg { margin-top: 4px; }
+
+/* output card */
+.bday-output {
+  margin-top: 20px;
+  animation: fade-up 0.4s ease;
+}
+
+.bday-card {
+  background: linear-gradient(135deg, #1e1040 0%, #0f0c29 60%, #1a1040 100%);
+  border: 1px solid rgba(167,139,250,0.3);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(124,58,237,0.25);
+  margin-bottom: 14px;
+}
+
+.bc-logo {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #a78bfa;
+  opacity: 0.6;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.bc-name {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #f1f5f9;
+  margin-bottom: 8px;
+}
+
+.bc-days {
+  font-size: 0.82rem;
+  color: #a78bfa;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 0.03em;
+}
+
+.bc-msg {
+  font-size: 1rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+  font-style: italic;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 18px;
+}
+
+.bc-footer {
+  margin-top: 20px;
+  font-size: 0.68rem;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.bday-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.bday-actions .ss-btn { flex: 1; }
+
+.bday-copied {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: #34d399;
+  text-align: center;
+  animation: fade-up 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .bday-actions { flex-direction: column; }
+  .bc-name { font-size: 1.4rem; }
+  .bc-msg { font-size: 0.92rem; }
+}

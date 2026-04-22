@@ -1402,6 +1402,76 @@ document.getElementById('sn-share-btn').addEventListener('click', function() {
   document.getElementById('btn-share-single').click();
 });
 
+// ─── Birthday Message Generator ──────────────────────────────
+var _bdayRel = 'friend';
+
+document.getElementById('btn-bday-trigger').addEventListener('click', function() {
+  var form = document.getElementById('bday-form');
+  form.classList.toggle('hidden');
+  this.style.opacity = form.classList.contains('hidden') ? '1' : '0.5';
+});
+
+document.querySelectorAll('.bf-rel').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.bf-rel').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    _bdayRel = btn.getAttribute('data-rel');
+  });
+});
+
+document.getElementById('btn-gen-msg').addEventListener('click', function() {
+  var name = document.getElementById('bf-name').value.trim();
+  var dob  = document.getElementById('bf-dob').value;
+  if (!name || !dob) return;
+
+  var birth = parseDOB(dob);
+  var t = getTotals(birth);
+  var b = getBreakdown(birth);
+  var days = t.day.toLocaleString();
+  var pct  = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+
+  var messages = {
+    friend: 'You\'ve lived ' + days + ' days. That\'s ' + days + ' chances to become who you are. I\'m glad I get to be part of your story.',
+    parent: 'You\'ve spent a lifetime giving your time to others. ' + days + ' days of showing up. Today is just a small moment to remind you how much that matters.',
+    partner: 'Time feels different with you in it. ' + days + ' days — and I\'m grateful for every single one we\'ve shared.'
+  };
+
+  var msg = messages[_bdayRel];
+
+  document.getElementById('bc-name').textContent = name;
+  document.getElementById('bc-days').textContent = days + ' days lived · ' + pct + '% of an average life';
+  document.getElementById('bc-msg').textContent  = msg;
+
+  document.getElementById('bday-output').classList.remove('hidden');
+  document.getElementById('bday-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // copy button
+  document.getElementById('btn-copy-bday').onclick = function() {
+    var text = name + '\n\n' + msg + '\n\n— Made with AgeWise';
+    navigator.clipboard.writeText(text).then(function() {
+      var el = document.getElementById('bday-copied');
+      el.classList.remove('hidden');
+      setTimeout(function() { el.classList.add('hidden'); }, 3000);
+    });
+    track('bday_copy', _bdayRel);
+  };
+
+  // download card
+  document.getElementById('btn-download-bday').onclick = function() {
+    var card = document.getElementById('bday-card');
+    if (typeof html2canvas === 'undefined') return;
+    html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true }).then(function(canvas) {
+      var link = document.createElement('a');
+      link.download = 'agewise-birthday-' + name.toLowerCase().replace(/\s+/g, '-') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+    track('bday_download', _bdayRel);
+  };
+
+  track('bday_generate', _bdayRel);
+});
+
 // ─── Track key events ─────────────────────────────────────────
 document.getElementById('calc-single').addEventListener('click', function() {
   track('calculate', 'single');

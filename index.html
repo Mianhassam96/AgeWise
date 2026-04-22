@@ -371,8 +371,37 @@
             <div class="co-tag">Tag us <strong>@MultiMian</strong> when you share 🚀</div>
           </div>
 
-          <!-- hidden share trigger for JS -->
-          <button class="hidden" id="btn-share-single" aria-hidden="true" tabindex="-1"></button>
+          <!-- ── BIRTHDAY MESSAGE ── -->
+          <div class="bday-wrap" id="bday-wrap">
+            <button class="btn-bday-trigger" id="btn-bday-trigger">🎁 Make this for someone else</button>
+            <div class="bday-form hidden" id="bday-form">
+              <div class="bf-title">A birthday message they'll remember</div>
+              <div class="bf-fields">
+                <input type="text" class="bf-input" id="bf-name" placeholder="Their name" autocomplete="off" />
+                <input type="date" class="bf-input" id="bf-dob" />
+                <div class="bf-relations">
+                  <button class="bf-rel active" data-rel="friend">Friend</button>
+                  <button class="bf-rel" data-rel="parent">Parent</button>
+                  <button class="bf-rel" data-rel="partner">Partner</button>
+                </div>
+              </div>
+              <button class="btn-primary btn-gen-msg" id="btn-gen-msg">Generate Message</button>
+              <div class="bday-output hidden" id="bday-output">
+                <div class="bday-card" id="bday-card">
+                  <div class="bc-logo">⏳ AgeWise</div>
+                  <div class="bc-name" id="bc-name"></div>
+                  <div class="bc-days" id="bc-days"></div>
+                  <div class="bc-msg" id="bc-msg"></div>
+                  <div class="bc-footer">agewise · a different kind of birthday message</div>
+                </div>
+                <div class="bday-actions">
+                  <button class="ss-btn ss-msg" id="btn-copy-bday">💬 Copy message</button>
+                  <button class="ss-btn ss-card" id="btn-download-bday">⬇️ Save card</button>
+                </div>
+                <div class="bday-copied hidden" id="bday-copied">✅ Copied. Send it to someone who matters.</div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </section>
