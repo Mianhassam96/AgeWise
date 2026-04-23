@@ -87,22 +87,66 @@ function getTimeTwin(birth){
 }
 
 // ── History events ────────────────────────────────────────────
-var HISTORY_EVENTS={
+var HISTORY_EVENTS = {
   '1-1':[{y:1863,t:'Emancipation Proclamation took effect in the US.'},{y:1804,t:'Haiti declared independence from France.'},{y:1958,t:'European Economic Community established.'}],
-  '8-15':[{y:1947,t:'India gained independence from British rule.'},{y:1971,t:'Bahrain declared independence from the UK.'},{y:1969,t:'Woodstock Music Festival began in New York.'}],
-  '7-4':[{y:1776,t:'United States declared independence.'},{y:1826,t:'John Adams and Thomas Jefferson both died.'},{y:1997,t:'Mars Pathfinder landed on Mars.'}],
-  '12-25':[{y:1642,t:'Isaac Newton was born.'},{y:1991,t:'Soviet Union officially dissolved.'},{y:1914,t:'Christmas Truce during World War I.'}]
+  '1-8':[{y:1942,t:'Stephen Hawking was born in Oxford, England.'},{y:1935,t:'Elvis Presley was born in Tupelo, Mississippi.'},{y:1815,t:'Battle of New Orleans ended the War of 1812.'}],
+  '1-15':[{y:1929,t:'Martin Luther King Jr. was born in Atlanta, Georgia.'},{y:1559,t:'Elizabeth I was crowned Queen of England.'},{y:2009,t:'Miracle on the Hudson: US Airways Flight 1549 landed safely.'}],
+  '1-17':[{y:1942,t:'Muhammad Ali was born in Louisville, Kentucky.'},{y:1706,t:'Benjamin Franklin was born in Boston.'},{y:1991,t:'Operation Desert Storm began in the Gulf War.'}],
+  '1-20':[{y:1961,t:'John F. Kennedy was inaugurated as 35th US President.'},{y:2009,t:'Barack Obama was inaugurated as 44th US President.'},{y:1981,t:'Iran hostage crisis ended after 444 days.'}],
+  '1-27':[{y:1756,t:'Wolfgang Amadeus Mozart was born in Salzburg.'},{y:1945,t:'Soviet forces liberated Auschwitz concentration camp.'},{y:1967,t:'Apollo 1 fire killed three NASA astronauts.'}],
+  '2-4':[{y:1945,t:'Yalta Conference began between Allied leaders.'},{y:2004,t:'Facebook was launched by Mark Zuckerberg.'},{y:1789,t:'George Washington was unanimously elected first US President.'}],
+  '2-11':[{y:1847,t:'Thomas Edison was born in Milan, Ohio.'},{y:1990,t:'Nelson Mandela was released from prison after 27 years.'},{y:1929,t:'Lateran Treaty established Vatican City as independent state.'}],
+  '2-14':[{y:1929,t:'St. Valentine Day Massacre occurred in Chicago.'},{y:1876,t:'Alexander Graham Bell applied for telephone patent.'},{y:1989,t:'Ayatollah Khomeini issued fatwa against Salman Rushdie.'}],
+  '2-18':[{y:1930,t:'Pluto was discovered by astronomer Clyde Tombaugh.'},{y:1564,t:'Michelangelo died in Rome at age 88.'},{y:1861,t:'Jefferson Davis was inaugurated as Confederate President.'}],
+  '3-6':[{y:1475,t:'Michelangelo was born in Caprese, Italy.'},{y:1836,t:'Battle of the Alamo ended in Texas.'},{y:1857,t:'Dred Scott decision issued by US Supreme Court.'}],
+  '3-14':[{y:1879,t:'Albert Einstein was born in Ulm, Germany.'},{y:1883,t:'Karl Marx died in London.'},{y:1794,t:'Eli Whitney patented the cotton gin.'}],
+  '3-21':[{y:1685,t:'Johann Sebastian Bach was born in Eisenach.'},{y:1960,t:'Sharpeville massacre occurred in South Africa.'},{y:2006,t:'Twitter was founded by Jack Dorsey.'}],
+  '4-2':[{y:1805,t:'Hans Christian Andersen was born in Denmark.'},{y:1982,t:'Argentina invaded the Falkland Islands.'},{y:1792,t:'US Mint was established by Congress.'}],
+  '4-15':[{y:1452,t:'Leonardo da Vinci was born in Vinci, Italy.'},{y:1912,t:'RMS Titanic sank in the North Atlantic.'},{y:1865,t:'Abraham Lincoln died after being shot the previous night.'}],
+  '4-23':[{y:1564,t:'William Shakespeare was born in Stratford-upon-Avon.'},{y:1616,t:'Miguel de Cervantes died in Madrid.'},{y:1985,t:'Coca-Cola introduced New Coke formula.'}],
+  '5-5':[{y:1818,t:'Karl Marx was born in Trier, Germany.'},{y:1961,t:'Alan Shepard became first American in space.'},{y:1821,t:'Napoleon Bonaparte died in exile on Saint Helena.'}],
+  '5-14':[{y:1948,t:'State of Israel was proclaimed.'},{y:1804,t:'Lewis and Clark Expedition departed from Camp Dubois.'},{y:1973,t:'Skylab, first US space station, was launched.'}],
+  '5-25':[{y:1977,t:'Star Wars was released in cinemas worldwide.'},{y:1961,t:'JFK announced goal to land on the Moon.'},{y:1979,t:'American Airlines Flight 191 crashed in Chicago.'}],
+  '6-1':[{y:1926,t:'Marilyn Monroe was born in Los Angeles.'},{y:1980,t:'CNN launched as first 24-hour news network.'},{y:1967,t:'Beatles released Sgt. Peppers Lonely Hearts Club Band.'}],
+  '6-12':[{y:1929,t:'Anne Frank was born in Frankfurt, Germany.'},{y:1963,t:'Civil rights leader Medgar Evers was assassinated.'},{y:1987,t:'Reagan challenged Gorbachev to tear down the Berlin Wall.'}],
+  '6-18':[{y:1815,t:'Battle of Waterloo: Napoleon was defeated.'},{y:1928,t:'Amelia Earhart became first woman to fly across the Atlantic.'},{y:1983,t:'Sally Ride became first American woman in space.'}],
+  '7-4':[{y:1776,t:'United States declared independence from Britain.'},{y:1826,t:'John Adams and Thomas Jefferson both died on this day.'},{y:1997,t:'Mars Pathfinder landed on Mars.'}],
+  '7-18':[{y:1918,t:'Nelson Mandela was born in Mvezo, South Africa.'},{y:1969,t:'Ted Kennedy drove off Chappaquiddick Bridge.'},{y:1936,t:'Spanish Civil War began.'}],
+  '7-20':[{y:1969,t:'Apollo 11: Neil Armstrong walked on the Moon.'},{y:1944,t:'Assassination attempt on Adolf Hitler failed.'},{y:1976,t:'Viking 1 landed on Mars.'}],
+  '8-4':[{y:1961,t:'Barack Obama was born in Honolulu, Hawaii.'},{y:1914,t:'Britain declared war on Germany, entering World War I.'},{y:1944,t:'Anne Frank and family were arrested by Gestapo.'}],
+  '8-6':[{y:1945,t:'Atomic bomb dropped on Hiroshima, Japan.'},{y:1991,t:'World Wide Web became publicly available.'},{y:1965,t:'Voting Rights Act signed by President Johnson.'}],
+  '8-9':[{y:1945,t:'Atomic bomb dropped on Nagasaki, Japan.'},{y:1974,t:'Richard Nixon resigned as US President.'},{y:1963,t:'Great Train Robbery occurred in England.'}],
+  '8-15':[{y:1947,t:'India gained independence from British rule.'},{y:1769,t:'Napoleon Bonaparte was born in Corsica.'},{y:1971,t:'Bahrain declared independence from the UK.'}],
+  '8-26':[{y:1920,t:'19th Amendment ratified, giving women the right to vote.'},{y:1978,t:'Pope John Paul I was elected.'},{y:1883,t:'Krakatoa volcano erupted in Indonesia.'}],
+  '9-5':[{y:1946,t:'Freddie Mercury was born in Zanzibar.'},{y:1972,t:'Munich massacre occurred at the Olympic Games.'},{y:1698,t:'Peter the Great imposed tax on beards in Russia.'}],
+  '9-11':[{y:2001,t:'Terrorist attacks destroyed World Trade Center in New York.'},{y:1973,t:'Military coup overthrew Salvador Allende in Chile.'},{y:1789,t:'Alexander Hamilton became first US Secretary of the Treasury.'}],
+  '9-15':[{y:1890,t:'Agatha Christie was born in Torquay, England.'},{y:1935,t:'Nuremberg Laws stripped Jews of German citizenship.'},{y:1916,t:'Tanks were used in battle for the first time.'}],
+  '9-26':[{y:1888,t:'T.S. Eliot was born in St. Louis, Missouri.'},{y:1960,t:'First televised US presidential debate: Kennedy vs Nixon.'},{y:1983,t:'Soviet officer Stanislav Petrov prevented nuclear war.'}],
+  '10-2':[{y:1869,t:'Mahatma Gandhi was born in Porbandar, India.'},{y:1950,t:'Peanuts comic strip by Charles Schulz first published.'},{y:1967,t:'Thurgood Marshall became first Black US Supreme Court Justice.'}],
+  '10-9':[{y:1940,t:'John Lennon was born in Liverpool, England.'},{y:1967,t:'Che Guevara was executed in Bolivia.'},{y:1874,t:'Universal Postal Union was established.'}],
+  '10-14':[{y:1947,t:'Chuck Yeager broke the sound barrier for the first time.'},{y:1066,t:'Battle of Hastings: William the Conqueror defeated King Harold.'},{y:1964,t:'Martin Luther King Jr. was awarded the Nobel Peace Prize.'}],
+  '10-28':[{y:1955,t:'Bill Gates was born in Seattle, Washington.'},{y:1886,t:'Statue of Liberty was dedicated in New York Harbor.'},{y:1962,t:'Cuban Missile Crisis ended as Soviet ships turned back.'}],
+  '11-9':[{y:1934,t:'Carl Sagan was born in Brooklyn, New York.'},{y:1989,t:'Berlin Wall fell, ending the Cold War division of Germany.'},{y:1938,t:'Kristallnacht: Nazi pogrom against Jews in Germany.'}],
+  '11-19':[{y:1917,t:'Indira Gandhi was born in Allahabad, India.'},{y:1863,t:'Lincoln delivered the Gettysburg Address.'},{y:1969,t:'Apollo 12 astronauts landed on the Moon.'}],
+  '11-22':[{y:1963,t:'President John F. Kennedy was assassinated in Dallas.'},{y:1718,t:'Blackbeard the pirate was killed in battle.'},{y:1990,t:'Margaret Thatcher resigned as British Prime Minister.'}],
+  '11-30':[{y:1835,t:'Mark Twain was born in Florida, Missouri.'},{y:1874,t:'Winston Churchill was born at Blenheim Palace.'},{y:1954,t:'First meteorite to hit a human struck Ann Hodges in Alabama.'}],
+  '12-5':[{y:1901,t:'Walt Disney was born in Chicago, Illinois.'},{y:1933,t:'Prohibition ended in the United States.'},{y:1955,t:'Montgomery Bus Boycott began after Rosa Parks arrest.'}],
+  '12-16':[{y:1770,t:'Ludwig van Beethoven was born in Bonn, Germany.'},{y:1773,t:'Boston Tea Party took place in Boston Harbor.'},{y:1944,t:'Battle of the Bulge began in World War II.'}],
+  '12-25':[{y:1642,t:'Isaac Newton was born in Woolsthorpe, England.'},{y:1991,t:'Soviet Union officially dissolved.'},{y:1914,t:'Christmas Truce: soldiers stopped fighting in World War I.'}],
+  '12-31':[{y:1879,t:'Thomas Edison demonstrated incandescent light bulb publicly.'},{y:1999,t:'Y2K fears proved unfounded as millennium arrived.'},{y:1929,t:'Guy Lombardo played Auld Lang Syne on New Year Eve for first time.'}]
 };
 function getHistoryEvents(birth){
   var key=(birth.getMonth()+1)+'-'+birth.getDate();
   if(HISTORY_EVENTS[key])return HISTORY_EVENTS[key];
-  var month=birth.getMonth()+1;
-  var defaults=[
-    {y:1914,t:'World War I began, reshaping the world.'},
-    {y:1969,t:'Apollo 11 landed on the Moon.'},
-    {y:1989,t:'The Berlin Wall fell, ending the Cold War.'}
-  ];
-  return defaults;
+  // Find nearest date in same month
+  var m=birth.getMonth()+1;
+  var d=birth.getDate();
+  var keys=Object.keys(HISTORY_EVENTS).filter(function(k){return k.split('-')[0]===String(m);});
+  if(keys.length){
+    keys.sort(function(a,b){return Math.abs(parseInt(a.split('-')[1])-d)-Math.abs(parseInt(b.split('-')[1])-d);});
+    return HISTORY_EVENTS[keys[0]];
+  }
+  return [{y:1969,t:'Apollo 11 landed on the Moon.'},{y:1989,t:'The Berlin Wall fell, ending the Cold War.'},{y:1945,t:'World War II ended, reshaping the modern world.'}];
 }
 
 var MONTH_EVENTS={
@@ -111,7 +155,7 @@ var MONTH_EVENTS={
   3:[{icon:'🌍',y:1945,t:'Battle of Iwo Jima ended.'},{icon:'🔬',y:1876,t:'Alexander Graham Bell patented the telephone.'},{icon:'🎭',y:1616,t:'William Shakespeare died.'}],
   4:[{icon:'🚀',y:1961,t:'Yuri Gagarin became first human in space.'},{icon:'🌍',y:1912,t:'Titanic sank in the North Atlantic.'},{icon:'🎵',y:1994,t:'Kurt Cobain died.'}],
   5:[{icon:'🌍',y:1945,t:'World War II ended in Europe (V-E Day).'},{icon:'🔬',y:1953,t:'DNA double helix structure discovered.'},{icon:'⛰️',y:1953,t:'Edmund Hillary summited Mount Everest.'}],
-  6:[{icon:'🌍',y:1944,t:'D-Day: Allied forces landed in Normandy.'},{icon:'🎵',y:1967,t:'Beatles released Sgt. Pepper's album.'},{icon:'🏆',y:1966,t:'England won the FIFA World Cup.'}],
+  6:[{icon:'🌍',y:1944,t:'D-Day: Allied forces landed in Normandy.'},{icon:'🎵',y:1967,t:'Beatles released Sgt. Peppers Lonely Hearts Club Band.'},{icon:'🏆',y:1966,t:'England won the FIFA World Cup.'}],
   7:[{icon:'🚀',y:1969,t:'Apollo 11 landed on the Moon.'},{icon:'🌍',y:1776,t:'United States declared independence.'},{icon:'🎵',y:1985,t:'Live Aid concert raised millions for Africa.'}],
   8:[{icon:'🌍',y:1914,t:'World War I began.'},{icon:'✊',y:1963,t:'Martin Luther King Jr. delivered "I Have a Dream" speech.'},{icon:'🏅',y:2000,t:'Summer Olympics held in Sydney, Australia.'}],
   9:[{icon:'🌍',y:2001,t:'September 11 attacks in the United States.'},{icon:'🔬',y:1928,t:'Alexander Fleming discovered penicillin.'},{icon:'🎵',y:1969,t:'Beatles released Abbey Road album.'}],
@@ -206,7 +250,7 @@ function renderAll(birth){
   // ── Fun Facts ──
   setText('ff-heartbeats',fmtShort(Math.floor(t.day*24*60*70)));
   setText('ff-sunrises',fmt(t.day));
-  setText('ff-weekends',fmt(Math.floor(t.day/7)));
+  setText('ff-weekends',fmt(Math.floor(t.wk)));
   setText('ff-mondays',fmt(Math.floor(t.day/7)));
 
   // ── History date label ──
