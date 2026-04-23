@@ -670,9 +670,11 @@
   <script>
     // Fix: allow mobile nav to overflow the header
     document.querySelector('.site-header').style.overflow = 'visible';
-    // PWA service worker
+    // Unregister any old service workers that may be serving stale cache
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(function() {});
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      });
     }
     // smooth scroll nav (covers header nav + footer links)
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
