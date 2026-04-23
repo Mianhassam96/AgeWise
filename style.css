@@ -809,61 +809,6 @@ main {
 }
 
 /* ══════════════════════════════════════
-   LIFE IN NUMBERS
-══════════════════════════════════════ */
-.life-numbers {
-  margin: 4px 0 24px;
-}
-
-.section-sub-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #c4b5fd;
-  margin-bottom: 16px;
-}
-
-.life-bars { display: flex; flex-direction: column; gap: 14px; }
-
-.life-bar-item { margin-bottom: 2px; }
-
-.lb-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.lb-icon { font-size: 1rem; }
-
-.lb-label {
-  flex: 1;
-  font-size: 0.82rem;
-  color: #94a3b8;
-  font-weight: 600;
-}
-
-.lb-val {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #e2e8f0;
-}
-
-.lb-track {
-  height: 7px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.lb-fill {
-  height: 100%;
-  border-radius: 999px;
-  width: 0%;
-  transition: width 1s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 6px currentColor;
-}
-
-/* ══════════════════════════════════════
    SHARE BUTTON
 ══════════════════════════════════════ */
 .btn-share {
@@ -1674,32 +1619,6 @@ main {
   font-weight: 600;
 }
 
-/* ══════════════════════════════════════
-   VIRAL LOOP
-══════════════════════════════════════ */
-.viral-loop {
-  margin-top: 16px;
-  padding: 16px;
-  background: rgba(124,58,237,0.08);
-  border: 1px solid rgba(124,58,237,0.2);
-  border-radius: 14px;
-}
-
-.vl-proof {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.vl-proof strong { color: #a78bfa; }
-
-.vl-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
 .btn-challenge {
   padding: 11px;
   background: linear-gradient(135deg, #7c3aed, #4f46e5);
@@ -2027,20 +1946,6 @@ main {
   padding: 11px 8px;
   font-size: 0.82rem;
 }
-
-/* Viral loop tighter */
-.viral-loop {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: rgba(124,58,237,0.06);
-  border: 1px solid rgba(124,58,237,0.15);
-  border-radius: 10px;
-  text-align: center;
-}
-
-.vl-proof { font-size: 0.8rem; color: #64748b; }
-.vl-proof strong { color: #a78bfa; }
-.vl-proof #vl-recent { color: #34d399; font-size: 0.75rem; }
 
 /* Share card subhead */
 .sc-subhead {

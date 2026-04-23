@@ -128,93 +128,6 @@ function updateRing(ageYears) {
     AVG_LIFESPAN_YEARS + '-year life · ~' + left + ' years ahead';
 }
 
-// ─── Life in Numbers ─────────────────────────────────────────
-function lifeNumbersHTML(totalDays) {
-  var items = [
-    { icon: '❤️', label: 'Heartbeats',      val: Math.floor(totalDays * 24 * 60 * 70),  max: AVG_LIFESPAN_YEARS * 365 * 24 * 60 * 70, color: '#f87171' },
-    { icon: '😴', label: 'Hours Slept',     val: Math.floor(totalDays * 8),              max: AVG_LIFESPAN_YEARS * 365 * 8,            color: '#818cf8' },
-    { icon: '🍽️', label: 'Meals Eaten',     val: Math.floor(totalDays * 3),              max: AVG_LIFESPAN_YEARS * 365 * 3,            color: '#34d399' },
-    { icon: '🚶', label: 'Steps Taken',     val: Math.floor(totalDays * 8000),           max: AVG_LIFESPAN_YEARS * 365 * 8000,         color: '#fbbf24' },
-    { icon: '🌅', label: 'Sunrises Seen',   val: totalDays,                              max: AVG_LIFESPAN_YEARS * 365,                color: '#f97316' },
-    { icon: '💧', label: 'Glasses of Water',val: Math.floor(totalDays * 8),              max: AVG_LIFESPAN_YEARS * 365 * 8,            color: '#38bdf8' }
-  ];
-  return items.map(function(item, i) {
-    var pct = Math.min(100, (item.val / item.max) * 100).toFixed(1);
-    var display = item.val >= 1e9
-      ? (item.val / 1e9).toFixed(2) + 'B'
-      : item.val >= 1e6
-        ? (item.val / 1e6).toFixed(1) + 'M'
-        : Number(item.val).toLocaleString();
-    return '<div class="life-bar-item" style="animation-delay:' + (i * 80) + 'ms">' +
-      '<div class="lb-header"><span class="lb-icon">' + item.icon + '</span>' +
-      '<span class="lb-label">' + item.label + '</span>' +
-      '<span class="lb-val">' + display + '</span></div>' +
-      '<div class="lb-track"><div class="lb-fill" style="background:' + item.color +
-      '" data-pct="' + pct + '"></div></div></div>';
-  }).join('');
-}
-
-function animateBars() {
-  document.querySelectorAll('.lb-fill').forEach(function(el, i) {
-    var target = el.getAttribute('data-pct');
-    el.style.width = '0%';
-    setTimeout(function() { el.style.width = target + '%'; }, 100 + i * 80);
-  });
-}
-
-// ─── Smart Insights ───────────────────────────────────────────
-function getInsights(b, t) {
-  var age = b.yy;
-  var insights = [];
-
-  // Phase insight
-  if (age < 13)       insights.push({ icon: '🌱', title: 'Childhood',         text: 'Every day is a new discovery. The world is your playground.' });
-  else if (age < 20)  insights.push({ icon: '⚡', title: 'Teen Years',         text: 'You\'re building the foundation of who you\'ll become. Make it count.' });
-  else if (age < 25)  insights.push({ icon: '🚀', title: 'Growth Phase',       text: 'You\'re in your growth phase — the best time to take bold risks.' });
-  else if (age < 35)  insights.push({ icon: '💼', title: 'Peak Productivity',  text: 'Peak productivity years. Your energy and ambition are at their highest.' });
-  else if (age < 50)  insights.push({ icon: '🧠', title: 'Wisdom Phase',       text: 'Experience meets energy. You know what matters — and what doesn\'t.' });
-  else if (age < 65)  insights.push({ icon: '🌟', title: 'Legacy Phase',       text: 'You\'re building your legacy. The impact you make now echoes forward.' });
-  else                insights.push({ icon: '👑', title: 'Golden Years',        text: 'A life richly lived. Your wisdom is your greatest gift to the world.' });
-
-  // Sleep insight
-  var sleepYears = Math.round(t.day * 8 / 365);
-  insights.push({ icon: '😴', title: 'Sleep Stats', text: 'You\'ve spent roughly ' + sleepYears + ' years sleeping — your body\'s secret superpower.' });
-
-  // Days milestone
-  if (t.day >= 10000) insights.push({ icon: '🏆', title: '10,000 Days Club!', text: 'You\'ve crossed 10,000 days alive. That\'s a rare milestone — celebrate it!' });
-  else {
-    var toMilestone = 10000 - t.day;
-    if (toMilestone > 0 && toMilestone < 500) {
-      insights.push({ icon: '⏳', title: '10,000 Days Soon!', text: 'Only ' + toMilestone + ' days until your 10,000-day milestone. Mark your calendar!' });
-    }
-  }
-
-  // Billion seconds
-  if (t.sec >= 1e9) insights.push({ icon: '🎯', title: 'Billion Seconds Club!', text: 'You\'ve lived over 1 billion seconds. Less than 5% of people ever reach this.' });
-  else {
-    var toB = 1e9 - t.sec;
-    if (toB > 0 && toB < 3e7) {
-      var daysToB = Math.ceil(toB / 86400);
-      insights.push({ icon: '🎯', title: '1 Billion Seconds Soon!', text: 'Only ~' + daysToB + ' days until you hit 1 billion seconds alive. Incredible!' });
-    }
-  }
-
-  // Weekend insight
-  var weekends = Math.floor(t.wk);
-  insights.push({ icon: '🎉', title: 'Weekends Lived', text: 'You\'ve enjoyed ~' + weekends.toLocaleString() + ' weekends. Hope most of them were great ones.' });
-
-  return insights;
-}
-
-function insightsHTML(insights) {
-  return insights.map(function(ins, i) {
-    return '<div class="insight-card" style="animation-delay:' + (i * 60) + 'ms">' +
-      '<div class="ins-icon">' + ins.icon + '</div>' +
-      '<div class="ins-body"><div class="ins-title">' + ins.title + '</div>' +
-      '<div class="ins-text">' + ins.text + '</div></div></div>';
-  }).join('');
-}
-
 // ─── Daily Hook ───────────────────────────────────────────────
 function initDailyHook(name, birth) {
   var t    = getTotals(birth);
@@ -1467,35 +1380,6 @@ loadProfile();
   setInterval(updateES, 1000);
 })();
 
-// ─── Viral Loop — social proof counter ───────────────────────
-(function() {
-  var base = parseInt(localStorage.getItem('aw_share_base') || '12482', 10);
-  var today = new Date().toDateString();
-  var lastDay = localStorage.getItem('aw_share_day') || '';
-  if (lastDay !== today) {
-    base += Math.floor(Math.random() * 80 + 20);
-    localStorage.setItem('aw_share_base', base);
-    localStorage.setItem('aw_share_day', today);
-  }
-  var el = document.getElementById('vl-count');
-  var recentEl = document.getElementById('vl-recent');
-  if (el) el.textContent = base.toLocaleString();
-  var secondsAgo = Math.floor(Math.random() * 8 + 2);
-  if (recentEl) recentEl.textContent = 'someone shared ' + secondsAgo + 's ago';
-  function scheduleNext() {
-    setTimeout(function() {
-      var inc = Math.floor(Math.random() * 3 + 1);
-      base += inc;
-      localStorage.setItem('aw_share_base', base);
-      if (el) el.textContent = base.toLocaleString();
-      secondsAgo = Math.floor(Math.random() * 8 + 1);
-      if (recentEl) recentEl.textContent = 'someone shared ' + secondsAgo + 's ago';
-      scheduleNext();
-    }, Math.floor(Math.random() * 4000 + 3000));
-  }
-  scheduleNext();
-})();
-
 // ─── Challenge Mode ───────────────────────────────────────────
 function buildChallengeLink(name, dob) {
   // encode as base64 URL param — no server needed
@@ -1817,14 +1701,7 @@ document.getElementById('btn-share-single').addEventListener('click', function()
 });
 document.getElementById('btn-download').addEventListener('click', function() {
   track('share_card_download', _shareStyle);
-});
-
-// increment share count on download
-var _origDownload = document.getElementById('btn-download').onclick;
-document.getElementById('btn-download').addEventListener('click', function() {
-  var base = parseInt(localStorage.getItem('aw_share_base') || '12482', 10);
-  base++;
-  localStorage.setItem('aw_share_base', base);
-  var el = document.getElementById('vl-count');
-  if (el) el.textContent = base.toLocaleString();
+  // increment share count
+  var base = parseInt(localStorage.getItem('aw_share_base') || '0', 10);
+  localStorage.setItem('aw_share_base', base + 1);
 });
