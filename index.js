@@ -1990,7 +1990,7 @@ function renderShareTrigger(birth, name) {
   } else {
     shockLine = 'You\'ve used <strong>' + pct + '% of your life.</strong> The clock has always been running.';
   }
-  shockLine += '<br><span style="font-size:0.82rem;color:#94a3b8;font-weight:400;">Most people your age have already used ' + (pct - 3) + '–' + (pct + 3) + '% of their life. See how your friends compare.</span>';
+  shockLine += '<br><span style="font-size:0.82rem;color:#94a3b8;font-weight:400;">Send this to someone your age. They\'ll see their own number — and it hits differently when you compare.</span>';
 
   shock.innerHTML = shockLine;
   el.classList.remove('hidden');
@@ -2048,12 +2048,12 @@ function renderFutureYou(birth, name) {
   var familyYears = Math.round(yearsLeft * 2 / 24 * 10) / 10; // avg 2hrs/day with family
 
   currentEl.innerHTML =
-    '<div class="fy-path-label">📍 If nothing changes — current path</div>' +
+    '<div class="fy-path-label">📍 If nothing changes — this is where you end up</div>' +
     '<div class="fy-stats">' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + Math.round(deathAge) + '</span><span class="fy-stat-lbl">age at avg death</span></div>' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + screenYears + ' yrs</span><span class="fy-stat-lbl">spent on screens</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + Math.round(deathAge) + '</span><span class="fy-stat-lbl">projected age at death</span></div>' +
+      '<div class="fy-stat fy-stat-warn"><span class="fy-stat-val">' + screenYears + ' yrs</span><span class="fy-stat-lbl">staring at a screen</span></div>' +
       '<div class="fy-stat"><span class="fy-stat-val">' + workYears + ' yrs</span><span class="fy-stat-lbl">spent working</span></div>' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + familyYears + ' yrs</span><span class="fy-stat-lbl">with family</span></div>' +
+      '<div class="fy-stat fy-stat-warn"><span class="fy-stat-val">' + familyYears + ' yrs</span><span class="fy-stat-lbl">with people who matter</span></div>' +
     '</div>';
 
   // Changed path — cut screen time 2hrs/day
@@ -2064,14 +2064,14 @@ function renderFutureYou(birth, name) {
   var lifeGain = Math.round(yearsLeft * 0.035 * 10) / 10; // walking bonus
 
   changedEl.innerHTML =
-    '<div class="fy-path-label">✅ If you cut screen time 2hrs/day + walk 30min</div>' +
+    '<div class="fy-path-label">✅ Cut screen time 2hrs/day + walk 30min</div>' +
     '<div class="fy-stats">' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + (Math.round(deathAge) + Math.round(lifeGain)) + '</span><span class="fy-stat-lbl">projected age</span></div>' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + newScreenYears + ' yrs</span><span class="fy-stat-lbl">on screens</span></div>' +
+      '<div class="fy-stat fy-stat-good"><span class="fy-stat-val">' + (Math.round(deathAge) + Math.round(lifeGain)) + '</span><span class="fy-stat-lbl">projected age at death</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + newScreenYears + ' yrs</span><span class="fy-stat-lbl">staring at a screen</span></div>' +
       '<div class="fy-stat"><span class="fy-stat-val">' + workYears + ' yrs</span><span class="fy-stat-lbl">spent working</span></div>' +
-      '<div class="fy-stat"><span class="fy-stat-val">' + newFamilyYears + ' yrs</span><span class="fy-stat-lbl">with family</span></div>' +
+      '<div class="fy-stat fy-stat-good"><span class="fy-stat-val">' + newFamilyYears + ' yrs</span><span class="fy-stat-lbl">with people who matter</span></div>' +
     '</div>' +
-    '<div class="fy-gain"><span class="fy-gain-icon">🟢</span>+' + extraYears + ' years reclaimed · +' + lifeGain + ' years added to lifespan · +' + Math.round(extraYears * 0.5 * 365) + ' days with people you love</div>';
+    '<div class="fy-gain"><span class="fy-gain-icon">🟢</span>+' + extraYears + ' years reclaimed · +' + lifeGain + ' years added to lifespan · +' + Math.round(extraYears * 0.5 * 365) + ' extra days with people you love</div>';
 
   section.classList.remove('hidden');
 }

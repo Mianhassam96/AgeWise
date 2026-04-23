@@ -3725,3 +3725,7 @@ main {
 @media (max-width: 640px) {
   .fy-stats { grid-template-columns: 1fr; }
 }
+
+/* ── Future You consequence highlights ── */
+.fy-stat-warn .fy-stat-val { color: #f87171; }
+.fy-stat-good .fy-stat-val { color: #34d399; }

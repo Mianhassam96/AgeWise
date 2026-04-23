@@ -57,7 +57,7 @@
         <a href="#life-calendar" class="nav-link">Life Calendar</a>
       </nav>
       <div class="header-hero">
-        <div class="hero-eyebrow">⚠️ Don't check this if you're not ready</div>
+        <div class="hero-eyebrow">⏳ This shows how much of your life is already gone.</div>
         <h1 class="hero-title">
           <span class="word w1">How</span>
           <span class="word w2">Much</span>
@@ -181,6 +181,15 @@
             <div class="age-banner" id="sr-banner"></div>
           </div>
 
+          <!-- ── SHARE TRIGGER ── -->
+          <div class="share-trigger hidden" id="share-trigger">
+            <div class="st-shock" id="st-shock"></div>
+            <div class="st-actions">
+              <button class="st-btn st-compare" id="st-compare-btn">👥 Send this to someone your age</button>
+              <button class="st-btn st-share" id="st-share-btn">😳 They won't expect this result</button>
+            </div>
+          </div>
+
           <!-- ── STEP 2: Life Progress Ring + Phase Bar ── -->
           <div class="result-step step-ring">
             <div class="life-ring-wrap">
@@ -217,6 +226,25 @@
               <div class="phase-labels">
                 <span>Birth</span><span>25</span><span>40</span><span>60</span><span>75</span>
               </div>
+            </div>
+          </div>
+
+          <!-- ── FUTURE YOU SIMULATION ── -->
+          <div class="future-you hidden" id="future-you">
+            <div class="fy-header">
+              <span class="fy-icon">🔮</span>
+              <div>
+                <h3 class="fy-title">Future You Simulation</h3>
+                <p class="fy-sub">If nothing changes — here's where you end up.</p>
+              </div>
+            </div>
+            <div class="fy-current" id="fy-current"></div>
+            <div class="fy-divider">
+              <span class="fy-divider-text">vs if you change one habit</span>
+            </div>
+            <div class="fy-changed" id="fy-changed"></div>
+            <div class="fy-cta">
+              <span class="fy-cta-text">The difference between these two futures is a single decision.</span>
             </div>
           </div>
 
@@ -263,6 +291,18 @@
             <div class="perception-msg" id="perception-msg"></div>
           </div>
 
+          <!-- ── IMPROVE MY LIFE ── -->
+          <div class="improve-section hidden" id="improve-section">
+            <div class="improve-header">
+              <span class="improve-icon">⚡</span>
+              <div>
+                <h3 class="improve-title">Reclaim Your Time</h3>
+                <p class="improve-sub">You don't need to change everything. One small change can give you years back.</p>
+              </div>
+            </div>
+            <div class="improve-grid" id="improve-grid"></div>
+          </div>
+
           <!-- ── STEP 4: Key insights ── -->
           <div class="result-step step-insights reveal-second">
             <h3 class="section-sub-title">✨ Smart Insights</h3>
@@ -288,6 +328,29 @@
               <button class="btn-cal-full" id="btn-cal-full">View Full Calendar →</button>
             </div>
 
+          </div>
+
+
+          <!-- ── AGE TWIN ── -->
+          <div class="age-twin hidden reveal-third" id="age-twin">
+            <div class="at-header">
+              <span class="at-icon" id="at-icon">👤</span>
+              <div>
+                <div class="at-label">Time Twin</div>
+                <div class="at-name" id="at-name"></div>
+              </div>
+              <div class="at-badge" id="at-badge"></div>
+            </div>
+            <div class="at-fact" id="at-fact"></div>
+          </div>
+
+          <!-- ── NEXT MILESTONE ── -->
+          <div class="next-milestone hidden reveal-third" id="next-milestone">
+            <span class="nm-icon">🎯</span>
+            <div class="nm-body">
+              <div class="nm-title" id="nm-title"></div>
+              <div class="nm-sub" id="nm-sub"></div>
+            </div>
           </div>
 
           <!-- ── COSMIC AGE ── -->
@@ -319,29 +382,7 @@
             <div class="reality-fact">
               <div class="rf-label">🎲 Random Reality</div>
               <div class="rf-text" id="rf-text"></div>
-              <button class="rf-btn" id="rf-btn">Show me another →</button>
-            </div>
-          </div>
-
-          <!-- ── AGE TWIN ── -->
-          <div class="age-twin hidden reveal-third" id="age-twin">
-            <div class="at-header">
-              <span class="at-icon" id="at-icon">👤</span>
-              <div>
-                <div class="at-label">Time Twin</div>
-                <div class="at-name" id="at-name"></div>
-              </div>
-              <div class="at-badge" id="at-badge"></div>
-            </div>
-            <div class="at-fact" id="at-fact"></div>
-          </div>
-
-          <!-- ── NEXT MILESTONE ── -->
-          <div class="next-milestone hidden reveal-third" id="next-milestone">
-            <span class="nm-icon">🎯</span>
-            <div class="nm-body">
-              <div class="nm-title" id="nm-title"></div>
-              <div class="nm-sub" id="nm-sub"></div>
+              <button class="rf-btn" id="rf-btn">Break my reality again →</button>
             </div>
           </div>
 
@@ -349,18 +390,6 @@
           <div class="daily-insight hidden" id="daily-insight">
             <div class="di-dot"></div>
             <div class="di-text" id="di-text"></div>
-          </div>
-
-          <!-- ── IMPROVE MY LIFE ── -->
-          <div class="improve-section hidden" id="improve-section">
-            <div class="improve-header">
-              <span class="improve-icon">⚡</span>
-              <div>
-                <h3 class="improve-title">Improve My Life</h3>
-                <p class="improve-sub">Small changes. Real time gained.</p>
-              </div>
-            </div>
-            <div class="improve-grid" id="improve-grid"></div>
           </div>
 
           <!-- ── FINAL CLOSING INSIGHT ── -->
@@ -405,34 +434,6 @@
             <button class="btn-challenge" id="btn-challenge">🏆 Challenge</button>
             <button class="btn-copy-link" id="btn-copy-link">🔗 Copy Link</button>
             <button class="btn-share" id="btn-share-single">📸 Share Card</button>
-          </div>
-
-          <!-- ── SHARE TRIGGER ── -->
-          <div class="share-trigger hidden" id="share-trigger">
-            <div class="st-shock" id="st-shock"></div>
-            <div class="st-actions">
-              <button class="st-btn st-compare" id="st-compare-btn">👥 See how a friend compares</button>
-              <button class="st-btn st-share" id="st-share-btn">😳 Share this reality check</button>
-            </div>
-          </div>
-
-          <!-- ── FUTURE YOU SIMULATION ── -->
-          <div class="future-you hidden" id="future-you">
-            <div class="fy-header">
-              <span class="fy-icon">🔮</span>
-              <div>
-                <h3 class="fy-title">Future You Simulation</h3>
-                <p class="fy-sub">If nothing changes — here's where you end up.</p>
-              </div>
-            </div>
-            <div class="fy-current" id="fy-current"></div>
-            <div class="fy-divider">
-              <span class="fy-divider-text">vs if you change one habit</span>
-            </div>
-            <div class="fy-changed" id="fy-changed"></div>
-            <div class="fy-cta">
-              <span class="fy-cta-text">The difference between these two futures is a single decision.</span>
-            </div>
           </div>
 
           <!-- 7-day return hook -->
