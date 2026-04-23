@@ -45,7 +45,7 @@ body {
   position: relative;
   background: linear-gradient(160deg, #1e1040 0%, #0f0c29 40%, #1a1040 100%);
   border-bottom: 1px solid rgba(139, 92, 246, 0.2);
-  overflow: hidden;
+  overflow: visible;
   padding-bottom: 30px;
 }
 

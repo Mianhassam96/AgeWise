@@ -6,20 +6,24 @@
   <title>AgeWise - Age Calculator</title>
   <meta name="description" content="See your life in numbers. Discover how many days, heartbeats, and moments you've lived — instantly." />
   <meta name="theme-color" content="#0f0c29" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AgeWise — See Your Life in Numbers" />
+  <meta property="og:description" content="Discover how many days, heartbeats, and moments you've lived — updated every second." />
+  <meta property="og:url" content="https://mianhassam96.github.io/AgeWise/" />
+  <meta property="og:image" content="https://mianhassam96.github.io/AgeWise/favicon.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="AgeWise — See Your Life in Numbers" />
+  <meta name="twitter:description" content="Discover how many days, heartbeats, and moments you've lived — updated every second." />
+  <!-- Analytics: replace G-XXXXXXXXXX with your real GA4 ID to enable tracking -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
     function track(action, label) {
-      if (typeof gtag !== 'undefined') gtag('event', action, { event_category: 'AgeWise', event_label: label });
+      if (typeof gtag !== 'undefined') gtag('event', action, { event_category: 'AgeWise', event_label: label || '' });
     }
   </script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="icon" type="image/svg+xml" sizes="32x32" href="favicon-32.svg" />
-  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -209,7 +213,7 @@
               <div class="phase-bar" id="phase-bar"></div>
               <div class="phase-marker" id="phase-marker"></div>
               <div class="phase-labels">
-                <span>Birth</span><span>25</span><span>40</span><span>60</span><span>72</span>
+                <span>Birth</span><span>25</span><span>40</span><span>60</span><span>75</span>
               </div>
             </div>
           </div>
@@ -306,15 +310,6 @@
             </div>
           </div>
 
-          <!-- ── STEP 4: Key insights ── -->
-          <div class="result-step step-insights reveal-fourth">
-            <h3 class="section-sub-title">✨ Smart Insights</h3>
-            <div class="insights-grid" id="insights-grid"></div>
-            <button class="btn-expand" id="btn-expand-more" aria-expanded="false">
-              Show more insights ↓
-            </button>
-          </div>
-
           <!-- ── FINAL CLOSING INSIGHT ── -->
           <div class="closing-insight hidden reveal-fifth" id="closing-insight">
             <div class="ci-quote" id="ci-quote"></div>
@@ -353,6 +348,7 @@
           <div class="result-actions">
             <button class="btn-challenge" id="btn-challenge">🏆 Challenge</button>
             <button class="btn-copy-link" id="btn-copy-link">🔗 Copy Link</button>
+            <button class="btn-share" id="btn-share-single">📸 Share Card</button>
           </div>
 
           <!-- 7-day return hook -->
@@ -576,6 +572,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="index.js"></script>
   <script>
+    // Fix: allow mobile nav to overflow the header
+    document.querySelector('.site-header').style.overflow = 'visible';
     // PWA service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(function() {});
@@ -597,6 +595,14 @@
             if (calc) calc.scrollIntoView({ behavior: 'smooth' });
             var dob = document.getElementById('s-dob');
             if (dob) { dob.focus(); dob.style.boxShadow = '0 0 0 3px rgba(167,139,250,0.4)'; setTimeout(function(){ dob.style.boxShadow = ''; }, 2000); }
+            var nameEl = document.getElementById('s-name');
+            if (nameEl && !nameEl.value) {
+              var hint = document.createElement('div');
+              hint.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(15,12,41,0.97);border:1px solid rgba(167,139,250,0.4);border-radius:12px;padding:12px 20px;font-size:0.85rem;color:#c4b5fd;z-index:999;animation:fade-up 0.3s ease;pointer-events:none;';
+              hint.textContent = '👆 Enter your date of birth first to see your Life Calendar';
+              document.body.appendChild(hint);
+              setTimeout(function() { hint.remove(); }, 3000);
+            }
           }
           document.getElementById('mobile-nav').classList.remove('open');
           document.getElementById('hamburger').classList.remove('open');

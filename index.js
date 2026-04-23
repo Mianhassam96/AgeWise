@@ -1,6 +1,6 @@
 'use strict';
 
-var AVG_LIFESPAN_YEARS = 72;
+var AVG_LIFESPAN_YEARS = 75; // WHO global average life expectancy
 
 // ─── Tab switching ────────────────────────────────────────────
 document.querySelectorAll('.tab').forEach(function(tab) {
@@ -570,7 +570,7 @@ function renderPhaseBar(ageYears) {
     { label: 'Growth',    end: 25,  color: '#60a5fa' },
     { label: 'Peak',      end: 40,  color: '#a78bfa' },
     { label: 'Wisdom',    end: 60,  color: '#f97316' },
-    { label: 'Legacy',    end: 72,  color: '#f87171' }
+    { label: 'Legacy',    end: 75,  color: '#f87171' }
   ];
   var barEl    = document.getElementById('phase-bar');
   var markerEl = document.getElementById('phase-marker');
@@ -954,10 +954,12 @@ var _shareStyle = 'classic';
 
 document.querySelectorAll('.sc-style-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
+    if (!window._shareData) return;
     document.querySelectorAll('.sc-style-btn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     _shareStyle = btn.getAttribute('data-style');
     renderShareCard();
+    track('share_card_style', _shareStyle);
   });
 });
 
@@ -968,13 +970,22 @@ function renderShareCard() {
   var t = getTotals(data.birth);
   var pct = Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100);
 
-  // mini ring
+  // mini ring — update both main and share card rings
   var circ = 2 * Math.PI * 48;
+  var offset = circ - (pct / 100) * circ;
+  
   var scFill = document.getElementById('sc-ring-fill');
   var scPct  = document.getElementById('sc-ring-pct');
   if (scFill) {
-    scFill.style.strokeDashoffset = circ - (pct / 100) * circ;
+    scFill.style.strokeDashoffset = offset;
     scPct.textContent = Math.round(pct) + '%';
+  }
+  
+  // also update main ring if visible
+  var ringFill = document.getElementById('ring-fill');
+  if (ringFill) {
+    var mainCirc = 2 * Math.PI * 80;
+    ringFill.style.strokeDashoffset = mainCirc - (pct / 100) * mainCirc;
   }
 
   var card = document.getElementById('share-card');
@@ -983,11 +994,13 @@ function renderShareCard() {
   var ageEl    = document.getElementById('sc-age');
   var statsEl  = document.getElementById('sc-stats');
 
+  if (!card || !headline || !nameEl || !ageEl || !statsEl) return;
+
   nameEl.textContent = data.name;
 
   if (_shareStyle === 'classic') {
     card.className = 'share-card sc-classic';
-    headline.textContent = 'I\'ve already used ' + pct + '% of my life 😳';
+    headline.textContent = 'I\'ve already used ' + Math.round(pct) + '% of my life 😳';
     document.getElementById('sc-subhead').textContent = data.name + ' · ' + t.day.toLocaleString() + ' days lived';
     ageEl.textContent = b.yy + ' years · ' + b.mo + ' months · ' + b.dd + ' days';
     statsEl.innerHTML = '❤️ ~' + (Math.floor(t.day * 24 * 60 * 70 / 1e9)).toFixed(1) + 'B heartbeats' +
@@ -1044,14 +1057,33 @@ function closeModal() {
 document.getElementById('btn-download').addEventListener('click', function() {
   var card = document.getElementById('share-card');
   if (typeof html2canvas === 'undefined') {
-    alert('Download library not loaded. Please check your connection.');
+    alert('Download library not loaded. Please check your connection and try again.');
     return;
   }
+  
+  var btn = this;
+  var originalText = btn.textContent;
+  btn.textContent = '⏳ Generating...';
+  btn.disabled = true;
+  
   html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true }).then(function(canvas) {
     var link = document.createElement('a');
-    link.download = 'agewise-' + _shareStyle + '.png';
+    link.download = 'agewise-' + (_shareStyle || 'card') + '.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+    
+    btn.textContent = '✅ Downloaded!';
+    setTimeout(function() {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 2000);
+    
+    track('share_card_download', _shareStyle);
+  }).catch(function(err) {
+    console.error('Download failed:', err);
+    alert('Failed to download card. Please try again.');
+    btn.textContent = originalText;
+    btn.disabled = false;
   });
 });
 
@@ -1218,6 +1250,7 @@ document.getElementById('calc-single').addEventListener('click', function() {
 
 // ─── PWA Install Banner ───────────────────────────────────────
 var _deferredPrompt = null;
+var _pwaInstallHandled = false;
 
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
@@ -1238,23 +1271,36 @@ window.addEventListener('beforeinstallprompt', function(e) {
     var installBtn = document.getElementById('pwa-install');
     if (banner && installBtn) {
       installBtn.textContent = 'How to Install';
-      installBtn.addEventListener('click', function() {
+      installBtn.onclick = function() {
         alert('To install AgeWise:\n\n1. Tap the Share button (□↑) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
-      }, { once: true });
+        sessionStorage.setItem('aw_pwa_dismissed', '1');
+        banner.classList.add('hidden');
+      };
       setTimeout(function() { banner.classList.remove('hidden'); }, 4000);
     }
   }
 })();
 
 document.getElementById('pwa-install').addEventListener('click', function() {
-  if (!_deferredPrompt) return;
+  if (_pwaInstallHandled) return;
+  _pwaInstallHandled = true;
+  
+  if (!_deferredPrompt) {
+    // Fallback for iOS or if beforeinstallprompt didn't fire
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    if (isIOS) {
+      alert('To install AgeWise:\n\n1. Tap the Share button (□↑) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
+    }
+    sessionStorage.setItem('aw_pwa_dismissed', '1');
+    document.getElementById('pwa-banner').classList.add('hidden');
+    return;
+  }
+  
   _deferredPrompt.prompt();
   _deferredPrompt.userChoice.then(function(result) {
     _deferredPrompt = null;
     document.getElementById('pwa-banner').classList.add('hidden');
-    if (result.outcome === 'accepted') {
-      sessionStorage.setItem('aw_pwa_dismissed', '1');
-    }
+    sessionStorage.setItem('aw_pwa_dismissed', '1');
   });
 });
 
