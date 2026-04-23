@@ -4,723 +4,474 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>AgeWise — How Much Life Have You Already Used?</title>
-  <meta name="description" content="Find out how much of your life you've already used — in days, heartbeats, and moments. A reality check that hits." />
-  <meta name="theme-color" content="#0f0c29" />
-  <!-- Open Graph / Social sharing -->
+  <title>AgeWise — See Your Life. Understand Your Time.</title>
+  <meta name="description" content="Find out how much of your life you've already used — in days, heartbeats, and moments." />
+  <meta name="theme-color" content="#0d0b1e" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="How Much of Your Life Have You Already Used?" />
+  <meta property="og:title" content="AgeWise — See Your Life. Understand Your Time." />
   <meta property="og:description" content="Most people don't know. Find out in 10 seconds — and you can't unsee it." />
   <meta property="og:url" content="https://mianhassam96.github.io/AgeWise/" />
-  <meta property="og:image" content="https://mianhassam96.github.io/AgeWise/favicon.svg" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="How Much of Your Life Have You Already Used?" />
-  <meta name="twitter:description" content="Most people don't know. Find out in 10 seconds — and you can't unsee it." />
-  <!-- Analytics: replace G-XXXXXXXXXX with your real GA4 ID to enable tracking -->
   <script>
     function track(action, label) {
       if (typeof gtag !== 'undefined') gtag('event', action, { event_category: 'AgeWise', event_label: label || '' });
     }
   </script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="icon" type="image/svg+xml" sizes="32x32" href="favicon-32.svg" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css?v=cfe2e9c" />
-  <!-- v=cfe2e9c -->
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
-  <!-- Floating orbs background -->
-  <div class="orbs" aria-hidden="true">
-    <span class="orb orb1"></span>
-    <span class="orb orb2"></span>
-    <span class="orb orb3"></span>
-  </div>
 
-  <div class="wrapper">
-
-    <!-- ── NAV HEADER ── -->
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="header-logo">
-          <span class="logo-icon">⏳</span>
-          <span class="logo-text">AgeWise</span>
-        </div>
-        <nav class="header-nav">
-          <a href="#calculator" class="nav-link">Calculator</a>
-          <a href="#life-calendar" class="nav-link">Life Calendar</a>
-        </nav>
-        <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+  <!-- ── NAV ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">⏳</span>
+        <span class="nav-logo-text">Age<span>Wise</span></span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#" class="nav-item active">Home</a>
+        <a href="#life-calendar-section" class="nav-item">Life Calendar</a>
+        <a href="#time-twin-section" class="nav-item">Time Twin</a>
+        <a href="#birth-insights-section" class="nav-item">Birth Insights</a>
+        <a href="#global-events-section" class="nav-item">Global Events</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-nav-share" id="btn-nav-share">Share</button>
+        <button class="btn-nav-calc" id="btn-nav-calc">Calculate Your Life</button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
       </div>
-      <nav class="mobile-nav" id="mobile-nav">
-        <a href="#calculator" class="nav-link">Calculator</a>
-        <a href="#life-calendar" class="nav-link">Life Calendar</a>
-      </nav>
-      <div class="header-hero">
-        <div class="hero-eyebrow">⏳ This shows how much of your life is already gone.</div>
-        <h1 class="hero-title">
-          <span class="word w1">How</span>
-          <span class="word w2">Much</span>
-          <span class="word w3">Life</span>
-          <span class="word w4">Have</span>
-          <span class="word w5">You</span>
-          <span class="word w6">Used?</span>
-        </h1>
-        <p class="hero-sub">Most people never stop to check. Enter your birth date and see the number that changes how you think about time.</p>
-
-        <!-- Live demo counter -->
-        <div class="hero-demo" aria-label="Live counter preview">
-          <div class="hd-item"><span class="hd-val" id="hd-days">9,846</span><span class="hd-lbl">Days</span></div>
-          <div class="hd-sep">·</div>
-          <div class="hd-item"><span class="hd-val" id="hd-hb">689M</span><span class="hd-lbl">Heartbeats</span></div>
-          <div class="hd-sep">·</div>
-          <div class="hd-item"><span class="hd-val" id="hd-sec">850,694,400</span><span class="hd-lbl">Seconds</span></div>
-        </div>
-
-        <!-- Stop-scroll curiosity hook -->
-        <div class="hero-curiosity">
-          <span class="hc-dot"></span>
-          Most people don't realize this… by age 25, you've already used <strong>~30% of your life.</strong>
-        </div>
-
-        <div class="hero-cta-row">
-          <a href="#calculator" class="btn-hero-cta">Show My Life Breakdown →</a>
-        </div>
-
-        <div class="hero-badges">
-          <span class="badge">😳 Reality Check</span>
-          <span class="badge">🪐 Cosmic Age</span>
-          <span class="badge">⚡ Improve My Life</span>
-          <span class="badge">🗓️ Life Calendar</span>
-          <span class="badge">👥 Compare Friends</span>
-          <span class="badge">🔮 Future You</span>
-        </div>
-      </div>
-      <div class="header-wave" aria-hidden="true">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="rgba(15,12,41,0.6)"/></svg>
-      </div>
-    </header>
-
-    <!-- ── DAILY HOOK BANNER ── -->
-    <div class="daily-hook hidden" id="daily-hook">
-      <div class="dh-inner">
-        <div class="dh-left">
-          <span class="dh-emoji" id="dh-emoji">🎉</span>
-          <div>
-            <div class="dh-title" id="dh-title">Welcome back!</div>
-            <div class="dh-sub" id="dh-sub"></div>
-          </div>
-        </div>
-        <div class="dh-right">
-          <div class="dh-streak" id="dh-streak"></div>
-          <button class="dh-dismiss" id="dh-dismiss" aria-label="Dismiss">✕</button>
-        </div>
-      </div>
-      <div class="dh-milestone hidden" id="dh-milestone"></div>
     </div>
+  </nav>
 
-    <main id="calculator">
-      <!-- ── PROFILE WELCOME ── -->
-      <div class="profile-welcome hidden" id="profile-welcome">
-        <span class="pw-avatar" id="pw-avatar">👤</span>
-        <div class="pw-text">
-          <span class="pw-greeting" id="pw-greeting">Welcome back!</span>
-          <span class="pw-sub" id="pw-sub"></span>
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+
+      <!-- Left: headline + form -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">WELCOME TO AGEWISE</div>
+        <h1 class="hero-title">
+          <span class="hero-title-pink">See Your Life.</span><br>
+          Understand Your Time.
+        </h1>
+        <p class="hero-desc">AgeWise shows you how much of your life you've used, what's still ahead, and the moments you share with the world.</p>
+
+        <div class="hero-form" id="hero-form">
+          <label class="form-label">Enter your date of birth</label>
+          <div class="form-row">
+            <input type="date" id="hero-dob" class="hero-input" />
+          </div>
+          <button class="btn-calculate" id="btn-calculate">Calculate My Life</button>
+          <div class="form-trust">100% Private &nbsp;•&nbsp; No Sign Up &nbsp;•&nbsp; Instant Results</div>
+          <div class="error hidden" id="hero-error" style="color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
         </div>
-        <button class="pw-clear" id="pw-clear" title="Clear profile">✕</button>
       </div>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="single">Single Age Check</button>
-        <button class="tab" data-tab="compare">Age Comparison</button>
+      <!-- Center: ring -->
+      <div class="hero-center">
+        <div class="ring-wrap" id="ring-wrap">
+          <svg class="ring-svg" viewBox="0 0 260 260" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a78bfa"/>
+                <stop offset="50%" stop-color="#ec4899"/>
+                <stop offset="100%" stop-color="#60a5fa"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="130" cy="130" r="110"/>
+            <circle class="ring-progress" id="ring-progress" cx="130" cy="130" r="110"
+              stroke-dasharray="691.15" stroke-dashoffset="691.15"/>
+            <!-- dot at end -->
+            <circle class="ring-dot" id="ring-dot" cx="130" cy="20" r="6"/>
+          </svg>
+          <div class="ring-content">
+            <div class="ring-label-top">YOU'VE USED</div>
+            <div class="ring-pct" id="ring-pct">—</div>
+            <div class="ring-label-bot">OF YOUR LIFE</div>
+            <div class="ring-days" id="ring-days">— of — days</div>
+            <div class="ring-heart">♥</div>
+          </div>
+        </div>
       </div>
 
-      <!-- ── Single ── -->
-      <section id="single" class="tab-content active">
-
-        <!-- Empty state demo -->
-        <div class="empty-state" id="empty-state">
-          <div class="es-demo">
-            <div class="es-demo-name">Someone born in 2000 has lived</div>
-            <div class="es-demo-number" id="es-days">9,215</div>
-            <div class="es-demo-label">days · <span id="es-hb">646M</span> heartbeats · <span id="es-sec">796,176,000</span> seconds</div>
-          </div>
-          <p class="es-cta">Enter your details below to see your own numbers ↓</p>
+      <!-- Right: quote + image -->
+      <div class="hero-right">
+        <div class="hero-quote">
+          <p>Every second is a step<br>toward your story.</p>
+          <p class="hero-quote-bold">Make it meaningful.</p>
         </div>
-
-        <div class="card">
-          <h2>⏳ How much of your life have you already used?</h2>
-          <p class="card-hook">Enter your details. The number might surprise you.</p>
-          <div class="form-group">
-            <label for="s-name">Your Name</label>
-            <input type="text" id="s-name" placeholder="e.g. Hassam" autocomplete="off" />
-          </div>
-          <div class="form-group">
-            <label for="s-dob">Date of Birth</label>
-            <input type="date" id="s-dob" />
-          </div>
-          <div class="error hidden" id="s-error"></div>
-          <button class="btn-primary btn-calc-main" id="calc-single">🔥 Show My Life Breakdown</button>
+        <div class="hero-silhouette" aria-hidden="true">
+          <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a0533"/>
+                <stop offset="40%" stop-color="#3d1a6e"/>
+                <stop offset="70%" stop-color="#c2410c"/>
+                <stop offset="100%" stop-color="#1e1040"/>
+              </linearGradient>
+              <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fbbf24"/>
+                <stop offset="100%" stop-color="#f97316"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="280" fill="url(#skyGrad)" rx="12"/>
+            <!-- sun glow -->
+            <circle cx="100" cy="160" r="50" fill="url(#sunGrad)" opacity="0.3"/>
+            <circle cx="100" cy="160" r="30" fill="url(#sunGrad)" opacity="0.5"/>
+            <circle cx="100" cy="160" r="16" fill="#fbbf24" opacity="0.9"/>
+            <!-- mountains -->
+            <polygon points="0,280 60,180 120,240 180,160 200,200 200,280" fill="#0d0b1e" opacity="0.9"/>
+            <polygon points="0,280 40,200 80,230 130,170 160,210 200,180 200,280" fill="#1a0533" opacity="0.7"/>
+            <!-- person silhouette -->
+            <ellipse cx="130" cy="148" rx="5" ry="6" fill="#0d0b1e"/>
+            <line x1="130" y1="154" x2="130" y2="172" stroke="#0d0b1e" stroke-width="3"/>
+            <line x1="130" y1="158" x2="122" y2="165" stroke="#0d0b1e" stroke-width="2"/>
+            <line x1="130" y1="158" x2="138" y2="165" stroke="#0d0b1e" stroke-width="2"/>
+            <line x1="130" y1="172" x2="124" y2="182" stroke="#0d0b1e" stroke-width="2"/>
+            <line x1="130" y1="172" x2="136" y2="182" stroke="#0d0b1e" stroke-width="2"/>
+            <!-- shooting star -->
+            <line x1="155" y1="30" x2="175" y2="50" stroke="#fbbf24" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="155" cy="30" r="2" fill="#fbbf24"/>
+            <!-- stars -->
+            <circle cx="30" cy="40" r="1.5" fill="white" opacity="0.8"/>
+            <circle cx="60" cy="20" r="1" fill="white" opacity="0.6"/>
+            <circle cx="90" cy="50" r="1" fill="white" opacity="0.5"/>
+            <circle cx="170" cy="70" r="1.5" fill="white" opacity="0.7"/>
+            <circle cx="20" cy="80" r="1" fill="white" opacity="0.5"/>
+          </svg>
         </div>
+      </div>
 
-        <div class="card result-card hidden" id="single-result">
+    </div>
+  </section>
 
-          <!-- ── PRE-RESULT MICRO-SHOCK ── -->
-          <div class="micro-shock hidden micro-shock-pulse" id="micro-shock">
-            <div class="ms-text">Most people don't realize this until it's too late.</div>
-          </div>
+  <!-- ── RESULTS (hidden until calculated) ── -->
+  <div id="results-section" class="hidden">
 
-          <!-- ── STEP 1: Hero stat ── -->
-          <div class="result-step step-hero">
-            <h2 id="sr-title"></h2>
-            <div class="hero-stat-row">
-              <div class="hero-stat-days" id="hero-stat-days"></div>
-              <div class="hero-stat-label">days lived</div>
-              <div class="hero-stat-pct" id="hero-stat-pct"></div>
-            </div>
-            <div class="age-banner" id="sr-banner"></div>
-          </div>
-
-          <!-- ── SHARE TRIGGER ── -->
-          <div class="share-trigger hidden" id="share-trigger">
-            <div class="st-shock" id="st-shock"></div>
-            <div class="st-actions">
-              <button class="st-btn st-compare" id="st-compare-btn">👥 Send this to someone your age</button>
-              <button class="st-btn st-share" id="st-share-btn">😳 They won't expect this result</button>
-            </div>
-          </div>
-
-          <!-- ── STEP 2: Life Progress Ring + Phase Bar ── -->
-          <div class="result-step step-ring">
-            <div class="life-ring-wrap">
-              <div class="life-ring-container">
-                <svg class="life-ring-svg" viewBox="0 0 200 200" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#a78bfa"/>
-                      <stop offset="100%" stop-color="#60a5fa"/>
-                    </linearGradient>
-                  </defs>
-                  <circle class="ring-bg" cx="100" cy="100" r="80"/>
-                  <circle class="ring-fill" id="ring-fill" cx="100" cy="100" r="80"
-                    stroke-dasharray="502.65" stroke-dashoffset="502.65"/>
-                </svg>
-                <div class="ring-center">
-                  <div class="ring-pct" id="ring-pct">0%</div>
-                  <div class="ring-label">of avg life</div>
-                </div>
-              </div>
-              <p class="ring-sub" id="ring-sub"></p>
-            </div>
-
-            <!-- Weeks left big number -->
-            <div class="weeks-left-box">
-              <div class="wl-number" id="wl-number">—</div>
-              <div class="wl-label">weeks left. Use them well.</div>
-            </div>
-
-            <!-- Life Phase Bar -->
-            <div class="phase-bar-wrap">
-              <div class="phase-bar" id="phase-bar"></div>
-              <div class="phase-marker" id="phase-marker"></div>
-              <div class="phase-labels">
-                <span>Birth</span><span>25</span><span>40</span><span>60</span><span>75</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── FUTURE YOU SIMULATION ── -->
-          <div class="future-you hidden" id="future-you">
-            <div class="fy-header">
-              <span class="fy-icon">🔮</span>
-              <div>
-                <h3 class="fy-title">Future You Simulation</h3>
-                <p class="fy-sub">If nothing changes — here's where you end up.</p>
-              </div>
-            </div>
-            <div class="fy-current" id="fy-current"></div>
-            <div class="fy-divider">
-              <span class="fy-divider-text">vs if you change one habit</span>
-            </div>
-            <div class="fy-changed" id="fy-changed"></div>
-            <div class="fy-cta">
-              <span class="fy-cta-text">The difference between these two futures is a single decision.</span>
-            </div>
-          </div>
-
-          <!-- ── STEP 3: Life Spend (loads first for impact) ── -->
-          <div class="result-step step-budget reveal-first">
-            <div class="budget-header">
-              <span class="budget-icon">⏳</span>
-              <div>
-                <h3 class="budget-title">Life Spend</h3>
-                <p class="budget-sub">Your time, measured in hours.</p>
-              </div>
-            </div>
-            <div class="budget-numbers">
-              <div class="budget-num">
-                <span class="bn-val" id="budget-total">—</span>
-                <span class="bn-lbl">total hours</span>
-              </div>
-              <div class="budget-num bn-used">
-                <span class="bn-val" id="budget-used">—</span>
-                <span class="bn-lbl">hours spent</span>
-              </div>
-              <div class="budget-num bn-left">
-                <span class="bn-val" id="budget-left">—</span>
-                <span class="bn-lbl">hours remaining</span>
-              </div>
-            </div>
-            <div class="budget-bar-wrap" aria-label="Life spend bar">
-              <div class="budget-bar">
-                <div class="budget-bar-fill" id="budget-bar-fill"></div>
-              </div>
-              <div class="budget-bar-labels">
-                <span id="budget-pct-lbl">0% spent</span>
-                <span id="budget-left-lbl">— remaining</span>
-              </div>
-            </div>
-            <div class="budget-pace" id="budget-pace"></div>
-            <div class="budget-burn" id="budget-burn">
-              You are spending your life at <strong>1 hour every 3,600 seconds.</strong>
-            </div>
-            <div class="perception-toggle">
-              <button class="pt-btn active" id="pt-realistic" data-mode="realistic">Realistic</button>
-              <button class="pt-btn" id="pt-optimistic" data-mode="optimistic">Optimistic</button>
-            </div>
-            <div class="perception-msg" id="perception-msg"></div>
-          </div>
-
-          <!-- ── IMPROVE MY LIFE ── -->
-          <div class="improve-section hidden" id="improve-section">
-            <div class="improve-header">
-              <span class="improve-icon">⚡</span>
-              <div>
-                <h3 class="improve-title">Reclaim Your Time</h3>
-                <p class="improve-sub">You don't need to change everything. One small change can give you years back.</p>
-              </div>
-            </div>
-            <div class="improve-grid" id="improve-grid"></div>
-          </div>
-
-          <!-- ── STEP 4: Key insights ── -->
-          <div class="result-step step-insights reveal-second">
-            <h3 class="section-sub-title">✨ Smart Insights</h3>
-            <div class="insights-grid" id="insights-grid"></div>
-            <button class="btn-expand" id="btn-expand-more" aria-expanded="false">
-              Show more insights ↓
-            </button>
-          </div>
-
-          <!-- ── STEP 4: Expand — full details ── -->
-          <div class="result-expand hidden" id="result-expand">
-
-            <div class="stats-grid" id="sr-stats"></div>
-
-            <div class="pills" id="sr-pills"></div>
-
-            <!-- Life Calendar preview (auto-shown) -->
-            <div class="cal-preview-wrap">
-              <h3 class="section-sub-title">🗓️ Your Life Calendar
-                <span class="cal-preview-hint">Each square = 1 week of your life</span>
-              </h3>
-              <div class="cal-preview-grid" id="cal-preview-grid"></div>
-              <button class="btn-cal-full" id="btn-cal-full">View Full Calendar →</button>
-            </div>
-
-          </div>
-
-
-          <!-- ── AGE TWIN ── -->
-          <div class="age-twin hidden reveal-third" id="age-twin">
-            <div class="at-header">
-              <span class="at-icon" id="at-icon">👤</span>
-              <div>
-                <div class="at-label">Time Twin</div>
-                <div class="at-name" id="at-name"></div>
-              </div>
-              <div class="at-badge" id="at-badge"></div>
-            </div>
-            <div class="at-fact" id="at-fact"></div>
-          </div>
-
-          <!-- ── NEXT MILESTONE ── -->
-          <div class="next-milestone hidden reveal-third" id="next-milestone">
-            <span class="nm-icon">🎯</span>
-            <div class="nm-body">
-              <div class="nm-title" id="nm-title"></div>
-              <div class="nm-sub" id="nm-sub"></div>
-            </div>
-          </div>
-
-          <!-- ── COSMIC AGE ── -->
-          <div class="cosmic-section hidden" id="cosmic-section">
-            <div class="cosmic-header">
-              <span class="cosmic-icon">🌌</span>
-              <div>
-                <h3 class="cosmic-title">Your Age Across the Universe</h3>
-                <p class="cosmic-sub">Time moves differently everywhere. Here's who you are out there.</p>
-              </div>
-            </div>
-            <div class="planet-grid" id="planet-grid"></div>
-            <div class="cosmic-twist" id="cosmic-twist"></div>
-
-            <!-- You vs The Universe -->
-            <div class="universe-scale" id="universe-scale">
-              <div class="us-title">🌠 You vs The Universe</div>
-              <div class="us-stats" id="us-stats"></div>
-              <div class="us-line" id="us-line"></div>
-            </div>
-
-            <!-- Cosmic Events Since Birth -->
-            <div class="cosmic-events" id="cosmic-events">
-              <div class="ce-title">☄️ Since You Were Born</div>
-              <div class="ce-grid" id="ce-grid"></div>
-            </div>
-
-            <!-- Random Reality Fact -->
-            <div class="reality-fact">
-              <div class="rf-label">🎲 Random Reality</div>
-              <div class="rf-text" id="rf-text"></div>
-              <button class="rf-btn" id="rf-btn">Break my reality again →</button>
-            </div>
-          </div>
-
-          <!-- ── DAILY INSIGHT ── -->
-          <div class="daily-insight hidden" id="daily-insight">
-            <div class="di-dot"></div>
-            <div class="di-text" id="di-text"></div>
-          </div>
-
-          <!-- ── FINAL CLOSING INSIGHT ── -->
-          <div class="closing-insight hidden reveal-fifth" id="closing-insight">
-            <div class="ci-signature">You're not running out of time slowly. You're losing it right now.</div>
-            <div class="ci-quote" id="ci-quote"></div>
-            <div class="ci-moments">"You don't measure life in hours. You measure it in moments with people."</div>
-            <div class="ci-sub">— AgeWise</div>
-          </div>
-
-          <!-- ── LIFE QUESTION ── -->
-          <div class="life-question hidden" id="life-question">
-            <div class="lq-text">If nothing changes, are you okay with where this leads?</div>
-            <div class="lq-choices">
-              <button class="lq-btn lq-yes" id="lq-yes">Yes</button>
-              <button class="lq-btn lq-no" id="lq-no">Not really</button>
-            </div>
-            <div class="lq-response hidden" id="lq-response"></div>
-            <!-- Curiosity loop -->
-            <div class="curiosity-loop hidden" id="curiosity-loop">
-              <div class="cl-label">Curious how others compare?</div>
-              <div class="cl-actions">
-                <button class="cl-btn" id="cl-older">Check someone older →</button>
-                <button class="cl-btn" id="cl-younger">Check someone younger →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── SEND TO SOMEONE ── -->
-          <div class="send-someone hidden" id="send-someone">
-            <div class="ss-label">Send this to someone you care about</div>
-            <div class="ss-actions">
-              <button class="ss-btn ss-msg" id="ss-copy-msg">💬 Copy message</button>
-              <button class="ss-btn ss-msg ss-parents" id="ss-copy-parents">👨‍👩‍👧 Send to parents</button>
-              <button class="ss-btn ss-card" id="ss-share-card">📸 Share card</button>
-            </div>
-            <div class="ss-copied hidden" id="ss-copied">✅ Copied to clipboard</div>
-          </div>
-
-          <!-- ── REMEMBER THIS ── -->
-          <div class="remember-wrap hidden" id="remember-wrap">
-            <button class="btn-remember" id="btn-remember">🔖 Remember this moment</button>
-            <div class="remember-saved hidden" id="remember-saved"></div>
-          </div>
-
-          <!-- ── CALENDAR BUTTON (injected here, not via DOM manipulation) ── -->
-          <div id="cal-btn-slot"></div>
-
-          <!-- ── ACTIONS ── -->
-          <div class="result-actions">
-            <button class="btn-challenge" id="btn-challenge">🏆 Challenge</button>
-            <button class="btn-copy-link" id="btn-copy-link">🔗 Copy Link</button>
-            <button class="btn-share" id="btn-share-single">📸 Share Card</button>
-          </div>
-
-          <!-- 7-day return hook -->
-          <div class="return-hook hidden" id="return-hook">
-            <span class="rh-icon">📅</span>
-            <span id="rh-text"></span>
-          </div>
-
-          <!-- Challenge link output -->
-          <div class="challenge-out hidden" id="challenge-out">
-            <div class="co-label">Share this link — they'll see your stats when they compare:</div>
-            <div class="co-link-row">
-              <input type="text" class="co-link-input" id="co-link-input" readonly />
-              <button class="co-copy-btn" id="co-copy-btn">Copy</button>
-            </div>
-            <div class="co-tag">Tag us <strong>@MultiMian</strong> when you share 🚀</div>
-          </div>
-
-          <!-- ── BIRTHDAY MESSAGE ── -->
-          <div class="bday-wrap" id="bday-wrap">
-            <button class="btn-bday-trigger" id="btn-bday-trigger">🎁 Make this for someone else</button>
-            <div class="bday-form hidden" id="bday-form">
-              <div class="bf-title">A birthday message they'll remember</div>
-              <div class="bf-fields">
-                <input type="text" class="bf-input" id="bf-name" placeholder="Their name" autocomplete="off" />
-                <input type="date" class="bf-input" id="bf-dob" />
-                <div class="bf-relations">
-                  <button class="bf-rel active" data-rel="friend">Friend</button>
-                  <button class="bf-rel" data-rel="parent">Parent</button>
-                  <button class="bf-rel" data-rel="partner">Partner</button>
-                </div>
-              </div>
-              <button class="btn-primary btn-gen-msg" id="btn-gen-msg">Generate Message</button>
-              <div class="bday-output hidden" id="bday-output">
-                <div class="bday-card" id="bday-card">
-                  <div class="bc-logo">⏳ AgeWise</div>
-                  <div class="bc-name" id="bc-name"></div>
-                  <div class="bc-days" id="bc-days"></div>
-                  <div class="bc-msg" id="bc-msg"></div>
-                  <div class="bc-footer">agewise · a different kind of birthday message</div>
-                </div>
-                <div class="bday-actions">
-                  <button class="ss-btn ss-msg" id="btn-copy-bday">💬 Copy message</button>
-                  <button class="ss-btn ss-msg" id="btn-wa-bday">💚 WhatsApp</button>
-                  <button class="ss-btn ss-card" id="btn-download-bday">⬇️ Save card</button>
-                </div>
-                <div class="bday-nudge hidden" id="bday-nudge">Don't just save this. Send it.</div>
-                <div class="bday-copied hidden" id="bday-copied"></div>
-                <button class="btn-bday-again" id="btn-bday-again">↩ Make another for someone else</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-      <section id="compare" class="tab-content">
-        <div class="card">
-          <h2>Age Comparison</h2>
-          <div class="two-col">
-            <div>
-              <div class="form-group">
-                <label for="p1-name">Person 1 Name</label>
-                <input type="text" id="p1-name" placeholder="e.g. Hassam" autocomplete="off" />
-              </div>
-              <div class="form-group">
-                <label for="p1-dob">Person 1 Date of Birth</label>
-                <input type="date" id="p1-dob" />
-              </div>
-            </div>
-            <div>
-              <div class="form-group">
-                <label for="p2-name">Person 2 Name</label>
-                <input type="text" id="p2-name" placeholder="e.g. Ali" autocomplete="off" />
-              </div>
-              <div class="form-group">
-                <label for="p2-dob">Person 2 Date of Birth</label>
-                <input type="date" id="p2-dob" />
-              </div>
-            </div>
-          </div>
-          <div class="error hidden" id="c-error"></div>
-          <button class="btn-primary" id="calc-compare">Compare Ages</button>
-        </div>
-
-        <div class="card result-card hidden" id="compare-result">
-          <h2>Comparison Result</h2>
-          <div class="winner-box" id="cr-winner"></div>
-          <div class="age-banner" id="cr-diff"></div>
-          <div class="stats-grid" id="cr-stats"></div>
-          <div class="two-col" id="cr-cards"></div>
-        </div>
-      </section>
-    </main>
-
-    <!-- ── LIFE CALENDAR ── -->
-    <section id="life-calendar" class="calendar-section hidden">
-      <div class="cal-inner">
-        <div class="cal-header">
-          <div>
-            <div class="cal-existential">This is your life in weeks.</div>
-            <h2 class="cal-title">🗓️ Your Life Calendar</h2>
-            <p class="cal-sub">Every square is one week of your life. <span class="cal-lived-label">Lived</span> · <span class="cal-future-label">Future</span></p>
-          </div>
-          <div class="cal-legend">
-            <span class="cal-leg-item"><span class="cal-dot cal-dot-lived"></span> Lived</span>
-            <span class="cal-leg-item"><span class="cal-dot cal-dot-future"></span> Future</span>
-            <span class="cal-leg-item"><span class="cal-dot cal-dot-now"></span> Now</span>
+    <!-- Stats Row -->
+    <section class="stats-row">
+      <div class="stats-inner">
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-body">
+            <div class="stat-label">YOUR AGE</div>
+            <div class="stat-value" id="stat-age">—</div>
+            <div class="stat-unit">Years</div>
+            <div class="stat-sub" id="stat-age-days">— days</div>
           </div>
         </div>
-        <div class="cal-stats-row" id="cal-stats-row"></div>
-        <div class="cal-grid-wrap">
-          <div class="cal-grid" id="cal-grid" role="grid" aria-label="Life calendar grid"></div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-red">♥</div>
+          <div class="stat-body">
+            <div class="stat-label">DAYS USED</div>
+            <div class="stat-value" id="stat-days-used">—</div>
+            <div class="stat-unit">Days</div>
+            <div class="stat-sub" id="stat-hours-used">— hours</div>
+          </div>
         </div>
-        <div class="cal-tooltip hidden" id="cal-tooltip"></div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-yellow">☀</div>
+          <div class="stat-body">
+            <div class="stat-label">DAYS LEFT</div>
+            <div class="stat-value" id="stat-days-left">—</div>
+            <div class="stat-unit">Days</div>
+            <div class="stat-sub" id="stat-hours-left">— hours</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-purple">%</div>
+          <div class="stat-body">
+            <div class="stat-label">LIFE USED</div>
+            <div class="stat-value" id="stat-pct">—</div>
+            <div class="stat-unit">Complete</div>
+            <div class="stat-sub" id="stat-pct-left">Still —% to live</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-blue">∞</div>
+          <div class="stat-body">
+            <div class="stat-label">LIFE EXPECTANCY</div>
+            <div class="stat-value">100</div>
+            <div class="stat-unit">Years</div>
+            <div class="stat-sub" id="stat-total-days">— days</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ── FOOTER ── -->
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <span class="footer-logo">⏳ AgeWise</span>
-          <p>A quiet system that makes people aware of time passing.</p>
-        </div>
-        <div class="footer-links-col">
-          <span class="footer-col-title">Tool</span>
-          <a href="#calculator" class="footer-scroll">Calculator</a>
-          <a href="#life-calendar" class="footer-scroll">Life Calendar</a>
-        </div>
-        <div class="footer-links-col">
-          <span class="footer-col-title">Connect</span>
-          <a href="contact.html" target="_blank" rel="noopener noreferrer">Contact Us</a>
-          <a href="https://multimian.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-          <a href="https://multimian.com/" target="_blank" rel="noopener noreferrer">🌐 MultiMian</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 AgeWise &nbsp;·&nbsp; by <a href="https://github.com/Mianhassam96/" target="_blank" rel="noopener noreferrer" class="footer-author">MultiMian</a></p>
-      </div>
-    </footer>
+    <!-- 3-column grid -->
+    <section class="grid-3col">
+      <div class="grid-inner">
 
-    <!-- ── SHARE NUDGE POPUP ── -->
-    <div class="share-nudge hidden" id="share-nudge" role="status">
-      <div class="sn-inner">
-        <span class="sn-emoji">😳</span>
-        <div class="sn-text">
-          <strong>This number surprises most people…</strong>
-          <span>Take a screenshot or share your stats.</span>
-        </div>
-        <button class="sn-share" id="sn-share-btn">📸 Share</button>
-        <button class="sn-close" id="sn-close" aria-label="Dismiss">✕</button>
-      </div>
-    </div>
-
-    <!-- ── SHARE CARD MODAL ── -->
-    <div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share Card">
-      <div class="share-modal-inner">
-        <button class="share-close" id="share-close" aria-label="Close">✕</button>
-
-        <!-- Style picker -->
-        <div class="sc-style-picker">
-          <button class="sc-style-btn active" data-style="classic">🚀 Classic</button>
-          <button class="sc-style-btn" data-style="funny">🍕 Funny</button>
-          <button class="sc-style-btn" data-style="minimal">✨ Minimal</button>
-        </div>
-
-        <div class="share-card" id="share-card">
-          <div class="sc-logo">⏳ AgeWise</div>
-          <div class="sc-headline" id="sc-headline"></div>
-          <div class="sc-subhead" id="sc-subhead"></div>
-          <div class="sc-name" id="sc-name"></div>
-          <div class="sc-age" id="sc-age"></div>
-
-          <!-- mini ring inside card -->
-          <div class="sc-ring-wrap" id="sc-ring-wrap">
-            <svg class="sc-ring-svg" viewBox="0 0 120 120" aria-hidden="true">
-              <defs>
-                <linearGradient id="scRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#a78bfa"/>
-                  <stop offset="100%" stop-color="#60a5fa"/>
-                </linearGradient>
-              </defs>
-              <circle class="sc-ring-bg" cx="60" cy="60" r="48"/>
-              <circle class="sc-ring-fill" id="sc-ring-fill" cx="60" cy="60" r="48"
-                stroke-dasharray="301.59" stroke-dashoffset="301.59"/>
-            </svg>
-            <div class="sc-ring-center">
-              <div class="sc-ring-pct" id="sc-ring-pct">0%</div>
-              <div class="sc-ring-lbl">lived</div>
+        <!-- Life Progress -->
+        <div class="panel" id="life-progress-panel">
+          <h3 class="panel-title">Your Life Progress</h3>
+          <p class="panel-sub">A visual of your journey so far.</p>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <span class="progress-bar-pct" id="progress-bar-pct">—%</span>
+          </div>
+          <div class="life-timeline">
+            <div class="lt-title">Life Timeline</div>
+            <div class="lt-item">
+              <div class="lt-dot lt-dot-purple"></div>
+              <div class="lt-body">
+                <div class="lt-days">0 days</div>
+                <div class="lt-desc" id="lt-birth-date">—</div>
+                <div class="lt-label">The day you were born</div>
+              </div>
+            </div>
+            <div class="lt-line"></div>
+            <div class="lt-item">
+              <div class="lt-dot lt-dot-pink"></div>
+              <div class="lt-body">
+                <div class="lt-days" id="lt-total-days">—</div>
+                <div class="lt-desc" id="lt-death-date">—</div>
+                <div class="lt-label">Your estimated lifetime</div>
+              </div>
             </div>
           </div>
-
-          <div class="sc-stats" id="sc-stats"></div>
-          <div class="sc-footer">Made with AgeWise · multimian.com</div>
         </div>
 
-        <button class="btn-primary btn-download" id="btn-download">⬇️ Download Card</button>
-      </div>
-    </div>
-
-    <!-- ── PWA INSTALL BANNER ── -->
-    <div class="pwa-banner hidden" id="pwa-banner">
-      <div class="pwa-inner">
-        <span class="pwa-icon">⏳</span>
-        <div class="pwa-text">
-          <strong>Install AgeWise</strong>
-          <span>Save to home screen — works offline</span>
+        <!-- Life Calendar -->
+        <div class="panel" id="life-calendar-section">
+          <h3 class="panel-title">Life Calendar</h3>
+          <p class="panel-sub">Your life in weeks. Past, present &amp; future.</p>
+          <div class="cal-legend-row">
+            <span class="cal-leg"><span class="cal-dot-past"></span> Past</span>
+            <span class="cal-leg"><span class="cal-dot-present"></span> Present</span>
+            <span class="cal-leg"><span class="cal-dot-future"></span> Future</span>
+          </div>
+          <div class="mini-cal-grid" id="mini-cal-grid"></div>
+          <div class="cal-week-labels">
+            <span id="cal-week-start">Week 1<br><small id="cal-date-start">—</small></span>
+            <span id="cal-week-now">Week —<br><small>You are here</small></span>
+            <span id="cal-week-end">Week 5,217<br><small id="cal-date-end">—</small></span>
+          </div>
+          <button class="btn-outline" id="btn-full-calendar">🗓 Open Full Life Calendar →</button>
         </div>
-        <button class="pwa-install-btn" id="pwa-install">Install</button>
-        <button class="pwa-dismiss" id="pwa-dismiss" aria-label="Dismiss">✕</button>
+
+        <!-- Time Twin -->
+        <div class="panel" id="time-twin-section">
+          <h3 class="panel-title">Time Twin</h3>
+          <p class="panel-sub">People who share your birthday</p>
+          <div class="twin-featured" id="twin-featured">
+            <div class="twin-badge">⭐ Most Famous Twin</div>
+            <div class="twin-avatar" id="twin-avatar">👤</div>
+            <div class="twin-name" id="twin-name">—</div>
+            <div class="twin-role" id="twin-role">—</div>
+            <div class="twin-born" id="twin-born">—</div>
+          </div>
+          <div class="twin-others" id="twin-others"></div>
+          <button class="btn-outline" id="btn-all-twins">View All Time Twins →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2-column: History + Month -->
+    <section class="grid-2col" id="global-events-section">
+      <div class="grid-inner">
+
+        <!-- On This Day -->
+        <div class="panel">
+          <h3 class="panel-title">On This Day in History</h3>
+          <p class="panel-sub" id="history-date-label">Major events that happened on your birthday</p>
+          <div class="history-list" id="history-list">
+            <div class="history-item">
+              <span class="history-dot history-dot-green"></span>
+              <span class="history-year">—</span>
+              <span class="history-text">Loading...</span>
+            </div>
+          </div>
+          <button class="btn-outline" id="btn-more-events">View More Events</button>
+        </div>
+
+        <!-- On This Month -->
+        <div class="panel">
+          <h3 class="panel-title">On This Month in the World</h3>
+          <p class="panel-sub" id="month-label">What happened in your birth month</p>
+          <div class="month-list" id="month-list">
+            <div class="month-item">
+              <span class="month-icon">🌍</span>
+              <span class="month-year">—</span>
+              <span class="month-text">Loading...</span>
+              <span class="month-arrow">›</span>
+            </div>
+          </div>
+          <button class="btn-outline" id="btn-explore-more">Explore More</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4-column bottom -->
+    <section class="grid-4col" id="birth-insights-section">
+      <div class="grid-inner">
+
+        <!-- Birth Details -->
+        <div class="panel panel-sm">
+          <h3 class="panel-title">Your Birth Details</h3>
+          <div class="birth-details" id="birth-details">
+            <div class="bd-row"><span class="bd-key">Day</span><span class="bd-val" id="bd-day">—</span></div>
+            <div class="bd-row"><span class="bd-key">Zodiac Sign</span><span class="bd-val" id="bd-zodiac">—</span></div>
+            <div class="bd-row"><span class="bd-key">Chinese Zodiac</span><span class="bd-val" id="bd-chinese">—</span></div>
+            <div class="bd-row"><span class="bd-key">Birth Stone</span><span class="bd-val" id="bd-stone">—</span></div>
+            <div class="bd-row"><span class="bd-key">Birth Flower</span><span class="bd-val" id="bd-flower">—</span></div>
+          </div>
+        </div>
+
+        <!-- Country Events -->
+        <div class="panel panel-sm">
+          <h3 class="panel-title" id="country-title">🌍 On This Day</h3>
+          <div class="country-events" id="country-events">
+            <div class="ce-item-sm">Loading...</div>
+          </div>
+          <button class="btn-outline btn-sm" id="btn-country-more">More Events</button>
+        </div>
+
+        <!-- Fun Facts -->
+        <div class="panel panel-sm">
+          <h3 class="panel-title">Fun Numerical Facts</h3>
+          <div class="fun-facts" id="fun-facts">
+            <div class="ff-item">
+              <span class="ff-icon">♥</span>
+              <div class="ff-body">
+                <div class="ff-val" id="ff-heartbeats">—</div>
+                <div class="ff-lbl">Heartbeats you've had</div>
+              </div>
+            </div>
+            <div class="ff-item">
+              <span class="ff-icon">☀</span>
+              <div class="ff-body">
+                <div class="ff-val" id="ff-sunrises">—</div>
+                <div class="ff-lbl">Sunrises you've seen</div>
+              </div>
+            </div>
+            <div class="ff-item">
+              <span class="ff-icon">📅</span>
+              <div class="ff-body">
+                <div class="ff-val" id="ff-weekends">—</div>
+                <div class="ff-lbl">Weekends you've lived</div>
+              </div>
+            </div>
+            <div class="ff-item">
+              <span class="ff-icon">📆</span>
+              <div class="ff-body">
+                <div class="ff-val" id="ff-mondays">—</div>
+                <div class="ff-lbl">Mondays you've faced</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote card -->
+        <div class="panel panel-quote">
+          <div class="quote-label">Remember</div>
+          <div class="quote-text">"You don't find time, you create it."</div>
+          <div class="quote-attr">— AgeWise</div>
+          <div class="quote-mountain" aria-hidden="true">
+            <svg viewBox="0 0 200 100" fill="none">
+              <defs>
+                <linearGradient id="qGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#0d0b1e"/>
+                </linearGradient>
+              </defs>
+              <rect width="200" height="100" fill="url(#qGrad)"/>
+              <circle cx="100" cy="60" r="25" fill="#f97316" opacity="0.5"/>
+              <circle cx="100" cy="60" r="12" fill="#fbbf24" opacity="0.7"/>
+              <polygon points="0,100 50,50 100,70 150,30 200,60 200,100" fill="#0d0b1e" opacity="0.8"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Full Life Calendar (hidden) -->
+    <section class="full-calendar-section hidden" id="full-calendar-section">
+      <div class="panel">
+        <h3 class="panel-title">🗓️ Your Full Life Calendar</h3>
+        <p class="panel-sub">Every square = 1 week of your life</p>
+        <div class="cal-legend-row">
+          <span class="cal-leg"><span class="cal-dot-past"></span> Past</span>
+          <span class="cal-leg"><span class="cal-dot-present"></span> Present</span>
+          <span class="cal-leg"><span class="cal-dot-future"></span> Future</span>
+        </div>
+        <div class="full-cal-grid-wrap">
+          <div class="full-cal-grid" id="full-cal-grid"></div>
+        </div>
+        <button class="btn-outline" id="btn-close-calendar">Close Calendar</button>
+      </div>
+    </section>
+
+  </div><!-- end results-section -->
+
+  <!-- ── SHARE MODAL ── -->
+  <div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true">
+    <div class="share-modal-inner">
+      <button class="share-close" id="share-close" aria-label="Close">✕</button>
+      <div class="share-card" id="share-card">
+        <div class="sc-logo">⏳ AgeWise</div>
+        <div class="sc-pct" id="sc-pct">—%</div>
+        <div class="sc-label">of life used</div>
+        <div class="sc-name" id="sc-name-card">—</div>
+        <div class="sc-stats" id="sc-stats-card"></div>
+        <div class="sc-footer">agewise · mianhassam96.github.io/AgeWise</div>
+      </div>
+      <button class="btn-calculate" id="btn-download-share">⬇️ Download Card</button>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">⏳ Age<span>Wise</span></span>
+        <p>A mirror for your time.<br>A guide for your life.</p>
+      </div>
+      <div class="footer-center">
+        Made with <span style="color:#f87171">♥</span> for a meaningful life
+        <div class="footer-socials">
+          <a href="https://github.com/Mianhassam96" target="_blank" rel="noopener" aria-label="GitHub">⊕</a>
+          <a href="contact.html" target="_blank" rel="noopener" aria-label="Contact">✉</a>
+          <a href="https://twitter.com/MultiMian" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a>
+          <a href="https://multimian.com" target="_blank" rel="noopener" aria-label="Website">🌐</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+        <div class="footer-copy">© 2024 AgeWise. All rights reserved.</div>
       </div>
     </div>
+  </footer>
 
-    <!-- ── RETURN TRIGGER ── -->
-    <div class="return-trigger hidden" id="return-trigger">
-      <span id="rt-text"></span>
-      <button class="rt-close" id="rt-close" aria-label="Close">✕</button>
-    </div>
-
-  </div><!-- end .wrapper -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="index.js?v=cfe2e9c"></script>
+  <script src="index.js?v=2"></script>
   <script>
-    // Fix: allow mobile nav to overflow the header
-    document.querySelector('.site-header').style.overflow = 'visible';
-    // Unregister any old service workers that may be serving stale cache
+    // Unregister any old service workers
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function(regs) {
         regs.forEach(function(r) { r.unregister(); });
       });
     }
-    // smooth scroll nav (covers header nav + footer links)
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        var href = a.getAttribute('href');
-        if (href === '#life-calendar') {
-          e.preventDefault();
-          var section = document.getElementById('life-calendar');
-          if (section && !section.classList.contains('hidden')) {
-            section.scrollIntoView({ behavior: 'smooth' });
-          } else if (window._shareData) {
-            buildLifeCalendar(window._shareData.birth, window._shareData.name);
-          } else {
-            // no data yet — scroll to calculator and hint
-            var calc = document.getElementById('calculator');
-            if (calc) calc.scrollIntoView({ behavior: 'smooth' });
-            var dob = document.getElementById('s-dob');
-            if (dob) { dob.focus(); dob.style.boxShadow = '0 0 0 3px rgba(167,139,250,0.4)'; setTimeout(function(){ dob.style.boxShadow = ''; }, 2000); }
-            var nameEl = document.getElementById('s-name');
-            if (nameEl && !nameEl.value) {
-              var hint = document.createElement('div');
-              hint.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(15,12,41,0.97);border:1px solid rgba(167,139,250,0.4);border-radius:12px;padding:12px 20px;font-size:0.85rem;color:#c4b5fd;z-index:999;animation:fade-up 0.3s ease;pointer-events:none;';
-              hint.textContent = '👆 Enter your date of birth first to see your Life Calendar';
-              document.body.appendChild(hint);
-              setTimeout(function() { hint.remove(); }, 3000);
-            }
-          }
-          document.getElementById('mobile-nav').classList.remove('open');
-          document.getElementById('hamburger').classList.remove('open');
-          document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
-          return;
-        }
-        var target = document.querySelector(href);
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-        document.getElementById('mobile-nav').classList.remove('open');
-        document.getElementById('hamburger').classList.remove('open');
-        document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
-      });
-    });
-    // hamburger toggle
+    // Hamburger
     document.getElementById('hamburger').addEventListener('click', function() {
-      var nav = document.getElementById('mobile-nav');
-      var btn = document.getElementById('hamburger');
-      var isOpen = nav.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.getElementById('nav-links').classList.toggle('open');
+    });
+    // Nav calc button scrolls to form
+    document.getElementById('btn-nav-calc').addEventListener('click', function() {
+      document.getElementById('hero-dob').focus();
+      document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
     });
   </script>
 </body>
