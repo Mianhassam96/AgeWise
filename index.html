@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgeWise - Age Calculator</title>
-  <meta name="description" content="See your life in numbers. Discover how many days, heartbeats, and moments you've lived — instantly." />
+  <title>AgeWise — How Much Life Have You Already Used?</title>
+  <meta name="description" content="Find out how much of your life you've already used — in days, heartbeats, and moments. A reality check that hits." />
   <meta name="theme-color" content="#0f0c29" />
   <!-- Open Graph / Social sharing -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="AgeWise — See Your Life in Numbers" />
-  <meta property="og:description" content="Discover how many days, heartbeats, and moments you've lived — updated every second." />
+  <meta property="og:title" content="How Much of Your Life Have You Already Used?" />
+  <meta property="og:description" content="Most people don't know. Find out in 10 seconds — and you can't unsee it." />
   <meta property="og:url" content="https://mianhassam96.github.io/AgeWise/" />
   <meta property="og:image" content="https://mianhassam96.github.io/AgeWise/favicon.svg" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="AgeWise — See Your Life in Numbers" />
-  <meta name="twitter:description" content="Discover how many days, heartbeats, and moments you've lived — updated every second." />
+  <meta name="twitter:title" content="How Much of Your Life Have You Already Used?" />
+  <meta name="twitter:description" content="Most people don't know. Find out in 10 seconds — and you can't unsee it." />
   <!-- Analytics: replace G-XXXXXXXXXX with your real GA4 ID to enable tracking -->
   <script>
     function track(action, label) {
@@ -57,15 +57,16 @@
         <a href="#life-calendar" class="nav-link">Life Calendar</a>
       </nav>
       <div class="header-hero">
-        <div class="hero-eyebrow">⏳ Your life, measured precisely</div>
+        <div class="hero-eyebrow">⚠️ Don't check this if you're not ready</div>
         <h1 class="hero-title">
-          <span class="word w1">See</span>
-          <span class="word w2">Your</span>
+          <span class="word w1">How</span>
+          <span class="word w2">Much</span>
           <span class="word w3">Life</span>
-          <span class="word w4">in</span>
-          <span class="word w5">Numbers</span>
+          <span class="word w4">Have</span>
+          <span class="word w5">You</span>
+          <span class="word w6">Used?</span>
         </h1>
-        <p class="hero-sub">Discover how many days, heartbeats, and moments you've lived — updated every second.</p>
+        <p class="hero-sub">Most people never stop to check. Enter your birth date and see the number that changes how you think about time.</p>
 
         <!-- Live demo counter -->
         <div class="hero-demo" aria-label="Live counter preview">
@@ -83,16 +84,16 @@
         </div>
 
         <div class="hero-cta-row">
-          <a href="#calculator" class="btn-hero-cta">Calculate My Age →</a>
+          <a href="#calculator" class="btn-hero-cta">Show My Life Breakdown →</a>
         </div>
 
         <div class="hero-badges">
-          <span class="badge">⚡ Real-time</span>
-          <span class="badge">📅 Born Day</span>
-          <span class="badge">🎂 Birthday Countdown</span>
-          <span class="badge">👥 Age Comparison</span>
+          <span class="badge">😳 Reality Check</span>
+          <span class="badge">🪐 Cosmic Age</span>
+          <span class="badge">⚡ Improve My Life</span>
           <span class="badge">🗓️ Life Calendar</span>
-          <span class="badge">✨ Smart Insights</span>
+          <span class="badge">👥 Compare Friends</span>
+          <span class="badge">🔮 Future You</span>
         </div>
       </div>
       <div class="header-wave" aria-hidden="true">
@@ -148,9 +149,10 @@
         </div>
 
         <div class="card">
-          <h2>Single Age Check</h2>
+          <h2>⏳ How much of your life have you already used?</h2>
+          <p class="card-hook">Enter your details. The number might surprise you.</p>
           <div class="form-group">
-            <label for="s-name">Name</label>
+            <label for="s-name">Your Name</label>
             <input type="text" id="s-name" placeholder="e.g. Hassam" autocomplete="off" />
           </div>
           <div class="form-group">
@@ -158,7 +160,7 @@
             <input type="date" id="s-dob" />
           </div>
           <div class="error hidden" id="s-error"></div>
-          <button class="btn-primary" id="calc-single">Calculate Age</button>
+          <button class="btn-primary btn-calc-main" id="calc-single">🔥 Show My Life Breakdown</button>
         </div>
 
         <div class="card result-card hidden" id="single-result">
@@ -403,6 +405,34 @@
             <button class="btn-challenge" id="btn-challenge">🏆 Challenge</button>
             <button class="btn-copy-link" id="btn-copy-link">🔗 Copy Link</button>
             <button class="btn-share" id="btn-share-single">📸 Share Card</button>
+          </div>
+
+          <!-- ── SHARE TRIGGER ── -->
+          <div class="share-trigger hidden" id="share-trigger">
+            <div class="st-shock" id="st-shock"></div>
+            <div class="st-actions">
+              <button class="st-btn st-compare" id="st-compare-btn">👥 See how a friend compares</button>
+              <button class="st-btn st-share" id="st-share-btn">😳 Share this reality check</button>
+            </div>
+          </div>
+
+          <!-- ── FUTURE YOU SIMULATION ── -->
+          <div class="future-you hidden" id="future-you">
+            <div class="fy-header">
+              <span class="fy-icon">🔮</span>
+              <div>
+                <h3 class="fy-title">Future You Simulation</h3>
+                <p class="fy-sub">If nothing changes — here's where you end up.</p>
+              </div>
+            </div>
+            <div class="fy-current" id="fy-current"></div>
+            <div class="fy-divider">
+              <span class="fy-divider-text">vs if you change one habit</span>
+            </div>
+            <div class="fy-changed" id="fy-changed"></div>
+            <div class="fy-cta">
+              <span class="fy-cta-text">The difference between these two futures is a single decision.</span>
+            </div>
           </div>
 
           <!-- 7-day return hook -->

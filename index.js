@@ -1966,3 +1966,150 @@ document.getElementById('calc-single').addEventListener('click', function() {
     renderImproveSection(birth);
   }, 50);
 });
+
+// ══════════════════════════════════════════════════════════════
+// SHARE TRIGGER + FUTURE YOU SIMULATION
+// ══════════════════════════════════════════════════════════════
+
+// ─── Share Trigger ────────────────────────────────────────────
+function renderShareTrigger(birth, name) {
+  var el = document.getElementById('share-trigger');
+  var shock = document.getElementById('st-shock');
+  if (!el || !shock) return;
+
+  var b = getBreakdown(birth);
+  var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+  var t = getTotals(birth);
+
+  // Pick the most striking stat
+  var shockLine;
+  if (pct >= 50) {
+    shockLine = 'You\'ve already used <strong>' + pct + '% of your life.</strong> More than half is gone.';
+  } else if (pct >= 30) {
+    shockLine = 'You\'ve used <strong>' + pct + '% of your life</strong> — and most people your age don\'t realise it.';
+  } else {
+    shockLine = 'You\'ve used <strong>' + pct + '% of your life.</strong> The clock has always been running.';
+  }
+  shockLine += '<br><span style="font-size:0.82rem;color:#94a3b8;font-weight:400;">Most people your age have already used ' + (pct - 3) + '–' + (pct + 3) + '% of their life. See how your friends compare.</span>';
+
+  shock.innerHTML = shockLine;
+  el.classList.remove('hidden');
+}
+
+// Share trigger buttons
+document.getElementById('st-compare-btn').addEventListener('click', function() {
+  // Switch to compare tab
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.tab-content').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelector('[data-tab="compare"]').classList.add('active');
+  document.getElementById('compare').classList.add('active');
+  // Pre-fill person 1 with current user
+  if (window._shareData) {
+    var d = window._shareData.birth;
+    document.getElementById('p1-name').value = window._shareData.name;
+    document.getElementById('p1-dob').value = d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  document.getElementById('compare').scrollIntoView({ behavior: 'smooth' });
+  track('share_trigger', 'compare');
+});
+
+document.getElementById('st-share-btn').addEventListener('click', function() {
+  if (!window._shareData) return;
+  _shareStyle = 'classic';
+  document.querySelectorAll('.sc-style-btn').forEach(function(b) { b.classList.remove('active'); });
+  var classicBtn = document.querySelector('[data-style="classic"]');
+  if (classicBtn) classicBtn.classList.add('active');
+  renderShareCard();
+  document.getElementById('share-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  track('share_trigger', 'share_card');
+});
+
+// ─── Future You Simulation ────────────────────────────────────
+function renderFutureYou(birth, name) {
+  var section = document.getElementById('future-you');
+  var currentEl = document.getElementById('fy-current');
+  var changedEl = document.getElementById('fy-changed');
+  if (!section || !currentEl || !changedEl) return;
+
+  var b = getBreakdown(birth);
+  var t = getTotals(birth);
+  var ageNow = b.yy + b.mo / 12;
+  var yearsLeft = Math.max(0, AVG_LIFESPAN_YEARS - ageNow);
+  var deathAge = AVG_LIFESPAN_YEARS;
+
+  // Current path stats
+  var screenHoursPerDay = 7; // global average
+  var screenYears = Math.round(yearsLeft * screenHoursPerDay / 24 * 10) / 10;
+  var workYears   = Math.round(yearsLeft * 8 / 24 * 5 / 7 * 10) / 10;
+  var sleepYears  = Math.round(yearsLeft * 8 / 24 * 10) / 10;
+  var familyYears = Math.round(yearsLeft * 2 / 24 * 10) / 10; // avg 2hrs/day with family
+
+  currentEl.innerHTML =
+    '<div class="fy-path-label">📍 If nothing changes — current path</div>' +
+    '<div class="fy-stats">' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + Math.round(deathAge) + '</span><span class="fy-stat-lbl">age at avg death</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + screenYears + ' yrs</span><span class="fy-stat-lbl">spent on screens</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + workYears + ' yrs</span><span class="fy-stat-lbl">spent working</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + familyYears + ' yrs</span><span class="fy-stat-lbl">with family</span></div>' +
+    '</div>';
+
+  // Changed path — cut screen time 2hrs/day
+  var savedHoursPerYear = 2 * 365;
+  var extraYears = Math.round(yearsLeft * 2 / 24 * 10) / 10;
+  var newFamilyYears = Math.round((familyYears + extraYears * 0.5) * 10) / 10;
+  var newScreenYears = Math.round((screenYears - extraYears) * 10) / 10;
+  var lifeGain = Math.round(yearsLeft * 0.035 * 10) / 10; // walking bonus
+
+  changedEl.innerHTML =
+    '<div class="fy-path-label">✅ If you cut screen time 2hrs/day + walk 30min</div>' +
+    '<div class="fy-stats">' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + (Math.round(deathAge) + Math.round(lifeGain)) + '</span><span class="fy-stat-lbl">projected age</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + newScreenYears + ' yrs</span><span class="fy-stat-lbl">on screens</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + workYears + ' yrs</span><span class="fy-stat-lbl">spent working</span></div>' +
+      '<div class="fy-stat"><span class="fy-stat-val">' + newFamilyYears + ' yrs</span><span class="fy-stat-lbl">with family</span></div>' +
+    '</div>' +
+    '<div class="fy-gain"><span class="fy-gain-icon">🟢</span>+' + extraYears + ' years reclaimed · +' + lifeGain + ' years added to lifespan · +' + Math.round(extraYears * 0.5 * 365) + ' days with people you love</div>';
+
+  section.classList.remove('hidden');
+}
+
+// ─── Upgraded return loop — "Your Life Changed Today" ─────────
+function renderReturnLoop(birth) {
+  var hookEl = document.getElementById('return-hook');
+  var hookTx = document.getElementById('rh-text');
+  if (!hookEl || !hookTx) return;
+
+  var b = getBreakdown(birth);
+  var t = getTotals(birth);
+  var pct = Math.round(Math.min(100, ((b.yy + b.mo / 12) / AVG_LIFESPAN_YEARS) * 100));
+  var halfwayAge = AVG_LIFESPAN_YEARS / 2;
+  var daysToHalfway = Math.max(0, Math.round((halfwayAge - (b.yy + b.mo / 12)) * 365.25));
+
+  var msg;
+  if (pct >= 50) {
+    msg = '⚠️ You\'ve now used more than half your expected life. Come back tomorrow — the number will have moved again.';
+  } else if (daysToHalfway < 365) {
+    msg = '🎯 In ' + daysToHalfway + ' days you\'ll have used exactly half your expected life. Come back and see it happen.';
+  } else {
+    var hoursIn7 = 7 * 24;
+    msg = '📅 Come back in 7 days — your Life Spend will have grown by ' + hoursIn7.toLocaleString() + ' more hours. The number never stops.';
+  }
+
+  hookTx.textContent = msg;
+  hookEl.classList.remove('hidden');
+}
+
+// ─── Hook all new features into calc-single ───────────────────
+document.getElementById('calc-single').addEventListener('click', function() {
+  setTimeout(function() {
+    if (!window._shareData) return;
+    var birth = window._shareData.birth;
+    var name  = window._shareData.name;
+    renderShareTrigger(birth, name);
+    renderFutureYou(birth, name);
+    renderReturnLoop(birth);
+  }, 80);
+});

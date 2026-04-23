@@ -273,7 +273,20 @@ main {
 .card h2 {
   font-size: 1.2rem;
   color: #c4b5fd;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
+}
+
+.card-hook {
+  font-size: 0.82rem;
+  color: #475569;
+  margin-bottom: 18px;
+}
+
+.btn-calc-main {
+  font-size: 1.05rem;
+  padding: 16px;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  box-shadow: 0 4px 24px rgba(124,58,237,0.35);
 }
 
 /* ── Form ── */
@@ -1204,6 +1217,7 @@ main {
 
 .w4 { animation-delay: 0.7s; }
 .w5 { animation-delay: 0.9s; }
+.w6 { animation-delay: 1.1s; }
 
 /* live demo counter */
 .hero-demo {
@@ -3510,4 +3524,204 @@ main {
   .improve-grid { grid-template-columns: 1fr; }
   .cosmic-twist { flex-direction: column; gap: 4px; }
   .ct-sep { display: none; }
+}
+
+/* ══════════════════════════════════════
+   SHARE TRIGGER
+══════════════════════════════════════ */
+.share-trigger {
+  margin: 24px 0;
+  padding: 22px 20px;
+  background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(124,58,237,0.08));
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: 18px;
+  text-align: center;
+  animation: fade-up 0.5s ease;
+}
+
+.st-shock {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fca5a5;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.st-shock strong { color: #f87171; font-size: 1.15rem; }
+
+.st-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.st-btn {
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.st-compare {
+  background: rgba(167,139,250,0.15);
+  border: 1px solid rgba(167,139,250,0.35);
+  color: #c4b5fd;
+}
+
+.st-compare:hover { background: rgba(167,139,250,0.25); transform: translateY(-2px); }
+
+.st-share {
+  background: linear-gradient(135deg, #f87171, #7c3aed);
+  color: #fff;
+}
+
+.st-share:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(248,113,113,0.3); }
+
+@media (max-width: 640px) {
+  .st-actions { flex-direction: column; }
+  .st-btn { width: 100%; }
+}
+
+/* ══════════════════════════════════════
+   FUTURE YOU SIMULATION
+══════════════════════════════════════ */
+.future-you {
+  margin-bottom: 28px;
+  animation: fade-up 0.5s ease;
+}
+
+.fy-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.fy-icon { font-size: 2rem; flex-shrink: 0; }
+
+.fy-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #c4b5fd;
+  margin-bottom: 3px;
+}
+
+.fy-sub { font-size: 0.78rem; color: #475569; }
+
+/* Current path */
+.fy-current {
+  background: rgba(248,113,113,0.06);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+
+.fy-path-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #f87171;
+  margin-bottom: 12px;
+}
+
+.fy-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.fy-stat {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.fy-stat-val {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  margin-bottom: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fy-stat-lbl {
+  display: block;
+  font-size: 0.65rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Divider */
+.fy-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.fy-divider::before,
+.fy-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+.fy-divider-text {
+  font-size: 0.72rem;
+  color: #34d399;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Changed path */
+.fy-changed {
+  background: rgba(52,211,153,0.06);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.fy-changed .fy-path-label { color: #34d399; }
+
+.fy-gain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(52,211,153,0.15);
+  font-size: 0.82rem;
+  color: #6ee7b7;
+  font-weight: 600;
+}
+
+.fy-gain-icon { font-size: 1rem; }
+
+.fy-cta {
+  text-align: center;
+  padding: 12px;
+}
+
+.fy-cta-text {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .fy-stats { grid-template-columns: 1fr; }
 }
