@@ -1,4 +1,4 @@
-# ⏳ AgeWise — Age Calculator
+# ⏳ AgeWise
 
 A fast, precise, and beautifully animated age calculator built with vanilla HTML, CSS, and JavaScript.
 
