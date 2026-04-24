@@ -284,3 +284,11 @@ img{max-width:100%}
   .rb-actions{flex-direction:column;width:100%}
   .rb-btn-share,.rb-btn-compare{width:100%}
 }
+
+/* ── BIG WEEKENDS LINE ── */
+.rb-weekends-big{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#f1f5f9;line-height:1.2;margin-bottom:8px}
+.rb-weekends-big strong{background:linear-gradient(135deg,#f87171,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── EXPLORE TEASER ── */
+.explore-teaser{text-align:center;font-size:0.82rem;color:#475569;font-style:italic;margin-bottom:10px;padding:0 24px}
+.explore-toggle-wrap{padding:0 24px 24px;max-width:1280px;margin:0 auto}

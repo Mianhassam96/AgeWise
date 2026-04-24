@@ -278,44 +278,62 @@ function renderAll(birth,name){
   var pct2=Math.round(Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100));
   var daysLeft2=Math.max(0,totalDays-t2.day);
   var weekendsLeft=Math.floor(daysLeft2/7);
+
+  // BIG LINE — weekends (most shocking)
+  var weekendsBigEl=el('rb-weekends-big');
+  if(weekendsBigEl){
+    weekendsBigEl.innerHTML='You only have <strong>~'+fmt(weekendsLeft)+'</strong> weekends left.';
+  }
+
+  // SMALL SUPPORT — % used
   var shockEl=el('rb-shock');
-  var insightEl=el('rb-insight');
   if(shockEl){
-    var namePrefix=_name?_name+', you have':'You have';
     if(pct2>=50){
-      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life. More than half is gone.';
+      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life. More than half is gone.';
     } else if(pct2>=30){
-      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life — and most people your age never stop to notice.';
+      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life — and most people your age never stop to notice.';
     } else {
-      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life. The clock started the day you were born.';
+      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life. The clock started the day you were born.';
     }
   }
+
+  // IDENTITY INSIGHT
+  var insightEl=el('rb-insight');
   if(insightEl){
-    insightEl.innerHTML=
-      'You have lived <strong>'+fmt(t2.day)+' days</strong> and have roughly <strong>'+fmt(daysLeft2)+' days left</strong>. '+
-      'Most people waste the next 25%. You don\'t have to.';
+    var phase='';
+    if(b2.yy<25)phase='You\'re in the most elastic phase of your life. Risks taken now cost the least and pay the most.';
+    else if(b2.yy<35)phase='You\'re in your peak productivity years. The decisions you make now compound harder than any investment.';
+    else if(b2.yy<50)phase='You\'ve earned the clarity to know what truly matters. This is when purpose-driven people do their best work.';
+    else if(b2.yy<65)phase='The impact you create now outlasts you. Every relationship and project is a thread in your legacy.';
+    else phase='A life richly lived. Your perspective is irreplaceable — the world needs your story.';
+    insightEl.innerHTML=phase+'<br><span style="color:#475569;font-size:0.82rem;">You have <strong style="color:#fbbf24">'+fmt(daysLeft2)+' days</strong> left. Most people waste the next 25%. You don\'t have to.</span>';
   }
+
   var weekendsEl=el('rb-weekends');
-  if(weekendsEl){
-    weekendsEl.innerHTML='You have only <strong>~'+fmt(weekendsLeft)+'</strong> weekends left. Use them well.';
-  }
+  if(weekendsEl)weekendsEl.innerHTML='';
 
   // ── Animate ring count-up ──
   var ringProgressEl=el('ring-progress');
   if(ringProgressEl){
     var circFull=2*Math.PI*110;
+    ringProgressEl.style.transition='none';
     ringProgressEl.style.strokeDasharray=circFull;
     ringProgressEl.style.strokeDashoffset=circFull;
     setTimeout(function(){
       ringProgressEl.style.transition='stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
       ringProgressEl.style.strokeDashoffset=circ-(pct/100)*circ;
+      // glow pulse after animation
+      setTimeout(function(){
+        ringProgressEl.style.filter='drop-shadow(0 0 12px rgba(236,72,153,0.8))';
+        setTimeout(function(){ringProgressEl.style.filter='drop-shadow(0 0 8px rgba(167,139,250,0.5))';},600);
+      },1600);
     },200);
     // count-up the % text
     var startPct=0;
     var targetPct=Math.round(pct);
-    var step=targetPct/60;
+    var stepPct=targetPct/60;
     var counter=setInterval(function(){
-      startPct+=step;
+      startPct+=stepPct;
       if(startPct>=targetPct){startPct=targetPct;clearInterval(counter);}
       setText('ring-pct',Math.floor(startPct)+'%');
     },25);
@@ -328,7 +346,7 @@ function renderAll(birth,name){
   if(qResult){
     qResult.classList.remove('hidden');
     setText('hqr-line1','You\'ve already spent '+pct2+'% of your life.');
-    setText('hqr-line2','You have ~'+fmt(daysLeft2)+' days left.\nWhat will you do with them?');
+    setText('hqr-line2','You have ~'+fmt(daysLeft2)+' days left. What will you do with them?');
     setText('hqr-line3','"The best time to start was yesterday. The next best time is now."');
   }
 

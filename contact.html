@@ -7,7 +7,7 @@
   <meta name="description" content="Get in touch with AgeWise. Share feedback, ideas, or just say hi." />
   <meta name="theme-color" content="#0f0c29" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <div class="orbs" aria-hidden="true">
@@ -17,9 +17,17 @@
   </div>
 
   <div class="wrapper">
-    <header class="contact-page-header">
-      <a href="index.html" class="contact-back">← Back to AgeWise</a>
-    </header>
+    <nav class="navbar">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <span class="nav-logo-icon">⏳</span>
+          <span class="nav-logo-text">Age<span>Wise</span></span>
+        </a>
+        <div class="nav-actions">
+          <a href="index.html" class="btn-nav-calc" style="text-decoration:none">← Back to AgeWise</a>
+        </div>
+      </div>
+    </nav>
 
     <main class="contact-page-main">
       <div class="contact-inner">
@@ -59,8 +67,18 @@
     </main>
 
     <footer class="site-footer">
-      <div class="footer-bottom">
-        <p>© 2026 AgeWise &nbsp;·&nbsp; by <a href="https://github.com/Mianhassam96/" target="_blank" rel="noopener noreferrer" class="footer-author">MultiMian</a></p>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-logo">⏳ Age<span>Wise</span></span>
+          <p>A mirror for your time.<br>A guide for your life.</p>
+        </div>
+        <div class="footer-center">Made with <span style="color:#f87171">♥</span> for a meaningful life</div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="contact.html">Contact</a>
+          <div class="footer-copy">© 2026 MultiMian. All rights reserved.</div>
+        </div>
       </div>
     </footer>
   </div>
