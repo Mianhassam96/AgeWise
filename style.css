@@ -275,3 +275,77 @@ input{font-family:inherit;outline:none}
 .cmp-sub{font-size:0.75rem;color:#475569;margin-top:4px}
 .cmp-vs{font-size:1rem;font-weight:800;color:#64748b;flex-shrink:0}
 .cmp-verdict{text-align:center;font-size:0.82rem;color:#94a3b8;padding:10px;background:rgba(124,92,255,0.08);border-radius:8px}
+
+/* ══════════════════════════════════════════════════════════════
+   NEW FEATURES v6
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Birthday Twin Reveal ── */
+.twin-reveal-section{max-width:1100px;margin:0 auto 24px;background:linear-gradient(135deg,rgba(124,92,255,0.1),rgba(255,77,141,0.08));border:1px solid rgba(124,92,255,0.25);border-radius:24px;padding:40px 36px;position:relative;overflow:hidden}
+.twin-reveal-section::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,141,0.12),transparent 70%);pointer-events:none}
+.tr-header{text-align:center;margin-bottom:32px}
+.tr-eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:2.5px;color:#FF4D8D;text-transform:uppercase;margin-bottom:10px}
+.tr-headline{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#f1f5f9;line-height:1.2;margin-bottom:8px}
+.tr-headline span{color:#FF4D8D}
+.tr-sub{font-size:0.88rem;color:#64748b}
+.tr-twins-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.tr-twin-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px 24px;text-align:center;flex:1;min-width:160px;max-width:220px;transition:border-color .2s,transform .2s}
+.tr-twin-card:hover{border-color:rgba(124,92,255,0.4);transform:translateY(-3px)}
+.tr-twin-featured{border-color:rgba(255,77,141,0.4);background:rgba(255,77,141,0.06)}
+.tr-twin-icon{font-size:2.8rem;margin-bottom:10px;line-height:1}
+.tr-twin-name{font-size:0.95rem;font-weight:700;color:#f1f5f9;margin-bottom:4px}
+.tr-twin-role{font-size:0.75rem;color:#94a3b8;margin-bottom:4px}
+.tr-twin-born{font-size:0.7rem;color:#475569}
+.tr-personality{margin-bottom:24px}
+.tr-personality-inner{background:rgba(124,92,255,0.08);border:1px solid rgba(124,92,255,0.2);border-radius:16px;padding:24px;text-align:center}
+.tr-personality-label{font-size:0.75rem;font-weight:700;letter-spacing:1.5px;color:#7C5CFF;text-transform:uppercase;margin-bottom:14px}
+.tr-trait-line{display:block;font-size:1rem;color:#e2e8f0;font-style:italic;margin-bottom:8px;line-height:1.5}
+.tr-trait-line::before{content:'\2728 ';color:#FF4D8D}
+.tr-personality-cta{font-size:0.82rem;color:#64748b;margin-top:12px;font-weight:600}
+.tr-club{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 18px;margin-bottom:20px;flex-wrap:wrap}
+.tr-club-icon{font-size:1.3rem;flex-shrink:0}
+.tr-club span{font-size:0.85rem;color:#94a3b8}
+.tr-club strong{color:#f1f5f9}
+.tr-club-quote{font-size:0.82rem;color:#7C5CFF;font-style:italic;margin-left:auto}
+.btn-twin-share{width:100%;padding:14px;border-radius:12px;font-size:0.95rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#7C5CFF,#FF4D8D);transition:all .2s;letter-spacing:0.3px}
+.btn-twin-share:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,92,255,0.4)}
+.panel-wide-standalone{padding:40px 36px}
+
+/* ── Planet Age ── */
+.planet-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.planet-scroll::-webkit-scrollbar{height:4px}
+.planet-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,0.04);border-radius:2px}
+.planet-scroll::-webkit-scrollbar-thumb{background:rgba(124,92,255,0.4);border-radius:2px}
+.planet-card{flex-shrink:0;width:150px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px 16px;text-align:center;scroll-snap-align:start;transition:border-color .2s,transform .2s;border-top:3px solid var(--planet-color,#7C5CFF)}
+.planet-card:hover{transform:translateY(-4px);border-color:var(--planet-color,#7C5CFF)}
+.pc-icon{font-size:2.2rem;margin-bottom:8px;line-height:1}
+.pc-name{font-size:0.72rem;font-weight:700;letter-spacing:1px;color:#64748b;text-transform:uppercase;margin-bottom:6px}
+.pc-age{font-size:1.8rem;font-weight:900;color:var(--planet-color,#f1f5f9);line-height:1}
+.pc-unit{font-size:0.65rem;color:#475569;margin-bottom:10px}
+.pc-funny{font-size:0.72rem;color:#94a3b8;line-height:1.4;font-style:italic}
+
+/* ── Life Moments tabs ── */
+.lm-tabs{display:flex;gap:4px;background:rgba(255,255,255,0.04);border-radius:10px;padding:4px;margin-bottom:16px}
+.lm-tab{flex:1;padding:8px 12px;border-radius:7px;font-size:0.82rem;font-weight:600;color:#64748b;background:transparent;transition:all .2s}
+.lm-tab.active{background:rgba(124,92,255,0.2);color:#c4b5fd}
+.lm-content{display:block}
+.ff-sub{font-size:0.7rem;color:#475569;margin-top:2px;line-height:1.4}
+.lm-cta{margin-top:14px;padding:12px 16px;background:rgba(124,92,255,0.1);border:1px solid rgba(124,92,255,0.2);border-radius:10px;font-size:0.82rem;color:#c4b5fd;text-align:center}
+
+/* ── Twin Share Card ── */
+.twin-share-card{background:linear-gradient(135deg,#0f172a,#1e1b4b);border:1px solid rgba(124,92,255,0.3);border-radius:16px;padding:28px;text-align:center}
+.tsc-born{font-size:0.78rem;color:#64748b;margin-bottom:12px}
+.tsc-twins{margin-bottom:12px}
+.tsc-twist{margin-bottom:12px}
+.tsc-weekends{font-size:0.82rem;color:#94a3b8;padding:10px;background:rgba(255,77,141,0.08);border-radius:8px;margin-bottom:4px}
+
+/* ── Responsive for new sections ── */
+@media(max-width:600px){
+  .twin-reveal-section{padding:24px 16px}
+  .tr-twins-row{gap:10px}
+  .tr-twin-card{min-width:130px;padding:14px 12px}
+  .tr-twin-icon{font-size:2rem}
+  .planet-card{width:130px}
+  .tr-club{flex-direction:column;align-items:flex-start;gap:6px}
+  .tr-club-quote{margin-left:0}
+}

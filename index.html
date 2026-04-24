@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
-  <link rel="stylesheet" href="style.css?v=5"/>
+  <link rel="stylesheet" href="style.css?v=6"/>
 </head>
 <body>
 
@@ -175,7 +175,56 @@
     </div>
 
     <div class="explore-content hidden" id="explore-content">
+
+      <!-- ① BIRTHDAY TWIN REVEAL — full width, first, strongest -->
+      <div class="twin-reveal-section panel-wide-standalone" id="time-twin-section">
+        <div class="tr-header">
+          <div class="tr-eyebrow">🎉 BIRTHDAY TWIN REVEAL</div>
+          <h3 class="tr-headline">You share your birthday with <span id="tr-headline-name">—</span></h3>
+          <p class="tr-sub" id="tr-sub">Loading your birthday twins…</p>
+        </div>
+        <div class="tr-twins-row" id="tr-twins-row"></div>
+        <div class="tr-personality" id="tr-personality"></div>
+        <div class="tr-club">
+          <span class="tr-club-icon">🌍</span>
+          <span id="tr-club-text">You share your birthday with <strong id="tr-club-count">~19 million</strong> people worldwide.</span>
+          <span class="tr-club-quote">Some of them will change the world. Will you?</span>
+        </div>
+        <button class="btn-twin-share" id="btn-twin-share">📸 Share My Birthday Twin Card</button>
+      </div>
+
       <div class="explore-grid">
+
+        <!-- ② PLANET AGE — full width -->
+        <div class="panel panel-wide" id="planet-age-section">
+          <h3 class="panel-title">🪐 Your Age Across the Universe</h3>
+          <p class="panel-sub">You're a different age on every planet — and each one says something about you.</p>
+          <div class="planet-scroll" id="planet-scroll"></div>
+        </div>
+
+        <!-- ③ LIFE MOMENTS — left -->
+        <div class="panel" id="birth-insights-section">
+          <h3 class="panel-title">⏳ Life Moments Breakdown</h3>
+          <p class="panel-sub">How you've spent your time so far — and what's coming.</p>
+          <div class="lm-tabs">
+            <button class="lm-tab active" id="lm-tab-past" data-tab="past">Past</button>
+            <button class="lm-tab" id="lm-tab-future" data-tab="future">Future Projection</button>
+          </div>
+          <div id="lm-past" class="lm-content">
+            <div class="fun-facts" id="lm-past-list"></div>
+          </div>
+          <div id="lm-future" class="lm-content hidden">
+            <div class="fun-facts" id="lm-future-list"></div>
+            <div class="lm-cta">Want to change this? <strong>Start today.</strong></div>
+          </div>
+        </div>
+
+        <!-- ④ PEAK YEARS — right -->
+        <div class="panel" id="peak-years-section">
+          <h3 class="panel-title">🚀 Your Peak Years</h3>
+          <p class="panel-sub">When you'll be at your best</p>
+          <div class="peak-content" id="peak-content"></div>
+        </div>
 
         <!-- Life Calendar (2x wide) -->
         <div class="panel panel-wide" id="life-calendar-section">
@@ -193,40 +242,6 @@
             <span>Week <span id="cal-week-total">—</span><br><small id="cal-date-end">—</small></span>
           </div>
           <button class="btn-outline" id="btn-full-calendar">Open Full Life Calendar →</button>
-        </div>
-
-        <!-- Time Twin -->
-        <div class="panel" id="time-twin-section">
-          <h3 class="panel-title">👥 Time Twin</h3>
-          <p class="panel-sub">Famous people who share your birthday</p>
-          <div class="twin-featured">
-            <div class="twin-badge">⭐ Most Famous Twin</div>
-            <div class="twin-avatar" id="twin-avatar" aria-hidden="true">👤</div>
-            <div class="twin-name" id="twin-name">—</div>
-            <div class="twin-role" id="twin-role">—</div>
-            <div class="twin-born" id="twin-born">—</div>
-          </div>
-          <div class="twin-others" id="twin-others"></div>
-          <button class="btn-outline" id="btn-all-twins">View All Time Twins →</button>
-        </div>
-
-        <!-- Peak Years -->
-        <div class="panel" id="peak-years-section">
-          <h3 class="panel-title">🚀 Your Peak Years</h3>
-          <p class="panel-sub">When you'll be at your best</p>
-          <div class="peak-content" id="peak-content"></div>
-        </div>
-
-        <!-- Fun Stats -->
-        <div class="panel" id="birth-insights-section">
-          <h3 class="panel-title">✨ Fun Stats</h3>
-          <p class="panel-sub">Your life in numbers</p>
-          <div class="fun-facts">
-            <div class="ff-item"><span class="ff-icon" aria-hidden="true">♥</span><div class="ff-body"><div class="ff-val" id="ff-heartbeats">—</div><div class="ff-lbl">Heartbeats you've had</div></div></div>
-            <div class="ff-item"><span class="ff-icon" aria-hidden="true">☀</span><div class="ff-body"><div class="ff-val" id="ff-sunrises">—</div><div class="ff-lbl">Sunrises you've seen</div></div></div>
-            <div class="ff-item"><span class="ff-icon" aria-hidden="true">📅</span><div class="ff-body"><div class="ff-val" id="ff-weekends">—</div><div class="ff-lbl">Weekends you've lived</div></div></div>
-            <div class="ff-item"><span class="ff-icon" aria-hidden="true">📆</span><div class="ff-body"><div class="ff-val" id="ff-mondays">—</div><div class="ff-lbl">Mondays you've faced</div></div></div>
-          </div>
         </div>
 
         <!-- Birth Details -->
@@ -287,7 +302,7 @@
 
 </div><!-- end results-section -->
 
-<!-- SHARE MODAL -->
+<!-- SHARE MODAL — Life Card -->
 <div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share your result">
   <div class="share-modal-inner">
     <button class="share-close" id="share-close" aria-label="Close share modal">✕</button>
@@ -301,6 +316,22 @@
       <div class="sc-footer">agewise · mianhassam96.github.io/AgeWise</div>
     </div>
     <button class="btn-calculate" id="btn-download-share">⬇️ Download Card</button>
+  </div>
+</div>
+
+<!-- TWIN SHARE MODAL — Birthday Twin Card -->
+<div class="share-modal hidden" id="twin-share-modal" role="dialog" aria-modal="true" aria-label="Share your birthday twin card">
+  <div class="share-modal-inner">
+    <button class="share-close" id="twin-share-close" aria-label="Close twin share modal">✕</button>
+    <div class="share-card twin-share-card" id="twin-share-card">
+      <div class="sc-logo">🎉 AgeWise — Birthday Twin</div>
+      <div class="tsc-born" id="tsc-born"></div>
+      <div class="tsc-twins" id="tsc-twins-card"></div>
+      <div class="tsc-twist" id="tsc-twist-card"></div>
+      <div class="tsc-weekends" id="tsc-weekends-card"></div>
+      <div class="sc-footer">What about you? → mianhassam96.github.io/AgeWise</div>
+    </div>
+    <button class="btn-calculate" id="btn-download-twin-share">⬇️ Download Twin Card</button>
   </div>
 </div>
 
@@ -348,6 +379,6 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="index.js?v=5"></script>
+<script src="index.js?v=6"></script>
 </body>
 </html>

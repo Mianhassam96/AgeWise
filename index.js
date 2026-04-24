@@ -89,38 +89,166 @@ function initParticles(){
 
 // ── Time Twins ────────────────────────────────────────────────
 var TIME_TWINS=[
-  {month:1,day:3,name:'J.R.R. Tolkien',icon:'\uD83D\uDCD6',role:'Author, Lord of the Rings',born:'Born on 3 Jan 1892'},
-  {month:1,day:8,name:'Stephen Hawking',icon:'\uD83C\uDF0C',role:'Physicist',born:'Born on 8 Jan 1942'},
-  {month:1,day:17,name:'Muhammad Ali',icon:'\uD83E\uDD4A',role:'Boxing Legend',born:'Born on 17 Jan 1942'},
-  {month:2,day:6,name:'Bob Marley',icon:'\uD83C\uDFB5',role:'Reggae Legend',born:'Born on 6 Feb 1945'},
-  {month:2,day:11,name:'Thomas Edison',icon:'\uD83D\uDCA1',role:'Inventor',born:'Born on 11 Feb 1847'},
-  {month:3,day:14,name:'Albert Einstein',icon:'\uD83E\uDDE0',role:'Physicist',born:'Born on 14 Mar 1879'},
-  {month:4,day:15,name:'Leonardo da Vinci',icon:'\uD83C\uDFA8',role:'Renaissance Genius',born:'Born on 15 Apr 1452'},
-  {month:4,day:23,name:'William Shakespeare',icon:'\uD83C\uDFAD',role:'Playwright',born:'Born on 23 Apr 1564'},
-  {month:5,day:5,name:'Karl Marx',icon:'\uD83D\uDCDC',role:'Philosopher',born:'Born on 5 May 1818'},
-  {month:6,day:1,name:'Marilyn Monroe',icon:'\uD83D\uDCAB',role:'Actress & Icon',born:'Born on 1 Jun 1926'},
-  {month:6,day:12,name:'Anne Frank',icon:'\uD83D\uDCD3',role:'Diarist',born:'Born on 12 Jun 1929'},
-  {month:7,day:18,name:'Nelson Mandela',icon:'\u270A',role:'President & Activist',born:'Born on 18 Jul 1918'},
-  {month:8,day:4,name:'Barack Obama',icon:'\uD83C\uDF0D',role:'44th US President',born:'Born on 4 Aug 1961'},
-  {month:8,day:15,name:'Napoleon Bonaparte',icon:'\u2694\uFE0F',role:'French Emperor',born:'Born on 15 Aug 1769'},
-  {month:9,day:5,name:'Freddie Mercury',icon:'\uD83C\uDFA4',role:'Queen Frontman',born:'Born on 5 Sep 1946'},
-  {month:9,day:15,name:'Agatha Christie',icon:'\uD83D\uDD0D',role:'Mystery Writer',born:'Born on 15 Sep 1890'},
-  {month:10,day:2,name:'Mahatma Gandhi',icon:'\uD83D\uDD4A\uFE0F',role:'Independence Leader',born:'Born on 2 Oct 1869'},
-  {month:10,day:9,name:'John Lennon',icon:'\uD83C\uDFB5',role:'Beatle & Activist',born:'Born on 9 Oct 1940'},
-  {month:11,day:9,name:'Carl Sagan',icon:'\uD83C\uDF0C',role:'Astronomer',born:'Born on 9 Nov 1934'},
-  {month:11,day:30,name:'Mark Twain',icon:'\u270D\uFE0F',role:'American Author',born:'Born on 30 Nov 1835'},
-  {month:12,day:5,name:'Walt Disney',icon:'\u2728',role:'Animation Pioneer',born:'Born on 5 Dec 1901'},
-  {month:12,day:25,name:'Isaac Newton',icon:'\uD83C\uDF4E',role:'Physicist & Mathematician',born:'Born on 25 Dec 1642'},
-  {month:12,day:16,name:'Ludwig van Beethoven',icon:'\uD83C\uDFB9',role:'Classical Composer',born:'Born on 16 Dec 1770'}
+  {month:1,day:3,name:'J.R.R. Tolkien',icon:'\uD83D\uDCD6',role:'Author, Lord of the Rings',born:'Born on 3 Jan 1892',trait:'You build entire worlds in your mind.'},
+  {month:1,day:8,name:'Stephen Hawking',icon:'\uD83C\uDF0C',role:'Physicist',born:'Born on 8 Jan 1942',trait:'You think beyond what others can see.'},
+  {month:1,day:14,name:'LL Cool J',icon:'\uD83C\uDFB5',role:'Rapper & Actor',born:'Born on 14 Jan 1968',trait:'You reinvent yourself and keep going.'},
+  {month:1,day:17,name:'Muhammad Ali',icon:'\uD83E\uDD4A',role:'Boxing Legend',born:'Born on 17 Jan 1942',trait:'You hustle harder than anyone in the room.'},
+  {month:1,day:25,name:'Alicia Keys',icon:'\uD83C\uDFB9',role:'Singer & Songwriter',born:'Born on 25 Jan 1981',trait:'You express what others can\'t put into words.'},
+  {month:2,day:6,name:'Bob Marley',icon:'\uD83C\uDFB5',role:'Reggae Legend',born:'Born on 6 Feb 1945',trait:'You spread peace wherever you go.'},
+  {month:2,day:11,name:'Thomas Edison',icon:'\uD83D\uDCA1',role:'Inventor',born:'Born on 11 Feb 1847',trait:'You turn failure into fuel.'},
+  {month:2,day:23,name:'Steve Jobs',icon:'\uD83D\uDCBB',role:'Apple Co-founder',born:'Born on 24 Feb 1955',trait:'You think differently and change the game.'},
+  {month:3,day:14,name:'Albert Einstein',icon:'\uD83E\uDDE0',role:'Physicist',born:'Born on 14 Mar 1879',trait:'You see patterns no one else notices.'},
+  {month:3,day:26,name:'Diana Ross',icon:'\uD83C\uDFA4',role:'Singer & Icon',born:'Born on 26 Mar 1944',trait:'You command every room you walk into.'},
+  {month:4,day:15,name:'Leonardo da Vinci',icon:'\uD83C\uDFA8',role:'Renaissance Genius',born:'Born on 15 Apr 1452',trait:'You create things that outlast generations.'},
+  {month:4,day:23,name:'William Shakespeare',icon:'\uD83C\uDFAD',role:'Playwright',born:'Born on 23 Apr 1564',trait:'You tell stories that move people deeply.'},
+  {month:5,day:5,name:'Karl Marx',icon:'\uD83D\uDCDC',role:'Philosopher',born:'Born on 5 May 1818',trait:'You question systems others take for granted.'},
+  {month:5,day:21,name:'Mr. T',icon:'\uD83D\uDCAA',role:'Actor & Icon',born:'Born on 21 May 1952',trait:'You have a presence that can\'t be ignored.'},
+  {month:6,day:1,name:'Marilyn Monroe',icon:'\uD83D\uDCAB',role:'Actress & Icon',born:'Born on 1 Jun 1926',trait:'You leave an impression that lasts forever.'},
+  {month:6,day:12,name:'Anne Frank',icon:'\uD83D\uDCD3',role:'Diarist',born:'Born on 12 Jun 1929',trait:'Your words carry more weight than you know.'},
+  {month:6,day:24,name:'Lionel Messi',icon:'\u26BD',role:'Football Legend',born:'Born on 24 Jun 1987',trait:'You make the impossible look effortless.'},
+  {month:7,day:18,name:'Nelson Mandela',icon:'\u270A',role:'President & Activist',born:'Born on 18 Jul 1918',trait:'You stand firm when others give up.'},
+  {month:7,day:23,name:'Daniel Radcliffe',icon:'\u2728',role:'Actor',born:'Born on 23 Jul 1989',trait:'You grow beyond the role the world gave you.'},
+  {month:8,day:4,name:'Barack Obama',icon:'\uD83C\uDF0D',role:'44th US President',born:'Born on 4 Aug 1961',trait:'You inspire people to believe in something bigger.'},
+  {month:8,day:15,name:'Napoleon Bonaparte',icon:'\u2694\uFE0F',role:'French Emperor',born:'Born on 15 Aug 1769',trait:'You lead with total conviction.'},
+  {month:9,day:5,name:'Freddie Mercury',icon:'\uD83C\uDFA4',role:'Queen Frontman',born:'Born on 5 Sep 1946',trait:'You perform life at full volume.'},
+  {month:9,day:15,name:'Agatha Christie',icon:'\uD83D\uDD0D',role:'Mystery Writer',born:'Born on 15 Sep 1890',trait:'You see what others overlook.'},
+  {month:10,day:2,name:'Mahatma Gandhi',icon:'\uD83D\uDD4A\uFE0F',role:'Independence Leader',born:'Born on 2 Oct 1869',trait:'You change the world without raising your voice.'},
+  {month:10,day:9,name:'John Lennon',icon:'\uD83C\uDFB5',role:'Beatle & Activist',born:'Born on 9 Oct 1940',trait:'You imagine a better world and make people believe it.'},
+  {month:10,day:24,name:'Drake',icon:'\uD83C\uDFA7',role:'Rapper & Artist',born:'Born on 24 Oct 1986',trait:'You express your feelings with zero apology.'},
+  {month:11,day:9,name:'Carl Sagan',icon:'\uD83C\uDF0C',role:'Astronomer',born:'Born on 9 Nov 1934',trait:'You make the universe feel personal.'},
+  {month:11,day:30,name:'Mark Twain',icon:'\u270D\uFE0F',role:'American Author',born:'Born on 30 Nov 1835',trait:'You say the truth with a smile.'},
+  {month:12,day:5,name:'Walt Disney',icon:'\u2728',role:'Animation Pioneer',born:'Born on 5 Dec 1901',trait:'You turn dreams into things people can touch.'},
+  {month:12,day:16,name:'Ludwig van Beethoven',icon:'\uD83C\uDFB9',role:'Classical Composer',born:'Born on 16 Dec 1770',trait:'You create beauty even through struggle.'},
+  {month:12,day:25,name:'Isaac Newton',icon:'\uD83C\uDF4E',role:'Physicist & Mathematician',born:'Born on 25 Dec 1642',trait:'You find the laws hidden inside chaos.'}
 ];
-function getTimeTwin(birth){
+function getTimeTwins(birth){
   var m=birth.getMonth()+1,d=birth.getDate();
+  // exact date matches first
   var exact=TIME_TWINS.filter(function(t){return t.month===m&&t.day===d;});
-  if(exact.length)return exact[0];
-  var sameMonth=TIME_TWINS.filter(function(t){return t.month===m;});
-  if(sameMonth.length)return sameMonth.sort(function(a,b){return Math.abs(a.day-d)-Math.abs(b.day-d);})[0];
-  return TIME_TWINS.sort(function(a,b){return Math.abs((a.month*31+a.day)-(m*31+d))-Math.abs((b.month*31+b.day)-(m*31+d));})[0];
+  if(exact.length>=2)return exact.slice(0,3);
+  // same month, sorted by proximity
+  var sameMonth=TIME_TWINS.filter(function(t){return t.month===m;}).sort(function(a,b){return Math.abs(a.day-d)-Math.abs(b.day-d);});
+  var combined=exact.concat(sameMonth.filter(function(t){return t.day!==d;}));
+  if(combined.length>=2)return combined.slice(0,3);
+  // fallback: any 3
+  return TIME_TWINS.sort(function(a,b){return Math.abs((a.month*31+a.day)-(m*31+d))-Math.abs((b.month*31+b.day)-(m*31+d));}).slice(0,3);
 }
+// keep single-twin getter for backward compat
+function getTimeTwin(birth){return getTimeTwins(birth)[0];}
+
+// ── Planet Age ────────────────────────────────────────────────
+var PLANETS=[
+  {name:'Mercury',icon:'\u263F',orbitalYears:0.2408,color:'#94a3b8',funny:function(a){return a<1?'You\'re basically a newborn here.':'You\'ve lapped the Sun '+Math.floor(a)+' times already.';}},
+  {name:'Venus',icon:'\u2640',orbitalYears:0.6152,color:'#fbbf24',funny:function(a){return 'On Venus, beauty standards are '+Math.round(a)+' years old.';}},
+  {name:'Earth',icon:'\uD83C\uDF0D',orbitalYears:1,color:'#60a5fa',funny:function(a){return 'Your official age. '+Math.floor(a)+' trips around the Sun.';}},
+  {name:'Mars',icon:'\uD83D\uDD34',orbitalYears:1.8808,color:'#f87171',funny:function(a){return a<18?'On Mars, you\'re still figuring life out.':a<30?'On Mars, you\'re just getting started.':'On Mars, you\'re a seasoned explorer.';}},
+  {name:'Jupiter',icon:'\uD83D\uDFE0',orbitalYears:11.862,color:'#fb923c',funny:function(a){return a<5?'On Jupiter, you\'re basically a toddler \uD83D\uDE04':a<10?'On Jupiter, you just started school.':'On Jupiter, you\'re finally a teenager.';}},
+  {name:'Saturn',icon:'\uD83D\uDFE1',orbitalYears:29.457,color:'#fde68a',funny:function(a){return a<1?'On Saturn, you haven\'t even had your first birthday.':'On Saturn, you\'re only '+a.toFixed(1)+'. Still figuring life out.';}},
+  {name:'Uranus',icon:'\uD83D\uDFE6',orbitalYears:84.011,color:'#67e8f9',funny:function(a){return 'On Uranus, you\'re '+a.toFixed(2)+' years old. Basically a cell.';}},
+  {name:'Neptune',icon:'\uD83D\uDFE3',orbitalYears:164.8,color:'#818cf8',funny:function(a){return 'On Neptune, you\'re '+a.toFixed(3)+'. You don\'t even exist yet.';}},
+  {name:'Moon',icon:'\uD83C\uDF15',orbitalYears:0.0748,color:'#e2e8f0',funny:function(a){return 'In lunar months, you\'ve seen '+Math.floor(a)+' full moons.';}},
+];
+function renderPlanetAge(birth){
+  var t=getTotals(birth);
+  var earthYears=t.day/365.25;
+  var container=el('planet-scroll');
+  if(!container)return;
+  container.innerHTML=PLANETS.map(function(p){
+    var age=earthYears/p.orbitalYears;
+    var display=age>=100?Math.round(age).toLocaleString():age>=10?age.toFixed(1):age.toFixed(2);
+    return '<div class="planet-card" style="--planet-color:'+p.color+'">'+
+      '<div class="pc-icon">'+p.icon+'</div>'+
+      '<div class="pc-name">'+p.name+'</div>'+
+      '<div class="pc-age">'+display+'</div>'+
+      '<div class="pc-unit">years</div>'+
+      '<div class="pc-funny">'+p.funny(age)+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+// ── Life Moments ──────────────────────────────────────────────
+function renderLifeMoments(birth){
+  var t=getTotals(birth);
+  var b=getBreakdown(birth);
+  var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
+  var daysLeft=Math.max(0,totalDays-t.day);
+  var yearsLived=t.day/365.25;
+  var yearsLeft=daysLeft/365.25;
+
+  var pastItems=[
+    {icon:'\uD83D\uDCA4',label:'Sleeping',val:fmtShort(Math.round(yearsLived*0.33))+' years',sub:'~8 hrs/day — you\'ve been unconscious for a third of your life.'},
+    {icon:'\u2764\uFE0F',label:'Heartbeats',val:fmtShort(Math.floor(t.day*24*60*70)),sub:'Your heart has never taken a day off.'},
+    {icon:'\uD83D\uDCF1',label:'Screen time',val:fmtShort(Math.round(yearsLived*0.17))+' years',sub:'~4 hrs/day average. More than you\'d like to admit.'},
+    {icon:'\uD83D\uDEB6',label:'Walking',val:fmtShort(Math.round(t.day*8000))+' steps',sub:'You\'ve walked the equivalent of the Earth\'s circumference '+Math.round(t.day*8000/40075000)+' times.'},
+    {icon:'\uD83C\uDF7D\uFE0F',label:'Meals eaten',val:fmtShort(Math.floor(t.day*3)),sub:'Three times a day, every day, without fail.'},
+    {icon:'\uD83D\uDE04',label:'Laughs',val:fmtShort(Math.floor(t.day*15)),sub:'~15 laughs a day. Hopefully more.'},
+  ];
+  var futureItems=[
+    {icon:'\uD83D\uDCA4',label:'More sleeping',val:fmtShort(Math.round(yearsLeft*0.33))+' years',sub:'You\'ll spend another third of your remaining life asleep.'},
+    {icon:'\uD83D\uDCF1',label:'More screen time',val:fmtShort(Math.round(yearsLeft*0.17))+' years',sub:'At current rates. Want to change this?'},
+    {icon:'\uD83D\uDEB6',label:'More walking',val:fmtShort(Math.round(daysLeft*8000))+' steps',sub:'Every step is a choice. Make them count.'},
+    {icon:'\uD83C\uDF05',label:'More sunrises',val:fmt(daysLeft),sub:'You have '+fmt(daysLeft)+' more mornings. Each one is a fresh start.'},
+    {icon:'\uD83C\uDF89',label:'More weekends',val:fmt(Math.floor(daysLeft/7)),sub:'~'+fmt(Math.floor(daysLeft/7))+' weekends left. How will you spend them?'},
+    {icon:'\uD83D\uDCDA',label:'More learning',val:'Unlimited',sub:'The only resource that doesn\'t run out.'},
+  ];
+
+  var pastList=el('lm-past-list');
+  if(pastList){
+    pastList.innerHTML=pastItems.map(function(item){
+      return '<div class="ff-item"><span class="ff-icon" aria-hidden="true">'+item.icon+'</span><div class="ff-body"><div class="ff-val">'+item.val+'</div><div class="ff-lbl">'+item.label+'</div><div class="ff-sub">'+item.sub+'</div></div></div>';
+    }).join('');
+  }
+  var futureList=el('lm-future-list');
+  if(futureList){
+    futureList.innerHTML=futureItems.map(function(item){
+      return '<div class="ff-item"><span class="ff-icon" aria-hidden="true">'+item.icon+'</span><div class="ff-body"><div class="ff-val">'+item.val+'</div><div class="ff-lbl">'+item.label+'</div><div class="ff-sub">'+item.sub+'</div></div></div>';
+    }).join('');
+  }
+}
+
+// ── Birthday Twin Reveal ──────────────────────────────────────
+var BIRTH_COUNTS_BY_MONTH=[3.3,2.9,3.1,3.0,3.1,3.2,3.4,3.5,3.3,3.2,3.1,3.1]; // millions
+function renderBirthdayTwinReveal(birth){
+  var twins=getTimeTwins(birth);
+  var m=birth.getMonth()+1;
+  var d=birth.getDate();
+  var dateStr=birth.toLocaleDateString('en-US',{month:'long',day:'numeric'});
+
+  // Headline
+  setText('tr-headline-name',twins[0].name);
+  setText('tr-sub','People born on '+dateStr+' — you\'re in rare company.');
+
+  // Twins row
+  var rowEl=el('tr-twins-row');
+  if(rowEl){
+    rowEl.innerHTML=twins.map(function(tw,i){
+      return '<div class="tr-twin-card'+(i===0?' tr-twin-featured':'')+'">'+
+        '<div class="tr-twin-icon">'+tw.icon+'</div>'+
+        '<div class="tr-twin-name">'+tw.name+'</div>'+
+        '<div class="tr-twin-role">'+tw.role+'</div>'+
+        '<div class="tr-twin-born">'+tw.born+'</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  // Personality twist
+  var personalityEl=el('tr-personality');
+  if(personalityEl&&twins.length>=2){
+    var lines=twins.map(function(tw){return '<span class="tr-trait-line">'+tw.trait+'</span>';});
+    personalityEl.innerHTML=
+      '<div class="tr-personality-inner">'+
+        '<div class="tr-personality-label">But here\'s the twist\u2026</div>'+
+        lines.join('')+
+        '<div class="tr-personality-cta">These traits are in your DNA. Own them.</div>'+
+      '</div>';
+  }
+
+  // Club count
+  var monthCount=BIRTH_COUNTS_BY_MONTH[m-1]||3.2;
+  var dayCount=Math.round((monthCount/30)*1000)/1000;
+  setText('tr-club-count','~'+dayCount.toFixed(1)+' million');
+}
+
 
 // ── History events ────────────────────────────────────────────
 var HISTORY_EVENTS={
@@ -300,8 +428,14 @@ function renderAll(birth,name){
   // ── Mini Calendar ──
   buildMiniCalendar(birth,t.day,10);
 
-  // ── Time Twin ──
-  renderTimeTwin(birth);
+  // ── Birthday Twin Reveal ──
+  renderBirthdayTwinReveal(birth);
+
+  // ── Planet Age ──
+  renderPlanetAge(birth);
+
+  // ── Life Moments ──
+  renderLifeMoments(birth);
 
   // ── Peak Years ──
   renderPeakYears(birth);
@@ -449,19 +583,7 @@ function buildFullCalendar(birth){
 }
 
 function renderTimeTwin(birth){
-  var twin=getTimeTwin(birth);
-  if(!twin)return;
-  setText('twin-avatar',twin.icon);
-  setText('twin-name',twin.name);
-  setText('twin-role',twin.role);
-  setText('twin-born',twin.born);
-  var others=TIME_TWINS.filter(function(t){return t.name!==twin.name;}).slice(0,5);
-  var othersEl=el('twin-others');
-  if(othersEl){
-    othersEl.innerHTML=others.map(function(o){
-      return '<div class="twin-other-avatar" title="'+o.name+'">'+o.icon+'</div>';
-    }).join('')+'<div class="twin-more">+12</div>';
-  }
+  // Legacy stub — twin reveal is now handled by renderBirthdayTwinReveal
 }
 
 function renderHistory(birth){
@@ -497,13 +619,44 @@ function openShare(){
   var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
   var daysLeft=Math.max(0,totalDays-t.day);
   var weekendsLeft=Math.floor(daysLeft/7);
+  var twin=getTimeTwin(_birth);
   setText('sc-pct',Math.round(pct)+'%');
   setText('sc-weekends','~'+fmt(weekendsLeft)+' weekends remaining');
   var savedName=localStorage.getItem('aw_name')||'';
   setText('sc-name-card',savedName||b.yy+' years old');
   var statsEl=el('sc-stats-card');
-  if(statsEl)statsEl.innerHTML=fmt(t.day)+' days lived &nbsp;&middot;&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;&middot;&nbsp; '+Math.round(pct)+'% of life used';
+  if(statsEl){
+    statsEl.innerHTML=fmt(t.day)+' days lived &nbsp;&middot;&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats';
+    if(twin)statsEl.innerHTML+='<br><span style="color:#c4b5fd;font-size:0.82rem;">Birthday twin: '+twin.icon+' '+twin.name+'</span>';
+  }
   el('share-modal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+
+function openTwinShare(){
+  if(!_birth){
+    alert('Please calculate your life first.');
+    return;
+  }
+  var twins=getTimeTwins(_birth);
+  var b=getBreakdown(_birth);
+  var t=getTotals(_birth);
+  var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
+  var daysLeft=Math.max(0,totalDays-t.day);
+  var weekendsLeft=Math.floor(daysLeft/7);
+  var dateStr=_birth.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  setText('tsc-born','Born '+dateStr);
+  var twinsCardEl=el('tsc-twins-card');
+  if(twinsCardEl){
+    twinsCardEl.innerHTML='<div style="font-size:0.7rem;font-weight:700;letter-spacing:1px;color:#7C5CFF;margin-bottom:10px;">YOU SHARE YOUR BIRTHDAY WITH</div>'+
+      twins.map(function(tw){return '<div style="font-size:1rem;margin:4px 0;">'+tw.icon+' <strong>'+tw.name+'</strong> <span style="color:#64748b;font-size:0.78rem;">'+tw.role+'</span></div>';}).join('');
+  }
+  var twistEl=el('tsc-twist-card');
+  if(twistEl&&twins[0]){
+    twistEl.innerHTML='<div style="font-size:0.82rem;color:#c4b5fd;font-style:italic;margin-top:12px;padding:10px;background:rgba(124,92,255,0.1);border-radius:8px;">'+twins[0].trait+'</div>';
+  }
+  setText('tsc-weekends-card','You have ~'+fmt(weekendsLeft)+' weekends left. What will you do with them?');
+  el('twin-share-modal').classList.remove('hidden');
   document.body.style.overflow='hidden';
 }
 
@@ -553,7 +706,6 @@ document.getElementById('btn-reveal').addEventListener('click',function(){
   this.classList.add('hidden');
   el('hero-dob').focus();
 });
-
 // Calculate
 document.getElementById('btn-calculate').addEventListener('click',function(){
   var dob=el('hero-dob').value;
@@ -588,6 +740,51 @@ document.getElementById('share-close').addEventListener('click',function(){
 });
 document.getElementById('share-modal').addEventListener('click',function(e){
   if(e.target===this){el('share-modal').classList.add('hidden');document.body.style.overflow='';}
+});
+
+// Twin share
+document.getElementById('btn-twin-share').addEventListener('click',openTwinShare);
+document.getElementById('twin-share-close').addEventListener('click',function(){
+  el('twin-share-modal').classList.add('hidden');
+  document.body.style.overflow='';
+});
+document.getElementById('twin-share-modal').addEventListener('click',function(e){
+  if(e.target===this){el('twin-share-modal').classList.add('hidden');document.body.style.overflow='';}
+});
+
+// Download twin share card
+document.getElementById('btn-download-twin-share').addEventListener('click',function(){
+  var card=el('twin-share-card');
+  if(typeof html2canvas==='undefined'){alert('Download not available. Please screenshot instead.');return;}
+  var btn=this;
+  btn.textContent='Generating...';
+  btn.disabled=true;
+  html2canvas(card,{backgroundColor:'#0d0b1e',scale:2}).then(function(canvas){
+    var a=document.createElement('a');
+    a.download='agewise-twin-card.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+    btn.textContent='Downloaded!';
+    setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Twin Card';btn.disabled=false;},2000);
+  }).catch(function(){
+    btn.textContent='\u2B07\uFE0F Download Twin Card';
+    btn.disabled=false;
+    alert('Download failed. Please screenshot instead.');
+  });
+});
+
+// Life moments tabs
+document.getElementById('lm-tab-past').addEventListener('click',function(){
+  el('lm-past').classList.remove('hidden');
+  el('lm-future').classList.add('hidden');
+  el('lm-tab-past').classList.add('active');
+  el('lm-tab-future').classList.remove('active');
+});
+document.getElementById('lm-tab-future').addEventListener('click',function(){
+  el('lm-future').classList.remove('hidden');
+  el('lm-past').classList.add('hidden');
+  el('lm-tab-future').classList.add('active');
+  el('lm-tab-past').classList.remove('active');
 });
 
 // Download share card
@@ -638,23 +835,6 @@ document.getElementById('btn-full-calendar').addEventListener('click',function()
 });
 document.getElementById('btn-close-calendar').addEventListener('click',function(){
   el('full-calendar-section').classList.add('hidden');
-});
-
-// View all twins
-document.getElementById('btn-all-twins').addEventListener('click',function(){
-  if(!_birth)return;
-  var m=_birth.getMonth()+1;
-  var twins=TIME_TWINS.filter(function(t){return t.month===m;});
-  if(!twins.length)twins=TIME_TWINS.slice(0,6);
-  var listEl=el('twin-others');
-  if(listEl){
-    listEl.innerHTML=twins.map(function(o){
-      return '<div class="twin-other-avatar" title="'+o.name+'" style="width:auto;border-radius:8px;padding:6px 10px;font-size:0.78rem;gap:6px;display:flex;align-items:center;"><span>'+o.icon+'</span><span style="color:#c4b5fd;font-weight:600;">'+o.name+'</span></div>';
-    }).join('');
-    this.textContent='Show Less \u2191';
-    var self=this;
-    this.onclick=function(){renderTimeTwin(_birth);self.textContent='View All Time Twins \u2192';self.onclick=null;};
-  }
 });
 
 // More events
