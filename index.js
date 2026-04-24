@@ -165,8 +165,9 @@ var MONTH_EVENTS={
 };
 
 // ── Main render ───────────────────────────────────────────────
-function renderAll(birth){
+function renderAll(birth,name){
   _birth=birth;
+  var _name=name||'';
   var b=getBreakdown(birth);
   var t=getTotals(birth);
   var ageYears=b.yy+b.mo/12;
@@ -185,7 +186,6 @@ function renderAll(birth){
   if(ringEl){ringEl.style.strokeDasharray=circ;ringEl.style.strokeDashoffset=offset;}
   setText('ring-pct',Math.round(pct)+'%');
   setText('ring-days',fmt(t.day)+' of '+fmt(totalDays)+' days');
-  // move dot
   var dotEl=el('ring-dot');
   if(dotEl){
     var angle=(pct/100)*360-90;
@@ -196,7 +196,7 @@ function renderAll(birth){
   }
 
   // ── Stats row ──
-  setText('stat-age',(b.yy+b.mo/12).toFixed(1));
+  setText('stat-age',b.yy+' yrs '+b.mo+' mo');
   setText('stat-age-days',fmt(t.day)+' days');
   setText('stat-days-used',fmt(t.day));
   setText('stat-hours-used',fmt(t.hr)+' hours');
@@ -217,8 +217,8 @@ function renderAll(birth){
   setText('lt-total-days',fmt(totalDays)+' days');
   setText('lt-death-date',deathStr);
 
-  // ── Mini Calendar ──
-  buildMiniCalendar(birth,t.day);
+  // ── Mini Calendar — show 10 years worth ──
+  buildMiniCalendar(birth,t.day,10);
 
   // ── Time Twin ──
   renderTimeTwin(birth);
@@ -237,7 +237,7 @@ function renderAll(birth){
   setText('bd-stone',getBirthStone(m));
   setText('bd-flower',getBirthFlower(m));
 
-  // ── Country events (use history events) ──
+  // ── Country events ──
   var countryEl=el('country-events');
   var histEvents=getHistoryEvents(birth);
   if(countryEl){
@@ -253,7 +253,7 @@ function renderAll(birth){
   setText('ff-weekends',fmt(Math.floor(t.wk)));
   setText('ff-mondays',fmt(Math.floor(t.day/7)));
 
-  // ── History date label ──
+  // ── Labels ──
   setText('history-date-label','Major events that happened on '+birth.toLocaleDateString('en-US',{month:'long',day:'numeric'}));
   setText('month-label','What happened in '+birth.toLocaleDateString('en-US',{month:'long'}));
 
@@ -261,7 +261,16 @@ function renderAll(birth){
   setText('cal-date-start',birthStr);
   setText('cal-date-end',deathStr);
   var weeksLived=Math.floor(t.day/7);
+  var totalWeeks=AVG_LIFESPAN_YEARS*52;
   setText('cal-week-now','Week '+fmt(weeksLived));
+  setText('cal-week-end','Week '+fmt(totalWeeks));
+
+  // ── Share card name ──
+  if(_name){
+    setText('sc-name-card',_name);
+  } else {
+    setText('sc-name-card',b.yy+' years old');
+  }
 
   // ── Start live ticker ──
   clearInterval(window._ticker);
@@ -270,6 +279,7 @@ function renderAll(birth){
 
   // ── Save ──
   localStorage.setItem('aw_dob',birth.toISOString().split('T')[0]);
+  if(_name)localStorage.setItem('aw_name',_name);
 }
 
 function tickUpdate(birth){
@@ -281,7 +291,8 @@ function tickUpdate(birth){
   var daysLeft=Math.max(0,totalDays-t.day);
   setText('ring-pct',Math.round(pct)+'%');
   setText('ring-days',fmt(t.day)+' of '+fmt(totalDays)+' days');
-  setText('stat-age',(ageYears).toFixed(4));
+  setText('stat-age',b.yy+' yrs '+b.mo+' mo');
+  setText('stat-age-days',fmt(t.day)+' days');
   setText('stat-days-used',fmt(t.day));
   setText('stat-hours-used',fmt(t.hr)+' hours');
   setText('stat-days-left',fmt(daysLeft));
@@ -290,12 +301,12 @@ function tickUpdate(birth){
   setText('ff-heartbeats',fmtShort(Math.floor(t.day*24*60*70)));
 }
 
-function buildMiniCalendar(birth,daysLived){
+function buildMiniCalendar(birth,daysLived,years){
   var grid=el('mini-cal-grid');
   if(!grid)return;
   var totalWeeks=AVG_LIFESPAN_YEARS*52;
   var weeksLived=Math.floor(daysLived/7);
-  var show=Math.min(totalWeeks,52*2); // show 2 years worth in mini
+  var show=Math.min(totalWeeks,52*(years||10));
   var frag=document.createDocumentFragment();
   for(var w=0;w<show;w++){
     var cell=document.createElement('div');
@@ -364,17 +375,21 @@ function renderMonthEvents(birth){
 // ── Calculate button ──────────────────────────────────────────
 document.getElementById('btn-calculate').addEventListener('click',function(){
   var dob=el('hero-dob').value;
+  var name=(el('hero-name').value||'').trim();
   var errEl=el('hero-error');
   errEl.classList.add('hidden');
   if(!dob){errEl.textContent='Please enter your date of birth.';errEl.classList.remove('hidden');return;}
   var birth=parseDOB(dob);
   if(birth>new Date()){errEl.textContent='Date of birth cannot be in the future.';errEl.classList.remove('hidden');return;}
-  renderAll(birth);
+  renderAll(birth,name);
   track('calculate','main');
 });
 
 // Enter key on input
 document.getElementById('hero-dob').addEventListener('keydown',function(e){
+  if(e.key==='Enter')document.getElementById('btn-calculate').click();
+});
+document.getElementById('hero-name').addEventListener('keydown',function(e){
   if(e.key==='Enter')document.getElementById('btn-calculate').click();
 });
 
@@ -391,14 +406,22 @@ document.getElementById('btn-close-calendar').addEventListener('click',function(
 
 // ── Share ─────────────────────────────────────────────────────
 function openShare(){
-  if(!_birth)return;
+  if(!_birth){
+    alert('Please calculate your life first by entering your date of birth.');
+    document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+    return;
+  }
   var t=getTotals(_birth);
   var b=getBreakdown(_birth);
   var pct=Math.min(100,((b.yy+b.mo/12)/AVG_LIFESPAN_YEARS)*100);
   setText('sc-pct',Math.round(pct)+'%');
-  setText('sc-name-card',b.yy+' years old');
+  var savedName=localStorage.getItem('aw_name')||'';
+  setText('sc-name-card',savedName||b.yy+' years old');
   var statsEl=el('sc-stats-card');
-  if(statsEl)statsEl.innerHTML=fmt(t.day)+' days lived &nbsp;·&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats';
+  if(statsEl)statsEl.innerHTML=
+    fmt(t.day)+' days lived &nbsp;·&nbsp; '+
+    fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;·&nbsp; '+
+    Math.round(pct)+'% of life used';
   el('share-modal').classList.remove('hidden');
   document.body.style.overflow='hidden';
 }
@@ -413,12 +436,76 @@ document.getElementById('share-modal').addEventListener('click',function(e){
 document.getElementById('btn-download-share').addEventListener('click',function(){
   var card=el('share-card');
   if(typeof html2canvas==='undefined'){alert('Download not available. Please screenshot instead.');return;}
-  html2canvas(card,{backgroundColor:null,scale:2}).then(function(canvas){
+  var btn=this;
+  btn.textContent='⏳ Generating...';
+  btn.disabled=true;
+  html2canvas(card,{backgroundColor:'#0d0b1e',scale:2}).then(function(canvas){
     var a=document.createElement('a');
     a.download='agewise-life-card.png';
     a.href=canvas.toDataURL('image/png');
     a.click();
+    btn.textContent='✅ Downloaded!';
+    setTimeout(function(){btn.textContent='⬇️ Download Card';btn.disabled=false;},2000);
+  }).catch(function(){
+    btn.textContent='⬇️ Download Card';
+    btn.disabled=false;
+    alert('Download failed. Please screenshot instead.');
   });
+});
+
+// ── Missing button handlers ───────────────────────────────────
+document.getElementById('btn-all-twins').addEventListener('click',function(){
+  if(!_birth)return;
+  var m=_birth.getMonth()+1,d=_birth.getDate();
+  var twins=TIME_TWINS.filter(function(t){return t.month===m;});
+  if(!twins.length)twins=TIME_TWINS.slice(0,6);
+  var listEl=el('twin-others');
+  if(listEl){
+    listEl.innerHTML=twins.map(function(o){
+      return '<div class="twin-other-avatar" title="'+o.name+'" style="width:auto;border-radius:8px;padding:6px 10px;font-size:0.78rem;gap:6px;display:flex;align-items:center;">'+
+        '<span>'+o.icon+'</span><span style="color:#c4b5fd;font-weight:600;">'+o.name+'</span></div>';
+    }).join('');
+    this.textContent='Show Less ↑';
+    this.onclick=function(){renderTimeTwin(_birth);this.textContent='View All Time Twins →';this.onclick=null;};
+  }
+});
+
+document.getElementById('btn-more-events').addEventListener('click',function(){
+  if(!_birth)return;
+  var allEvents=getHistoryEvents(_birth);
+  var listEl=el('history-list');
+  if(listEl){
+    var colors=['history-dot-green','history-dot-yellow','history-dot-blue'];
+    listEl.innerHTML=allEvents.map(function(e,i){
+      return '<div class="history-item"><span class="history-dot '+colors[i%3]+'"></span><span class="history-year">'+e.y+'</span><span class="history-text">'+e.t+'</span></div>';
+    }).join('');
+    this.style.display='none';
+  }
+});
+
+document.getElementById('btn-explore-more').addEventListener('click',function(){
+  if(!_birth)return;
+  var m=_birth.getMonth()+1;
+  var allMonthEvents=MONTH_EVENTS[m]||MONTH_EVENTS[8];
+  var listEl=el('month-list');
+  if(listEl){
+    listEl.innerHTML=allMonthEvents.map(function(e){
+      return '<div class="month-item"><span class="month-icon">'+e.icon+'</span><span class="month-year">'+e.y+'</span><span class="month-text">'+e.t+'</span><span class="month-arrow">›</span></div>';
+    }).join('');
+    this.style.display='none';
+  }
+});
+
+document.getElementById('btn-country-more').addEventListener('click',function(){
+  if(!_birth)return;
+  var events=getHistoryEvents(_birth);
+  var countryEl=el('country-events');
+  if(countryEl){
+    countryEl.innerHTML=events.map(function(e){
+      return '<div class="ce-item-sm"><span class="ce-year">'+e.y+'</span>'+e.t+'</div>';
+    }).join('');
+    this.style.display='none';
+  }
 });
 
 // ── Nav smooth scroll ─────────────────────────────────────────
@@ -434,11 +521,10 @@ document.querySelectorAll('.nav-item').forEach(function(a){
   });
 });
 
-// ── Restore last DOB ──────────────────────────────────────────
+// ── Restore last DOB + name ───────────────────────────────────
 (function(){
-  var saved=localStorage.getItem('aw_dob');
-  if(saved){
-    var inp=el('hero-dob');
-    if(inp)inp.value=saved;
-  }
+  var savedDob=localStorage.getItem('aw_dob');
+  var savedName=localStorage.getItem('aw_name');
+  if(savedDob){var inp=el('hero-dob');if(inp)inp.value=savedDob;}
+  if(savedName){var nameInp=el('hero-name');if(nameInp)nameInp.value=savedName;}
 })();
