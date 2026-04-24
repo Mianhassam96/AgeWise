@@ -102,9 +102,14 @@
 
       <!-- Right: quote + image -->
       <div class="hero-right">
-        <div class="hero-quote">
+        <div class="hero-quote" id="hero-quote-default">
           <p>Every second is a step<br>toward your story.</p>
           <p class="hero-quote-bold">Make it meaningful.</p>
+        </div>
+        <div class="hero-quote hidden" id="hero-quote-result">
+          <p class="hqr-line1" id="hqr-line1"></p>
+          <p class="hqr-line2" id="hqr-line2"></p>
+          <p class="hqr-line3" id="hqr-line3"></p>
         </div>
         <div class="hero-silhouette" aria-hidden="true">
           <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -153,6 +158,21 @@
 
   <!-- ── RESULTS (hidden until calculated) ── -->
   <div id="results-section" class="hidden">
+
+    <!-- ── EMOTIONAL RESULT BANNER ── -->
+    <section class="result-banner" id="result-banner">
+      <div class="rb-inner">
+        <div class="rb-main">
+          <div class="rb-shock" id="rb-shock"></div>
+          <div class="rb-insight" id="rb-insight"></div>
+        </div>
+        <div class="rb-actions">
+          <button class="rb-btn-share" id="rb-btn-share">📸 Share My Result</button>
+          <button class="rb-btn-compare" id="rb-btn-compare">👥 Compare with Friend</button>
+        </div>
+        <div class="rb-weekends" id="rb-weekends"></div>
+      </div>
+    </section>
 
     <!-- Stats Row -->
     <section class="stats-row">
@@ -204,6 +224,16 @@
         </div>
       </div>
     </section>
+
+    <!-- 3-column grid -->
+    <div class="explore-toggle-wrap">
+      <button class="btn-explore-toggle" id="btn-explore-toggle">
+        <span>✨ Explore Your Full Life Report</span>
+        <span class="explore-arrow">↓</span>
+      </button>
+    </div>
+
+    <div class="explore-content hidden" id="explore-content">
 
     <!-- 3-column grid -->
     <section class="grid-3col">
@@ -413,6 +443,8 @@
         <button class="btn-outline" id="btn-close-calendar">Close Calendar</button>
       </div>
     </section>
+
+    </div><!-- end explore-content -->
 
   </div><!-- end results-section -->
 

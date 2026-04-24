@@ -272,7 +272,70 @@ function renderAll(birth,name){
     setText('sc-name-card',b.yy+' years old');
   }
 
-  // ── Start live ticker ──
+  // ── Emotional result banner ──
+  var b2=getBreakdown(birth);
+  var t2=getTotals(birth);
+  var pct2=Math.round(Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100));
+  var daysLeft2=Math.max(0,totalDays-t2.day);
+  var weekendsLeft=Math.floor(daysLeft2/7);
+  var shockEl=el('rb-shock');
+  var insightEl=el('rb-insight');
+  if(shockEl){
+    var namePrefix=_name?_name+', you have':'You have';
+    if(pct2>=50){
+      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life. More than half is gone.';
+    } else if(pct2>=30){
+      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life — and most people your age never stop to notice.';
+    } else {
+      shockEl.innerHTML='You have already used <strong>'+pct2+'%</strong> of your life. The clock started the day you were born.';
+    }
+  }
+  if(insightEl){
+    insightEl.innerHTML=
+      'You have lived <strong>'+fmt(t2.day)+' days</strong> and have roughly <strong>'+fmt(daysLeft2)+' days left</strong>. '+
+      'Most people waste the next 25%. You don\'t have to.';
+  }
+  var weekendsEl=el('rb-weekends');
+  if(weekendsEl){
+    weekendsEl.innerHTML='You have only <strong>~'+fmt(weekendsLeft)+'</strong> weekends left. Use them well.';
+  }
+
+  // ── Animate ring count-up ──
+  var ringProgressEl=el('ring-progress');
+  if(ringProgressEl){
+    var circFull=2*Math.PI*110;
+    ringProgressEl.style.strokeDasharray=circFull;
+    ringProgressEl.style.strokeDashoffset=circFull;
+    setTimeout(function(){
+      ringProgressEl.style.transition='stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
+      ringProgressEl.style.strokeDashoffset=circ-(pct/100)*circ;
+    },200);
+    // count-up the % text
+    var startPct=0;
+    var targetPct=Math.round(pct);
+    var step=targetPct/60;
+    var counter=setInterval(function(){
+      startPct+=step;
+      if(startPct>=targetPct){startPct=targetPct;clearInterval(counter);}
+      setText('ring-pct',Math.floor(startPct)+'%');
+    },25);
+  }
+
+  // ── Update right-side quote ──
+  var qDefault=el('hero-quote-default');
+  var qResult=el('hero-quote-result');
+  if(qDefault)qDefault.classList.add('hidden');
+  if(qResult){
+    qResult.classList.remove('hidden');
+    setText('hqr-line1','You\'ve already spent '+pct2+'% of your life.');
+    setText('hqr-line2','You have ~'+fmt(daysLeft2)+' days left.\nWhat will you do with them?');
+    setText('hqr-line3','"The best time to start was yesterday. The next best time is now."');
+  }
+
+  // ── Highlight the Life Used stat card ──
+  var statCards=document.querySelectorAll('.stat-card');
+  statCards.forEach(function(c){c.classList.remove('stat-card-highlight');});
+  if(statCards[3])statCards[3].classList.add('stat-card-highlight');
   clearInterval(window._ticker);
   window._ticker=setInterval(function(){tickUpdate(birth);},1000);
   tickUpdate(birth);
@@ -453,7 +516,51 @@ document.getElementById('btn-download-share').addEventListener('click',function(
   });
 });
 
-// ── Missing button handlers ───────────────────────────────────
+// ── Explore toggle ────────────────────────────────────────────
+document.getElementById('btn-explore-toggle').addEventListener('click',function(){
+  var content=el('explore-content');
+  var arrow=this.querySelector('.explore-arrow');
+  var isHidden=content.classList.contains('hidden');
+  content.classList.toggle('hidden');
+  arrow.classList.toggle('open',isHidden);
+  this.querySelector('span').textContent=isHidden?'✨ Hide Full Life Report':'✨ Explore Your Full Life Report';
+  if(isHidden)content.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// ── Result banner share/compare ───────────────────────────────
+document.getElementById('rb-btn-share').addEventListener('click',openShare);
+document.getElementById('rb-btn-compare').addEventListener('click',function(){
+  if(!_birth)return;
+  // Pre-fill compare: scroll to hero, show a compare prompt
+  var d=_birth;
+  var savedName=localStorage.getItem('aw_name')||'';
+  // Store current user as person A in sessionStorage for compare
+  sessionStorage.setItem('aw_compare_a',JSON.stringify({
+    name:savedName,
+    dob:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')
+  }));
+  // Show a simple prompt
+  var friendDob=prompt('Enter your friend\'s date of birth (YYYY-MM-DD):');
+  if(!friendDob)return;
+  var friendBirth=parseDOB(friendDob);
+  if(isNaN(friendBirth.getTime())||friendBirth>new Date()){alert('Invalid date.');return;}
+  var friendName=prompt('Enter their name (optional):')||'Friend';
+  showComparison(_birth,savedName||'You',friendBirth,friendName);
+});
+
+function showComparison(birth1,name1,birth2,name2){
+  var t1=getTotals(birth1),t2=getTotals(birth2);
+  var b1=getBreakdown(birth1),b2=getBreakdown(birth2);
+  var pct1=Math.round(Math.min(100,((b1.yy+b1.mo/12)/AVG_LIFESPAN_YEARS)*100));
+  var pct2=Math.round(Math.min(100,((b2.yy+b2.mo/12)/AVG_LIFESPAN_YEARS)*100));
+  var older=birth1<birth2?name1:name2;
+  var diffDays=Math.abs(t1.day-t2.day);
+  var msg=older+' is older by '+fmt(diffDays)+' days.\n\n'+
+    name1+': '+pct1+'% of life used ('+fmt(t1.day)+' days)\n'+
+    name2+': '+pct2+'% of life used ('+fmt(t2.day)+' days)\n\n'+
+    'Difference: '+Math.abs(pct1-pct2)+'% of life';
+  alert(msg);
+}
 document.getElementById('btn-all-twins').addEventListener('click',function(){
   if(!_birth)return;
   var m=_birth.getMonth()+1,d=_birth.getDate();
