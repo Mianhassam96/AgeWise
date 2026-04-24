@@ -29,16 +29,33 @@ function bornDay(birth){return birth.toLocaleDateString('en-US',{weekday:'long'}
 function el(id){return document.getElementById(id);}
 function setText(id,v){var e=el(id);if(e)e.textContent=v;}
 
-// ── Zodiac / Chinese Zodiac / Birth details ───────────────────
+// ── Zodiac ────────────────────────────────────────────────────
 function getZodiac(m,d){
-  var signs=[['Capricorn',12,22],['Aquarius',1,20],['Pisces',2,19],['Aries',3,21],['Taurus',4,20],['Gemini',5,21],['Cancer',6,21],['Leo',7,23],['Virgo',8,23],['Libra',9,23],['Scorpio',10,23],['Sagittarius',11,22],['Capricorn',12,32]];
-  var emojis={Capricorn:'♑',Aquarius:'♒',Pisces:'♓',Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐'};
-  for(var i=0;i<signs.length;i++){if(m===signs[i][1]&&d>=signs[i][2]){return signs[i][0]+' '+emojis[signs[i][0]];}}
-  return signs[m-1][0]+' '+emojis[signs[m-1][0]];
+  var signs=[
+    [1,1,19,'Capricorn'],[1,20,31,'Aquarius'],
+    [2,1,18,'Pisces'],[2,19,29,'Pisces'],
+    [3,1,20,'Pisces'],[3,21,31,'Aries'],
+    [4,1,19,'Aries'],[4,20,30,'Taurus'],
+    [5,1,20,'Taurus'],[5,21,31,'Gemini'],
+    [6,1,20,'Gemini'],[6,21,30,'Cancer'],
+    [7,1,22,'Cancer'],[7,23,31,'Leo'],
+    [8,1,22,'Leo'],[8,23,31,'Virgo'],
+    [9,1,22,'Virgo'],[9,23,30,'Libra'],
+    [10,1,22,'Libra'],[10,23,31,'Scorpio'],
+    [11,1,21,'Scorpio'],[11,22,30,'Sagittarius'],
+    [12,1,21,'Sagittarius'],[12,22,31,'Capricorn']
+  ];
+  var emojis={Capricorn:'\u2651',Aquarius:'\u2652',Pisces:'\u2653',Aries:'\u2648',Taurus:'\u2649',Gemini:'\u264A',Cancer:'\u264B',Leo:'\u264C',Virgo:'\u264D',Libra:'\u264E',Scorpio:'\u264F',Sagittarius:'\u2650'};
+  for(var i=0;i<signs.length;i++){
+    if(m===signs[i][0]&&d>=signs[i][1]&&d<=signs[i][2]){
+      return signs[i][3]+' '+emojis[signs[i][3]];
+    }
+  }
+  return 'Capricorn \u2651';
 }
 function getChineseZodiac(year){
   var animals=['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
-  var emojis=['🐀','🐂','🐅','🐇','🐉','🐍','🐎','🐐','🐒','🐓','🐕','🐖'];
+  var emojis=['\uD83D\uDC00','\uD83D\uDC02','\uD83D\uDC05','\uD83D\uDC07','\uD83D\uDC09','\uD83D\uDC0D','\uD83D\uDC0E','\uD83D\uDC10','\uD83D\uDC12','\uD83D\uDC13','\uD83D\uDC15','\uD83D\uDC16'];
   var idx=((year-1900)%12+12)%12;
   return animals[idx]+' '+emojis[idx];
 }
@@ -51,31 +68,50 @@ function getBirthFlower(m){
   return f[m-1];
 }
 
+// ── Particles ─────────────────────────────────────────────────
+function initParticles(){
+  var container=el('hero-particles');
+  if(!container)return;
+  container.innerHTML='';
+  var colors=['rgba(124,92,255,0.6)','rgba(255,77,141,0.5)','rgba(96,165,250,0.4)','rgba(251,191,36,0.3)'];
+  for(var i=0;i<28;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    var size=Math.random()*4+2;
+    var left=Math.random()*100;
+    var delay=Math.random()*8;
+    var dur=Math.random()*10+8;
+    var color=colors[Math.floor(Math.random()*colors.length)];
+    p.style.cssText='width:'+size+'px;height:'+size+'px;left:'+left+'%;bottom:-10px;background:'+color+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+    container.appendChild(p);
+  }
+}
+
 // ── Time Twins ────────────────────────────────────────────────
 var TIME_TWINS=[
-  {month:1,day:3,name:'J.R.R. Tolkien',icon:'📖',role:'Author, Lord of the Rings',born:'Born on 3 Jan 1892'},
-  {month:1,day:8,name:'Stephen Hawking',icon:'🌌',role:'Physicist',born:'Born on 8 Jan 1942'},
-  {month:1,day:17,name:'Muhammad Ali',icon:'🥊',role:'Boxing Legend',born:'Born on 17 Jan 1942'},
-  {month:2,day:6,name:'Bob Marley',icon:'🎵',role:'Reggae Legend',born:'Born on 6 Feb 1945'},
-  {month:2,day:11,name:'Thomas Edison',icon:'💡',role:'Inventor',born:'Born on 11 Feb 1847'},
-  {month:3,day:14,name:'Albert Einstein',icon:'🧠',role:'Physicist',born:'Born on 14 Mar 1879'},
-  {month:4,day:15,name:'Leonardo da Vinci',icon:'🎨',role:'Renaissance Genius',born:'Born on 15 Apr 1452'},
-  {month:4,day:23,name:'William Shakespeare',icon:'🎭',role:'Playwright',born:'Born on 23 Apr 1564'},
-  {month:5,day:5,name:'Karl Marx',icon:'📜',role:'Philosopher',born:'Born on 5 May 1818'},
-  {month:6,day:1,name:'Marilyn Monroe',icon:'💫',role:'Actress & Icon',born:'Born on 1 Jun 1926'},
-  {month:6,day:12,name:'Anne Frank',icon:'📓',role:'Diarist',born:'Born on 12 Jun 1929'},
-  {month:7,day:18,name:'Nelson Mandela',icon:'✊',role:'President & Activist',born:'Born on 18 Jul 1918'},
-  {month:8,day:4,name:'Barack Obama',icon:'🌍',role:'44th US President',born:'Born on 4 Aug 1961'},
-  {month:8,day:15,name:'Napoleon Bonaparte',icon:'⚔️',role:'French Emperor',born:'Born on 15 Aug 1769'},
-  {month:9,day:5,name:'Freddie Mercury',icon:'🎤',role:'Queen Frontman',born:'Born on 5 Sep 1946'},
-  {month:9,day:15,name:'Agatha Christie',icon:'🔍',role:'Mystery Writer',born:'Born on 15 Sep 1890'},
-  {month:10,day:2,name:'Mahatma Gandhi',icon:'🕊️',role:'Independence Leader',born:'Born on 2 Oct 1869'},
-  {month:10,day:9,name:'John Lennon',icon:'🎵',role:'Beatle & Activist',born:'Born on 9 Oct 1940'},
-  {month:11,day:9,name:'Carl Sagan',icon:'🌌',role:'Astronomer',born:'Born on 9 Nov 1934'},
-  {month:11,day:30,name:'Mark Twain',icon:'✍️',role:'American Author',born:'Born on 30 Nov 1835'},
-  {month:12,day:5,name:'Walt Disney',icon:'✨',role:'Animation Pioneer',born:'Born on 5 Dec 1901'},
-  {month:12,day:25,name:'Isaac Newton',icon:'🍎',role:'Physicist & Mathematician',born:'Born on 25 Dec 1642'},
-  {month:12,day:16,name:'Ludwig van Beethoven',icon:'🎹',role:'Classical Composer',born:'Born on 16 Dec 1770'}
+  {month:1,day:3,name:'J.R.R. Tolkien',icon:'\uD83D\uDCD6',role:'Author, Lord of the Rings',born:'Born on 3 Jan 1892'},
+  {month:1,day:8,name:'Stephen Hawking',icon:'\uD83C\uDF0C',role:'Physicist',born:'Born on 8 Jan 1942'},
+  {month:1,day:17,name:'Muhammad Ali',icon:'\uD83E\uDD4A',role:'Boxing Legend',born:'Born on 17 Jan 1942'},
+  {month:2,day:6,name:'Bob Marley',icon:'\uD83C\uDFB5',role:'Reggae Legend',born:'Born on 6 Feb 1945'},
+  {month:2,day:11,name:'Thomas Edison',icon:'\uD83D\uDCA1',role:'Inventor',born:'Born on 11 Feb 1847'},
+  {month:3,day:14,name:'Albert Einstein',icon:'\uD83E\uDDE0',role:'Physicist',born:'Born on 14 Mar 1879'},
+  {month:4,day:15,name:'Leonardo da Vinci',icon:'\uD83C\uDFA8',role:'Renaissance Genius',born:'Born on 15 Apr 1452'},
+  {month:4,day:23,name:'William Shakespeare',icon:'\uD83C\uDFAD',role:'Playwright',born:'Born on 23 Apr 1564'},
+  {month:5,day:5,name:'Karl Marx',icon:'\uD83D\uDCDC',role:'Philosopher',born:'Born on 5 May 1818'},
+  {month:6,day:1,name:'Marilyn Monroe',icon:'\uD83D\uDCAB',role:'Actress & Icon',born:'Born on 1 Jun 1926'},
+  {month:6,day:12,name:'Anne Frank',icon:'\uD83D\uDCD3',role:'Diarist',born:'Born on 12 Jun 1929'},
+  {month:7,day:18,name:'Nelson Mandela',icon:'\u270A',role:'President & Activist',born:'Born on 18 Jul 1918'},
+  {month:8,day:4,name:'Barack Obama',icon:'\uD83C\uDF0D',role:'44th US President',born:'Born on 4 Aug 1961'},
+  {month:8,day:15,name:'Napoleon Bonaparte',icon:'\u2694\uFE0F',role:'French Emperor',born:'Born on 15 Aug 1769'},
+  {month:9,day:5,name:'Freddie Mercury',icon:'\uD83C\uDFA4',role:'Queen Frontman',born:'Born on 5 Sep 1946'},
+  {month:9,day:15,name:'Agatha Christie',icon:'\uD83D\uDD0D',role:'Mystery Writer',born:'Born on 15 Sep 1890'},
+  {month:10,day:2,name:'Mahatma Gandhi',icon:'\uD83D\uDD4A\uFE0F',role:'Independence Leader',born:'Born on 2 Oct 1869'},
+  {month:10,day:9,name:'John Lennon',icon:'\uD83C\uDFB5',role:'Beatle & Activist',born:'Born on 9 Oct 1940'},
+  {month:11,day:9,name:'Carl Sagan',icon:'\uD83C\uDF0C',role:'Astronomer',born:'Born on 9 Nov 1934'},
+  {month:11,day:30,name:'Mark Twain',icon:'\u270D\uFE0F',role:'American Author',born:'Born on 30 Nov 1835'},
+  {month:12,day:5,name:'Walt Disney',icon:'\u2728',role:'Animation Pioneer',born:'Born on 5 Dec 1901'},
+  {month:12,day:25,name:'Isaac Newton',icon:'\uD83C\uDF4E',role:'Physicist & Mathematician',born:'Born on 25 Dec 1642'},
+  {month:12,day:16,name:'Ludwig van Beethoven',icon:'\uD83C\uDFB9',role:'Classical Composer',born:'Born on 16 Dec 1770'}
 ];
 function getTimeTwin(birth){
   var m=birth.getMonth()+1,d=birth.getDate();
@@ -87,7 +123,7 @@ function getTimeTwin(birth){
 }
 
 // ── History events ────────────────────────────────────────────
-var HISTORY_EVENTS = {
+var HISTORY_EVENTS={
   '1-1':[{y:1863,t:'Emancipation Proclamation took effect in the US.'},{y:1804,t:'Haiti declared independence from France.'},{y:1958,t:'European Economic Community established.'}],
   '1-8':[{y:1942,t:'Stephen Hawking was born in Oxford, England.'},{y:1935,t:'Elvis Presley was born in Tupelo, Mississippi.'},{y:1815,t:'Battle of New Orleans ended the War of 1812.'}],
   '1-15':[{y:1929,t:'Martin Luther King Jr. was born in Atlanta, Georgia.'},{y:1559,t:'Elizabeth I was crowned Queen of England.'},{y:2009,t:'Miracle on the Hudson: US Airways Flight 1549 landed safely.'}],
@@ -138,9 +174,7 @@ var HISTORY_EVENTS = {
 function getHistoryEvents(birth){
   var key=(birth.getMonth()+1)+'-'+birth.getDate();
   if(HISTORY_EVENTS[key])return HISTORY_EVENTS[key];
-  // Find nearest date in same month
-  var m=birth.getMonth()+1;
-  var d=birth.getDate();
+  var m=birth.getMonth()+1,d=birth.getDate();
   var keys=Object.keys(HISTORY_EVENTS).filter(function(k){return k.split('-')[0]===String(m);});
   if(keys.length){
     keys.sort(function(a,b){return Math.abs(parseInt(a.split('-')[1])-d)-Math.abs(parseInt(b.split('-')[1])-d);});
@@ -150,19 +184,45 @@ function getHistoryEvents(birth){
 }
 
 var MONTH_EVENTS={
-  1:[{icon:'🌍',y:1945,t:'United Nations was founded.'},{icon:'🚀',y:1986,t:'Space Shuttle Challenger disaster.'},{icon:'🎵',y:1964,t:'Beatles arrived in the United States.'}],
-  2:[{icon:'🌍',y:1945,t:'Yalta Conference shaped post-WWII world.'},{icon:'🎬',y:1895,t:'First public film screening by Lumière brothers.'},{icon:'✊',y:1965,t:'Malcolm X was assassinated.'}],
-  3:[{icon:'🌍',y:1945,t:'Battle of Iwo Jima ended.'},{icon:'🔬',y:1876,t:'Alexander Graham Bell patented the telephone.'},{icon:'🎭',y:1616,t:'William Shakespeare died.'}],
-  4:[{icon:'🚀',y:1961,t:'Yuri Gagarin became first human in space.'},{icon:'🌍',y:1912,t:'Titanic sank in the North Atlantic.'},{icon:'🎵',y:1994,t:'Kurt Cobain died.'}],
-  5:[{icon:'🌍',y:1945,t:'World War II ended in Europe (V-E Day).'},{icon:'🔬',y:1953,t:'DNA double helix structure discovered.'},{icon:'⛰️',y:1953,t:'Edmund Hillary summited Mount Everest.'}],
-  6:[{icon:'🌍',y:1944,t:'D-Day: Allied forces landed in Normandy.'},{icon:'🎵',y:1967,t:'Beatles released Sgt. Peppers Lonely Hearts Club Band.'},{icon:'🏆',y:1966,t:'England won the FIFA World Cup.'}],
-  7:[{icon:'🚀',y:1969,t:'Apollo 11 landed on the Moon.'},{icon:'🌍',y:1776,t:'United States declared independence.'},{icon:'🎵',y:1985,t:'Live Aid concert raised millions for Africa.'}],
-  8:[{icon:'🌍',y:1914,t:'World War I began.'},{icon:'✊',y:1963,t:'Martin Luther King Jr. delivered "I Have a Dream" speech.'},{icon:'🏅',y:2000,t:'Summer Olympics held in Sydney, Australia.'}],
-  9:[{icon:'🌍',y:2001,t:'September 11 attacks in the United States.'},{icon:'🔬',y:1928,t:'Alexander Fleming discovered penicillin.'},{icon:'🎵',y:1969,t:'Beatles released Abbey Road album.'}],
-  10:[{icon:'🌍',y:1962,t:'Cuban Missile Crisis began.'},{icon:'🔬',y:1901,t:'First Nobel Prizes were awarded.'},{icon:'🎵',y:1958,t:'Billboard Hot 100 chart was introduced.'}],
-  11:[{icon:'🌍',y:1989,t:'Berlin Wall fell, ending the Cold War.'},{icon:'🔬',y:1895,t:'Wilhelm Röntgen discovered X-rays.'},{icon:'🎵',y:1963,t:'Beatles released "With the Beatles" album.'}],
-  12:[{icon:'🌍',y:1991,t:'Soviet Union officially dissolved.'},{icon:'🚀',y:1972,t:'Apollo 17 — last humans walked on the Moon.'},{icon:'🎵',y:1967,t:'Beatles released Magical Mystery Tour.'}]
+  1:[{icon:'\uD83C\uDF0D',y:1945,t:'United Nations was founded.'},{icon:'\uD83D\uDE80',y:1986,t:'Space Shuttle Challenger disaster.'},{icon:'\uD83C\uDFB5',y:1964,t:'Beatles arrived in the United States.'}],
+  2:[{icon:'\uD83C\uDF0D',y:1945,t:'Yalta Conference shaped post-WWII world.'},{icon:'\uD83C\uDFAC',y:1895,t:'First public film screening by Lumiere brothers.'},{icon:'\u270A',y:1965,t:'Malcolm X was assassinated.'}],
+  3:[{icon:'\uD83C\uDF0D',y:1945,t:'Battle of Iwo Jima ended.'},{icon:'\uD83D\uDD2C',y:1876,t:'Alexander Graham Bell patented the telephone.'},{icon:'\uD83C\uDFAD',y:1616,t:'William Shakespeare died.'}],
+  4:[{icon:'\uD83D\uDE80',y:1961,t:'Yuri Gagarin became first human in space.'},{icon:'\uD83C\uDF0D',y:1912,t:'Titanic sank in the North Atlantic.'},{icon:'\uD83C\uDFB5',y:1994,t:'Kurt Cobain died.'}],
+  5:[{icon:'\uD83C\uDF0D',y:1945,t:'World War II ended in Europe (V-E Day).'},{icon:'\uD83D\uDD2C',y:1953,t:'DNA double helix structure discovered.'},{icon:'\u26F0\uFE0F',y:1953,t:'Edmund Hillary summited Mount Everest.'}],
+  6:[{icon:'\uD83C\uDF0D',y:1944,t:'D-Day: Allied forces landed in Normandy.'},{icon:'\uD83C\uDFB5',y:1967,t:'Beatles released Sgt. Peppers Lonely Hearts Club Band.'},{icon:'\uD83C\uDFC6',y:1966,t:'England won the FIFA World Cup.'}],
+  7:[{icon:'\uD83D\uDE80',y:1969,t:'Apollo 11 landed on the Moon.'},{icon:'\uD83C\uDF0D',y:1776,t:'United States declared independence.'},{icon:'\uD83C\uDFB5',y:1985,t:'Live Aid concert raised millions for Africa.'}],
+  8:[{icon:'\uD83C\uDF0D',y:1914,t:'World War I began.'},{icon:'\u270A',y:1963,t:'Martin Luther King Jr. delivered "I Have a Dream" speech.'},{icon:'\uD83C\uDFC5',y:2000,t:'Summer Olympics held in Sydney, Australia.'}],
+  9:[{icon:'\uD83C\uDF0D',y:2001,t:'September 11 attacks in the United States.'},{icon:'\uD83D\uDD2C',y:1928,t:'Alexander Fleming discovered penicillin.'},{icon:'\uD83C\uDFB5',y:1969,t:'Beatles released Abbey Road album.'}],
+  10:[{icon:'\uD83C\uDF0D',y:1962,t:'Cuban Missile Crisis began.'},{icon:'\uD83D\uDD2C',y:1901,t:'First Nobel Prizes were awarded.'},{icon:'\uD83C\uDFB5',y:1958,t:'Billboard Hot 100 chart was introduced.'}],
+  11:[{icon:'\uD83C\uDF0D',y:1989,t:'Berlin Wall fell, ending the Cold War.'},{icon:'\uD83D\uDD2C',y:1895,t:'Wilhelm Rontgen discovered X-rays.'},{icon:'\uD83C\uDFB5',y:1963,t:'Beatles released "With the Beatles" album.'}],
+  12:[{icon:'\uD83C\uDF0D',y:1991,t:'Soviet Union officially dissolved.'},{icon:'\uD83D\uDE80',y:1972,t:'Apollo 17 - last humans walked on the Moon.'},{icon:'\uD83C\uDFB5',y:1967,t:'Beatles released Magical Mystery Tour.'}]
 };
+
+// ── Peak Years ────────────────────────────────────────────────
+function renderPeakYears(birth){
+  var b=getBreakdown(birth);
+  var age=b.yy;
+  var currentYear=new Date().getFullYear();
+  var birthYear=birth.getFullYear();
+  var peaks=[
+    {icon:'\uD83E\uDDE0',title:'Mental Peak',desc:'Cognitive flexibility and learning speed are highest.',ageRange:'15-25',startAge:15,endAge:25},
+    {icon:'\uD83D\uDCAA',title:'Physical Peak',desc:'Strength, endurance and reaction time at their best.',ageRange:'20-30',startAge:20,endAge:30},
+    {icon:'\uD83D\uDCBC',title:'Career Peak',desc:'Experience meets energy — your most productive decade.',ageRange:'35-50',startAge:35,endAge:50},
+    {icon:'\uD83D\uDCB0',title:'Wealth Peak',desc:'Earnings and net worth typically peak in this window.',ageRange:'45-60',startAge:45,endAge:60},
+    {icon:'\uD83D\uDE4F',title:'Wisdom Peak',desc:'Emotional intelligence and life perspective at their richest.',ageRange:'60-75',startAge:60,endAge:75}
+  ];
+  var container=el('peak-content');
+  if(!container)return;
+  container.innerHTML=peaks.map(function(p){
+    var peakYear1=birthYear+p.startAge;
+    var peakYear2=birthYear+p.endAge;
+    var status='';
+    if(age<p.startAge){status='<span style="color:#7C5CFF;font-size:0.7rem;font-weight:700;">UPCOMING ('+(peakYear1)+')</span>';}
+    else if(age>=p.startAge&&age<=p.endAge){status='<span style="color:#34d399;font-size:0.7rem;font-weight:700;">YOU ARE HERE NOW</span>';}
+    else{status='<span style="color:#475569;font-size:0.7rem;">Completed ('+peakYear1+'-'+peakYear2+')</span>';}
+    return '<div class="peak-item"><div class="peak-icon">'+p.icon+'</div><div><div class="peak-title">'+p.title+' <small style="color:#64748b;font-weight:400;">Age '+p.ageRange+'</small></div><div class="peak-desc">'+p.desc+'</div><div class="peak-age">'+status+'</div></div></div>';
+  }).join('');
+}
 
 // ── Main render ───────────────────────────────────────────────
 function renderAll(birth,name){
@@ -174,23 +234,25 @@ function renderAll(birth,name){
   var pct=Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100);
   var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
   var daysLeft=Math.max(0,totalDays-t.day);
+  var weekendsLeft=Math.floor(daysLeft/7);
 
   // Show results
   el('results-section').classList.remove('hidden');
   el('results-section').scrollIntoView({behavior:'smooth',block:'start'});
 
   // ── Ring ──
-  var circ=2*Math.PI*110;
+  var circ=2*Math.PI*120;
   var offset=circ-(pct/100)*circ;
   var ringEl=el('ring-progress');
   if(ringEl){ringEl.style.strokeDasharray=circ;ringEl.style.strokeDashoffset=offset;}
   setText('ring-pct',Math.round(pct)+'%');
   setText('ring-days',fmt(t.day)+' of '+fmt(totalDays)+' days');
+  // Fix dot position: SVG center is 150,150 radius 120
   var dotEl=el('ring-dot');
   if(dotEl){
     var angle=(pct/100)*360-90;
     var rad=angle*Math.PI/180;
-    var cx=130+110*Math.cos(rad),cy=130+110*Math.sin(rad);
+    var cx=150+120*Math.cos(rad),cy=150+120*Math.sin(rad);
     dotEl.setAttribute('cx',cx.toFixed(1));
     dotEl.setAttribute('cy',cy.toFixed(1));
   }
@@ -204,24 +266,45 @@ function renderAll(birth,name){
   setText('stat-hours-left',fmt(daysLeft*24)+' hours');
   setText('stat-pct',Math.round(pct)+'%');
   setText('stat-pct-left','Still '+Math.round(100-pct)+'% to live');
-  setText('stat-total-days',fmt(totalDays)+' days');
 
-  // ── Life Progress ──
-  var fillEl=el('progress-bar-fill');
-  if(fillEl)setTimeout(function(){fillEl.style.width=pct.toFixed(1)+'%';},100);
-  setText('progress-bar-pct',Math.round(pct)+'%');
-  var birthStr=birth.toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});
-  var deathYear=birth.getFullYear()+AVG_LIFESPAN_YEARS;
-  var deathStr=birth.toLocaleDateString('en-US',{day:'numeric',month:'short'})+' '+deathYear;
-  setText('lt-birth-date',birthStr);
-  setText('lt-total-days',fmt(totalDays)+' days');
-  setText('lt-death-date',deathStr);
+  // ── Big stat section ──
+  var bssMain=el('bss-main');
+  if(bssMain){
+    bssMain.innerHTML='You have <strong>~'+fmt(weekendsLeft)+'</strong> weekends left in your life.';
+  }
+  var bssSupport=el('bss-support');
+  if(bssSupport){
+    if(Math.round(pct)>=50){
+      bssSupport.textContent='You\'ve already used '+Math.round(pct)+'% of your life. More than half is gone.';
+    } else {
+      bssSupport.textContent='You\'ve used '+Math.round(pct)+'% of your life. The clock started the day you were born.';
+    }
+  }
 
-  // ── Mini Calendar — show 10 years worth ──
+  // ── Insight banner ──
+  var ibText=el('ib-text');
+  if(ibText){
+    var phase='';
+    if(b.yy<25)phase='You\'re in the most elastic phase of your life. Risks taken now cost the least and pay the most.';
+    else if(b.yy<35)phase='You\'re in your peak productivity years. The decisions you make now compound harder than any investment.';
+    else if(b.yy<50)phase='You\'ve earned the clarity to know what truly matters. This is when purpose-driven people do their best work.';
+    else if(b.yy<65)phase='The impact you create now outlasts you. Every relationship and project is a thread in your legacy.';
+    else phase='A life richly lived. Your perspective is irreplaceable — the world needs your story.';
+    ibText.textContent=phase;
+  }
+  var ibPhase=el('ib-phase');
+  if(ibPhase){
+    ibPhase.textContent='You have '+fmt(daysLeft)+' days left. Most people waste the next 25%. You don\'t have to.';
+  }
+
+  // ── Mini Calendar ──
   buildMiniCalendar(birth,t.day,10);
 
   // ── Time Twin ──
   renderTimeTwin(birth);
+
+  // ── Peak Years ──
+  renderPeakYears(birth);
 
   // ── History ──
   renderHistory(birth);
@@ -245,7 +328,7 @@ function renderAll(birth,name){
       return '<div class="ce-item-sm"><span class="ce-year">'+e.y+'</span>'+e.t+'</div>';
     }).join('');
   }
-  setText('country-title','🌍 On '+birth.toLocaleDateString('en-US',{month:'long',day:'numeric'}));
+  setText('country-title','\uD83C\uDF0D On '+birth.toLocaleDateString('en-US',{month:'long',day:'numeric'}));
 
   // ── Fun Facts ──
   setText('ff-heartbeats',fmtShort(Math.floor(t.day*24*60*70)));
@@ -258,80 +341,39 @@ function renderAll(birth,name){
   setText('month-label','What happened in '+birth.toLocaleDateString('en-US',{month:'long'}));
 
   // ── Cal week labels ──
+  var birthStr=birth.toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'});
+  var deathYear=birth.getFullYear()+AVG_LIFESPAN_YEARS;
+  var deathStr=birth.toLocaleDateString('en-US',{day:'numeric',month:'short'})+' '+deathYear;
   setText('cal-date-start',birthStr);
   setText('cal-date-end',deathStr);
   var weeksLived=Math.floor(t.day/7);
   var totalWeeks=AVG_LIFESPAN_YEARS*52;
   setText('cal-week-now','Week '+fmt(weeksLived));
-  setText('cal-week-end','Week '+fmt(totalWeeks));
+  setText('cal-week-total',fmt(totalWeeks));
 
-  // ── Share card name ──
-  if(_name){
-    setText('sc-name-card',_name);
-  } else {
-    setText('sc-name-card',b.yy+' years old');
-  }
-
-  // ── Emotional result banner ──
-  var b2=getBreakdown(birth);
-  var t2=getTotals(birth);
-  var pct2=Math.round(Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100));
-  var daysLeft2=Math.max(0,totalDays-t2.day);
-  var weekendsLeft=Math.floor(daysLeft2/7);
-
-  // BIG LINE — weekends (most shocking)
-  var weekendsBigEl=el('rb-weekends-big');
-  if(weekendsBigEl){
-    weekendsBigEl.innerHTML='You only have <strong>~'+fmt(weekendsLeft)+'</strong> weekends left.';
-  }
-
-  // SMALL SUPPORT — % used
-  var shockEl=el('rb-shock');
-  if(shockEl){
-    if(pct2>=50){
-      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life. More than half is gone.';
-    } else if(pct2>=30){
-      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life — and most people your age never stop to notice.';
-    } else {
-      shockEl.innerHTML='You\'ve already used <strong>'+pct2+'%</strong> of your life. The clock started the day you were born.';
-    }
-  }
-
-  // IDENTITY INSIGHT
-  var insightEl=el('rb-insight');
-  if(insightEl){
-    var phase='';
-    if(b2.yy<25)phase='You\'re in the most elastic phase of your life. Risks taken now cost the least and pay the most.';
-    else if(b2.yy<35)phase='You\'re in your peak productivity years. The decisions you make now compound harder than any investment.';
-    else if(b2.yy<50)phase='You\'ve earned the clarity to know what truly matters. This is when purpose-driven people do their best work.';
-    else if(b2.yy<65)phase='The impact you create now outlasts you. Every relationship and project is a thread in your legacy.';
-    else phase='A life richly lived. Your perspective is irreplaceable — the world needs your story.';
-    insightEl.innerHTML=phase+'<br><span style="color:#475569;font-size:0.82rem;">You have <strong style="color:#fbbf24">'+fmt(daysLeft2)+' days</strong> left. Most people waste the next 25%. You don\'t have to.</span>';
-  }
-
-  var weekendsEl=el('rb-weekends');
-  if(weekendsEl)weekendsEl.innerHTML='';
+  // ── Share card ──
+  setText('sc-pct',Math.round(pct)+'%');
+  setText('sc-weekends','~'+fmt(weekendsLeft)+' weekends remaining');
+  if(_name){setText('sc-name-card',_name);}else{setText('sc-name-card',b.yy+' years old');}
+  var scStats=el('sc-stats-card');
+  if(scStats)scStats.innerHTML=fmt(t.day)+' days lived &nbsp;&middot;&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;&middot;&nbsp; '+Math.round(pct)+'% of life used';
 
   // ── Animate ring count-up ──
   var ringProgressEl=el('ring-progress');
   if(ringProgressEl){
-    var circFull=2*Math.PI*110;
+    var circFull=2*Math.PI*120;
     ringProgressEl.style.transition='none';
     ringProgressEl.style.strokeDasharray=circFull;
     ringProgressEl.style.strokeDashoffset=circFull;
     setTimeout(function(){
       ringProgressEl.style.transition='stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
-      ringProgressEl.style.strokeDashoffset=circ-(pct/100)*circ;
-      // glow pulse after animation
+      ringProgressEl.style.strokeDashoffset=circFull-(pct/100)*circFull;
       setTimeout(function(){
         ringProgressEl.style.filter='drop-shadow(0 0 12px rgba(236,72,153,0.8))';
-        setTimeout(function(){ringProgressEl.style.filter='drop-shadow(0 0 8px rgba(167,139,250,0.5))';},600);
+        setTimeout(function(){ringProgressEl.style.filter='';},600);
       },1600);
     },200);
-    // count-up the % text
-    var startPct=0;
-    var targetPct=Math.round(pct);
-    var stepPct=targetPct/60;
+    var startPct=0,targetPct=Math.round(pct),stepPct=targetPct/60;
     var counter=setInterval(function(){
       startPct+=stepPct;
       if(startPct>=targetPct){startPct=targetPct;clearInterval(counter);}
@@ -339,21 +381,12 @@ function renderAll(birth,name){
     },25);
   }
 
-  // ── Update right-side quote ──
-  var qDefault=el('hero-quote-default');
-  var qResult=el('hero-quote-result');
-  if(qDefault)qDefault.classList.add('hidden');
-  if(qResult){
-    qResult.classList.remove('hidden');
-    setText('hqr-line1','You\'ve already spent '+pct2+'% of your life.');
-    setText('hqr-line2','You have ~'+fmt(daysLeft2)+' days left. What will you do with them?');
-    setText('hqr-line3','"The best time to start was yesterday. The next best time is now."');
-  }
-
-  // ── Highlight the Life Used stat card ──
+  // ── Highlight stat card ──
   var statCards=document.querySelectorAll('.stat-card');
   statCards.forEach(function(c){c.classList.remove('stat-card-highlight');});
-  if(statCards[3])statCards[3].classList.add('stat-card-highlight');
+  if(statCards[2])statCards[2].classList.add('stat-card-highlight');
+
+  // ── Live ticker ──
   clearInterval(window._ticker);
   window._ticker=setInterval(function(){tickUpdate(birth);},1000);
   tickUpdate(birth);
@@ -422,8 +455,6 @@ function renderTimeTwin(birth){
   setText('twin-name',twin.name);
   setText('twin-role',twin.role);
   setText('twin-born',twin.born);
-  // others — pick 4 more different twins
-  var m=birth.getMonth()+1;
   var others=TIME_TWINS.filter(function(t){return t.name!==twin.name;}).slice(0,5);
   var othersEl=el('twin-others');
   if(othersEl){
@@ -449,43 +480,11 @@ function renderMonthEvents(birth){
   var listEl=el('month-list');
   if(!listEl)return;
   listEl.innerHTML=events.map(function(e){
-    return '<div class="month-item"><span class="month-icon">'+e.icon+'</span><span class="month-year">'+e.y+'</span><span class="month-text">'+e.t+'</span><span class="month-arrow">›</span></div>';
+    return '<div class="month-item"><span class="month-icon">'+e.icon+'</span><span class="month-year">'+e.y+'</span><span class="month-text">'+e.t+'</span><span class="month-arrow">\u203A</span></div>';
   }).join('');
 }
 
-// ── Calculate button ──────────────────────────────────────────
-document.getElementById('btn-calculate').addEventListener('click',function(){
-  var dob=el('hero-dob').value;
-  var name=(el('hero-name').value||'').trim();
-  var errEl=el('hero-error');
-  errEl.classList.add('hidden');
-  if(!dob){errEl.textContent='Please enter your date of birth.';errEl.classList.remove('hidden');return;}
-  var birth=parseDOB(dob);
-  if(birth>new Date()){errEl.textContent='Date of birth cannot be in the future.';errEl.classList.remove('hidden');return;}
-  renderAll(birth,name);
-  track('calculate','main');
-});
-
-// Enter key on input
-document.getElementById('hero-dob').addEventListener('keydown',function(e){
-  if(e.key==='Enter')document.getElementById('btn-calculate').click();
-});
-document.getElementById('hero-name').addEventListener('keydown',function(e){
-  if(e.key==='Enter')document.getElementById('btn-calculate').click();
-});
-
-// ── Full calendar ─────────────────────────────────────────────
-document.getElementById('btn-full-calendar').addEventListener('click',function(){
-  if(!_birth)return;
-  buildFullCalendar(_birth);
-  el('full-calendar-section').classList.remove('hidden');
-  el('full-calendar-section').scrollIntoView({behavior:'smooth'});
-});
-document.getElementById('btn-close-calendar').addEventListener('click',function(){
-  el('full-calendar-section').classList.add('hidden');
-});
-
-// ── Share ─────────────────────────────────────────────────────
+// ── Share modal ───────────────────────────────────────────────
 function openShare(){
   if(!_birth){
     alert('Please calculate your life first by entering your date of birth.');
@@ -495,18 +494,94 @@ function openShare(){
   var t=getTotals(_birth);
   var b=getBreakdown(_birth);
   var pct=Math.min(100,((b.yy+b.mo/12)/AVG_LIFESPAN_YEARS)*100);
+  var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
+  var daysLeft=Math.max(0,totalDays-t.day);
+  var weekendsLeft=Math.floor(daysLeft/7);
   setText('sc-pct',Math.round(pct)+'%');
+  setText('sc-weekends','~'+fmt(weekendsLeft)+' weekends remaining');
   var savedName=localStorage.getItem('aw_name')||'';
   setText('sc-name-card',savedName||b.yy+' years old');
   var statsEl=el('sc-stats-card');
-  if(statsEl)statsEl.innerHTML=
-    fmt(t.day)+' days lived &nbsp;·&nbsp; '+
-    fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;·&nbsp; '+
-    Math.round(pct)+'% of life used';
+  if(statsEl)statsEl.innerHTML=fmt(t.day)+' days lived &nbsp;&middot;&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;&middot;&nbsp; '+Math.round(pct)+'% of life used';
   el('share-modal').classList.remove('hidden');
   document.body.style.overflow='hidden';
 }
+
+// ── Compare modal ─────────────────────────────────────────────
+function openCompare(){
+  if(!_birth)return;
+  var modal=el('compare-modal');
+  if(modal){modal.classList.remove('hidden');document.body.style.overflow='hidden';}
+}
+function closeCompare(){
+  var modal=el('compare-modal');
+  if(modal){modal.classList.add('hidden');document.body.style.overflow='';}
+}
+function runComparison(){
+  var friendDob=el('compare-dob').value;
+  var friendName=(el('compare-name').value||'').trim()||'Friend';
+  var errEl=el('compare-error');
+  if(errEl)errEl.classList.add('hidden');
+  if(!friendDob){if(errEl){errEl.textContent='Please enter a date of birth.';errEl.classList.remove('hidden');}return;}
+  var friendBirth=parseDOB(friendDob);
+  if(isNaN(friendBirth.getTime())||friendBirth>new Date()){if(errEl){errEl.textContent='Please enter a valid past date.';errEl.classList.remove('hidden');}return;}
+  var savedName=localStorage.getItem('aw_name')||'You';
+  var t1=getTotals(_birth),t2=getTotals(friendBirth);
+  var b1=getBreakdown(_birth),b2=getBreakdown(friendBirth);
+  var pct1=Math.round(Math.min(100,((b1.yy+b1.mo/12)/AVG_LIFESPAN_YEARS)*100));
+  var pct2=Math.round(Math.min(100,((b2.yy+b2.mo/12)/AVG_LIFESPAN_YEARS)*100));
+  var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
+  var left1=Math.max(0,totalDays-t1.day),left2=Math.max(0,totalDays-t2.day);
+  var resultEl=el('compare-result');
+  if(resultEl){
+    var older=_birth<friendBirth?savedName:friendName;
+    var diffDays=Math.abs(t1.day-t2.day);
+    resultEl.innerHTML=
+      '<div class="cmp-row"><div class="cmp-person"><div class="cmp-name">'+savedName+'</div><div class="cmp-pct">'+pct1+'%</div><div class="cmp-sub">'+fmt(t1.day)+' days lived</div><div class="cmp-sub">'+fmt(left1)+' days left</div></div>'+
+      '<div class="cmp-vs">VS</div>'+
+      '<div class="cmp-person"><div class="cmp-name">'+friendName+'</div><div class="cmp-pct">'+pct2+'%</div><div class="cmp-sub">'+fmt(t2.day)+' days lived</div><div class="cmp-sub">'+fmt(left2)+' days left</div></div></div>'+
+      '<div class="cmp-verdict">'+older+' is older by '+fmt(diffDays)+' days &nbsp;&middot;&nbsp; Difference: '+Math.abs(pct1-pct2)+'% of life</div>';
+    resultEl.classList.remove('hidden');
+  }
+}
+
+// ── Event listeners ───────────────────────────────────────────
+
+// Reveal button
+document.getElementById('btn-reveal').addEventListener('click',function(){
+  el('hero-input-wrap').classList.remove('hidden');
+  this.classList.add('hidden');
+  el('hero-dob').focus();
+});
+
+// Calculate
+document.getElementById('btn-calculate').addEventListener('click',function(){
+  var dob=el('hero-dob').value;
+  var name=(el('hero-name').value||'').trim();
+  var errEl=el('hero-error');
+  errEl.classList.add('hidden');
+  if(!dob){errEl.textContent='Please enter your date of birth.';errEl.classList.remove('hidden');return;}
+  var birth=parseDOB(dob);
+  if(birth>new Date()){errEl.textContent='Date of birth cannot be in the future.';errEl.classList.remove('hidden');return;}
+  renderAll(birth,name);
+  if(typeof gtag!=='undefined')gtag('event','calculate',{event_category:'AgeWise',event_label:'main'});
+});
+
+// Enter key
+document.getElementById('hero-dob').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btn-calculate').click();});
+document.getElementById('hero-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btn-calculate').click();});
+
+// Nav calc button
+document.getElementById('btn-nav-calc').addEventListener('click',function(){
+  el('hero-input-wrap').classList.remove('hidden');
+  el('btn-reveal').classList.add('hidden');
+  el('hero-dob').focus();
+  el('hero').scrollIntoView({behavior:'smooth'});
+});
+
+// Share buttons
 document.getElementById('btn-nav-share').addEventListener('click',openShare);
+document.getElementById('btn-action-share').addEventListener('click',openShare);
 document.getElementById('share-close').addEventListener('click',function(){
   el('share-modal').classList.add('hidden');
   document.body.style.overflow='';
@@ -514,87 +589,75 @@ document.getElementById('share-close').addEventListener('click',function(){
 document.getElementById('share-modal').addEventListener('click',function(e){
   if(e.target===this){el('share-modal').classList.add('hidden');document.body.style.overflow='';}
 });
+
+// Download share card
 document.getElementById('btn-download-share').addEventListener('click',function(){
   var card=el('share-card');
   if(typeof html2canvas==='undefined'){alert('Download not available. Please screenshot instead.');return;}
   var btn=this;
-  btn.textContent='⏳ Generating...';
+  btn.textContent='Generating...';
   btn.disabled=true;
   html2canvas(card,{backgroundColor:'#0d0b1e',scale:2}).then(function(canvas){
     var a=document.createElement('a');
     a.download='agewise-life-card.png';
     a.href=canvas.toDataURL('image/png');
     a.click();
-    btn.textContent='✅ Downloaded!';
-    setTimeout(function(){btn.textContent='⬇️ Download Card';btn.disabled=false;},2000);
+    btn.textContent='Downloaded!';
+    setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Card';btn.disabled=false;},2000);
   }).catch(function(){
-    btn.textContent='⬇️ Download Card';
+    btn.textContent='\u2B07\uFE0F Download Card';
     btn.disabled=false;
     alert('Download failed. Please screenshot instead.');
   });
 });
 
-// ── Explore toggle ────────────────────────────────────────────
+// Compare buttons
+document.getElementById('btn-action-compare').addEventListener('click',openCompare);
+document.getElementById('compare-close').addEventListener('click',closeCompare);
+document.getElementById('compare-modal').addEventListener('click',function(e){if(e.target===this)closeCompare();});
+document.getElementById('btn-run-compare').addEventListener('click',runComparison);
+document.getElementById('compare-dob').addEventListener('keydown',function(e){if(e.key==='Enter')runComparison();});
+
+// Explore toggle
 document.getElementById('btn-explore-toggle').addEventListener('click',function(){
   var content=el('explore-content');
-  var arrow=this.querySelector('.explore-arrow');
+  var arrow=el('explore-arrow');
   var isHidden=content.classList.contains('hidden');
   content.classList.toggle('hidden');
   arrow.classList.toggle('open',isHidden);
-  this.querySelector('span').textContent=isHidden?'✨ Hide Full Life Report':'✨ Explore Your Full Life Report';
-  if(isHidden)content.scrollIntoView({behavior:'smooth',block:'start'});
+  el('explore-toggle-text').textContent=isHidden?'\u2728 Hide Full Life Report':'\u2728 Explore Your Full Life Report';
+  if(isHidden)setTimeout(function(){content.scrollIntoView({behavior:'smooth',block:'start'});},50);
 });
 
-// ── Result banner share/compare ───────────────────────────────
-document.getElementById('rb-btn-share').addEventListener('click',openShare);
-document.getElementById('rb-btn-compare').addEventListener('click',function(){
+// Full calendar
+document.getElementById('btn-full-calendar').addEventListener('click',function(){
   if(!_birth)return;
-  // Pre-fill compare: scroll to hero, show a compare prompt
-  var d=_birth;
-  var savedName=localStorage.getItem('aw_name')||'';
-  // Store current user as person A in sessionStorage for compare
-  sessionStorage.setItem('aw_compare_a',JSON.stringify({
-    name:savedName,
-    dob:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')
-  }));
-  // Show a simple prompt
-  var friendDob=prompt('Enter your friend\'s date of birth (YYYY-MM-DD):');
-  if(!friendDob)return;
-  var friendBirth=parseDOB(friendDob);
-  if(isNaN(friendBirth.getTime())||friendBirth>new Date()){alert('Invalid date.');return;}
-  var friendName=prompt('Enter their name (optional):')||'Friend';
-  showComparison(_birth,savedName||'You',friendBirth,friendName);
+  buildFullCalendar(_birth);
+  el('full-calendar-section').classList.remove('hidden');
+  setTimeout(function(){el('full-calendar-section').scrollIntoView({behavior:'smooth'});},50);
+});
+document.getElementById('btn-close-calendar').addEventListener('click',function(){
+  el('full-calendar-section').classList.add('hidden');
 });
 
-function showComparison(birth1,name1,birth2,name2){
-  var t1=getTotals(birth1),t2=getTotals(birth2);
-  var b1=getBreakdown(birth1),b2=getBreakdown(birth2);
-  var pct1=Math.round(Math.min(100,((b1.yy+b1.mo/12)/AVG_LIFESPAN_YEARS)*100));
-  var pct2=Math.round(Math.min(100,((b2.yy+b2.mo/12)/AVG_LIFESPAN_YEARS)*100));
-  var older=birth1<birth2?name1:name2;
-  var diffDays=Math.abs(t1.day-t2.day);
-  var msg=older+' is older by '+fmt(diffDays)+' days.\n\n'+
-    name1+': '+pct1+'% of life used ('+fmt(t1.day)+' days)\n'+
-    name2+': '+pct2+'% of life used ('+fmt(t2.day)+' days)\n\n'+
-    'Difference: '+Math.abs(pct1-pct2)+'% of life';
-  alert(msg);
-}
+// View all twins
 document.getElementById('btn-all-twins').addEventListener('click',function(){
   if(!_birth)return;
-  var m=_birth.getMonth()+1,d=_birth.getDate();
+  var m=_birth.getMonth()+1;
   var twins=TIME_TWINS.filter(function(t){return t.month===m;});
   if(!twins.length)twins=TIME_TWINS.slice(0,6);
   var listEl=el('twin-others');
   if(listEl){
     listEl.innerHTML=twins.map(function(o){
-      return '<div class="twin-other-avatar" title="'+o.name+'" style="width:auto;border-radius:8px;padding:6px 10px;font-size:0.78rem;gap:6px;display:flex;align-items:center;">'+
-        '<span>'+o.icon+'</span><span style="color:#c4b5fd;font-weight:600;">'+o.name+'</span></div>';
+      return '<div class="twin-other-avatar" title="'+o.name+'" style="width:auto;border-radius:8px;padding:6px 10px;font-size:0.78rem;gap:6px;display:flex;align-items:center;"><span>'+o.icon+'</span><span style="color:#c4b5fd;font-weight:600;">'+o.name+'</span></div>';
     }).join('');
-    this.textContent='Show Less ↑';
-    this.onclick=function(){renderTimeTwin(_birth);this.textContent='View All Time Twins →';this.onclick=null;};
+    this.textContent='Show Less \u2191';
+    var self=this;
+    this.onclick=function(){renderTimeTwin(_birth);self.textContent='View All Time Twins \u2192';self.onclick=null;};
   }
 });
 
+// More events
 document.getElementById('btn-more-events').addEventListener('click',function(){
   if(!_birth)return;
   var allEvents=getHistoryEvents(_birth);
@@ -608,6 +671,7 @@ document.getElementById('btn-more-events').addEventListener('click',function(){
   }
 });
 
+// Explore more month events
 document.getElementById('btn-explore-more').addEventListener('click',function(){
   if(!_birth)return;
   var m=_birth.getMonth()+1;
@@ -615,12 +679,13 @@ document.getElementById('btn-explore-more').addEventListener('click',function(){
   var listEl=el('month-list');
   if(listEl){
     listEl.innerHTML=allMonthEvents.map(function(e){
-      return '<div class="month-item"><span class="month-icon">'+e.icon+'</span><span class="month-year">'+e.y+'</span><span class="month-text">'+e.t+'</span><span class="month-arrow">›</span></div>';
+      return '<div class="month-item"><span class="month-icon">'+e.icon+'</span><span class="month-year">'+e.y+'</span><span class="month-text">'+e.t+'</span><span class="month-arrow">\u203A</span></div>';
     }).join('');
     this.style.display='none';
   }
 });
 
+// Country more events
 document.getElementById('btn-country-more').addEventListener('click',function(){
   if(!_birth)return;
   var events=getHistoryEvents(_birth);
@@ -633,20 +698,37 @@ document.getElementById('btn-country-more').addEventListener('click',function(){
   }
 });
 
-// ── Nav smooth scroll ─────────────────────────────────────────
+// Nav smooth scroll (for specific section anchors)
 document.querySelectorAll('.nav-item').forEach(function(a){
   a.addEventListener('click',function(e){
     var href=a.getAttribute('href');
-    if(href&&href.startsWith('#')){
+    if(href&&href.startsWith('#')&&href!=='#'){
       e.preventDefault();
+      var sectionMap={'#explore-section':'#explore-section','#life-calendar-section':'#life-calendar-section','#time-twin-section':'#time-twin-section','#birth-insights-section':'#birth-insights-section','#global-events-section':'#global-events-section'};
       var target=document.querySelector(href);
-      if(target)target.scrollIntoView({behavior:'smooth'});
-      document.getElementById('nav-links').classList.remove('open');
+      if(target){
+        var ec=el('explore-content');
+        if(ec&&ec.classList.contains('hidden')){
+          ec.classList.remove('hidden');
+          el('explore-arrow').classList.add('open');
+          el('explore-toggle-text').textContent='\u2728 Hide Full Life Report';
+        }
+        setTimeout(function(){target.scrollIntoView({behavior:'smooth'});},100);
+      }
     }
+    el('nav-links').classList.remove('open');
   });
 });
 
-// ── Restore last DOB + name ───────────────────────────────────
+// Hamburger
+document.getElementById('hamburger').addEventListener('click',function(){
+  el('nav-links').classList.toggle('open');
+});
+
+// ── Init ──────────────────────────────────────────────────────
+initParticles();
+
+// Restore last DOB + name
 (function(){
   var savedDob=localStorage.getItem('aw_dob');
   var savedName=localStorage.getItem('aw_name');
