@@ -947,13 +947,44 @@ function initWisdom(){
   });
 }
 
+// ── Personalities "View More" toggle ─────────────────────────
+function initPersonalitiesToggle(){
+  var grid=document.querySelector('.ps-grid');
+  if(!grid)return;
+  // Check if btn already exists
+  if(document.getElementById('ps-view-more'))return;
+  var btn=document.createElement('button');
+  btn.id='ps-view-more';
+  btn.className='ps-view-more-btn scene-reveal';
+  btn.style.cssText='--reveal-delay:0.4s';
+  btn.textContent='View More Personalities';
+  btn.setAttribute('aria-expanded','false');
+  grid.parentNode.insertBefore(btn,grid.nextSibling);
+  btn.addEventListener('click',function(){
+    var hidden=grid.querySelectorAll('.ps-card:nth-child(n+4)');
+    var expanded=btn.getAttribute('aria-expanded')==='true';
+    hidden.forEach(function(c){
+      if(expanded){c.classList.remove('ps-visible');}
+      else{c.classList.add('ps-visible');}
+    });
+    btn.setAttribute('aria-expanded',expanded?'false':'true');
+    btn.textContent=expanded?'View More Personalities':'Show Less';
+    if(!expanded)setTimeout(function(){initScrollReveal();},50);
+  });
+}
+
 // ── PWA Install Prompt ────────────────────────────────────────
 var _deferredInstall=null;
 function initPWA(){
+  // Upgrade prompt text
+  var subEl=document.querySelector('.pwa-sub');
+  if(subEl)subEl.textContent='Install for daily reflection — works offline';
+  var installBtnText=el('pwa-install-btn');
+  if(installBtnText)installBtnText.textContent='Install Free';
+
   window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault();
     _deferredInstall=e;
-    // Show prompt after 8 seconds
     setTimeout(function(){
       var prompt=el('pwa-prompt');
       if(prompt)prompt.classList.remove('hidden');
@@ -967,7 +998,7 @@ function initPWA(){
     installBtn.addEventListener('click',function(){
       if(!_deferredInstall)return;
       _deferredInstall.prompt();
-      _deferredInstall.userChoice.then(function(result){
+      _deferredInstall.userChoice.then(function(){
         _deferredInstall=null;
         var prompt=el('pwa-prompt');
         if(prompt)prompt.classList.add('hidden');
@@ -978,24 +1009,22 @@ function initPWA(){
     dismissBtn.addEventListener('click',function(){
       var prompt=el('pwa-prompt');
       if(prompt)prompt.classList.add('hidden');
-      // Don't show again for 3 days
       localStorage.setItem('pwa_dismissed',Date.now());
     });
   }
 
-  // Don't show if dismissed recently
   var dismissed=localStorage.getItem('pwa_dismissed');
   if(dismissed&&(Date.now()-parseInt(dismissed))<3*24*60*60*1000){
     window.removeEventListener('beforeinstallprompt',function(){});
   }
 }
-
 // ── Init ──────────────────────────────────────────────────────
 initParticles();
 initScrollReveal();
 initFreezeObserver();
 initWisdom();
 initPWA();
+initPersonalitiesToggle();
 
 // Restore last DOB
 (function(){
