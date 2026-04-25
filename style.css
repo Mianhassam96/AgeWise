@@ -498,3 +498,222 @@ input{font-family:inherit;outline:none}
   .contact-page-main{padding:80px 16px 40px}
   .about-page,.privacy-page{padding:80px 16px 40px}
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM EXPERIENCE LAYER v8
+   Motion · Typography · Depth · Emotional Timing
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. SCENE REVEAL — cinematic scroll entrance ── */
+.scene-reveal{
+  opacity:0;
+  transform:translateY(30px);
+  filter:blur(6px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+    transform 0.8s cubic-bezier(0.16,1,0.3,1),
+    filter 0.8s cubic-bezier(0.16,1,0.3,1);
+  transition-delay:var(--reveal-delay,0s);
+}
+.scene-reveal.revealed{
+  opacity:1;
+  transform:translateY(0);
+  filter:blur(0);
+}
+
+/* ── 2. BACKGROUND DEPTH SYSTEM ── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,40,217,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%,rgba(79,70,229,0.08) 0%,transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.025;
+}
+
+/* ── 3. GLASSMORPHISM CARDS ── */
+.ibadah-card{
+  background:rgba(255,255,255,0.04)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.08)!important;
+  box-shadow:0 4px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.ibadah-card:hover{
+  border-color:rgba(167,139,250,0.35)!important;
+  box-shadow:0 8px 32px rgba(109,40,217,0.2),inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.stat-card{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 2px 16px rgba(0,0,0,0.2);
+}
+.panel{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.input-card{
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:0 8px 40px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ── 4. IBADAH GRID — 5 columns ── */
+.ibadah-grid{grid-template-columns:repeat(5,1fr)!important}
+@media(max-width:900px){.ibadah-grid{grid-template-columns:repeat(3,1fr)!important}}
+@media(max-width:600px){.ibadah-grid{grid-template-columns:repeat(2,1fr)!important}}
+
+/* ── 5. TYPOGRAPHY HIERARCHY UPGRADE ── */
+.hero-headline{font-size:clamp(2.2rem,6vw,4.5rem)!important;letter-spacing:-2px!important;line-height:1.08!important}
+.wow-line1{font-size:clamp(2rem,6vw,4.5rem)!important;font-weight:900!important;letter-spacing:-1.5px!important}
+.wow-line1 strong{
+  display:block;
+  font-size:clamp(3rem,10vw,6rem)!important;
+  background:linear-gradient(135deg,#fff 0%,#a78bfa 50%,#c4b5fd 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;
+  margin:8px 0;
+  text-shadow:none;
+  filter:drop-shadow(0 0 40px rgba(167,139,250,0.4));
+}
+.wow-line2{font-size:clamp(1.1rem,2.5vw,1.5rem)!important;color:#94a3b8!important;font-weight:400!important}
+.wow-line3{font-size:clamp(0.95rem,2vw,1.15rem)!important;color:#475569!important;letter-spacing:0.5px}
+.ibadah-count{font-size:clamp(1.6rem,3.5vw,2.4rem)!important;font-weight:900!important;letter-spacing:-0.5px}
+.ramadan-count{font-size:clamp(1.4rem,4vw,2.2rem)!important;font-weight:900!important}
+.core-days strong{font-size:clamp(1.8rem,4vw,2.8rem)!important;font-weight:900!important;letter-spacing:-1px}
+.final-line2{font-size:clamp(1.8rem,5vw,3rem)!important;font-weight:900!important;letter-spacing:-1px}
+
+/* ── 6. NUMBER GLOW EFFECT ── */
+.ibadah-count,.wow-line1 strong,.ramadan-count{
+  position:relative;
+}
+.ibadah-count::after{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:12px;
+  background:radial-gradient(circle,rgba(167,139,250,0.15),transparent 70%);
+  pointer-events:none;
+}
+
+/* ── 7. LOADING RITUAL UPGRADE ── */
+.loading-overlay{
+  background:radial-gradient(ellipse at 50% 40%,#0d0820 0%,#080c17 100%)!important;
+}
+.loading-crescent{
+  font-size:5rem!important;
+  animation:ritual-breathe 2s ease-in-out infinite!important;
+  filter:drop-shadow(0 0 30px rgba(167,139,250,0.6));
+}
+@keyframes ritual-breathe{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(167,139,250,0.4));}
+  50%{transform:scale(1.06);filter:drop-shadow(0 0 50px rgba(167,139,250,0.8));}
+}
+.loading-line{
+  font-size:1.1rem!important;
+  color:#94a3b8!important;
+  letter-spacing:0.5px;
+  transition:opacity 0.4s ease!important;
+}
+.loading-inner::before{
+  content:'';
+  position:absolute;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(109,40,217,0.15),transparent 70%);
+  animation:ritual-breathe 2s ease-in-out infinite;
+  pointer-events:none;
+}
+.loading-inner{position:relative}
+
+/* ── 8. BUTTON ELEVATION ── */
+.btn-reflect{
+  box-shadow:0 4px 32px rgba(109,40,217,0.5),0 0 0 1px rgba(167,139,250,0.2)!important;
+  letter-spacing:0.5px!important;
+}
+.btn-reflect:hover{
+  box-shadow:0 8px 48px rgba(109,40,217,0.7),0 0 0 1px rgba(167,139,250,0.4)!important;
+}
+.btn-begin{
+  box-shadow:0 4px 24px rgba(109,40,217,0.4)!important;
+}
+.btn-share-reflection{
+  box-shadow:0 4px 20px rgba(109,40,217,0.35)!important;
+}
+
+/* ── 9. HERO AYAH UPGRADE ── */
+.hero-ayah{
+  font-size:clamp(1.6rem,4.5vw,2.6rem)!important;
+  text-shadow:0 0 40px rgba(196,181,253,0.3);
+  animation:ayah-glow 4s ease-in-out infinite;
+}
+@keyframes ayah-glow{
+  0%,100%{text-shadow:0 0 30px rgba(196,181,253,0.2);}
+  50%{text-shadow:0 0 60px rgba(196,181,253,0.5);}
+}
+
+/* ── 10. FREEZE SECTION ── */
+.freeze-section{
+  min-height:70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px 24px;
+  text-align:center;
+  background:radial-gradient(ellipse at 50% 50%,rgba(109,40,217,0.06) 0%,transparent 70%);
+  border-top:1px solid rgba(255,255,255,0.03);
+}
+.freeze-inner{
+  max-width:600px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.freeze-line1{
+  font-size:clamp(1.1rem,3vw,1.6rem);
+  color:#475569;
+  font-style:italic;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 1s ease,transform 1s ease;
+}
+.freeze-line2{
+  font-size:clamp(1.4rem,4vw,2.2rem);
+  font-weight:800;
+  color:#f1f5f9;
+  letter-spacing:-0.5px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 1s ease 1.5s,transform 1s ease 1.5s;
+}
+.freeze-section.freeze-active .freeze-line1{opacity:1;transform:translateY(0);}
+.freeze-section.freeze-active .freeze-line2{opacity:1;transform:translateY(0);}
+
+/* ── 11. WOW SECTION UPGRADE ── */
+.wow-section{
+  min-height:70vh!important;
+  background:radial-gradient(ellipse at 50% 50%,rgba(109,40,217,0.12) 0%,transparent 65%)!important;
+}
+.wow-inner{gap:32px!important}
+
+/* ── 12. SECTION SPACING ── */
+.ibadah-section{padding:80px 24px!important}
+.ramadan-section{padding:80px 24px!important}
+.reflection-section{padding:100px 24px!important}
+.existence-section{padding:100px 24px!important}
+.passing-section{padding:100px 24px!important}

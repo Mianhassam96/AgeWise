@@ -390,6 +390,7 @@ function renderAll(birth,name){
   setText('ib-fajr',fmt(t.day));
   setText('ib-dhuhr',fmt(t.day));
   setText('ib-asr',fmt(t.day));
+  setText('ib-maghrib',fmt(t.day));
   setText('ib-isha',fmt(t.day));
 
   // ── Ramadan ──
@@ -479,8 +480,9 @@ function renderAll(birth,name){
   // ── Save ──
   localStorage.setItem('aw_dob',birth.toISOString().split('T')[0]);
 
-  // Scroll to wow section
+  // Re-init scroll reveal for newly visible elements
   setTimeout(function(){
+    initScrollReveal();
     el('wow-section').scrollIntoView({behavior:'smooth',block:'start'});
   },100);
 }
@@ -844,8 +846,40 @@ document.getElementById('hamburger').addEventListener('click',function(){
   inputSec.scrollIntoView({behavior:'smooth',block:'center'});
 });
 
+// ── Scroll Reveal Observer ────────────────────────────────────
+function initScrollReveal(){
+  var els=document.querySelectorAll('.scene-reveal');
+  if(!els.length)return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+}
+
+// ── Freeze Section Observer ───────────────────────────────────
+function initFreezeObserver(){
+  var sec=document.getElementById('freeze-section');
+  if(!sec)return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        sec.classList.add('freeze-active');
+        obs.unobserve(sec);
+      }
+    });
+  },{threshold:0.4});
+  obs.observe(sec);
+}
+
 // ── Init ──────────────────────────────────────────────────────
 initParticles();
+initScrollReveal();
+initFreezeObserver();
 
 // Restore last DOB
 (function(){

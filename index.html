@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
-  <link rel="stylesheet" href="style.css?v=7"/>
+  <link rel="stylesheet" href="style.css?v=8"/>
 </head>
 <body>
 
@@ -40,8 +40,8 @@
   <div class="hero-inner">
     <div class="hero-ayah" aria-label="Quranic verse">كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ</div>
     <div class="hero-ayah-trans">Every soul shall taste death.</div>
-    <h1 class="hero-headline">Your time is not yours.<br><span class="hero-headline-accent">It was given to you.</span></h1>
-    <p class="hero-subtext">And one day, it will be taken back.<br>See your life through reflection — not prediction.</p>
+    <h1 class="hero-headline scene-reveal">Time was given to you.<br><span class="hero-headline-accent">And it is being taken back.</span></h1>
+    <p class="hero-subtext scene-reveal" style="--reveal-delay:0.2s">See your life through reflection — not prediction.</p>
     <button class="btn-reflect" id="btn-reveal">Reflect on My Life</button>
   </div>
 </section>
@@ -78,7 +78,7 @@
   <!-- ═══ 4. WOW MOMENT ═══ -->
   <section class="wow-section" id="wow-section">
     <div class="wow-inner">
-      <div class="wow-line1" id="wow-line1"></div>
+      <div class="wow-line1 scene-reveal" id="wow-line1"></div>
       <div class="wow-line2 hidden" id="wow-line2">Only you know how many you kept.</div>
       <div class="wow-line3 hidden" id="wow-line3">And time… is still passing.</div>
     </div>
@@ -86,7 +86,7 @@
 
   <!-- ═══ 5. CORE LIFE DATA ═══ -->
   <section class="core-data-section">
-    <div class="core-data-inner">
+    <div class="core-data-inner scene-reveal">
       <div class="core-days" id="core-days"></div>
       <div class="core-sub">Days that will never return.</div>
     </div>
@@ -95,27 +95,33 @@
   <!-- ═══ 6. IBADAH SECTION ═══ -->
   <section class="ibadah-section">
     <div class="ibadah-inner">
-      <div class="ibadah-title">In your lifetime, you were given:</div>
+      <div class="ibadah-title scene-reveal">In your lifetime, you were given:</div>
       <div class="ibadah-grid" id="ibadah-grid">
-        <div class="ibadah-card">
+        <div class="ibadah-card scene-reveal">
           <div class="ibadah-icon">🌅</div>
           <div class="ibadah-name">Fajr</div>
           <div class="ibadah-count" id="ib-fajr">—</div>
           <div class="ibadah-label">فرص</div>
         </div>
-        <div class="ibadah-card">
+        <div class="ibadah-card scene-reveal" style="--reveal-delay:0.1s">
           <div class="ibadah-icon">☀️</div>
           <div class="ibadah-name">Dhuhr</div>
           <div class="ibadah-count" id="ib-dhuhr">—</div>
           <div class="ibadah-label">فرص</div>
         </div>
-        <div class="ibadah-card">
+        <div class="ibadah-card scene-reveal" style="--reveal-delay:0.2s">
           <div class="ibadah-icon">🌤️</div>
           <div class="ibadah-name">Asr</div>
           <div class="ibadah-count" id="ib-asr">—</div>
           <div class="ibadah-label">فرص</div>
         </div>
-        <div class="ibadah-card">
+        <div class="ibadah-card scene-reveal" style="--reveal-delay:0.3s">
+          <div class="ibadah-icon">🌇</div>
+          <div class="ibadah-name">Maghrib</div>
+          <div class="ibadah-count" id="ib-maghrib">—</div>
+          <div class="ibadah-label">فرص</div>
+        </div>
+        <div class="ibadah-card scene-reveal" style="--reveal-delay:0.4s">
           <div class="ibadah-icon">🌙</div>
           <div class="ibadah-name">Isha</div>
           <div class="ibadah-count" id="ib-isha">—</div>
@@ -132,7 +138,7 @@
 
   <!-- ═══ 7. RAMADAN SECTION ═══ -->
   <section class="ramadan-section">
-    <div class="ramadan-inner">
+    <div class="ramadan-inner scene-reveal">
       <div class="ramadan-moon" aria-hidden="true">🌙</div>
       <div class="ramadan-count" id="ramadan-count"></div>
       <div class="ramadan-text">
@@ -147,10 +153,10 @@
   <!-- ═══ 8. REFLECTION CORE ═══ -->
   <section class="reflection-section">
     <div class="reflection-inner">
-      <p>Most people think they have time.</p>
-      <p>Until time quietly slips away.</p>
-      <p>You planned your studies. Your career. Your future.</p>
-      <p class="reflection-highlight">But did you plan your <span class="arabic-inline">آخِرَة</span>?</p>
+      <p class="scene-reveal">Most people think they have time.</p>
+      <p class="scene-reveal" style="--reveal-delay:0.2s">Until time quietly slips away.</p>
+      <p class="scene-reveal" style="--reveal-delay:0.4s">You planned your studies. Your career. Your future.</p>
+      <p class="reflection-highlight scene-reveal" style="--reveal-delay:0.7s">But did you plan your <span class="arabic-inline">آخِرَة</span>?</p>
     </div>
   </section>
 
@@ -180,21 +186,29 @@
   <!-- ═══ 11. PERSONAL EXISTENCE ═══ -->
   <section class="existence-section">
     <div class="existence-inner">
-      <p>Millions share your birth date.</p>
-      <p>But no one will live your life.</p>
-      <p>No one will answer for your actions.</p>
-      <p class="existence-highlight">Your time is yours alone.<br>Your story is yours alone.</p>
+      <p class="scene-reveal">Millions share your birth date.</p>
+      <p class="scene-reveal" style="--reveal-delay:0.2s">But no one will live your life.</p>
+      <p class="scene-reveal" style="--reveal-delay:0.4s">No one will answer for your actions.</p>
+      <p class="existence-highlight scene-reveal" style="--reveal-delay:0.6s">Your time is yours alone.<br>Your story is yours alone.</p>
     </div>
   </section>
 
   <!-- ═══ 12. LIFE PASSING ═══ -->
   <section class="passing-section">
     <div class="passing-inner">
-      <div class="passing-line">Years passed.</div>
-      <div class="passing-line passing-dim">Without announcement. Without warning.</div>
-      <div class="passing-line">Moments turned into memories.</div>
-      <div class="passing-line passing-dim">Memories turned into silence.</div>
-      <div class="passing-line passing-final">And most of it… felt like nothing.</div>
+      <div class="passing-line scene-reveal">Years passed.</div>
+      <div class="passing-line passing-dim scene-reveal" style="--reveal-delay:0.2s">Without announcement. Without warning.</div>
+      <div class="passing-line scene-reveal" style="--reveal-delay:0.4s">Moments turned into memories.</div>
+      <div class="passing-line passing-dim scene-reveal" style="--reveal-delay:0.6s">Memories turned into silence.</div>
+      <div class="passing-line passing-final scene-reveal" style="--reveal-delay:0.8s">And most of it… felt like nothing.</div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL FREEZE ═══ -->
+  <section class="freeze-section" id="freeze-section">
+    <div class="freeze-inner">
+      <p class="freeze-line1">Your time is not counted in days…</p>
+      <p class="freeze-line2">It is counted in what you did with them.</p>
     </div>
   </section>
 
@@ -452,6 +466,6 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="index.js?v=7"></script>
+<script src="index.js?v=8"></script>
 </body>
 </html>
