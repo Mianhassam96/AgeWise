@@ -409,3 +409,92 @@ input{font-family:inherit;outline:none}
   .tr-club{flex-direction:column;align-items:flex-start;gap:6px}
   .tr-club-quote{margin-left:0}
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   CONTACT / ABOUT / PRIVACY PAGE STYLES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Orbs background ── */
+.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18}
+.orb1{width:500px;height:500px;background:#6d28d9;top:-120px;left:-120px}
+.orb2{width:400px;height:400px;background:#a78bfa;bottom:-100px;right:-100px}
+.orb3{width:300px;height:300px;background:#4f46e5;top:40%;left:50%;transform:translate(-50%,-50%)}
+
+/* ── Wrapper ── */
+.wrapper{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Contact Page ── */
+.contact-page-main{flex:1;padding:100px 24px 60px;display:flex;align-items:center;justify-content:center}
+.contact-inner{max-width:600px;width:100%;position:relative}
+.contact-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,0.2),transparent 70%);pointer-events:none}
+.contact-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#f1f5f9;margin-bottom:10px;text-align:center}
+.contact-sub{font-size:0.95rem;color:#64748b;text-align:center;margin-bottom:36px;line-height:1.7}
+
+/* ── Contact Form ── */
+.contact-form{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cf-group{display:flex;flex-direction:column;gap:6px}
+.cf-group label{font-size:0.8rem;font-weight:600;color:#94a3b8;letter-spacing:0.5px}
+.cf-group input,.cf-group textarea{padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(167,139,250,0.2);color:#e2e8f0;font-size:0.95rem;font-family:inherit;transition:border-color .2s,background .2s;resize:vertical}
+.cf-group input:focus,.cf-group textarea:focus{border-color:#a78bfa;background:rgba(167,139,250,0.08);outline:none}
+.cf-group input::placeholder,.cf-group textarea::placeholder{color:#334155}
+.btn-primary{padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#6d28d9,#a78bfa);border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:10px;justify-content:center}
+.btn-primary:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 6px 24px rgba(109,40,217,0.4)}
+.btn-send{width:100%}
+.btn-icon{font-size:1.1rem}
+.cf-success{padding:12px 16px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:10px;color:#6ee7b7;font-size:0.88rem;text-align:center}
+
+/* ── Contact Links ── */
+.contact-links{display:flex;flex-direction:column;gap:10px;align-items:center}
+.c-link{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;font-size:0.88rem;transition:all .2s}
+.c-link:hover{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#e2e8f0}
+
+/* ── About Page ── */
+.about-page{max-width:760px;margin:0 auto;padding:100px 24px 60px}
+.about-hero{text-align:center;margin-bottom:60px}
+.about-logo{font-size:2rem;font-weight:900;color:#fff;margin-bottom:16px}
+.about-logo span{color:#a78bfa}
+.about-tagline{font-size:1.4rem;font-weight:700;color:#f1f5f9;margin-bottom:12px;line-height:1.4}
+.about-sub{font-size:1rem;color:#94a3b8;line-height:1.8;max-width:560px;margin:0 auto}
+.about-section{margin-bottom:48px}
+.about-section h2{font-size:1.1rem;font-weight:800;color:#c4b5fd;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.08em}
+.about-section p{font-size:0.95rem;color:#94a3b8;line-height:1.8;margin-bottom:12px}
+.about-section strong{color:#f1f5f9}
+.about-features{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
+.af-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px}
+.af-icon{font-size:1.4rem;margin-bottom:8px}
+.af-title{font-size:0.88rem;font-weight:700;color:#f1f5f9;margin-bottom:4px}
+.af-desc{font-size:0.78rem;color:#64748b;line-height:1.5}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.as-item{text-align:center;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:12px;padding:20px}
+.as-val{font-size:1.8rem;font-weight:900;color:#a78bfa;display:block;margin-bottom:4px}
+.as-lbl{font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em}
+.about-cta{text-align:center;margin-top:48px}
+.about-cta a{display:inline-block;padding:14px 36px;background:linear-gradient(135deg,#6d28d9,#a78bfa);color:#fff;border-radius:999px;font-weight:700;font-size:1rem;transition:all .2s}
+.about-cta a:hover{opacity:.9;transform:translateY(-2px)}
+
+/* ── Privacy Page ── */
+.privacy-page{max-width:760px;margin:0 auto;padding:100px 24px 60px}
+.privacy-hero{margin-bottom:48px}
+.privacy-hero h1{font-size:2rem;font-weight:900;color:#f1f5f9;margin-bottom:12px}
+.privacy-hero p{font-size:0.95rem;color:#94a3b8;line-height:1.7}
+.privacy-section{margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.privacy-section:last-child{border-bottom:none}
+.privacy-section h2{font-size:1rem;font-weight:800;color:#c4b5fd;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.08em}
+.privacy-section p{font-size:0.92rem;color:#94a3b8;line-height:1.8;margin-bottom:10px}
+.privacy-section ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.privacy-section ul li{font-size:0.92rem;color:#94a3b8;line-height:1.6;padding-left:20px;position:relative}
+.privacy-section ul li::before{content:'✓';position:absolute;left:0;color:#34d399;font-weight:700}
+.privacy-section strong{color:#f1f5f9}
+.privacy-highlight{background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:12px;padding:20px 24px;margin-bottom:32px}
+.privacy-highlight p{color:#6ee7b7;font-weight:600;font-size:1rem;margin:0}
+
+/* ── Responsive for sub-pages ── */
+@media(max-width:640px){
+  .cf-row{grid-template-columns:1fr}
+  .about-features,.about-stats{grid-template-columns:1fr}
+  .contact-page-main{padding:80px 16px 40px}
+  .about-page,.privacy-page{padding:80px 16px 40px}
+}
