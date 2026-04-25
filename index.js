@@ -362,30 +362,45 @@ function renderAll(birth,name){
   var pct=Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100);
   var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
   var daysLeft=Math.max(0,totalDays-t.day);
-  var weekendsLeft=Math.floor(daysLeft/7);
 
-  // Show results
+  // Hide input, show results
+  el('input-section').classList.add('hidden');
   el('results-section').classList.remove('hidden');
-  el('results-section').scrollIntoView({behavior:'smooth',block:'start'});
 
-  // ── Ring ──
-  var circ=2*Math.PI*120;
-  var offset=circ-(pct/100)*circ;
-  var ringEl=el('ring-progress');
-  if(ringEl){ringEl.style.strokeDasharray=circ;ringEl.style.strokeDashoffset=offset;}
-  setText('ring-pct',Math.round(pct)+'%');
-  setText('ring-days',fmt(t.day)+' of '+fmt(totalDays)+' days');
-  // Fix dot position: SVG center is 150,150 radius 120
-  var dotEl=el('ring-dot');
-  if(dotEl){
-    var angle=(pct/100)*360-90;
-    var rad=angle*Math.PI/180;
-    var cx=150+120*Math.cos(rad),cy=150+120*Math.sin(rad);
-    dotEl.setAttribute('cx',cx.toFixed(1));
-    dotEl.setAttribute('cy',cy.toFixed(1));
+  // ── WOW Section ──
+  var fajrCount=t.day; // 1 Fajr per day
+  var wowLine1=el('wow-line1');
+  if(wowLine1){
+    wowLine1.innerHTML='You have had over <strong>'+fmt(fajrCount)+'</strong> chances to pray Fajr.';
   }
+  setTimeout(function(){
+    var l2=el('wow-line2');
+    if(l2){l2.classList.remove('hidden');l2.classList.add('fade-in');}
+  },800);
+  setTimeout(function(){
+    var l3=el('wow-line3');
+    if(l3){l3.classList.remove('hidden');l3.classList.add('fade-in');}
+  },1600);
 
-  // ── Stats row ──
+  // ── Core Data ──
+  var coreEl=el('core-days');
+  if(coreEl){coreEl.innerHTML='You have lived <strong>'+fmt(t.day)+'</strong> days.';}
+
+  // ── Ibadah ──
+  setText('ib-fajr',fmt(t.day));
+  setText('ib-dhuhr',fmt(t.day));
+  setText('ib-asr',fmt(t.day));
+  setText('ib-isha',fmt(t.day));
+
+  // ── Ramadan ──
+  var ramadans=Math.floor(ageYears);
+  var ramadanEl=el('ramadan-count');
+  if(ramadanEl){ramadanEl.textContent='You have witnessed around '+ramadans+' Ramadans.';}
+
+  // ── Share preview ──
+  setText('spc-pct',Math.round(pct)+'%');
+
+  // ── Stats row (explore) ──
   setText('stat-age',b.yy+' yrs '+b.mo+' mo');
   setText('stat-age-days',fmt(t.day)+' days');
   setText('stat-days-used',fmt(t.day));
@@ -394,36 +409,6 @@ function renderAll(birth,name){
   setText('stat-hours-left',fmt(daysLeft*24)+' hours');
   setText('stat-pct',Math.round(pct)+'%');
   setText('stat-pct-left','Still '+Math.round(100-pct)+'% to live');
-
-  // ── Big stat section ──
-  var bssMain=el('bss-main');
-  if(bssMain){
-    bssMain.innerHTML='You have <strong>~'+fmt(weekendsLeft)+'</strong> weekends left in your life.';
-  }
-  var bssSupport=el('bss-support');
-  if(bssSupport){
-    if(Math.round(pct)>=50){
-      bssSupport.textContent='You\'ve already used '+Math.round(pct)+'% of your life. More than half is gone.';
-    } else {
-      bssSupport.textContent='You\'ve used '+Math.round(pct)+'% of your life. The clock started the day you were born.';
-    }
-  }
-
-  // ── Insight banner ──
-  var ibText=el('ib-text');
-  if(ibText){
-    var phase='';
-    if(b.yy<25)phase='You\'re in the most elastic phase of your life. Risks taken now cost the least and pay the most.';
-    else if(b.yy<35)phase='You\'re in your peak productivity years. The decisions you make now compound harder than any investment.';
-    else if(b.yy<50)phase='You\'ve earned the clarity to know what truly matters. This is when purpose-driven people do their best work.';
-    else if(b.yy<65)phase='The impact you create now outlasts you. Every relationship and project is a thread in your legacy.';
-    else phase='A life richly lived. Your perspective is irreplaceable — the world needs your story.';
-    ibText.textContent=phase;
-  }
-  var ibPhase=el('ib-phase');
-  if(ibPhase){
-    ibPhase.textContent='You have '+fmt(daysLeft)+' days left. Most people waste the next 25%. You don\'t have to.';
-  }
 
   // ── Mini Calendar ──
   buildMiniCalendar(birth,t.day,10);
@@ -464,12 +449,6 @@ function renderAll(birth,name){
   }
   setText('country-title','\uD83C\uDF0D On '+birth.toLocaleDateString('en-US',{month:'long',day:'numeric'}));
 
-  // ── Fun Facts ──
-  setText('ff-heartbeats',fmtShort(Math.floor(t.day*24*60*70)));
-  setText('ff-sunrises',fmt(t.day));
-  setText('ff-weekends',fmt(Math.floor(t.wk)));
-  setText('ff-mondays',fmt(Math.floor(t.day/7)));
-
   // ── Labels ──
   setText('history-date-label','Major events that happened on '+birth.toLocaleDateString('en-US',{month:'long',day:'numeric'}));
   setText('month-label','What happened in '+birth.toLocaleDateString('en-US',{month:'long'}));
@@ -487,38 +466,10 @@ function renderAll(birth,name){
 
   // ── Share card ──
   setText('sc-pct',Math.round(pct)+'%');
-  setText('sc-weekends','~'+fmt(weekendsLeft)+' weekends remaining');
+  setText('sc-weekends','~'+fmt(Math.floor(daysLeft/7))+' weekends remaining');
   if(_name){setText('sc-name-card',_name);}else{setText('sc-name-card',b.yy+' years old');}
   var scStats=el('sc-stats-card');
   if(scStats)scStats.innerHTML=fmt(t.day)+' days lived &nbsp;&middot;&nbsp; '+fmtShort(Math.floor(t.day*24*60*70))+' heartbeats &nbsp;&middot;&nbsp; '+Math.round(pct)+'% of life used';
-
-  // ── Animate ring count-up ──
-  var ringProgressEl=el('ring-progress');
-  if(ringProgressEl){
-    var circFull=2*Math.PI*120;
-    ringProgressEl.style.transition='none';
-    ringProgressEl.style.strokeDasharray=circFull;
-    ringProgressEl.style.strokeDashoffset=circFull;
-    setTimeout(function(){
-      ringProgressEl.style.transition='stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
-      ringProgressEl.style.strokeDashoffset=circFull-(pct/100)*circFull;
-      setTimeout(function(){
-        ringProgressEl.style.filter='drop-shadow(0 0 12px rgba(236,72,153,0.8))';
-        setTimeout(function(){ringProgressEl.style.filter='';},600);
-      },1600);
-    },200);
-    var startPct=0,targetPct=Math.round(pct),stepPct=targetPct/60;
-    var counter=setInterval(function(){
-      startPct+=stepPct;
-      if(startPct>=targetPct){startPct=targetPct;clearInterval(counter);}
-      setText('ring-pct',Math.floor(startPct)+'%');
-    },25);
-  }
-
-  // ── Highlight stat card ──
-  var statCards=document.querySelectorAll('.stat-card');
-  statCards.forEach(function(c){c.classList.remove('stat-card-highlight');});
-  if(statCards[2])statCards[2].classList.add('stat-card-highlight');
 
   // ── Live ticker ──
   clearInterval(window._ticker);
@@ -527,7 +478,11 @@ function renderAll(birth,name){
 
   // ── Save ──
   localStorage.setItem('aw_dob',birth.toISOString().split('T')[0]);
-  if(_name)localStorage.setItem('aw_name',_name);
+
+  // Scroll to wow section
+  setTimeout(function(){
+    el('wow-section').scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
 }
 
 function tickUpdate(birth){
@@ -537,8 +492,6 @@ function tickUpdate(birth){
   var pct=Math.min(100,(ageYears/AVG_LIFESPAN_YEARS)*100);
   var totalDays=Math.round(AVG_LIFESPAN_YEARS*365.25);
   var daysLeft=Math.max(0,totalDays-t.day);
-  setText('ring-pct',Math.round(pct)+'%');
-  setText('ring-days',fmt(t.day)+' of '+fmt(totalDays)+' days');
   setText('stat-age',b.yy+' yrs '+b.mo+' mo');
   setText('stat-age-days',fmt(t.day)+' days');
   setText('stat-days-used',fmt(t.day));
@@ -546,7 +499,6 @@ function tickUpdate(birth){
   setText('stat-days-left',fmt(daysLeft));
   setText('stat-hours-left',fmt(daysLeft*24)+' hours');
   setText('stat-pct',Math.round(pct)+'%');
-  setText('ff-heartbeats',fmtShort(Math.floor(t.day*24*60*70)));
 }
 
 function buildMiniCalendar(birth,daysLived,years){
@@ -606,11 +558,36 @@ function renderMonthEvents(birth){
   }).join('');
 }
 
+// ── Loading sequence ──────────────────────────────────────────
+function showLoading(cb){
+  var overlay=el('loading-overlay');
+  var lineEl=el('loading-line');
+  overlay.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  var msgs=['Analyzing your time...','Every moment you\'ve lived\u2026','Every opportunity you\'ve been given\u2026'];
+  var i=0;
+  lineEl.textContent=msgs[0];
+  var seq=setInterval(function(){
+    i++;
+    if(i<msgs.length){
+      lineEl.style.opacity='0';
+      setTimeout(function(){lineEl.textContent=msgs[i];lineEl.style.opacity='1';},200);
+    } else {
+      clearInterval(seq);
+      setTimeout(function(){
+        overlay.classList.add('hidden');
+        document.body.style.overflow='';
+        cb();
+      },400);
+    }
+  },800);
+}
+
 // ── Share modal ───────────────────────────────────────────────
 function openShare(){
   if(!_birth){
-    alert('Please calculate your life first by entering your date of birth.');
-    document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+    el('input-section').classList.remove('hidden');
+    el('hero').scrollIntoView({behavior:'smooth'});
     return;
   }
   var t=getTotals(_birth);
@@ -634,10 +611,7 @@ function openShare(){
 }
 
 function openTwinShare(){
-  if(!_birth){
-    alert('Please calculate your life first.');
-    return;
-  }
+  if(!_birth){return;}
   var twins=getTimeTwins(_birth);
   var b=getBreakdown(_birth);
   var t=getTotals(_birth);
@@ -700,40 +674,57 @@ function runComparison(){
 
 // ── Event listeners ───────────────────────────────────────────
 
-// Reveal button
+// Hero CTA → scroll to input
 document.getElementById('btn-reveal').addEventListener('click',function(){
-  el('hero-input-wrap').classList.remove('hidden');
-  this.classList.add('hidden');
-  el('hero-dob').focus();
+  var inputSec=el('input-section');
+  inputSec.classList.remove('hidden');
+  setTimeout(function(){
+    inputSec.scrollIntoView({behavior:'smooth',block:'center'});
+    el('hero-dob').focus();
+  },50);
 });
-// Calculate
-document.getElementById('btn-calculate').addEventListener('click',function(){
-  var dob=el('hero-dob').value;
-  var name=(el('hero-name').value||'').trim();
-  var errEl=el('hero-error');
-  errEl.classList.add('hidden');
-  if(!dob){errEl.textContent='Please enter your date of birth.';errEl.classList.remove('hidden');return;}
-  var birth=parseDOB(dob);
-  if(birth>new Date()){errEl.textContent='Date of birth cannot be in the future.';errEl.classList.remove('hidden');return;}
-  renderAll(birth,name);
-  if(typeof gtag!=='undefined')gtag('event','calculate',{event_category:'AgeWise',event_label:'main'});
-});
-
-// Enter key
-document.getElementById('hero-dob').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btn-calculate').click();});
-document.getElementById('hero-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btn-calculate').click();});
 
 // Nav calc button
 document.getElementById('btn-nav-calc').addEventListener('click',function(){
-  el('hero-input-wrap').classList.remove('hidden');
-  el('btn-reveal').classList.add('hidden');
-  el('hero-dob').focus();
+  var inputSec=el('input-section');
+  inputSec.classList.remove('hidden');
+  setTimeout(function(){
+    inputSec.scrollIntoView({behavior:'smooth',block:'center'});
+    el('hero-dob').focus();
+  },50);
+});
+
+// Calculate
+document.getElementById('btn-calculate').addEventListener('click',function(){
+  var dob=el('hero-dob').value;
+  var errEl=el('hero-error');
+  errEl.classList.add('hidden');
+  if(!dob){errEl.textContent='Please select your date of birth.';errEl.classList.remove('hidden');return;}
+  var birth=parseDOB(dob);
+  if(birth>new Date()){errEl.textContent='Date of birth cannot be in the future.';errEl.classList.remove('hidden');return;}
+  showLoading(function(){
+    renderAll(birth,'');
+    if(typeof gtag!=='undefined')gtag('event','calculate',{event_category:'MultiMain WaqtX',event_label:'main'});
+  });
+});
+
+// Enter key on date input
+document.getElementById('hero-dob').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btn-calculate').click();});
+
+// Share reflection button
+document.getElementById('btn-share-reflection').addEventListener('click',openShare);
+
+// Start again
+document.getElementById('btn-start-again').addEventListener('click',function(){
+  el('results-section').classList.add('hidden');
+  el('input-section').classList.remove('hidden');
+  el('hero-dob').value='';
+  _birth=null;
+  clearInterval(window._ticker);
   el('hero').scrollIntoView({behavior:'smooth'});
 });
 
-// Share buttons
-document.getElementById('btn-nav-share').addEventListener('click',openShare);
-document.getElementById('btn-action-share').addEventListener('click',openShare);
+// Share modal close
 document.getElementById('share-close').addEventListener('click',function(){
   el('share-modal').classList.add('hidden');
   document.body.style.overflow='';
@@ -741,7 +732,6 @@ document.getElementById('share-close').addEventListener('click',function(){
 document.getElementById('share-modal').addEventListener('click',function(e){
   if(e.target===this){el('share-modal').classList.add('hidden');document.body.style.overflow='';}
 });
-
 // Twin share
 document.getElementById('btn-twin-share').addEventListener('click',openTwinShare);
 document.getElementById('twin-share-close').addEventListener('click',function(){
@@ -756,64 +746,33 @@ document.getElementById('twin-share-modal').addEventListener('click',function(e)
 document.getElementById('btn-download-twin-share').addEventListener('click',function(){
   var card=el('twin-share-card');
   if(typeof html2canvas==='undefined'){alert('Download not available. Please screenshot instead.');return;}
-  var btn=this;
-  btn.textContent='Generating...';
-  btn.disabled=true;
+  var btn=this;btn.textContent='Generating...';btn.disabled=true;
   html2canvas(card,{backgroundColor:'#0d0b1e',scale:2}).then(function(canvas){
-    var a=document.createElement('a');
-    a.download='agewise-twin-card.png';
-    a.href=canvas.toDataURL('image/png');
-    a.click();
-    btn.textContent='Downloaded!';
-    setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Twin Card';btn.disabled=false;},2000);
-  }).catch(function(){
-    btn.textContent='\u2B07\uFE0F Download Twin Card';
-    btn.disabled=false;
-    alert('Download failed. Please screenshot instead.');
-  });
-});
-
-// Life moments tabs
-document.getElementById('lm-tab-past').addEventListener('click',function(){
-  el('lm-past').classList.remove('hidden');
-  el('lm-future').classList.add('hidden');
-  el('lm-tab-past').classList.add('active');
-  el('lm-tab-future').classList.remove('active');
-});
-document.getElementById('lm-tab-future').addEventListener('click',function(){
-  el('lm-future').classList.remove('hidden');
-  el('lm-past').classList.add('hidden');
-  el('lm-tab-future').classList.add('active');
-  el('lm-tab-past').classList.remove('active');
+    var a=document.createElement('a');a.download='multimain-waqtx-twin-card.png';a.href=canvas.toDataURL('image/png');a.click();
+    btn.textContent='Downloaded!';setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Twin Card';btn.disabled=false;},2000);
+  }).catch(function(){btn.textContent='\u2B07\uFE0F Download Twin Card';btn.disabled=false;alert('Download failed. Please screenshot instead.');});
 });
 
 // Download share card
 document.getElementById('btn-download-share').addEventListener('click',function(){
   var card=el('share-card');
   if(typeof html2canvas==='undefined'){alert('Download not available. Please screenshot instead.');return;}
-  var btn=this;
-  btn.textContent='Generating...';
-  btn.disabled=true;
+  var btn=this;btn.textContent='Generating...';btn.disabled=true;
   html2canvas(card,{backgroundColor:'#0d0b1e',scale:2}).then(function(canvas){
-    var a=document.createElement('a');
-    a.download='agewise-life-card.png';
-    a.href=canvas.toDataURL('image/png');
-    a.click();
-    btn.textContent='Downloaded!';
-    setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Card';btn.disabled=false;},2000);
-  }).catch(function(){
-    btn.textContent='\u2B07\uFE0F Download Card';
-    btn.disabled=false;
-    alert('Download failed. Please screenshot instead.');
-  });
+    var a=document.createElement('a');a.download='multimain-waqtx-life-card.png';a.href=canvas.toDataURL('image/png');a.click();
+    btn.textContent='Downloaded!';setTimeout(function(){btn.textContent='\u2B07\uFE0F Download Card';btn.disabled=false;},2000);
+  }).catch(function(){btn.textContent='\u2B07\uFE0F Download Card';btn.disabled=false;alert('Download failed. Please screenshot instead.');});
 });
 
-// Compare buttons
-document.getElementById('btn-action-compare').addEventListener('click',openCompare);
-document.getElementById('compare-close').addEventListener('click',closeCompare);
-document.getElementById('compare-modal').addEventListener('click',function(e){if(e.target===this)closeCompare();});
-document.getElementById('btn-run-compare').addEventListener('click',runComparison);
-document.getElementById('compare-dob').addEventListener('keydown',function(e){if(e.key==='Enter')runComparison();});
+// Life moments tabs
+document.getElementById('lm-tab-past').addEventListener('click',function(){
+  el('lm-past').classList.remove('hidden');el('lm-future').classList.add('hidden');
+  el('lm-tab-past').classList.add('active');el('lm-tab-future').classList.remove('active');
+});
+document.getElementById('lm-tab-future').addEventListener('click',function(){
+  el('lm-future').classList.remove('hidden');el('lm-past').classList.add('hidden');
+  el('lm-tab-future').classList.add('active');el('lm-tab-past').classList.remove('active');
+});
 
 // Explore toggle
 document.getElementById('btn-explore-toggle').addEventListener('click',function(){
@@ -822,7 +781,7 @@ document.getElementById('btn-explore-toggle').addEventListener('click',function(
   var isHidden=content.classList.contains('hidden');
   content.classList.toggle('hidden');
   arrow.classList.toggle('open',isHidden);
-  el('explore-toggle-text').textContent=isHidden?'\u2728 Hide Full Life Report':'\u2728 Explore Your Full Life Report';
+  el('explore-toggle-text').textContent=isHidden?'\u2728 Hide Full Life Report':'\u2728 Explore Full Life Report';
   if(isHidden)setTimeout(function(){content.scrollIntoView({behavior:'smooth',block:'start'});},50);
 });
 
@@ -878,40 +837,18 @@ document.getElementById('btn-country-more').addEventListener('click',function(){
   }
 });
 
-// Nav smooth scroll (for specific section anchors)
-document.querySelectorAll('.nav-item').forEach(function(a){
-  a.addEventListener('click',function(e){
-    var href=a.getAttribute('href');
-    if(href&&href.startsWith('#')&&href!=='#'){
-      e.preventDefault();
-      var sectionMap={'#explore-section':'#explore-section','#life-calendar-section':'#life-calendar-section','#time-twin-section':'#time-twin-section','#birth-insights-section':'#birth-insights-section','#global-events-section':'#global-events-section'};
-      var target=document.querySelector(href);
-      if(target){
-        var ec=el('explore-content');
-        if(ec&&ec.classList.contains('hidden')){
-          ec.classList.remove('hidden');
-          el('explore-arrow').classList.add('open');
-          el('explore-toggle-text').textContent='\u2728 Hide Full Life Report';
-        }
-        setTimeout(function(){target.scrollIntoView({behavior:'smooth'});},100);
-      }
-    }
-    el('nav-links').classList.remove('open');
-  });
-});
-
 // Hamburger
 document.getElementById('hamburger').addEventListener('click',function(){
-  el('nav-links').classList.toggle('open');
+  var inputSec=el('input-section');
+  inputSec.classList.remove('hidden');
+  inputSec.scrollIntoView({behavior:'smooth',block:'center'});
 });
 
 // ── Init ──────────────────────────────────────────────────────
 initParticles();
 
-// Restore last DOB + name
+// Restore last DOB
 (function(){
   var savedDob=localStorage.getItem('aw_dob');
-  var savedName=localStorage.getItem('aw_name');
   if(savedDob){var inp=el('hero-dob');if(inp)inp.value=savedDob;}
-  if(savedName){var nameInp=el('hero-name');if(nameInp)nameInp.value=savedName;}
 })();

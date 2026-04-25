@@ -1,8 +1,8 @@
-# ⏳ AgeWise
+# ⏳ MultiMain WaqtX
 
 A fast, precise, and beautifully animated age calculator built with vanilla HTML, CSS, and JavaScript.
 
-🔗 **Live Demo:** [AgeWise on GitHub Pages](https://age-calculator-woad-seven.vercel.app/)
+🔗 **Live Demo:** [MultiMain WaqtX on GitHub Pages](https://mianhassam96.github.io/MultiMian-WaqtX/)
 👨‍💻 **Author:** [MultiMian](https://github.com/Mianhassam96/)
 
 ---
@@ -26,8 +26,8 @@ A fast, precise, and beautifully animated age calculator built with vanilla HTML
 Just open `index.html` in your browser — no build tools or dependencies required.
 
 ```bash
-git clone https://github.com/Mianhassam96/AgeWise.git
-cd AgeWise
+git clone https://github.com/Mianhassam96/MultiMian-WaqtX.git
+cd MultiMian-WaqtX
 # open index.html in your browser
 ```
 

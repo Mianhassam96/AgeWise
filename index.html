@@ -4,205 +4,313 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"/>
-  <title>AgeWise — How Much of Your Life Have You Already Used?</title>
-  <meta name="description" content="Discover your real life timeline in seconds. See how many days, weekends, and moments you have left."/>
-  <meta name="theme-color" content="#0B0F1A"/>
+  <title>MultiMain WaqtX — Your Time is Not Yours</title>
+  <meta name="description" content="Reflect on your life through an Islamic lens. See how many days, prayers, and Ramadans you have been given."/>
+  <meta name="theme-color" content="#080c17"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="How Much of Your Life Have You Already Used?"/>
-  <meta property="og:description" content="Most people don't know. Find out in 10 seconds."/>
-  <meta property="og:url" content="https://mianhassam96.github.io/AgeWise/"/>
+  <meta property="og:title" content="Your time is not yours. It was given to you."/>
+  <meta property="og:description" content="See your life through reflection — not prediction."/>
+  <meta property="og:url" content="https://mianhassam96.github.io/MultiMian-WaqtX/"/>
   <meta name="twitter:card" content="summary"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
-  <link rel="stylesheet" href="style.css?v=6"/>
+  <link rel="stylesheet" href="style.css?v=7"/>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-inner">
-    <a href="#" class="nav-logo"><span class="nav-logo-icon">⏳</span><span class="nav-logo-text">Age<span>Wise</span></span></a>
-    <div class="nav-links" id="nav-links">
-      <a href="#" class="nav-item active">Home</a>
-      <a href="#life-calendar-section" class="nav-item">Life Calendar</a>
-      <a href="#time-twin-section" class="nav-item">Time Twin</a>
-      <a href="#birth-insights-section" class="nav-item">Birth Insights</a>
-      <a href="#global-events-section" class="nav-item">Global Events</a>
-    </div>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-icon">⏳</span>
+      <span class="nav-logo-text">MultiMain <span>WaqtX</span></span>
+    </a>
     <div class="nav-actions">
-      <button class="btn-nav-share" id="btn-nav-share" aria-label="Share your result">Share</button>
-      <button class="btn-nav-calc" id="btn-nav-calc" aria-label="Calculate your life">Calculate Your Life</button>
+      <button class="btn-nav-calc" id="btn-nav-calc" aria-label="Reflect on your life">Reflect on My Life</button>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════════
+     1. HERO SECTION
+═══════════════════════════════════════════════ -->
 <section class="hero" id="hero">
   <div class="hero-particles" aria-hidden="true" id="hero-particles"></div>
   <div class="hero-inner">
-
-    <!-- LEFT -->
-    <div class="hero-left">
-      <div class="hero-eyebrow">⏳ YOUR LIFE, MEASURED PRECISELY</div>
-      <h1 class="hero-headline">You've already used<br><span class="hero-headline-pink">a part of your life.</span><br>Do you know how<br>much is left?</h1>
-      <p class="hero-subtext">Discover your real life timeline — in seconds.</p>
-      <button class="btn-reveal" id="btn-reveal">Reveal My Life →</button>
-      <div class="hero-input-wrap hidden" id="hero-input-wrap">
-        <div class="hi-label">Enter your details</div>
-        <label for="hero-name" class="sr-only">Your name (optional)</label>
-        <input type="text" id="hero-name" class="hero-input" placeholder="Your name (optional)" autocomplete="off"/>
-        <div class="hi-date-row">
-          <label for="hero-dob" class="sr-only">Date of birth</label>
-          <input type="date" id="hero-dob" class="hero-input" aria-label="Date of birth"/>
-        </div>
-        <button class="btn-calculate" id="btn-calculate">🔥 Calculate My Life</button>
-        <div class="hi-trust">100% Private &nbsp;•&nbsp; No Sign Up &nbsp;•&nbsp; Instant Results</div>
-        <div class="error hidden" id="hero-error" role="alert"></div>
-      </div>
-    </div>
-
-    <!-- RIGHT: Ring -->
-    <div class="hero-right">
-      <div class="ring-glow" aria-hidden="true"></div>
-      <div class="ring-wrap" id="ring-wrap">
-        <svg class="ring-svg" viewBox="0 0 300 300" aria-hidden="true">
-          <defs>
-            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#7C5CFF"/>
-              <stop offset="50%" stop-color="#FF4D8D"/>
-              <stop offset="100%" stop-color="#60a5fa"/>
-            </linearGradient>
-            <filter id="ringGlow">
-              <feGaussianBlur stdDeviation="4" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <circle class="ring-track" cx="150" cy="150" r="120"/>
-          <circle class="ring-progress" id="ring-progress" cx="150" cy="150" r="120" stroke-dasharray="753.98" stroke-dashoffset="753.98" filter="url(#ringGlow)"/>
-          <circle class="ring-dot" id="ring-dot" cx="150" cy="30" r="7"/>
-        </svg>
-        <div class="ring-content">
-          <div class="ring-label-top">YOU'VE USED</div>
-          <div class="ring-pct" id="ring-pct" aria-live="polite">—</div>
-          <div class="ring-label-bot">OF YOUR LIFE</div>
-          <div class="ring-days" id="ring-days">Enter your birth date</div>
-          <div class="ring-heart" aria-hidden="true">♥</div>
-        </div>
-      </div>
-      <div class="hero-right-insight" id="hero-right-insight">
-        <p class="hri-line1">Every second is a step toward your story.</p>
-        <p class="hri-line2">Make it meaningful.</p>
-      </div>
-    </div>
-
+    <div class="hero-ayah" aria-label="Quranic verse">كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ</div>
+    <div class="hero-ayah-trans">Every soul shall taste death.</div>
+    <h1 class="hero-headline">Your time is not yours.<br><span class="hero-headline-accent">It was given to you.</span></h1>
+    <p class="hero-subtext">And one day, it will be taken back.<br>See your life through reflection — not prediction.</p>
+    <button class="btn-reflect" id="btn-reveal">Reflect on My Life</button>
   </div>
 </section>
 
-<!-- RESULTS (hidden until calculated) -->
+<!-- ═══════════════════════════════════════════════
+     2. INPUT SECTION
+═══════════════════════════════════════════════ -->
+<section class="input-section hidden" id="input-section">
+  <div class="input-card">
+    <div class="input-card-top">You were brought into this world on a day chosen by Allah.</div>
+    <label for="hero-dob" class="sr-only">Date of Birth</label>
+    <input type="date" id="hero-dob" class="dob-input" aria-label="Select your date of birth"/>
+    <div class="error hidden" id="hero-error" role="alert"></div>
+    <button class="btn-begin" id="btn-calculate">Begin Reflection ⏳</button>
+    <div class="input-trust">100% Private &nbsp;•&nbsp; No Sign Up &nbsp;•&nbsp; Stays on Your Device</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     3. LOADING OVERLAY
+═══════════════════════════════════════════════ -->
+<div class="loading-overlay hidden" id="loading-overlay" aria-live="polite" aria-label="Loading your reflection">
+  <div class="loading-inner">
+    <div class="loading-crescent" aria-hidden="true">☽</div>
+    <div class="loading-line" id="loading-line">Analyzing your time...</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     RESULTS (hidden until calculated)
+═══════════════════════════════════════════════ -->
 <div id="results-section" class="hidden">
 
-  <!-- BIG STAT -->
-  <section class="big-stat-section" id="big-stat-section">
-    <div class="bss-inner">
-      <div class="bss-main" id="bss-main"></div>
-      <div class="bss-support" id="bss-support"></div>
+  <!-- ═══ 4. WOW MOMENT ═══ -->
+  <section class="wow-section" id="wow-section">
+    <div class="wow-inner">
+      <div class="wow-line1" id="wow-line1"></div>
+      <div class="wow-line2 hidden" id="wow-line2">Only you know how many you kept.</div>
+      <div class="wow-line3 hidden" id="wow-line3">And time… is still passing.</div>
     </div>
   </section>
 
-  <!-- STATS ROW (4 cards) -->
-  <section class="stats-row">
-    <div class="stats-inner">
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-blue" aria-hidden="true">📅</div>
-        <div class="stat-body">
-          <div class="stat-label">DAYS LIVED</div>
-          <div class="stat-value" id="stat-days-used">—</div>
-          <div class="stat-sub" id="stat-hours-used">— hours</div>
+  <!-- ═══ 5. CORE LIFE DATA ═══ -->
+  <section class="core-data-section">
+    <div class="core-data-inner">
+      <div class="core-days" id="core-days"></div>
+      <div class="core-sub">Days that will never return.</div>
+    </div>
+  </section>
+
+  <!-- ═══ 6. IBADAH SECTION ═══ -->
+  <section class="ibadah-section">
+    <div class="ibadah-inner">
+      <div class="ibadah-title">In your lifetime, you were given:</div>
+      <div class="ibadah-grid" id="ibadah-grid">
+        <div class="ibadah-card">
+          <div class="ibadah-icon">🌅</div>
+          <div class="ibadah-name">Fajr</div>
+          <div class="ibadah-count" id="ib-fajr">—</div>
+          <div class="ibadah-label">فرص</div>
+        </div>
+        <div class="ibadah-card">
+          <div class="ibadah-icon">☀️</div>
+          <div class="ibadah-name">Dhuhr</div>
+          <div class="ibadah-count" id="ib-dhuhr">—</div>
+          <div class="ibadah-label">فرص</div>
+        </div>
+        <div class="ibadah-card">
+          <div class="ibadah-icon">🌤️</div>
+          <div class="ibadah-name">Asr</div>
+          <div class="ibadah-count" id="ib-asr">—</div>
+          <div class="ibadah-label">فرص</div>
+        </div>
+        <div class="ibadah-card">
+          <div class="ibadah-icon">🌙</div>
+          <div class="ibadah-name">Isha</div>
+          <div class="ibadah-count" id="ib-isha">—</div>
+          <div class="ibadah-label">فرص</div>
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-green" aria-hidden="true">☀</div>
-        <div class="stat-body">
-          <div class="stat-label">DAYS LEFT</div>
-          <div class="stat-value" id="stat-days-left">—</div>
-          <div class="stat-sub" id="stat-hours-left">— hours</div>
-        </div>
-      </div>
-      <div class="stat-card stat-card-highlight">
-        <div class="stat-icon-wrap stat-icon-pink" aria-hidden="true">%</div>
-        <div class="stat-body">
-          <div class="stat-label">LIFE USED</div>
-          <div class="stat-value" id="stat-pct">—</div>
-          <div class="stat-sub" id="stat-pct-left">Still —% to live</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-purple" aria-hidden="true">∞</div>
-        <div class="stat-body">
-          <div class="stat-label">YOUR AGE</div>
-          <div class="stat-value" id="stat-age">—</div>
-          <div class="stat-sub" id="stat-age-days">— days</div>
-        </div>
+      <div class="ibadah-reflection">
+        Each one was a chance to turn back to Allah.<br>
+        Some you kept. Some you lost.<br>
+        <em>Only you know the truth.</em>
       </div>
     </div>
   </section>
 
-  <!-- EMOTIONAL INSIGHT BANNER -->
-  <section class="insight-banner">
-    <div class="ib-inner">
-      <div class="ib-text" id="ib-text">Most people waste the next 25% of their life without realizing it. You don't have to.</div>
-      <div class="ib-phase" id="ib-phase"></div>
+  <!-- ═══ 7. RAMADAN SECTION ═══ -->
+  <section class="ramadan-section">
+    <div class="ramadan-inner">
+      <div class="ramadan-moon" aria-hidden="true">🌙</div>
+      <div class="ramadan-count" id="ramadan-count"></div>
+      <div class="ramadan-text">
+        Nights of mercy. Days of forgiveness.<br>
+        Some passed like any other days…<br>
+        Some may have changed your life.<br>
+        <span class="ramadan-warning">And more may never come.</span>
+      </div>
     </div>
   </section>
 
-  <!-- ACTION ROW -->
-  <section class="action-row">
-    <div class="action-inner">
-      <button class="btn-action-share" id="btn-action-share">📸 Share My Result</button>
-      <button class="btn-action-compare" id="btn-action-compare">👥 Compare with Friend</button>
+  <!-- ═══ 8. REFLECTION CORE ═══ -->
+  <section class="reflection-section">
+    <div class="reflection-inner">
+      <p>Most people think they have time.</p>
+      <p>Until time quietly slips away.</p>
+      <p>You planned your studies. Your career. Your future.</p>
+      <p class="reflection-highlight">But did you plan your <span class="arabic-inline">آخِرَة</span>?</p>
     </div>
   </section>
 
-  <!-- EXPLORE MORE -->
+  <!-- ═══ 9. ISLAMIC HISTORY SECTION ═══ -->
+  <section class="ummah-section">
+    <div class="ummah-inner">
+      <div class="ummah-icon" aria-hidden="true">🕌</div>
+      <h2 class="ummah-title">The world you were born into</h2>
+      <div class="ummah-text">
+        When you were born, the Ummah was already moving through time.<br>
+        Scholars were teaching. People were returning to Allah. Others were forgetting.<br><br>
+        You entered a world already in motion.<br>
+        <em>And one day… you will leave it behind.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 10. PLANET SECTION ═══ -->
+  <section class="planet-section">
+    <div class="planet-section-inner">
+      <h3 class="planet-section-title">🪐 Your Age Across the Universe</h3>
+      <p class="planet-section-sub">No matter where you are — your deeds remain with you.</p>
+      <div class="planet-scroll" id="planet-scroll"></div>
+    </div>
+  </section>
+
+  <!-- ═══ 11. PERSONAL EXISTENCE ═══ -->
+  <section class="existence-section">
+    <div class="existence-inner">
+      <p>Millions share your birth date.</p>
+      <p>But no one will live your life.</p>
+      <p>No one will answer for your actions.</p>
+      <p class="existence-highlight">Your time is yours alone.<br>Your story is yours alone.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 12. LIFE PASSING ═══ -->
+  <section class="passing-section">
+    <div class="passing-inner">
+      <div class="passing-line">Years passed.</div>
+      <div class="passing-line passing-dim">Without announcement. Without warning.</div>
+      <div class="passing-line">Moments turned into memories.</div>
+      <div class="passing-line passing-dim">Memories turned into silence.</div>
+      <div class="passing-line passing-final">And most of it… felt like nothing.</div>
+    </div>
+  </section>
+
+  <!-- ═══ 13. SHARE SECTION ═══ -->
+  <section class="share-section">
+    <div class="share-section-inner">
+      <div class="share-preview-card" id="share-preview-card">
+        <div class="spc-logo">⏳ MultiMain WaqtX</div>
+        <div class="spc-pct" id="spc-pct">—%</div>
+        <div class="spc-label">of my life has passed.</div>
+        <div class="spc-quote">Only Allah knows what remains.<br>May I use my time better.</div>
+        <div class="spc-footer">mianhassam96.github.io/MultiMian-WaqtX</div>
+      </div>
+      <div class="share-btns">
+        <button class="btn-share-reflection" id="btn-share-reflection">📿 Share Reflection</button>
+        <button class="btn-start-again" id="btn-start-again">🔁 Start Again</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 14. FINAL LINE ═══ -->
+  <section class="final-section">
+    <div class="final-inner">
+      <p class="final-line1">You still have this moment.</p>
+      <p class="final-line2">What will you do with it?</p>
+    </div>
+  </section>
+
+  <!-- ═══ EXPLORE MORE (collapsible) ═══ -->
   <section class="explore-section" id="explore-section">
     <div class="explore-header">
-      <div class="explore-teaser">See your full life calendar, time twin, peak years, birth insights, and hidden facts…</div>
+      <div class="explore-teaser">See your full life calendar, time twin, birth insights, and more…</div>
       <button class="btn-explore-toggle" id="btn-explore-toggle" aria-expanded="false">
-        <span id="explore-toggle-text">✨ Explore Your Full Life Report</span>
+        <span id="explore-toggle-text">✨ Explore Full Life Report</span>
         <span class="explore-arrow" id="explore-arrow" aria-hidden="true">↓</span>
       </button>
     </div>
 
     <div class="explore-content hidden" id="explore-content">
 
-      <!-- ① BIRTHDAY TWIN REVEAL — full width, first, strongest -->
-      <div class="twin-reveal-section panel-wide-standalone" id="time-twin-section">
-        <div class="tr-header">
-          <div class="tr-eyebrow">🎉 BIRTHDAY TWIN REVEAL</div>
-          <h3 class="tr-headline">You share your birthday with <span id="tr-headline-name">—</span></h3>
-          <p class="tr-sub" id="tr-sub">Loading your birthday twins…</p>
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stats-inner">
+          <div class="stat-card">
+            <div class="stat-icon-wrap stat-icon-blue" aria-hidden="true">📅</div>
+            <div class="stat-body">
+              <div class="stat-label">DAYS LIVED</div>
+              <div class="stat-value" id="stat-days-used">—</div>
+              <div class="stat-sub" id="stat-hours-used">— hours</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap stat-icon-green" aria-hidden="true">☀</div>
+            <div class="stat-body">
+              <div class="stat-label">DAYS LEFT</div>
+              <div class="stat-value" id="stat-days-left">—</div>
+              <div class="stat-sub" id="stat-hours-left">— hours</div>
+            </div>
+          </div>
+          <div class="stat-card stat-card-highlight">
+            <div class="stat-icon-wrap stat-icon-pink" aria-hidden="true">%</div>
+            <div class="stat-body">
+              <div class="stat-label">LIFE USED</div>
+              <div class="stat-value" id="stat-pct">—</div>
+              <div class="stat-sub" id="stat-pct-left">Still —% to live</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap stat-icon-purple" aria-hidden="true">∞</div>
+            <div class="stat-body">
+              <div class="stat-label">YOUR AGE</div>
+              <div class="stat-value" id="stat-age">—</div>
+              <div class="stat-sub" id="stat-age-days">— days</div>
+            </div>
+          </div>
         </div>
-        <div class="tr-twins-row" id="tr-twins-row"></div>
-        <div class="tr-personality" id="tr-personality"></div>
-        <div class="tr-club">
-          <span class="tr-club-icon">🌍</span>
-          <span id="tr-club-text">You share your birthday with <strong id="tr-club-count">~19 million</strong> people worldwide.</span>
-          <span class="tr-club-quote">Some of them will change the world. Will you?</span>
-        </div>
-        <button class="btn-twin-share" id="btn-twin-share">📸 Share My Birthday Twin Card</button>
       </div>
 
       <div class="explore-grid">
 
-        <!-- ② PLANET AGE — full width -->
-        <div class="panel panel-wide" id="planet-age-section">
-          <h3 class="panel-title">🪐 Your Age Across the Universe</h3>
-          <p class="panel-sub">You're a different age on every planet — and each one says something about you.</p>
-          <div class="planet-scroll" id="planet-scroll"></div>
+        <!-- Birthday Twin -->
+        <div class="twin-reveal-section panel-wide-standalone" id="time-twin-section">
+          <div class="tr-header">
+            <div class="tr-eyebrow">🎉 BIRTHDAY TWIN REVEAL</div>
+            <h3 class="tr-headline">You share your birthday with <span id="tr-headline-name">—</span></h3>
+            <p class="tr-sub" id="tr-sub">Loading your birthday twins…</p>
+          </div>
+          <div class="tr-twins-row" id="tr-twins-row"></div>
+          <div class="tr-personality" id="tr-personality"></div>
+          <div class="tr-club">
+            <span class="tr-club-icon">🌍</span>
+            <span id="tr-club-text">You share your birthday with <strong id="tr-club-count">~19 million</strong> people worldwide.</span>
+            <span class="tr-club-quote">Some of them will change the world. Will you?</span>
+          </div>
+          <button class="btn-twin-share" id="btn-twin-share">📸 Share My Birthday Twin Card</button>
         </div>
 
-        <!-- ③ LIFE MOMENTS — left -->
+        <!-- Life Calendar -->
+        <div class="panel panel-wide" id="life-calendar-section">
+          <h3 class="panel-title">🗓️ Life Calendar</h3>
+          <p class="panel-sub">Your life in weeks. Past, present &amp; future.</p>
+          <div class="cal-legend-row">
+            <span class="cal-leg"><span class="cal-dot-past" aria-hidden="true"></span> Past</span>
+            <span class="cal-leg"><span class="cal-dot-present" aria-hidden="true"></span> Present</span>
+            <span class="cal-leg"><span class="cal-dot-future" aria-hidden="true"></span> Future</span>
+          </div>
+          <div class="mini-cal-grid" id="mini-cal-grid" aria-label="Life calendar grid"></div>
+          <div class="cal-week-labels">
+            <span>Week 1<br><small id="cal-date-start">—</small></span>
+            <span id="cal-week-now">Week —<br><small>You are here</small></span>
+            <span>Week <span id="cal-week-total">—</span><br><small id="cal-date-end">—</small></span>
+          </div>
+          <button class="btn-outline" id="btn-full-calendar">Open Full Life Calendar →</button>
+        </div>
+
+        <!-- Life Moments -->
         <div class="panel" id="birth-insights-section">
           <h3 class="panel-title">⏳ Life Moments Breakdown</h3>
           <p class="panel-sub">How you've spent your time so far — and what's coming.</p>
@@ -219,29 +327,11 @@
           </div>
         </div>
 
-        <!-- ④ PEAK YEARS — right -->
+        <!-- Peak Years -->
         <div class="panel" id="peak-years-section">
           <h3 class="panel-title">🚀 Your Peak Years</h3>
           <p class="panel-sub">When you'll be at your best</p>
           <div class="peak-content" id="peak-content"></div>
-        </div>
-
-        <!-- Life Calendar (2x wide) -->
-        <div class="panel panel-wide" id="life-calendar-section">
-          <h3 class="panel-title">🗓️ Life Calendar</h3>
-          <p class="panel-sub">Your life in weeks. Past, present &amp; future.</p>
-          <div class="cal-legend-row">
-            <span class="cal-leg"><span class="cal-dot-past" aria-hidden="true"></span> Past</span>
-            <span class="cal-leg"><span class="cal-dot-present" aria-hidden="true"></span> Present</span>
-            <span class="cal-leg"><span class="cal-dot-future" aria-hidden="true"></span> Future</span>
-          </div>
-          <div class="mini-cal-grid" id="mini-cal-grid" aria-label="Life calendar grid"></div>
-          <div class="cal-week-labels">
-            <span>Week 1<br><small id="cal-date-start">—</small></span>
-            <span id="cal-week-now">Week —<br><small>You are here</small></span>
-            <span>Week <span id="cal-week-total">—</span><br><small id="cal-date-end">—</small></span>
-          </div>
-          <button class="btn-outline" id="btn-full-calendar">Open Full Life Calendar →</button>
         </div>
 
         <!-- Birth Details -->
@@ -303,53 +393,36 @@
 </div><!-- end results-section -->
 
 <!-- SHARE MODAL — Life Card -->
-<div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share your result">
+<div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share your reflection">
   <div class="share-modal-inner">
     <button class="share-close" id="share-close" aria-label="Close share modal">✕</button>
     <div class="share-card" id="share-card">
-      <div class="sc-logo">⏳ AgeWise</div>
+      <div class="sc-logo">⏳ MultiMain WaqtX</div>
       <div class="sc-weekends" id="sc-weekends"></div>
       <div class="sc-pct" id="sc-pct">—%</div>
-      <div class="sc-label">of life used</div>
+      <div class="sc-label">of life has passed.</div>
       <div class="sc-name" id="sc-name-card"></div>
+      <div class="sc-quote">Only Allah knows what remains.<br>May I use my time better.</div>
       <div class="sc-stats" id="sc-stats-card"></div>
-      <div class="sc-footer">agewise · mianhassam96.github.io/AgeWise</div>
+      <div class="sc-footer">multimain waqtx · mianhassam96.github.io/MultiMian-WaqtX</div>
     </div>
     <button class="btn-calculate" id="btn-download-share">⬇️ Download Card</button>
   </div>
 </div>
 
-<!-- TWIN SHARE MODAL — Birthday Twin Card -->
+<!-- TWIN SHARE MODAL -->
 <div class="share-modal hidden" id="twin-share-modal" role="dialog" aria-modal="true" aria-label="Share your birthday twin card">
   <div class="share-modal-inner">
     <button class="share-close" id="twin-share-close" aria-label="Close twin share modal">✕</button>
     <div class="share-card twin-share-card" id="twin-share-card">
-      <div class="sc-logo">🎉 AgeWise — Birthday Twin</div>
+      <div class="sc-logo">🎉 MultiMain WaqtX — Birthday Twin</div>
       <div class="tsc-born" id="tsc-born"></div>
       <div class="tsc-twins" id="tsc-twins-card"></div>
       <div class="tsc-twist" id="tsc-twist-card"></div>
       <div class="tsc-weekends" id="tsc-weekends-card"></div>
-      <div class="sc-footer">What about you? → mianhassam96.github.io/AgeWise</div>
+      <div class="sc-footer">What about you? → mianhassam96.github.io/MultiMian-WaqtX</div>
     </div>
     <button class="btn-calculate" id="btn-download-twin-share">⬇️ Download Twin Card</button>
-  </div>
-</div>
-
-<!-- COMPARE MODAL -->
-<div class="share-modal hidden" id="compare-modal" role="dialog" aria-modal="true" aria-label="Compare with a friend">
-  <div class="share-modal-inner" style="max-width:480px;">
-    <button class="share-close" id="compare-close" aria-label="Close compare modal">✕</button>
-    <h3 style="color:#f1f5f9;font-size:1.1rem;font-weight:700;margin-bottom:4px;">👥 Compare with a Friend</h3>
-    <p style="color:#64748b;font-size:0.82rem;margin-bottom:20px;">Enter their details to see how your life timelines compare.</p>
-    <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
-      <label for="compare-name" class="sr-only">Friend's name</label>
-      <input type="text" id="compare-name" class="hero-input" placeholder="Friend's name (optional)" autocomplete="off"/>
-      <label for="compare-dob" class="sr-only">Friend's date of birth</label>
-      <input type="date" id="compare-dob" class="hero-input" aria-label="Friend's date of birth"/>
-      <div class="error hidden" id="compare-error" role="alert"></div>
-      <button class="btn-calculate" id="btn-run-compare">Compare Lives →</button>
-    </div>
-    <div class="hidden" id="compare-result" style="width:100%;margin-top:16px;"></div>
   </div>
 </div>
 
@@ -357,7 +430,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="footer-logo">⏳ Age<span>Wise</span></span>
+      <span class="footer-logo">⏳ MultiMain <span>WaqtX</span></span>
       <p>A mirror for your time.<br>A guide for your life.</p>
     </div>
     <div class="footer-center">
@@ -379,6 +452,6 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="index.js?v=6"></script>
+<script src="index.js?v=7"></script>
 </body>
 </html>
