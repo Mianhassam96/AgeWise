@@ -259,7 +259,7 @@ function renderAll(birth) {
 
   /* Personalise heading if name given */
   var nameEl = el('results-name');
-  if (nameEl) nameEl.textContent = _name ? _name + '\u2019s Timeline' : 'Your Timeline';
+  if (nameEl) nameEl.textContent = _name ? _name : 'Your Timeline';
 
   /* Glance */
   setText('g-days',    fmt(t.day));
