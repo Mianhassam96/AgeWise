@@ -1650,3 +1650,233 @@ img { max-width: 100%; }
   .truth-grid { grid-template-columns: 1fr 1fr; }
   .story-card { padding: 24px 16px; }
 }
+
+/* ══════════════════════════════════════════════
+   REFINEMENT CSS — Progressive Journey, Celebration,
+   Story Share, Daily Action, Softened Tone
+   ══════════════════════════════════════════════ */
+
+/* ── Journey Progress Steps ── */
+.journey-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 24px 0;
+  gap: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.journey-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.35;
+  transition: opacity 0.4s;
+  flex-shrink: 0;
+}
+.journey-step.active { opacity: 1; }
+.journey-step.done .js-num { background: var(--green); border-color: var(--green); color: #fff; }
+.js-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(201,168,76,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 800;
+  color: var(--text2);
+  background: var(--bg2);
+  transition: all 0.4s;
+}
+.journey-step.active .js-num {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.1);
+  box-shadow: 0 0 12px rgba(201,168,76,0.2);
+}
+.js-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.journey-step.active .js-label { color: var(--gold); }
+.journey-step-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(201,168,76,0.2);
+  margin: 0 8px;
+  margin-bottom: 18px;
+}
+
+/* ── Step Blocks ── */
+.step-block { transition: opacity 0.4s; }
+.step-entering { animation: stepReveal 0.5s ease forwards; }
+@keyframes stepReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Step Continue Button ── */
+.step-continue {
+  background: var(--bg);
+  padding: 40px 24px;
+  text-align: center;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+.step-continue-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; }
+.step-continue-label {
+  font-size: 0.72rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.btn-continue {
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--gold3), var(--gold));
+  border-radius: 999px;
+  color: #0a1a0d;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: all var(--transition);
+  box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+  cursor: pointer;
+  border: none;
+}
+.btn-continue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,168,76,0.4);
+}
+.btn-continue:active { transform: translateY(0); }
+
+/* ── Story Footer ── */
+.story-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(201,168,76,0.12);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.btn-story-share {
+  padding: 10px 22px;
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(201,168,76,0.06);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-story-share:hover {
+  background: rgba(201,168,76,0.14);
+  box-shadow: 0 0 16px rgba(201,168,76,0.2);
+}
+
+/* ── Story Share Card (modal) ── */
+.story-sc-days {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.story-sc-label {
+  font-size: 0.78rem;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+.story-sc-ramadans {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.story-sc-hijri {
+  font-size: 0.82rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+.story-sc-quote {
+  font-size: 0.88rem;
+  color: var(--text3);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* ── Celebration Toast ── */
+.celebration {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  z-index: 400;
+  background: linear-gradient(135deg, #0d2010, #0a1a0d);
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 16px;
+  padding: 20px 28px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.1);
+  min-width: 280px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.celebration.cel-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.celebration-emoji { font-size: 2rem; margin-bottom: 8px; }
+.celebration-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.celebration-sub {
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ── Daily Action Box ── */
+.insight-action-box {
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+  text-align: left;
+}
+.insight-focus {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.insight-action {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ── Responsive for new elements ── */
+@media (max-width: 600px) {
+  .journey-steps { padding: 16px 16px 0; gap: 0; }
+  .js-label { display: none; }
+  .journey-step-line { margin: 0 4px; margin-bottom: 0; }
+  .js-num { width: 28px; height: 28px; font-size: 0.72rem; }
+  .btn-continue { padding: 12px 28px; font-size: 0.88rem; }
+  .story-footer { flex-direction: column; align-items: flex-start; }
+  .celebration { min-width: 240px; padding: 16px 20px; }
+}

@@ -311,6 +311,9 @@ function renderAll(birth) {
   renderTimeTruth(ageYears, t);
   renderInsight(t.day); /* update day count in insight */
 
+  /* Progressive reveal — start at step 1 */
+  revealStep(1);
+
   /* Animate day counter */
   setTimeout(function () { animateCounter('g-days', t.day, 1200); }, 500);
 
@@ -330,6 +333,37 @@ function renderAll(birth) {
     var gs = el('results-section');
     if (gs) gs.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 200);
+}
+
+/* ── Progressive Step Reveal ── */
+function revealStep(step) {
+  document.querySelectorAll('.journey-step').forEach(function(s) {
+    var n = parseInt(s.getAttribute('data-step'));
+    s.classList.toggle('active', n <= step);
+    s.classList.toggle('done', n < step);
+  });
+  var block = el('step-' + step);
+  if (!block) return;
+  block.classList.remove('hidden');
+  block.classList.add('step-entering');
+  setTimeout(function() { block.classList.remove('step-entering'); }, 600);
+  setTimeout(function() { block.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+}
+
+/* ── Story Share Modal ── */
+function openStoryModal() {
+  var modal = el('story-modal');
+  if (!modal || !_birth) return;
+  var t = getTotals(_birth);
+  var b = getBreakdown(_birth);
+  var hijriBirth = toHijri(_birth);
+  var hijriNow = toHijri(new Date());
+  var ramadans = Math.floor(b.yy + b.mo / 12);
+  setText('story-sc-days', fmt(t.day));
+  setText('story-sc-ramadans', ramadans + ' Ramadans witnessed');
+  setText('story-sc-hijri', hijriBirth.year + ' AH \u2013 ' + hijriNow.year + ' AH');
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
 }
 
 /* ── Loading Sequence ── */
@@ -416,6 +450,11 @@ el('btn-start-again').addEventListener('click', function () {
   el('hero-dob').value = '';
   _birth = null;
   clearInterval(window._ticker);
+  /* Reset steps */
+  [1,2,3,4].forEach(function(n) {
+    var b = el('step-' + n);
+    if (b && n > 1) b.classList.add('hidden');
+  });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
@@ -520,6 +559,35 @@ window.addEventListener('scroll', function () {
   }
 });
 
+/* Story Share Modal */
+(function() {
+  var btn = el('btn-story-share');
+  if (btn) btn.addEventListener('click', openStoryModal);
+  var closeBtn = el('story-modal-close');
+  if (closeBtn) closeBtn.addEventListener('click', function() {
+    el('story-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+  var storyModal = el('story-modal');
+  if (storyModal) storyModal.addEventListener('click', function(e) {
+    if (e.target === this) { this.classList.add('hidden'); document.body.style.overflow = ''; }
+  });
+  var dlBtn = el('btn-story-dl');
+  if (dlBtn) dlBtn.addEventListener('click', function() {
+    var card = el('story-card-dl');
+    if (typeof html2canvas === 'undefined') { alert('Please screenshot to save.'); return; }
+    var btn = this; btn.textContent = 'Generating\u2026'; btn.disabled = true;
+    html2canvas(card, { backgroundColor: '#061008', scale: 2 }).then(function(canvas) {
+      var a = document.createElement('a');
+      a.download = 'waqtx-story.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      btn.textContent = 'Downloaded!';
+      setTimeout(function() { btn.textContent = '\u2B07 Download Story Card'; btn.disabled = false; }, 2000);
+    }).catch(function() { btn.textContent = '\u2B07 Download Story Card'; btn.disabled = false; });
+  });
+})();
+
 /* PWA Install */
 var _deferredInstall = null;
 window.addEventListener('beforeinstallprompt', function (e) {
@@ -588,6 +656,19 @@ renderInsight(0);
   }
 })();
 
+
+/* ── Celebration Toast ── */
+function showCelebration() {
+  var cel = el('celebration');
+  if (!cel) return;
+  setText('cel-streak', getStreakCount());
+  cel.classList.remove('hidden');
+  cel.classList.add('cel-show');
+  setTimeout(function() {
+    cel.classList.remove('cel-show');
+    setTimeout(function() { cel.classList.add('hidden'); }, 400);
+  }, 3500);
+}
 
 /* ══════════════════════════════════════════════
    FEATURE 1 — LIFE STORY (Narrative)
@@ -668,13 +749,13 @@ function renderTimeTruth(ageYears, t) {
 
   if (verdictEl) {
     var msg = meaningPct < 10
-      ? 'Less than <strong>' + meaningPct + '%</strong> of your life has been truly meaningful. That is the honest truth. The rest of your life can be different — but only if you decide now.'
+      ? 'Based on these averages, a relatively small portion — around <strong>' + meaningPct + '%</strong> — may have gone toward intentional growth. That is not a judgment. It is simply a starting point. The rest of your life can look different.'
       : meaningPct < 20
-      ? 'About <strong>' + meaningPct + '%</strong> of your life has been meaningful. There is still so much time to change the ratio. Every day is a new chance.'
-      : 'Around <strong>' + meaningPct + '%</strong> of your life has been meaningful. You are doing better than most — keep building on it.';
+      ? 'Around <strong>' + meaningPct + '%</strong> of your time has likely gone toward meaningful activities. There is still a great deal of room to grow — and every day is a fresh opportunity to shift that balance.'
+      : 'Roughly <strong>' + meaningPct + '%</strong> of your time appears to have been spent meaningfully. You are building something. Keep going — consistency compounds over time.';
 
-    verdictEl.innerHTML = '<div class="truth-verdict-headline">The Honest Picture</div>' +
-      '<div class="truth-verdict-text">' + msg + ' The Prophet ﷺ said: <em>"Take advantage of five before five: your youth before your old age, your health before your sickness, your wealth before your poverty, your free time before your busyness, and your life before your death."</em></div>';
+    verdictEl.innerHTML = '<div class="truth-verdict-headline">A Gentle Reality Check</div>' +
+      '<div class="truth-verdict-text">' + msg + '<br><br>The Prophet \uFDFA said: <em>"Take advantage of five before five: your youth before your old age, your health before your sickness, your wealth before your poverty, your free time before your busyness, and your life before your death."</em></div>';
   }
 }
 
@@ -753,6 +834,15 @@ function updateSalahUI() {
 
   // Streak
   setText('salah-streak', getStreakCount());
+
+  /* Celebration on full completion */
+  var wasFull = el('salah-bar-fill') && el('salah-bar-fill').getAttribute('data-was-full') === '1';
+  if (salahDone.length === 5 && !wasFull) {
+    if (el('salah-bar-fill')) el('salah-bar-fill').setAttribute('data-was-full', '1');
+    showCelebration();
+  } else if (salahDone.length < 5) {
+    if (el('salah-bar-fill')) el('salah-bar-fill').setAttribute('data-was-full', '0');
+  }
 
   // Dhikr count
   setText('dhikr-done', dhikrDone.length);
@@ -856,88 +946,88 @@ function initTracker() {
    ══════════════════════════════════════════════ */
 var DAILY_INSIGHTS = [
   {
-    icon: '⏳',
-    headline: 'Every second is a step closer.',
+    icon: '⏳', headline: 'Every second is a step closer.',
     body: 'Right now, as you read this, your life is moving forward. Not backward. Not paused. Forward. The question is not how much time you have — it is what you are doing with the time that is passing right now.',
-    ayah: '"And He is with you wherever you are." — (Quran 57:4)'
+    ayah: '"And He is with you wherever you are." — (Quran 57:4)',
+    focus: 'Today\'s Focus: Presence', action: 'Before each task today, pause for 3 seconds and set an intention. Just 3 seconds.'
   },
   {
-    icon: '🌙',
-    headline: 'Fajr changes everything.',
+    icon: '🌙', headline: 'Fajr changes everything.',
     body: 'The person who wakes for Fajr starts their day with Allah. That one act — 10 minutes before sunrise — sets the tone for the entire day. It is not just a prayer. It is a declaration: "My day belongs to You."',
-    ayah: '"Establish prayer at the decline of the sun until the darkness of the night and the Quran of dawn." — (Quran 17:78)'
+    ayah: '"Establish prayer at the decline of the sun until the darkness of the night and the Quran of dawn." — (Quran 17:78)',
+    focus: 'Today\'s Focus: Fajr', action: 'Set your alarm 15 minutes earlier tomorrow. Sit in silence after Fajr — even for 2 minutes.'
   },
   {
-    icon: '📖',
-    headline: 'One page a day. One life changed.',
-    body: 'If you read just one page of the Quran every day, you will complete it in about 3 years. But the real change is not finishing — it is the daily habit of sitting with the words of Allah. That habit reshapes who you are.',
-    ayah: '"Indeed, this Quran guides to that which is most suitable." — (Quran 17:9)'
+    icon: '📖', headline: 'One page a day. One life changed.',
+    body: 'If you read just one page of the Quran every day, you will complete it in about 3 years. But the real change is not finishing — it is the daily habit of sitting with the words of Allah.',
+    ayah: '"Indeed, this Quran guides to that which is most suitable." — (Quran 17:9)',
+    focus: 'Today\'s Focus: Quran', action: 'Open the Quran right now. Read just one page — slowly, with meaning. That is enough.'
   },
   {
-    icon: '🤲',
-    headline: 'Istighfar opens closed doors.',
-    body: 'The Prophet ﷺ made istighfar more than 70 times a day — and he was already forgiven. Imagine what it does for us. Saying "Astaghfirullah" is not just asking forgiveness. It is resetting your connection with Allah.',
-    ayah: '"Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver." — (Quran 71:10)'
+    icon: '🤲', headline: 'Istighfar opens closed doors.',
+    body: 'The Prophet \uFDFA made istighfar more than 70 times a day — and he was already forgiven. Saying "Astaghfirullah" is not just asking forgiveness. It is resetting your connection with Allah.',
+    ayah: '"Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver." — (Quran 71:10)',
+    focus: 'Today\'s Focus: Istighfar', action: 'Say Astaghfirullah 100 times today — in the car, while walking, before sleep. Count on your fingers.'
   },
   {
-    icon: '🌅',
-    headline: 'This morning will never come again.',
+    icon: '🌅', headline: 'This morning will never come again.',
     body: 'The morning you woke up today — this exact morning — will never exist again. Every sunrise is unique. Every day is a new page. What will you write on today\'s page before it closes tonight?',
-    ayah: '"By the dawn. And by the ten nights." — (Quran 89:1-2)'
+    ayah: '"By the dawn. And by the ten nights." — (Quran 89:1-2)',
+    focus: 'Today\'s Focus: Gratitude', action: 'Write down 3 things you are grateful for right now. Not tomorrow — right now.'
   },
   {
-    icon: '💭',
-    headline: 'Your thoughts become your life.',
-    body: 'What you think about most becomes what you do. What you do becomes who you are. Guard your thoughts. Fill your mind with what is good, true, and purposeful. The battle for your life is won or lost in your mind first.',
-    ayah: '"Allah does not change the condition of a people until they change what is in themselves." — (Quran 13:11)'
+    icon: '💭', headline: 'Your thoughts become your life.',
+    body: 'What you think about most becomes what you do. What you do becomes who you are. Guard your thoughts. Fill your mind with what is good, true, and purposeful.',
+    ayah: '"Allah does not change the condition of a people until they change what is in themselves." — (Quran 13:11)',
+    focus: 'Today\'s Focus: Mind Guard', action: 'When a negative or wasteful thought comes today, replace it with "SubhanAllah" and redirect.'
   },
   {
-    icon: '🕌',
-    headline: 'The masjid is waiting for you.',
-    body: 'There is a masjid near you right now. It has been there every day. The call to prayer has gone out five times today. Each time was an invitation — personal, direct, from Allah to you. How many did you answer?',
-    ayah: '"In houses which Allah has ordered to be raised and that His name be mentioned therein." — (Quran 24:36)'
+    icon: '🕌', headline: 'The masjid is waiting for you.',
+    body: 'There is a masjid near you right now. The call to prayer has gone out five times today. Each time was an invitation — personal, direct, from Allah to you.',
+    ayah: '"In houses which Allah has ordered to be raised and that His name be mentioned therein." — (Quran 24:36)',
+    focus: 'Today\'s Focus: Congregation', action: 'Pray at least one prayer in the masjid today. If not possible, pray on time at home with full focus.'
   },
   {
-    icon: '❤️',
-    headline: 'Your parents\' du\'a is your shield.',
-    body: 'The du\'a of a parent for their child is never rejected. If your parents are alive, their happiness with you is a door to Jannah. If they have passed, your du\'a for them is a gift that reaches them. Do not let this connection weaken.',
-    ayah: '"Your Lord has decreed that you worship none but Him, and that you be kind to parents." — (Quran 17:23)'
+    icon: '❤️', headline: 'Your parents\' du\'a is your shield.',
+    body: 'The du\'a of a parent for their child is never rejected. If your parents are alive, their happiness with you is a door to Jannah. If they have passed, your du\'a for them reaches them.',
+    ayah: '"Your Lord has decreed that you worship none but Him, and that you be kind to parents." — (Quran 17:23)',
+    focus: 'Today\'s Focus: Parents', action: 'Call or message a parent today. If they have passed, make du\'a for them right now.'
   },
   {
-    icon: '🎯',
-    headline: 'Small consistent beats big occasional.',
-    body: 'The Prophet ﷺ said the most beloved deeds to Allah are those done consistently, even if small. You do not need to pray all night. You need to pray every night. Consistency is the secret that most people miss.',
-    ayah: '"The most beloved of deeds to Allah are those that are most consistent, even if they are small." — (Hadith, Bukhari)'
+    icon: '🎯', headline: 'Small consistent beats big occasional.',
+    body: 'The Prophet \uFDFA said the most beloved deeds to Allah are those done consistently, even if small. You do not need to pray all night. You need to pray every night.',
+    ayah: '"The most beloved of deeds to Allah are those that are most consistent, even if they are small." — (Hadith, Bukhari)',
+    focus: 'Today\'s Focus: One Habit', action: 'Pick one small act of worship. Do it today. Then do it again tomorrow. That is how habits form.'
   },
   {
-    icon: '🌍',
-    headline: 'You are part of something bigger.',
-    body: 'Right now, over 1.8 billion Muslims around the world are praying, fasting, making du\'a, and striving. You are not alone in this journey. You are part of the Ummah — a community that spans every country, every language, every generation.',
-    ayah: '"And hold firmly to the rope of Allah all together and do not become divided." — (Quran 3:103)'
+    icon: '🌍', headline: 'You are part of something bigger.',
+    body: 'Right now, over 1.8 billion Muslims around the world are praying, fasting, making du\'a, and striving. You are not alone in this journey.',
+    ayah: '"And hold firmly to the rope of Allah all together and do not become divided." — (Quran 3:103)',
+    focus: 'Today\'s Focus: Ummah', action: 'Make du\'a for the Muslim Ummah today — for those suffering, for those striving, for all of us.'
   },
   {
-    icon: '⚖️',
-    headline: 'The scales will be real.',
-    body: 'On the Day of Judgment, every deed will be weighed. Not just the big ones — every word, every glance, every moment of patience, every act of kindness. Nothing is too small to matter. Nothing is too small to count.',
-    ayah: '"So whoever does an atom\'s weight of good will see it, and whoever does an atom\'s weight of evil will see it." — (Quran 99:7-8)'
+    icon: '⚖️', headline: 'Every deed will be weighed.',
+    body: 'On the Day of Judgment, every deed will be weighed. Not just the big ones — every word, every glance, every moment of patience, every act of kindness. Nothing is too small to count.',
+    ayah: '"So whoever does an atom\'s weight of good will see it." — (Quran 99:7)',
+    focus: 'Today\'s Focus: Intention', action: 'Before your next action, say "Bismillah" and set a clear intention. Turn the ordinary into worship.'
   },
   {
-    icon: '🔑',
-    headline: 'Gratitude is the key that opens more.',
-    body: 'You woke up today. Your heart is beating. You can read these words. You have been given another chance. Gratitude is not just a feeling — it is a practice. Say Alhamdulillah and mean it. Watch what happens.',
-    ayah: '"If you are grateful, I will surely increase you in favor." — (Quran 14:7)'
+    icon: '🔑', headline: 'Gratitude is the key that opens more.',
+    body: 'You woke up today. Your heart is beating. You can read these words. You have been given another chance. Gratitude is not just a feeling — it is a practice.',
+    ayah: '"If you are grateful, I will surely increase you in favor." — (Quran 14:7)',
+    focus: 'Today\'s Focus: Alhamdulillah', action: 'Say Alhamdulillah 33 times right now — slowly, meaning each one. Feel the weight of what you have.'
   },
   {
-    icon: '🌿',
-    headline: 'Sadaqah protects you.',
-    body: 'Give something today — even a smile, a kind word, a small amount of money. The Prophet ﷺ said sadaqah extinguishes sins like water extinguishes fire. It also protects from calamity. Giving is not losing — it is investing.',
-    ayah: '"The example of those who spend their wealth in the way of Allah is like a seed which grows seven spikes." — (Quran 2:261)'
+    icon: '🌿', headline: 'Sadaqah protects you.',
+    body: 'Give something today — even a smile, a kind word, a small amount of money. The Prophet \uFDFA said sadaqah extinguishes sins like water extinguishes fire.',
+    ayah: '"The example of those who spend their wealth in the way of Allah is like a seed which grows seven spikes." — (Quran 2:261)',
+    focus: 'Today\'s Focus: Give', action: 'Give something today — money, time, a kind word, or a smile. Even the smallest sadaqah counts.'
   },
   {
-    icon: '🕐',
-    headline: 'Time is the only thing you cannot get back.',
-    body: 'Money lost can be earned again. Health lost can sometimes be restored. But time lost is gone forever. The hour that just passed will never return. This is not meant to create anxiety — it is meant to create intention. Be intentional today.',
-    ayah: '"By time, indeed, mankind is in loss." — (Quran 103:1-2)'
+    icon: '🕐', headline: 'Time is the only thing you cannot get back.',
+    body: 'Money lost can be earned again. Health lost can sometimes be restored. But time lost is gone forever. Be intentional today.',
+    ayah: '"By time, indeed, mankind is in loss." — (Quran 103:1-2)',
+    focus: 'Today\'s Focus: Time Audit', action: 'At the end of today, ask yourself: "Did I use this day well?" That question alone changes behavior.'
   }
 ];
 
@@ -956,17 +1046,20 @@ function renderInsight(daysLived) {
 function renderInsightCard(container, idx, dateStr, daysLived) {
   var insight = DAILY_INSIGHTS[idx];
   container.innerHTML =
-    '<div class="insight-date">' + dateStr + ' &nbsp;·&nbsp; Day ' + fmt(daysLived) + ' of your life</div>' +
+    '<div class="insight-date">' + dateStr + (daysLived ? ' &nbsp;·&nbsp; Day ' + fmt(daysLived) + ' of your life' : '') + '</div>' +
     '<span class="insight-icon">' + insight.icon + '</span>' +
     '<div class="insight-headline">' + insight.headline + '</div>' +
     '<div class="insight-body">' + insight.body + '</div>' +
     '<div class="insight-ayah">' + insight.ayah + '</div>' +
+    '<div class="insight-action-box">' +
+      '<div class="insight-focus">' + insight.focus + '</div>' +
+      '<div class="insight-action">' + insight.action + '</div>' +
+    '</div>' +
     '<div class="insight-nav">' +
-      '<button class="insight-nav-btn" id="insight-prev">← Previous</button>' +
-      '<button class="insight-nav-btn" id="insight-next">Next →</button>' +
+      '<button class="insight-nav-btn" id="insight-prev">\u2190 Previous</button>' +
+      '<button class="insight-nav-btn" id="insight-next">Next \u2192</button>' +
     '</div>';
 
-  // Wire nav buttons
   var prevBtn = el('insight-prev');
   var nextBtn = el('insight-next');
   if (prevBtn) prevBtn.addEventListener('click', function() {

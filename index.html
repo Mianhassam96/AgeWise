@@ -178,6 +178,20 @@
 <!-- ═══ RESULTS ═══ -->
 <div id="results-section" class="hidden">
 
+<!-- ── JOURNEY PROGRESS BAR ── -->
+<div class="journey-steps" id="journey-steps">
+  <div class="journey-step active" data-step="1"><span class="js-num">1</span><span class="js-label">Your Time</span></div>
+  <div class="journey-step-line"></div>
+  <div class="journey-step" data-step="2"><span class="js-num">2</span><span class="js-label">Your Journey</span></div>
+  <div class="journey-step-line"></div>
+  <div class="journey-step" data-step="3"><span class="js-num">3</span><span class="js-label">Your Reality</span></div>
+  <div class="journey-step-line"></div>
+  <div class="journey-step" data-step="4"><span class="js-num">4</span><span class="js-label">Your Story</span></div>
+</div>
+
+<!-- ══ STEP 1: YOUR TIME ══ -->
+<div class="step-block" id="step-1">
+
   <!-- ── YOUR TIME AT A GLANCE ── -->
   <section class="section glance-section">
     <div class="section-inner">
@@ -324,6 +338,20 @@
     </div>
   </section>
 
+  <!-- Step 1 → 2 continue -->
+  <div class="step-continue" id="continue-1">
+    <div class="step-continue-inner">
+      <div class="step-continue-label">Step 1 of 4 complete</div>
+      <button class="btn-continue" onclick="revealStep(2)">
+        See Your Journey &amp; History ✦
+      </button>
+    </div>
+  </div>
+</div><!-- /step-1 -->
+
+<!-- ══ STEP 2: YOUR JOURNEY ══ -->
+<div class="step-block hidden" id="step-2">
+
   <!-- ── JOURNEY + REFLECTION ── -->
   <section class="section jr-section">
     <div class="section-inner">
@@ -417,9 +445,51 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       FEATURE 1: LIFE STORY (Narrative)
-       ══════════════════════════════════════════ -->
+  <!-- Step 2 → 3 continue -->
+  <div class="step-continue" id="continue-2">
+    <div class="step-continue-inner">
+      <div class="step-continue-label">Step 2 of 4 complete</div>
+      <button class="btn-continue" onclick="revealStep(3)">
+        See Where Your Time Goes ✦
+      </button>
+    </div>
+  </div>
+</div><!-- /step-2 -->
+
+<!-- ══ STEP 3: YOUR REALITY ══ -->
+<div class="step-block hidden" id="step-3">
+
+  <!-- ── TIME TRUTH ── -->
+  <section class="section truth-section" id="truth-section">
+    <div class="section-inner">
+      <div class="section-heading">
+        <span class="sh-line"></span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-text">WHERE YOUR TIME GOES</span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-line"></span>
+      </div>
+      <div class="truth-intro" id="truth-intro"></div>
+      <div class="truth-grid" id="truth-grid"></div>
+      <div class="truth-verdict" id="truth-verdict"></div>
+    </div>
+  </section>
+
+  <!-- Step 3 → 4 continue -->
+  <div class="step-continue" id="continue-3">
+    <div class="step-continue-inner">
+      <div class="step-continue-label">Step 3 of 4 complete</div>
+      <button class="btn-continue" onclick="revealStep(4)">
+        Read Your Life Story ✦
+      </button>
+    </div>
+  </div>
+</div><!-- /step-3 -->
+
+<!-- ══ STEP 4: YOUR STORY ══ -->
+<div class="step-block hidden" id="step-4">
+
+  <!-- ── LIFE STORY ── -->
   <section class="section story-section" id="story-section">
     <div class="section-inner">
       <div class="section-heading">
@@ -431,29 +501,45 @@
       </div>
       <div class="story-card">
         <div class="story-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-        <div class="story-body" id="story-body">
-          <!-- filled by JS -->
+        <div class="story-body" id="story-body"></div>
+        <div class="story-footer">
+          <div class="story-closing">Your journey is still being written. ✦</div>
+          <button class="btn-story-share" id="btn-story-share">📤 Share My Story</button>
         </div>
-        <div class="story-closing">Your journey is still being written. ✦</div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       FEATURE 2: TIME TRUTH (Harsh Reality)
-       ══════════════════════════════════════════ -->
-  <section class="section truth-section" id="truth-section">
+  <!-- ── MILESTONES + SHARE ── -->
+  <section class="section ms-section" id="features-section">
     <div class="section-inner">
-      <div class="section-heading">
-        <span class="sh-line"></span>
-        <span class="sh-icon">◆</span>
-        <span class="sh-text">WHERE YOUR TIME GOES</span>
-        <span class="sh-icon">◆</span>
-        <span class="sh-line"></span>
+      <div class="ms-grid">
+        <div class="milestones-card">
+          <div class="ms-title">UPCOMING MILESTONES</div>
+          <div class="ms-list">
+            <div class="ms-row"><span class="ms-icon">📅</span><span class="ms-label">Next Jumu'ah</span><span class="ms-val" id="ms-jumua">—</span></div>
+            <div class="ms-row"><span class="ms-icon">📆</span><span class="ms-label">10,000 Days of Life</span><span class="ms-val" id="ms-10k">—</span></div>
+            <div class="ms-row"><span class="ms-icon">👤</span><span class="ms-label">Age 30</span><span class="ms-val" id="ms-age30">—</span></div>
+            <div class="ms-row"><span class="ms-icon">✅</span><span class="ms-label">1 Billion Seconds</span><span class="ms-val" id="ms-1b">—</span></div>
+          </div>
+        </div>
+        <div class="share-card">
+          <div class="share-title">SHARE YOUR TIMELINE</div>
+          <div class="share-sub">Create and share your Islamic timeline with your loved ones.</div>
+          <div class="share-btns">
+            <button class="btn-download" id="btn-download">⬇ Download Image</button>
+            <button class="btn-copy" id="btn-copy-link">🔗 Copy Link</button>
+          </div>
+        </div>
+        <div class="share-preview" id="share-preview">
+          <div class="sp-logo">◆ WaqtX</div>
+          <div class="sp-text">I've lived</div>
+          <div class="sp-days" id="sp-days">—</div>
+          <div class="sp-unit">Days</div>
+          <div class="sp-hijri" id="sp-hijri">— AH</div>
+          <div class="sp-tagline">A journey of time.</div>
+        </div>
       </div>
-      <div class="truth-intro" id="truth-intro"><!-- filled by JS --></div>
-      <div class="truth-grid" id="truth-grid"><!-- filled by JS --></div>
-      <div class="truth-verdict" id="truth-verdict"><!-- filled by JS --></div>
     </div>
   </section>
 
@@ -469,6 +555,8 @@
   <div class="start-again-wrap">
     <button class="btn-start-again" id="btn-start-again">↩ Start Again</button>
   </div>
+
+</div><!-- /step-4 -->
 
 </div><!-- /results-section -->
 
@@ -548,6 +636,32 @@
     <div class="insight-card" id="insight-card"></div>
   </div>
 </section>
+
+<!-- ═══ SALAH CELEBRATION ═══ -->
+<div class="celebration hidden" id="celebration">
+  <div class="celebration-inner">
+    <div class="celebration-emoji">🎉</div>
+    <div class="celebration-title">All 5 Prayers Complete!</div>
+    <div class="celebration-sub" id="celebration-sub">Alhamdulillah — streak: <span id="cel-streak">0</span> days 🔥</div>
+  </div>
+</div>
+
+<!-- ═══ STORY SHARE MODAL ═══ -->
+<div class="share-modal hidden" id="story-modal" role="dialog" aria-modal="true" aria-label="Share your story">
+  <div class="share-modal-inner">
+    <button class="modal-close" id="story-modal-close" aria-label="Close">✕</button>
+    <div class="share-card-dl" id="story-card-dl">
+      <div class="scdl-logo">◆ WaqtX</div>
+      <div class="story-sc-days" id="story-sc-days">—</div>
+      <div class="story-sc-label">days of life</div>
+      <div class="story-sc-ramadans" id="story-sc-ramadans">— Ramadans witnessed</div>
+      <div class="story-sc-hijri" id="story-sc-hijri">— AH</div>
+      <div class="story-sc-quote">Still writing my story.</div>
+      <div class="scdl-footer">waqtx · mianhassam96.github.io/MultiMian-WaqtX</div>
+    </div>
+    <button class="btn-dl-card" id="btn-story-dl">⬇ Download Story Card</button>
+  </div>
+</div>
 
 <!-- ═══ SHARE MODAL ═══ -->
 <div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share your timeline">
