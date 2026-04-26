@@ -90,11 +90,22 @@ function initScreenFade(){
 function triggerScreenFade(cb){
   var fade=el('screen-fade');
   if(!fade){cb();return;}
-  fade.classList.add('active');
-  setTimeout(function(){
-    cb();
-    setTimeout(function(){fade.classList.remove('active');},400);
-  },600);
+  // Fade to black, then run callback, then fade back
+  fade.style.opacity='0';
+  fade.style.pointerEvents='none';
+  fade.style.transition='opacity 0.4s ease';
+  requestAnimationFrame(function(){
+    fade.style.opacity='1';
+    fade.style.pointerEvents='all';
+    setTimeout(function(){
+      cb();
+      // Fade back after loading takes over
+      setTimeout(function(){
+        fade.style.opacity='0';
+        fade.style.pointerEvents='none';
+      },300);
+    },400);
+  });
 }
 
 // ── Cinematic: Number counter ─────────────────────────────────
@@ -261,7 +272,7 @@ function renderLifeMoments(birth){
     {icon:'\uD83D\uDCA4',label:'Sleeping',val:fmtShort(Math.round(yearsLived*0.33))+' years',sub:'~8 hrs/day — you\'ve been unconscious for a third of your life.'},
     {icon:'\u2764\uFE0F',label:'Heartbeats',val:fmtShort(Math.floor(t.day*24*60*70)),sub:'Your heart has never taken a day off.'},
     {icon:'\uD83D\uDCF1',label:'Screen time',val:fmtShort(Math.round(yearsLived*0.17))+' years',sub:'~4 hrs/day average. More than you\'d like to admit.'},
-    {icon:'\uD83D\uDEB6',label:'Walking',val:fmtShort(Math.round(t.day*8000))+' steps',sub:'You\'ve walked the equivalent of the Earth\'s circumference '+Math.round(t.day*8000/40075000)+' times.'},
+    {icon:'\uD83D\uDEB6',label:'Walking',val:fmtShort(Math.round(t.day*8000))+' steps',sub:'You\'ve walked the equivalent of the Earth\'s circumference '+Math.round(t.day*8000*0.762/40075000)+' times.'},
     {icon:'\uD83C\uDF7D\uFE0F',label:'Meals eaten',val:fmtShort(Math.floor(t.day*3)),sub:'Three times a day, every day, without fail.'},
     {icon:'\uD83D\uDE04',label:'Laughs',val:fmtShort(Math.floor(t.day*15)),sub:'~15 laughs a day. Hopefully more.'},
   ];

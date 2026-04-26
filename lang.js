@@ -624,13 +624,16 @@ function applyLang(code, animate){
   }
 
   if(animate){
-    document.body.style.opacity = '0.5';
-    document.body.style.transition = 'opacity 0.35s ease';
+    document.body.style.opacity = '0.4';
+    document.body.style.transition = 'opacity 0.3s ease';
     setTimeout(function(){
       doApply();
       document.body.style.opacity = '1';
-      setTimeout(function(){ document.body.style.transition = ''; }, 400);
-    }, 350);
+      setTimeout(function(){
+        document.body.style.opacity = '';
+        document.body.style.transition = '';
+      }, 350);
+    }, 300);
   } else {
     doApply();
   }
