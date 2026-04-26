@@ -1,15 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Privacy — WaqtX</title>
-  <meta name="description" content="WaqtX privacy policy."/>
+  <meta name="description" content="WaqtX privacy policy. Your data stays on your device."/>
   <meta name="theme-color" content="#0d1a0f"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .privacy-page { max-width: 700px; margin: 0 auto; padding: calc(var(--nav-h) + 60px) 24px 80px; }
+    .privacy-title { font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+    .privacy-date { font-size: 0.8rem; color: var(--text3); margin-bottom: 40px; }
+    .privacy-section { margin-bottom: 36px; }
+    .privacy-section h2 { font-size: 0.72rem; font-weight: 800; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.12em; }
+    .privacy-section p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 10px; }
+    .privacy-section strong { color: var(--text); }
+    .privacy-highlight { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px; }
+    .privacy-highlight p { margin: 0; font-size: 0.95rem; color: var(--text); font-weight: 500; }
+  </style>
 </head>
 <body>
-  <!-- rebuild starts here -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#0d1a0f" stroke="#c9a84c" stroke-width="2"/><path d="M22 14h20v4L32 32l-10-14v-4z" fill="#c9a84c" opacity="0.9"/><path d="M22 50h20v-4L32 32l-10 14v4z" fill="#c9a84c" opacity="0.6"/><circle cx="32" cy="32" r="3" fill="#c9a84c"/></svg>
+        </span>
+        <span class="nav-logo-text">WaqtX</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn-share-nav" style="text-decoration:none">← Back to WaqtX</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="privacy-page">
+    <h1 class="privacy-title">Privacy Policy</h1>
+    <p class="privacy-date">Last updated: April 2026</p>
+
+    <div class="privacy-highlight">
+      <p>🔒 WaqtX does not collect, store, or transmit any personal data. Everything stays on your device.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>What data we collect</h2>
+      <p><strong>None.</strong> WaqtX does not collect any personal information. Your date of birth is processed entirely in your browser and is never sent to any server.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>Local storage</h2>
+      <p>WaqtX uses your browser's <strong>localStorage</strong> to remember your last entered date of birth so you don't have to re-enter it. This data never leaves your device.</p>
+      <p>You can clear this at any time by clearing your browser's site data, or by clicking "Start Again" in the app.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>Third-party services</h2>
+      <p>WaqtX loads fonts from <strong>Google Fonts</strong> and uses <strong>html2canvas</strong> (via CDN) for the download card feature. These are standard web services and do not receive your personal data.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>Cookies</h2>
+      <p>WaqtX does not use cookies.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>Contact</h2>
+      <p>If you have any questions about this privacy policy, please <a href="contact.html" style="color:var(--gold)">contact us</a>.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">◆ WaqtX</span>
+        <p>A mirror for your time.<br>A guide for your life.</p>
+      </div>
+      <div class="footer-center">Made with ♥ for a meaningful life</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+        <div class="footer-copy">© 2026 MultiMian. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

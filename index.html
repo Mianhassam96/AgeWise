@@ -6,12 +6,463 @@
   <title>WaqtX — Your Life in Time &amp; History</title>
   <meta name="description" content="Discover your timeline through Islamic history, world events and meaningful insights."/>
   <meta name="theme-color" content="#0d1a0f"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="WaqtX — Your Life in Time &amp; History"/>
+  <meta property="og:description" content="Discover your timeline through Islamic history, world events and meaningful insights."/>
+  <meta property="og:url" content="https://mianhassam96.github.io/MultiMian-WaqtX/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <!-- rebuild starts here -->
-  <script src="app.js"></script>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-icon">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="#0d1a0f" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M22 14h20v4L32 32l-10-14v-4z" fill="#c9a84c" opacity="0.9"/>
+          <path d="M22 50h20v-4L32 32l-10 14v4z" fill="#c9a84c" opacity="0.6"/>
+          <circle cx="32" cy="32" r="3" fill="#c9a84c"/>
+        </svg>
+      </span>
+      <span class="nav-logo-text">WaqtX</span>
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="#" class="nav-link active">Home</a>
+      <a href="#islamic-section" class="nav-link">Islamic History</a>
+      <a href="#features-section" class="nav-link">Features</a>
+      <a href="about.html" class="nav-link">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-share-nav" id="btn-share-nav">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+        Share WaqtX
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-bg-img"></div>
+    <div class="hero-bg-overlay"></div>
+  </div>
+  <div class="hero-inner">
+
+    <!-- LEFT -->
+    <div class="hero-left">
+      <div class="hero-arabic">وَكُن يَؤُهُ هُوَ بِي شَأن</div>
+      <div class="hero-divider">
+        <span class="hero-divider-line"></span>
+        <span class="hero-divider-icon">✦</span>
+        <span class="hero-divider-line"></span>
+      </div>
+      <h1 class="hero-headline">
+        Your Life in<br>
+        <span class="hero-headline-gold">Time &amp; History</span>
+      </h1>
+      <p class="hero-sub">Discover your timeline through Islamic history, world events and meaningful insights.</p>
+      <blockquote class="hero-quote">
+        <span class="hero-quote-mark">"</span>
+        And never think that Allah is unaware of what the wrongdoers do.
+        <cite>(Quran 14:42)</cite>
+      </blockquote>
+    </div>
+
+    <!-- RIGHT: form card -->
+    <div class="hero-right">
+      <div class="input-card">
+        <div class="input-card-title">Let's start with your birth details</div>
+        <div class="input-card-sub">This helps us build your personal timeline.</div>
+
+        <div class="input-group">
+          <label class="input-label">Date of Birth</label>
+          <div class="input-wrap">
+            <span class="input-icon">📅</span>
+            <input type="date" id="hero-dob" class="dob-input" placeholder="MM / DD / YYYY"/>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group half">
+            <label class="input-label">Time (Optional)</label>
+            <div class="input-wrap">
+              <span class="input-icon">🕐</span>
+              <input type="time" id="hero-time" class="dob-input" value="12:00"/>
+            </div>
+          </div>
+          <div class="input-group half">
+            <label class="input-label">Gender (Optional)</label>
+            <div class="input-wrap select-wrap">
+              <span class="input-icon">👤</span>
+              <select id="hero-gender" class="dob-input select-input">
+                <option value="">Select</option>
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-error hidden" id="hero-error" role="alert"></div>
+
+        <button class="btn-reveal" id="btn-calculate">
+          Reveal My Timeline ✦
+        </button>
+
+        <div class="input-trust">
+          <span>🔒 100% Private</span>
+          <span class="trust-dot">•</span>
+          <span>No Data Stored</span>
+          <span class="trust-dot">•</span>
+          <span>You're in Control</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ LOADING ═══ -->
+<div class="loading-overlay hidden" id="loading-overlay" aria-live="polite">
+  <div class="loading-inner">
+    <div class="loading-crescent">☽</div>
+    <div class="loading-text" id="loading-text">Analyzing your time…</div>
+    <div class="loading-bar"><div class="loading-bar-fill" id="loading-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- ═══ RESULTS ═══ -->
+<div id="results-section" class="hidden">
+
+  <!-- ── YOUR TIME AT A GLANCE ── -->
+  <section class="section glance-section">
+    <div class="section-inner">
+      <div class="section-heading">
+        <span class="sh-line"></span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-text">YOUR TIME AT A GLANCE</span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-line"></span>
+      </div>
+      <div class="glance-grid">
+        <div class="glance-card">
+          <div class="glance-icon">🕐</div>
+          <div class="glance-label">Days Lived</div>
+          <div class="glance-value" id="g-days">—</div>
+          <div class="glance-unit">Days</div>
+          <div class="glance-desc">A journey of time given to you.</div>
+        </div>
+        <div class="glance-card">
+          <div class="glance-icon">⏳</div>
+          <div class="glance-label">Hours Lived</div>
+          <div class="glance-value" id="g-hours">—</div>
+          <div class="glance-unit">Hours</div>
+          <div class="glance-desc">Every hour is a blessing.</div>
+        </div>
+        <div class="glance-card">
+          <div class="glance-icon">🌙</div>
+          <div class="glance-label">Time Sleeping</div>
+          <div class="glance-value" id="g-sleep">—</div>
+          <div class="glance-unit">Years</div>
+          <div class="glance-desc">About one third of your life.</div>
+        </div>
+        <div class="glance-card">
+          <div class="glance-icon">❤️</div>
+          <div class="glance-label">Heartbeats</div>
+          <div class="glance-value" id="g-hearts">—</div>
+          <div class="glance-unit">Billion</div>
+          <div class="glance-desc">Your heart has never stopped.</div>
+        </div>
+        <div class="glance-card">
+          <div class="glance-icon">🌅</div>
+          <div class="glance-label">Sunsets Seen</div>
+          <div class="glance-value" id="g-sunsets">—</div>
+          <div class="glance-unit"></div>
+          <div class="glance-desc">You've seen thousands of beautiful sunsets.</div>
+        </div>
+        <div class="glance-card">
+          <div class="glance-icon">⏱</div>
+          <div class="glance-label">Seconds Lived</div>
+          <div class="glance-value" id="g-seconds">—</div>
+          <div class="glance-unit">Million</div>
+          <div class="glance-desc">Every second counts.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── YOUR LIFE & ISLAMIC HISTORY ── -->
+  <section class="section islamic-section" id="islamic-section">
+    <div class="section-inner">
+      <div class="section-heading">
+        <span class="sh-line"></span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-text">YOUR LIFE &amp; ISLAMIC HISTORY</span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-line"></span>
+      </div>
+      <div class="islamic-grid">
+        <div class="islamic-card">
+          <div class="ic-icon">🕌</div>
+          <div class="ic-sub">You were born in</div>
+          <div class="ic-value" id="ih-hijri-year">—</div>
+          <div class="ic-label" id="ih-hijri-month">AH</div>
+        </div>
+        <div class="islamic-card">
+          <div class="ic-icon">📅</div>
+          <div class="ic-sub">Your birth day</div>
+          <div class="ic-value" id="ih-day">—</div>
+          <div class="ic-label" id="ih-day-sub">—</div>
+        </div>
+        <div class="islamic-card">
+          <div class="ic-icon">🌙</div>
+          <div class="ic-sub">Ramadans lived</div>
+          <div class="ic-value" id="ih-ramadans">—</div>
+          <div class="ic-label">You have witnessed <span id="ih-ramadans2">—</span> Ramadans.</div>
+        </div>
+        <div class="islamic-card">
+          <div class="ic-icon">🕋</div>
+          <div class="ic-sub">Hajj seasons lived</div>
+          <div class="ic-value" id="ih-hajj">—</div>
+          <div class="ic-label">You have lived through <span id="ih-hajj2">—</span> Hajj seasons.</div>
+        </div>
+        <div class="islamic-card">
+          <div class="ic-icon">📖</div>
+          <div class="ic-sub">Islamic years lived</div>
+          <div class="ic-value" id="ih-islamic-years">—</div>
+          <div class="ic-label">From <span id="ih-hijri-range">— AH</span>.</div>
+        </div>
+        <div class="islamic-card">
+          <div class="ic-icon">🪔</div>
+          <div class="ic-sub">Next Ramadan</div>
+          <div class="ic-value">In Sha Allah</div>
+          <div class="ic-label" id="ih-next-ramadan">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE WORLD WHEN YOU WERE BORN ── -->
+  <section class="section world-section">
+    <div class="section-inner">
+      <div class="section-heading">
+        <span class="sh-line"></span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-text">THE WORLD WHEN YOU WERE BORN</span>
+        <span class="sh-icon">◆</span>
+        <span class="sh-line"></span>
+      </div>
+      <div class="world-grid">
+        <div class="world-card world-pk">
+          <div class="world-flag" id="w-flag">🇵🇰</div>
+          <div class="world-country" id="w-country">In Pakistan</div>
+          <div class="world-facts">
+            <div class="wf-row"><span class="wf-key">Prime Minister</span><span class="wf-val" id="w-pm">—</span></div>
+            <div class="wf-row"><span class="wf-key">President</span><span class="wf-val" id="w-president">—</span></div>
+            <div class="wf-row"><span class="wf-key">Currency</span><span class="wf-val" id="w-currency">—</span></div>
+          </div>
+        </div>
+        <div class="world-card world-globe">
+          <div class="world-globe-icon">🌍</div>
+          <div class="world-country">In The World</div>
+          <div class="world-facts">
+            <div class="wf-row"><span class="wf-key">World Population</span><span class="wf-val" id="w-population">—</span></div>
+            <div class="wf-row"><span class="wf-key">Major Event</span><span class="wf-val" id="w-event">—</span></div>
+            <div class="wf-row"><span class="wf-key">Technology</span><span class="wf-val" id="w-tech">—</span></div>
+          </div>
+        </div>
+        <div class="world-card world-moment">
+          <div class="world-moment-icon">🔖</div>
+          <div class="world-moment-title">A moment in time</div>
+          <div class="world-moment-text">The world was different, but your journey had just begun.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── JOURNEY + REFLECTION ── -->
+  <section class="section jr-section">
+    <div class="section-inner">
+      <div class="jr-grid">
+
+        <div class="journey-card">
+          <div class="journey-title">YOUR JOURNEY SO FAR</div>
+          <div class="journey-ring-wrap">
+            <svg class="journey-ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
+                stroke-dasharray="314" stroke-dashoffset="314"/>
+            </svg>
+            <div class="journey-pct" id="journey-pct">0%</div>
+          </div>
+          <div class="journey-text">
+            You have completed <strong id="journey-pct2">—%</strong> of your estimated life journey.
+          </div>
+          <div class="journey-cta">Use your time wisely.</div>
+          <div class="journey-note">Based on average lifespan of 75 years</div>
+        </div>
+
+        <div class="reflection-card">
+          <div class="reflection-title">REFLECTION</div>
+          <div class="reflection-quote-mark">"</div>
+          <div class="reflection-headline">Time is a trust.</div>
+          <div class="reflection-body">
+            Every moment you have lived is a part of your journey. Make the rest meaningful.
+          </div>
+          <div class="reflection-ayah">
+            "And say, 'My Lord, increase me in knowledge.'"<br>
+            <span class="reflection-ref">(Quran 20:114)</span>
+          </div>
+          <div class="reflection-lamp" aria-hidden="true">🪔</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MILESTONES + SHARE ── -->
+  <section class="section ms-section" id="features-section">
+    <div class="section-inner">
+      <div class="ms-grid">
+
+        <div class="milestones-card">
+          <div class="ms-title">UPCOMING MILESTONES</div>
+          <div class="ms-list">
+            <div class="ms-row">
+              <span class="ms-icon">📅</span>
+              <span class="ms-label">Next Jumu'ah</span>
+              <span class="ms-val" id="ms-jumua">—</span>
+            </div>
+            <div class="ms-row">
+              <span class="ms-icon">📆</span>
+              <span class="ms-label">10,000 Days of Life</span>
+              <span class="ms-val" id="ms-10k">—</span>
+            </div>
+            <div class="ms-row">
+              <span class="ms-icon">👤</span>
+              <span class="ms-label">Age 30</span>
+              <span class="ms-val" id="ms-age30">—</span>
+            </div>
+            <div class="ms-row">
+              <span class="ms-icon">✅</span>
+              <span class="ms-label">1 Billion Seconds</span>
+              <span class="ms-val" id="ms-1b">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="share-card">
+          <div class="share-title">SHARE YOUR TIMELINE</div>
+          <div class="share-sub">Create and share your Islamic timeline with your loved ones.</div>
+          <div class="share-btns">
+            <button class="btn-download" id="btn-download">⬇ Download Image</button>
+            <button class="btn-copy" id="btn-copy-link">🔗 Copy Link</button>
+          </div>
+        </div>
+
+        <div class="share-preview" id="share-preview">
+          <div class="sp-logo">◆ WaqtX</div>
+          <div class="sp-text">I've lived</div>
+          <div class="sp-days" id="sp-days">—</div>
+          <div class="sp-unit">Days</div>
+          <div class="sp-hijri" id="sp-hijri">— AH</div>
+          <div class="sp-tagline">A journey of time.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER AYAH ── -->
+  <div class="footer-ayah">
+    <span class="faq-mark">"</span>
+    So remember Me; I will remember you. And be grateful to Me and do not deny Me.
+    <span class="faq-ref">(Quran 2:152)</span>
+    <span class="faq-mark">"</span>
+  </div>
+
+  <!-- ── START AGAIN ── -->
+  <div class="start-again-wrap">
+    <button class="btn-start-again" id="btn-start-again">↩ Start Again</button>
+  </div>
+
+</div><!-- /results-section -->
+
+<!-- ═══ SHARE MODAL ═══ -->
+<div class="share-modal hidden" id="share-modal" role="dialog" aria-modal="true" aria-label="Share your timeline">
+  <div class="share-modal-inner">
+    <button class="modal-close" id="share-close" aria-label="Close">✕</button>
+    <div class="share-card-dl" id="share-card-dl">
+      <div class="scdl-logo">◆ WaqtX</div>
+      <div class="scdl-pct" id="scdl-pct">—%</div>
+      <div class="scdl-label">of my life has passed.</div>
+      <div class="scdl-days" id="scdl-days">— Days</div>
+      <div class="scdl-hijri" id="scdl-hijri">— AH</div>
+      <div class="scdl-quote">Only Allah knows what remains.<br>May I use my time better.</div>
+      <div class="scdl-footer">mianhassam96.github.io/MultiMian-WaqtX</div>
+    </div>
+    <button class="btn-dl-card" id="btn-dl-card">⬇ Download Card</button>
+  </div>
+</div>
+
+<!-- ═══ SITE FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">◆ WaqtX</span>
+      <p>A mirror for your time.<br>A guide for your life.</p>
+    </div>
+    <div class="footer-center">
+      Made with ♥ for a meaningful life
+      <div class="footer-socials">
+        <a href="https://github.com/Mianhassam96" target="_blank" rel="noopener" aria-label="GitHub">⊕</a>
+        <a href="contact.html" aria-label="Contact">✉</a>
+        <a href="https://twitter.com/MultiMian" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a>
+        <a href="https://multimian.com" target="_blank" rel="noopener" aria-label="Website">🌐</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+      <div class="footer-copy">© 2026 MultiMian. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- PWA INSTALL -->
+<div class="pwa-prompt hidden" id="pwa-prompt">
+  <div class="pwa-inner">
+    <div class="pwa-icon">◆</div>
+    <div class="pwa-text">
+      <div class="pwa-title">Install WaqtX</div>
+      <div class="pwa-sub">Add to home screen for daily reflection</div>
+    </div>
+    <button class="pwa-install" id="pwa-install">Install</button>
+    <button class="pwa-dismiss" id="pwa-dismiss" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>
