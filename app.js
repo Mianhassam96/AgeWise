@@ -119,7 +119,7 @@ var WORLD_DATA = {
   1993: { pm: 'Benazir Bhutto',          president: 'Farooq Leghari',         currency: 'Pakistani Rupee (PKR)', pop: '5.6 Billion', event: 'Oslo Accords Signed',           tech: 'Mosaic Browser Released' },
   1994: { pm: 'Benazir Bhutto',          president: 'Farooq Leghari',         currency: 'Pakistani Rupee (PKR)', pop: '5.6 Billion', event: 'Nelson Mandela Elected',        tech: 'Amazon Founded' },
   1995: { pm: 'Benazir Bhutto',          president: 'Farooq Leghari',         currency: 'Pakistani Rupee (PKR)', pop: '5.7 Billion', event: 'Oklahoma City Bombing',         tech: 'Windows 95 Released' },
-  1996: { pm: 'Benazir Bhutto',          president: 'Farooq Leghari',         currency: 'Pakistani Rupee (PKR)', pop: '5.8 Billion', event: 'Summer Olympics in Atlanta',    tech: 'Windows 95 Released' },
+  1996: { pm: 'Benazir Bhutto',          president: 'Farooq Leghari',         currency: 'Pakistani Rupee (PKR)', pop: '5.8 Billion', event: 'Summer Olympics in Atlanta',    tech: 'DVD Format Introduced' },
   1997: { pm: 'Nawaz Sharif',            president: 'Muhammad Rafiq Tarar',   currency: 'Pakistani Rupee (PKR)', pop: '5.9 Billion', event: 'Hong Kong Handover to China',   tech: 'Deep Blue Beats Kasparov' },
   1998: { pm: 'Nawaz Sharif',            president: 'Muhammad Rafiq Tarar',   currency: 'Pakistani Rupee (PKR)', pop: '5.9 Billion', event: 'Pakistan Nuclear Tests',        tech: 'Google Founded' },
   1999: { pm: 'Pervez Musharraf',        president: 'Muhammad Rafiq Tarar',   currency: 'Pakistani Rupee (PKR)', pop: '6.0 Billion', event: 'NATO Kosovo Campaign',          tech: 'Napster Launched' },
@@ -331,8 +331,20 @@ function renderAll(birth) {
 function showLoading(cb) {
   var overlay = el('loading-overlay');
   var textEl  = el('loading-text');
+  var barFill = el('loading-bar-fill');
+
   overlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+
+  /* Reset and animate bar */
+  if (barFill) {
+    barFill.style.transition = 'none';
+    barFill.style.width = '0%';
+    setTimeout(function () {
+      barFill.style.transition = 'width 2.7s ease';
+      barFill.style.width = '100%';
+    }, 30);
+  }
 
   var msgs = [
     'Analyzing your time\u2026',
@@ -341,6 +353,7 @@ function showLoading(cb) {
   ];
   var i = 0;
   textEl.textContent = msgs[0];
+  textEl.style.opacity = '1';
 
   var seq = setInterval(function () {
     i++;
@@ -355,6 +368,7 @@ function showLoading(cb) {
       setTimeout(function () {
         overlay.classList.add('hidden');
         document.body.style.overflow = '';
+        if (barFill) { barFill.style.transition = 'none'; barFill.style.width = '0%'; }
         cb();
       }, 600);
     }
