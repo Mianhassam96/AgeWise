@@ -649,10 +649,13 @@ renderInsight(0);
 
 /* ── Scroll-reveal animation ── */
 (function() {
+  /* Only apply reveal to result cards — NOT tracker/insight which are always visible */
   var targets = document.querySelectorAll(
-    '.glance-card, .islamic-card, .world-card, .journey-card, .reflection-card, ' +
-    '.milestones-card, .share-card, .tracker-card, .story-card, .truth-card, ' +
-    '.insight-card, .section-heading'
+    '#results-section .glance-card, #results-section .islamic-card, ' +
+    '#results-section .world-card, #results-section .journey-card, ' +
+    '#results-section .reflection-card, #results-section .milestones-card, ' +
+    '#results-section .share-card, #results-section .story-card, ' +
+    '#results-section .truth-card'
   );
   targets.forEach(function(t) { t.classList.add('reveal'); });
 
@@ -664,7 +667,7 @@ renderInsight(0);
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
     targets.forEach(function(t) { obs.observe(t); });
   } else {
     targets.forEach(function(t) { t.classList.add('visible'); });
@@ -884,30 +887,32 @@ function renderWeekGrid(data) {
   var weekSummary = el('week-summary');
   if (!weekGrid) return;
 
-  var days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  var dayLabels = ['Su','Mo','Tu','We','Th','Fr','Sa'];
   var today = new Date();
+  var todayKey = getTodayKey();
   var totalFull = 0;
   var html = '';
 
+  /* Show last 7 days in chronological order */
   for (var i = 6; i >= 0; i--) {
     var d = new Date(today);
     d.setDate(today.getDate() - i);
     var key = d.toISOString().split('T')[0];
     var dayData = data[key] || { salah: [] };
     var count = (dayData.salah || []).length;
-    var isToday = (i === 0);
+    var isToday = (key === todayKey);
     var cls = count >= 5 ? 'full' : count > 0 ? 'partial' : isToday ? 'today' : '';
     if (count >= 5) totalFull++;
     html += '<div class="week-day">' +
-      '<div class="week-day-label">' + days[d.getDay()] + '</div>' +
-      '<div class="week-day-dot ' + cls + '">' + (count > 0 ? count : (isToday ? '·' : '')) + '</div>' +
+      '<div class="week-day-label">' + dayLabels[d.getDay()] + '</div>' +
+      '<div class="week-day-dot ' + cls + '">' + (count > 0 ? count : (isToday ? '\u00B7' : '')) + '</div>' +
     '</div>';
   }
   weekGrid.innerHTML = html;
 
   if (weekSummary) {
     weekSummary.innerHTML = '<strong>' + totalFull + '/7</strong> days with all 5 prayers this week.' +
-      (totalFull === 7 ? ' 🌟 Perfect week!' : totalFull >= 5 ? ' Keep it up!' : ' Every prayer counts.');
+      (totalFull === 7 ? ' \uD83C\uDF1F Perfect week!' : totalFull >= 5 ? ' Keep it up!' : ' Every prayer counts.');
   }
 }
 
