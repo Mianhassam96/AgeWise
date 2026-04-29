@@ -2810,3 +2810,126 @@ img { max-width: 100%; }
 .lm-skip:hover { color: var(--text2); }
 
 [data-theme="light"] .life-mirror { background: rgba(0,0,0,0.7); }
+
+/* ══════════════════════════════════════════════
+   LANGUAGE SWITCHER
+   ══════════════════════════════════════════════ */
+.lang-switcher {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.04em;
+}
+.lang-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.08);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  min-width: 160px;
+  z-index: 200;
+  overflow: hidden;
+  animation: dropdownFade 0.15s ease forwards;
+}
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lang-option {
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.lang-option:last-child { border-bottom: none; }
+.lang-option:hover {
+  background: rgba(201,168,76,0.08);
+  color: var(--gold);
+}
+.lang-option.active {
+  color: var(--gold);
+  font-weight: 700;
+  background: rgba(201,168,76,0.06);
+}
+
+/* RTL layout adjustments */
+[dir="rtl"] .nav-inner { flex-direction: row-reverse; }
+[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+[dir="rtl"] .hero-inner { direction: rtl; }
+[dir="rtl"] .hero-left  { text-align: right; align-items: flex-end; }
+[dir="rtl"] .input-card { direction: rtl; text-align: right; }
+[dir="rtl"] .dob-input  { text-align: right; padding-right: 38px; padding-left: 12px; }
+[dir="rtl"] .input-icon { left: auto; right: 12px; }
+[dir="rtl"] .glance-card,
+[dir="rtl"] .islamic-card,
+[dir="rtl"] .tracker-card,
+[dir="rtl"] .hadith-card,
+[dir="rtl"] .wakeup-card { direction: rtl; text-align: right; }
+[dir="rtl"] .wu-block-label { text-align: right; }
+[dir="rtl"] .ms-row { flex-direction: row-reverse; }
+[dir="rtl"] .wf-row { flex-direction: row-reverse; }
+[dir="rtl"] .qs-row { flex-direction: row-reverse; }
+[dir="rtl"] .salah-item { flex-direction: row-reverse; }
+[dir="rtl"] .dhikr-item { flex-direction: row-reverse; }
+[dir="rtl"] .footer-inner { direction: rtl; }
+[dir="rtl"] .footer-links { align-items: flex-start; }
+[dir="rtl"] .lang-dropdown { right: auto; left: 0; }
+[dir="rtl"] .lang-option { text-align: right; }
+[dir="rtl"] .life-mirror-inner { direction: rtl; }
+[dir="rtl"] .lm-question { direction: rtl; }
+
+/* Urdu/Arabic font for RTL content */
+[dir="rtl"] body,
+[dir="rtl"] .nav-link,
+[dir="rtl"] .input-card-title,
+[dir="rtl"] .input-card-sub,
+[dir="rtl"] .input-label,
+[dir="rtl"] .glance-label,
+[dir="rtl"] .glance-desc,
+[dir="rtl"] .glance-reflect,
+[dir="rtl"] .ic-sub,
+[dir="rtl"] .ic-label,
+[dir="rtl"] .wu-block-text,
+[dir="rtl"] .lm-question,
+[dir="rtl"] .lm-sub,
+[dir="rtl"] .lm-btn,
+[dir="rtl"] .section-heading .sh-text {
+  font-family: 'Amiri', 'Inter', system-ui, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .lang-btn { padding: 6px 10px; font-size: 0.7rem; }
+  #lang-current { display: none; }
+  .lang-btn svg { width: 16px; height: 16px; }
+}

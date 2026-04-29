@@ -10,6 +10,343 @@ let _name  = '';
 
 /* ── Helpers ── */
 function el(id) { return document.getElementById(id); }
+
+/* ══════════════════════════════════════════════
+   LANGUAGE ENGINE
+   Key-based system — Arabic Quran/Hadith text
+   is NEVER translated, only UI strings
+   ══════════════════════════════════════════════ */
+var _lang = 'en';
+var _langData = {};
+var _langLoaded = false;
+
+/* Translate key — falls back to key if missing */
+function t(key) {
+  return (_langData && _langData[key] !== undefined) ? _langData[key] : key;
+}
+
+/* Template replace: t('key', {n: 5}) → replaces {n} */
+function tr(key, vars) {
+  var str = t(key);
+  if (vars) {
+    Object.keys(vars).forEach(function(k) {
+      str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), vars[k]);
+    });
+  }
+  return str;
+}
+
+function applyDocumentDir(dir) {
+  document.documentElement.setAttribute('dir', dir || 'ltr');
+  document.documentElement.setAttribute('lang',
+    _lang === 'ur' ? 'ur' : _lang === 'ar' ? 'ar' : 'en');
+}
+
+function applyLangToDOM() {
+  /* Navbar */
+  var navLinks = [
+    ['a[href="#"].nav-link',              'nav_home'],
+    ['a[href="#islamic-section"].nav-link','nav_islamic'],
+    ['a[href="#features-section"].nav-link','nav_features'],
+    ['a[href="about.html"].nav-link',     'nav_about']
+  ];
+  navLinks.forEach(function(pair) {
+    var el2 = document.querySelector(pair[0]);
+    if (el2) el2.textContent = t(pair[1]);
+  });
+
+  var shareNavBtn = el('btn-share-nav');
+  if (shareNavBtn) {
+    shareNavBtn.innerHTML =
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> ' +
+      t('nav_share');
+  }
+
+  /* Section headings */
+  var sections = {
+    'section_glance':     '.glance-section .sh-text',
+    'section_islamic':    '.islamic-section .sh-text',
+    'section_world':      '.world-section .sh-text',
+    'section_truth':      '.truth-section .sh-text',
+    'section_story':      '.story-section .sh-text',
+    'section_milestones': '.ms-section .sh-text',
+    'section_tracker':    '.tracker-section .sh-text',
+    'section_insight':    '.insight-section .sh-text',
+    'section_wakeup':     '.hadith-section .sh-text',
+    'section_qibla':      '.qibla-section .sh-text',
+    'section_liveage':    '.liveage-section .sh-text'
+  };
+  Object.keys(sections).forEach(function(key) {
+    var node = document.querySelector(sections[key]);
+    if (node) node.textContent = t(key);
+  });
+
+  /* Hero */
+  var heroTrans = document.querySelector('.hero-arabic-trans');
+  if (heroTrans) heroTrans.textContent = t('hero_arabic_trans');
+  var heroSub = document.querySelector('.hero-sub');
+  if (heroSub) heroSub.textContent = t('hero_sub');
+
+  /* Input card */
+  var inputTitle = document.querySelector('.input-card-title');
+  if (inputTitle) inputTitle.textContent = t('input_title');
+  var inputSub = document.querySelector('.input-card-sub');
+  if (inputSub) inputSub.textContent = t('input_sub');
+
+  var nameLabel = document.querySelector('label.input-label[for="hero-name"], .input-group .input-label:first-of-type');
+  var labels = document.querySelectorAll('.input-label');
+  if (labels[0]) labels[0].textContent = t('input_name_label');
+  if (labels[1]) labels[1].textContent = t('input_dob_label');
+  if (labels[2]) labels[2].textContent = t('input_time_label');
+  if (labels[3]) labels[3].textContent = t('input_gender_label');
+
+  var namePh = el('hero-name');
+  if (namePh) namePh.placeholder = t('input_name_placeholder');
+
+  var genderSel = el('hero-gender');
+  if (genderSel && genderSel.options) {
+    if (genderSel.options[0]) genderSel.options[0].text = t('input_gender_select');
+    if (genderSel.options[1]) genderSel.options[1].text = t('input_gender_male');
+    if (genderSel.options[2]) genderSel.options[2].text = t('input_gender_female');
+  }
+
+  var revealBtn = el('btn-calculate');
+  if (revealBtn) revealBtn.textContent = t('input_btn');
+
+  var trustSpans = document.querySelectorAll('.input-trust span:not(.trust-dot)');
+  if (trustSpans[0]) trustSpans[0].textContent = t('input_private');
+  if (trustSpans[1]) trustSpans[1].textContent = t('input_no_data');
+  if (trustSpans[2]) trustSpans[2].textContent = t('input_control');
+
+  /* Step labels */
+  var stepLabels = document.querySelectorAll('.js-label');
+  var stepKeys = ['step1_label','step2_label','step3_label','step4_label'];
+  stepLabels.forEach(function(lbl, i) {
+    if (stepKeys[i]) lbl.textContent = t(stepKeys[i]);
+  });
+
+  /* Glance card labels */
+  var glanceLabels = document.querySelectorAll('.glance-label');
+  var glanceDescs  = document.querySelectorAll('.glance-desc');
+  var glanceKeys   = ['glance_days','glance_hours','glance_sleep','glance_hearts','glance_sunsets','glance_seconds'];
+  var glanceDescKeys = ['glance_days_desc','glance_hours_desc','glance_sleep_desc','glance_hearts_desc','glance_sunsets_desc','glance_seconds_desc'];
+  glanceLabels.forEach(function(lbl, i) { if (glanceKeys[i]) lbl.textContent = t(glanceKeys[i]); });
+  glanceDescs.forEach(function(d, i)   { if (glanceDescKeys[i]) d.textContent = t(glanceDescKeys[i]); });
+
+  /* Islamic section */
+  var icSubs = document.querySelectorAll('.ic-sub');
+  var icSubKeys = ['ih_born_in','ih_birth_day','ih_ramadans','ih_hajj','ih_islamic_years','ih_next_ramadan'];
+  icSubs.forEach(function(s, i) { if (icSubKeys[i]) s.textContent = t(icSubKeys[i]); });
+  var nextRamVal = document.querySelector('.islamic-card:last-child .ic-value');
+  if (nextRamVal) nextRamVal.textContent = t('ih_next_ramadan_val');
+
+  /* World section */
+  var worldCountry = el('w-country');
+  if (worldCountry) worldCountry.textContent = t('world_pakistan');
+  var wfKeys = document.querySelectorAll('.world-pk .wf-key');
+  if (wfKeys[0]) wfKeys[0].textContent = t('world_pm');
+  if (wfKeys[1]) wfKeys[1].textContent = t('world_president');
+  if (wfKeys[2]) wfKeys[2].textContent = t('world_currency');
+  var wfGlobeKeys = document.querySelectorAll('.world-globe .wf-key');
+  if (wfGlobeKeys[0]) wfGlobeKeys[0].textContent = t('world_population');
+  if (wfGlobeKeys[1]) wfGlobeKeys[1].textContent = t('world_event');
+  if (wfGlobeKeys[2]) wfGlobeKeys[2].textContent = t('world_tech');
+  var momentTitle = document.querySelector('.world-moment-title');
+  if (momentTitle) momentTitle.textContent = t('world_moment');
+  var momentText = document.querySelector('.world-moment-text');
+  if (momentText) momentText.textContent = t('world_moment_text');
+
+  /* Journey */
+  var journeyTitle = document.querySelector('.journey-title');
+  if (journeyTitle) journeyTitle.textContent = t('journey_title');
+  var journeyCta = document.querySelector('.journey-cta');
+  if (journeyCta) journeyCta.textContent = t('journey_cta');
+  var journeyNote = document.querySelector('.journey-note');
+  if (journeyNote) journeyNote.textContent = t('journey_note');
+  var reflTitle = document.querySelector('.reflection-title');
+  if (reflTitle) reflTitle.textContent = t('section_reflection');
+  var reflHeadline = document.querySelector('.reflection-headline');
+  if (reflHeadline) reflHeadline.textContent = t('reflection_headline');
+  var reflBody = document.querySelector('.reflection-body');
+  if (reflBody) reflBody.textContent = t('reflection_body');
+
+  /* Milestones */
+  var msLabels = document.querySelectorAll('.ms-label');
+  var msLabelKeys = ['ms_jumua','ms_10k','ms_age30','ms_1b'];
+  msLabels.forEach(function(lbl, i) { if (msLabelKeys[i]) lbl.textContent = t(msLabelKeys[i]); });
+  var msTitle = document.querySelector('.ms-title');
+  if (msTitle) msTitle.textContent = t('section_milestones');
+
+  /* Share */
+  var shareTitle = document.querySelector('.share-title');
+  if (shareTitle) shareTitle.textContent = t('section_share');
+  var shareSub = document.querySelector('.share-sub');
+  if (shareSub) shareSub.textContent = t('share_sub');
+  var dlBtn = el('btn-download');
+  if (dlBtn) dlBtn.textContent = t('share_download');
+  var copyBtn = el('btn-copy-link');
+  if (copyBtn) copyBtn.textContent = t('share_copy');
+  var spTagline = document.querySelector('.sp-tagline');
+  if (spTagline) spTagline.textContent = t('share_tagline');
+
+  /* Tracker */
+  var trackerSub = document.querySelector('.tracker-sub-heading');
+  if (trackerSub) trackerSub.textContent = t('tracker_sub');
+  var salahTitle = document.querySelector('.tracker-card:nth-child(1) .tracker-card-title');
+  if (salahTitle) salahTitle.textContent = t('tracker_salah_title');
+  var quranTitle = document.querySelector('.tracker-card:nth-child(2) .tracker-card-title');
+  if (quranTitle) quranTitle.textContent = t('tracker_quran_title');
+  var weekTitle = document.querySelector('.tracker-card:nth-child(3) .tracker-card-title');
+  if (weekTitle) weekTitle.textContent = t('tracker_week_title');
+  var resetBtn = el('btn-reset-tracker');
+  if (resetBtn) resetBtn.textContent = t('tracker_reset');
+
+  /* Qibla */
+  var qiblaTitle = document.querySelector('.qibla-info-title');
+  if (qiblaTitle) qiblaTitle.textContent = t('qibla_title');
+  var qiblaBody = document.querySelector('.qibla-info-body');
+  if (qiblaBody) qiblaBody.innerHTML = t('qibla_body');
+  var qiblaAyahTr = document.querySelector('.qibla-ayah-tr');
+  if (qiblaAyahTr) qiblaAyahTr.textContent = t('qibla_ayah_tr');
+  var qTap = el('qibla-direction-label');
+  if (qTap && qTap.textContent === 'Tap to find Qibla') qTap.textContent = t('qibla_tap');
+  var qLocLabel = document.querySelector('.qs-row:nth-child(1) .qs-label');
+  if (qLocLabel) qLocLabel.textContent = t('qibla_location');
+  var qDistLabel = document.querySelector('.qs-row:nth-child(2) .qs-label');
+  if (qDistLabel) qDistLabel.textContent = t('qibla_distance');
+  var qBearLabel = document.querySelector('.qs-row:nth-child(3) .qs-label');
+  if (qBearLabel) qBearLabel.textContent = t('qibla_bearing');
+  var qiblaBtn = el('btn-qibla');
+  if (qiblaBtn && !qiblaBtn.disabled) qiblaBtn.innerHTML =
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg> ' +
+    t('qibla_find_btn');
+  var qNote = el('qibla-note');
+  if (qNote) qNote.textContent = t('qibla_note');
+
+  /* Live age */
+  var laLabels = document.querySelectorAll('.la-label');
+  var laKeys = ['la_years','la_months','la_weeks','la_days','la_hours','la_minutes','la_seconds'];
+  laLabels.forEach(function(lbl, i) { if (laKeys[i]) lbl.textContent = t(laKeys[i]); });
+  var laSub = el('liveage-sub');
+  if (laSub) laSub.textContent = _birth ? t('liveage_sub_active') : t('liveage_sub_empty');
+
+  /* Birthday */
+  var bdayTitle2 = el('bday-title');
+  if (bdayTitle2 && bdayTitle2.textContent === 'Next Birthday') bdayTitle2.textContent = t('bday_title');
+
+  /* Story */
+  var storyClosing = document.querySelector('.story-closing');
+  if (storyClosing) storyClosing.textContent = t('story_closing');
+  var storyShareBtn = el('btn-story-share');
+  if (storyShareBtn) storyShareBtn.textContent = t('story_share_btn');
+
+  /* Continue buttons */
+  var cont1 = document.querySelector('#continue-1 .step-continue-label');
+  if (cont1) cont1.textContent = t('continue_1');
+  var cont2 = document.querySelector('#continue-2 .step-continue-label');
+  if (cont2) cont2.textContent = t('continue_2');
+  var cont3 = document.querySelector('#continue-3 .step-continue-label');
+  if (cont3) cont3.textContent = t('continue_3');
+  var contBtn1 = document.querySelector('#continue-1 .btn-continue');
+  if (contBtn1) contBtn1.textContent = t('continue_btn_1');
+  var contBtn2 = document.querySelector('#continue-2 .btn-continue');
+  if (contBtn2) contBtn2.textContent = t('continue_btn_2');
+  var contBtn3 = document.querySelector('#continue-3 .btn-continue');
+  if (contBtn3) contBtn3.textContent = t('continue_btn_3');
+
+  /* Start again */
+  var startAgain = el('btn-start-again');
+  if (startAgain) startAgain.textContent = t('start_again');
+
+  /* Footer */
+  var footerBrandP = document.querySelector('.footer-brand p');
+  if (footerBrandP) footerBrandP.innerHTML = t('footer_tagline').replace('. ', '.<br>');
+  var footerCenter = document.querySelector('.footer-center');
+  if (footerCenter) footerCenter.childNodes[0] && (footerCenter.childNodes[0].textContent = t('footer_made'));
+  var footerCopy = document.querySelector('.footer-copy');
+  if (footerCopy) footerCopy.textContent = t('footer_copy');
+
+  /* Mirror */
+  var mirrorSub = document.querySelector('.lm-sub');
+  if (mirrorSub) mirrorSub.textContent = t('mirror_sub');
+  var mirrorBtn = el('lm-close');
+  if (mirrorBtn) mirrorBtn.textContent = t('mirror_btn');
+  var mirrorSkip = el('lm-skip');
+  if (mirrorSkip) mirrorSkip.textContent = t('mirror_skip');
+
+  /* Re-render dynamic sections with new language */
+  renderWakeUpSystem();
+  if (_birth) renderReflections(
+    getTotals(_birth),
+    (_langData._ageYears * 0.333 || 0).toFixed(1),
+    (_langData._heartBillions || '—'),
+    (_langData._secondsMillion || '—')
+  );
+
+  /* Update lang indicator */
+  var langCurrent = el('lang-current');
+  if (langCurrent) {
+    var labels2 = { en: 'EN', ur: 'UR', ar: 'AR', roman: 'RO' };
+    langCurrent.textContent = labels2[_lang] || 'EN';
+  }
+  /* Mark active option */
+  document.querySelectorAll('.lang-option').forEach(function(opt) {
+    opt.classList.toggle('active', opt.getAttribute('data-lang') === _lang);
+  });
+}
+
+function loadLanguage(lang, callback) {
+  fetch('lang/' + lang + '.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      _langData = data;
+      _lang = lang;
+      _langLoaded = true;
+      try { localStorage.setItem('waqtx_lang', lang); } catch(e) {}
+      var meta = data._meta || {};
+      applyDocumentDir(meta.dir);
+      applyLangToDOM();
+      if (callback) callback();
+    })
+    .catch(function() {
+      /* Fallback: keep English */
+      _langLoaded = true;
+      if (callback) callback();
+    });
+}
+
+/* Language switcher UI */
+(function() {
+  var btn      = el('lang-btn');
+  var dropdown = el('lang-dropdown');
+  if (!btn || !dropdown) return;
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    dropdown.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', function() {
+    dropdown.classList.add('hidden');
+  });
+
+  dropdown.querySelectorAll('.lang-option').forEach(function(opt) {
+    opt.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var lang = opt.getAttribute('data-lang');
+      dropdown.classList.add('hidden');
+      loadLanguage(lang);
+    });
+  });
+})();
+
+/* Load saved language on startup */
+(function() {
+  var saved;
+  try { saved = localStorage.getItem('waqtx_lang') || 'en'; } catch(e) { saved = 'en'; }
+  loadLanguage(saved);
+})();
+
 function setText(id, v) { const e = el(id); if (e) e.textContent = v; }
 function fmt(n) { return Number(n).toLocaleString(); }
 
@@ -320,6 +657,8 @@ function renderAll(birth) {
   renderTimeTruth(ageYears, t);
   renderInsight(t.day); /* update day count in insight */
   renderReflections(t, sleepYears, heartBillions, secondsMillion);
+  /* Re-apply language to newly rendered DOM */
+  if (_langLoaded) applyLangToDOM();
 
   /* Progressive reveal — start at step 1 */
   revealStep(1);
@@ -1504,20 +1843,21 @@ renderWakeUpSystem();
    LAYER 1 — REFLECTION PROMPT ENGINE
    Injected under each stat after renderAll
    ══════════════════════════════════════════════ */
-function renderReflections(t, sleepYears, heartBillions, secondsMillion) {
+function renderReflections(t2, sleepYears, heartBillions, secondsMillion) {
   var rDays    = el('gr-days');
   var rHours   = el('gr-hours');
   var rSleep   = el('gr-sleep');
   var rHearts  = el('gr-hearts');
   var rSunsets = el('gr-sunsets');
   var rSeconds = el('gr-seconds');
+  var tots = _birth ? getTotals(_birth) : null;
 
-  if (rDays)    rDays.innerHTML    = 'You have lived <strong>' + fmt(t.day) + ' days</strong>. How many of them brought you closer to Allah?';
-  if (rHours)   rHours.innerHTML   = 'That is <strong>' + fmt(t.hr) + ' hours</strong> of life. How many were spent in a way you\'d be proud of on the Day of Judgment?';
-  if (rSleep)   rSleep.innerHTML   = 'You have slept approximately <strong>' + sleepYears + ' years</strong>. Did your rest give you strength for ibadah — or only for dunya?';
-  if (rHearts)  rHearts.innerHTML  = 'Your heart has beaten <strong>' + heartBillions + ' billion times</strong> without stopping. How many of those beats remembered the One who keeps it beating?';
-  if (rSunsets) rSunsets.innerHTML = 'You have witnessed <strong>' + fmt(t.day) + ' sunsets</strong> — each one a sign of Allah. Did you ever stop to say Alhamdulillah for even one?';
-  if (rSeconds) rSeconds.innerHTML = '<strong>' + secondsMillion + ' million seconds</strong> of life. Each one recorded. Each one will be asked about.';
+  if (rDays)    rDays.innerHTML    = tr('reflect_days',    { days:    tots ? fmt(tots.day) : '—' });
+  if (rHours)   rHours.innerHTML   = tr('reflect_hours',   { hours:   tots ? fmt(tots.hr)  : '—' });
+  if (rSleep)   rSleep.innerHTML   = tr('reflect_sleep',   { sleep:   sleepYears || '—' });
+  if (rHearts)  rHearts.innerHTML  = tr('reflect_hearts',  { hearts:  heartBillions || '—' });
+  if (rSunsets) rSunsets.innerHTML = tr('reflect_sunsets', { sunsets: tots ? fmt(tots.day) : '—' });
+  if (rSeconds) rSeconds.innerHTML = tr('reflect_seconds', { seconds: secondsMillion || '—' });
 }
 
 /* ══════════════════════════════════════════════
@@ -1555,7 +1895,11 @@ var MIRROR_QUESTIONS = [
 
   if (lastShown !== today) {
     var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    if (qEl) qEl.textContent = MIRROR_QUESTIONS[dayOfYear % MIRROR_QUESTIONS.length];
+    /* Use language file questions if available, else fallback array */
+    var questions = (_langData && Array.isArray(_langData.mirror_questions))
+      ? _langData.mirror_questions
+      : MIRROR_QUESTIONS;
+    if (qEl) qEl.textContent = questions[dayOfYear % questions.length];
     setTimeout(function () {
       mirror.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
