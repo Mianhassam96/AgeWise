@@ -632,6 +632,127 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════
+     ALWAYS-VISIBLE: QIBLA DIRECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section qibla-section" id="qibla-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line"></span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-text">QIBLA DIRECTION</span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-line"></span>
+    </div>
+    <div class="qibla-layout">
+
+      <!-- Compass card -->
+      <div class="qibla-compass-card">
+        <div class="qibla-compass-wrap" id="qibla-compass-wrap">
+          <svg class="qibla-compass-svg" id="qibla-compass-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer ring -->
+            <circle cx="110" cy="110" r="104" fill="none" stroke="rgba(201,168,76,0.18)" stroke-width="1.5"/>
+            <circle cx="110" cy="110" r="96" fill="rgba(255,255,255,0.02)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+            <!-- Cardinal tick marks -->
+            <line x1="110" y1="8"  x2="110" y2="20" stroke="rgba(201,168,76,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="110" y1="200" x2="110" y2="212" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="8"   y1="110" x2="20"  y2="110" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="200" y1="110" x2="212" y2="110" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Intercardinal ticks -->
+            <line x1="183" y1="27"  x2="176" y2="34"  stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="37"  y1="27"  x2="44"  y2="34"  stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="183" y1="193" x2="176" y2="186" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="37"  y1="193" x2="44"  y2="186" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-linecap="round"/>
+            <!-- Cardinal labels -->
+            <text x="110" y="5"   text-anchor="middle" font-size="11" font-weight="800" fill="#c9a84c" font-family="Inter,sans-serif">N</text>
+            <text x="110" y="220" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(201,168,76,0.5)" font-family="Inter,sans-serif">S</text>
+            <text x="4"   y="114" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(201,168,76,0.5)" font-family="Inter,sans-serif">W</text>
+            <text x="216" y="114" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(201,168,76,0.5)" font-family="Inter,sans-serif">E</text>
+            <!-- Inner circle -->
+            <circle cx="110" cy="110" r="60" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
+            <!-- Qibla needle group — rotated by JS -->
+            <g id="qibla-needle-group" transform="rotate(0,110,110)">
+              <!-- Needle pointing to Qibla (up = Qibla direction) -->
+              <polygon points="110,38 105,110 115,110" fill="url(#needleGold)" opacity="0.95"/>
+              <polygon points="110,182 105,110 115,110" fill="rgba(255,255,255,0.15)"/>
+              <!-- Kaaba icon at needle tip -->
+              <rect x="104" y="30" width="12" height="10" rx="1" fill="#c9a84c" opacity="0.9"/>
+              <line x1="104" y1="30" x2="116" y2="30" stroke="#e8c96a" stroke-width="1"/>
+              <!-- Center dot -->
+              <circle cx="110" cy="110" r="5" fill="#c9a84c"/>
+              <circle cx="110" cy="110" r="2.5" fill="#0a1a0d"/>
+            </g>
+            <defs>
+              <linearGradient id="needleGold" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8c96a"/>
+                <stop offset="100%" stop-color="#a07830"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="qibla-degree" id="qibla-degree">—°</div>
+        <div class="qibla-direction-label" id="qibla-direction-label">Tap to find Qibla</div>
+      </div>
+
+      <!-- Info card -->
+      <div class="qibla-info-card">
+        <div class="qibla-info-title">🕋 Face the Kaaba</div>
+        <div class="qibla-info-body">
+          The Qibla is the direction of the <strong>Masjid al-Haram</strong> in Makkah — the direction Muslims face during Salah.
+        </div>
+        <div class="qibla-stats" id="qibla-stats">
+          <div class="qs-row"><span class="qs-label">Your Location</span><span class="qs-val" id="q-location">—</span></div>
+          <div class="qs-row"><span class="qs-label">Distance to Kaaba</span><span class="qs-val" id="q-distance">—</span></div>
+          <div class="qs-row"><span class="qs-label">Qibla Bearing</span><span class="qs-val" id="q-bearing">—</span></div>
+        </div>
+        <button class="btn-qibla" id="btn-qibla">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          Find My Qibla
+        </button>
+        <div class="qibla-note" id="qibla-note">Uses your device location. Nothing is stored or sent anywhere.</div>
+        <div class="qibla-ayah">
+          <span class="qibla-ayah-ar">فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ</span>
+          <span class="qibla-ayah-tr">"Turn your face toward the Sacred Mosque." — (Quran 2:144)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ALWAYS-VISIBLE: LIVE AGE BREAKDOWN + BIRTHDAY
+     ═══════════════════════════════════════════════ -->
+<section class="section liveage-section" id="liveage-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line"></span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-text">YOUR AGE — LIVE</span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-line"></span>
+    </div>
+    <div class="liveage-sub" id="liveage-sub">Enter your date of birth above to see your live age.</div>
+    <div class="liveage-grid" id="liveage-grid">
+      <div class="la-card"><div class="la-val" id="la-years">—</div><div class="la-label">Years</div></div>
+      <div class="la-card"><div class="la-val" id="la-months">—</div><div class="la-label">Months</div></div>
+      <div class="la-card"><div class="la-val" id="la-weeks">—</div><div class="la-label">Weeks</div></div>
+      <div class="la-card la-card-accent"><div class="la-val" id="la-days">—</div><div class="la-label">Days</div></div>
+      <div class="la-card"><div class="la-val" id="la-hours">—</div><div class="la-label">Hours</div></div>
+      <div class="la-card"><div class="la-val" id="la-minutes">—</div><div class="la-label">Minutes</div></div>
+      <div class="la-card la-card-live"><div class="la-val" id="la-seconds">—</div><div class="la-label">Seconds ⚡</div></div>
+    </div>
+
+    <!-- Birthday Countdown -->
+    <div class="birthday-card" id="birthday-card">
+      <div class="bday-icon" id="bday-icon">🎂</div>
+      <div class="bday-title" id="bday-title">Next Birthday</div>
+      <div class="bday-val" id="bday-val">—</div>
+      <div class="bday-sub" id="bday-sub">Enter your DOB to see your birthday countdown.</div>
+    </div>
+  </div>
+</section>
+
 <div class="celebration hidden" id="celebration">
   <div class="celebration-inner">
     <div class="celebration-emoji">🎉</div>

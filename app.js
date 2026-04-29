@@ -1357,3 +1357,197 @@ function renderHadithSection() {
 }
 
 renderHadithSection();
+
+/* ══════════════════════════════════════════════
+   QIBLA DIRECTION
+   Kaaba coords: 21.4225° N, 39.8262° E
+   ══════════════════════════════════════════════ */
+var KAABA_LAT = 21.4225;
+var KAABA_LNG = 39.8262;
+
+function calcQibla(lat, lng) {
+  var dLng = (KAABA_LNG - lng) * Math.PI / 180;
+  var lat1 = lat * Math.PI / 180;
+  var lat2 = KAABA_LAT * Math.PI / 180;
+  var y = Math.sin(dLng) * Math.cos(lat2);
+  var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
+  var bearing = Math.atan2(y, x) * 180 / Math.PI;
+  return (bearing + 360) % 360;
+}
+
+function calcDistance(lat1, lng1, lat2, lng2) {
+  var R = 6371;
+  var dLat = (lat2 - lat1) * Math.PI / 180;
+  var dLng = (lng2 - lng1) * Math.PI / 180;
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+          Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function bearingToCompass(deg) {
+  var dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  return dirs[Math.round(deg / 22.5) % 16];
+}
+
+function setQiblaCompass(bearing) {
+  var needle = document.getElementById('qibla-needle-group');
+  if (needle) needle.setAttribute('transform', 'rotate(' + bearing + ',110,110)');
+  setText('qibla-degree', Math.round(bearing) + '°');
+  setText('qibla-direction-label', bearingToCompass(bearing) + ' — Face this direction for Qibla');
+  setText('q-bearing', Math.round(bearing) + '° ' + bearingToCompass(bearing));
+}
+
+(function () {
+  var btn = el('btn-qibla');
+  if (!btn) return;
+
+  btn.addEventListener('click', function () {
+    var noteEl = el('qibla-note');
+    if (!navigator.geolocation) {
+      if (noteEl) noteEl.textContent = 'Geolocation is not supported by your browser.';
+      return;
+    }
+    btn.textContent = 'Locating…';
+    btn.disabled = true;
+    if (noteEl) noteEl.textContent = 'Getting your location…';
+
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+        var bearing = calcQibla(lat, lng);
+        var dist = calcDistance(lat, lng, KAABA_LAT, KAABA_LNG);
+
+        setQiblaCompass(bearing);
+        setText('q-location', lat.toFixed(3) + '°, ' + lng.toFixed(3) + '°');
+        setText('q-distance', Math.round(dist).toLocaleString() + ' km from Kaaba');
+
+        btn.textContent = '✓ Qibla Found';
+        btn.style.background = 'rgba(22,163,74,0.15)';
+        btn.style.borderColor = 'rgba(22,163,74,0.4)';
+        btn.style.color = '#86efac';
+        if (noteEl) noteEl.textContent = 'Face the direction shown. Allahu Akbar.';
+
+        /* Save for next visit */
+        try {
+          localStorage.setItem('waqtx_qibla_lat', lat);
+          localStorage.setItem('waqtx_qibla_lng', lng);
+          localStorage.setItem('waqtx_qibla_bearing', bearing);
+          localStorage.setItem('waqtx_qibla_dist', Math.round(dist));
+        } catch(e) {}
+      },
+      function (err) {
+        btn.textContent = 'Find My Qibla';
+        btn.disabled = false;
+        var msgs = {
+          1: 'Location access denied. Please allow location in your browser settings.',
+          2: 'Location unavailable. Try again.',
+          3: 'Location request timed out. Try again.'
+        };
+        if (noteEl) noteEl.textContent = msgs[err.code] || 'Could not get location.';
+      },
+      { timeout: 10000, maximumAge: 300000 }
+    );
+  });
+
+  /* Restore saved Qibla on load */
+  try {
+    var savedBearing = localStorage.getItem('waqtx_qibla_bearing');
+    var savedDist    = localStorage.getItem('waqtx_qibla_dist');
+    var savedLat     = localStorage.getItem('waqtx_qibla_lat');
+    var savedLng     = localStorage.getItem('waqtx_qibla_lng');
+    if (savedBearing) {
+      setQiblaCompass(parseFloat(savedBearing));
+      if (savedLat && savedLng) setText('q-location', parseFloat(savedLat).toFixed(3) + '°, ' + parseFloat(savedLng).toFixed(3) + '°');
+      if (savedDist) setText('q-distance', parseInt(savedDist).toLocaleString() + ' km from Kaaba');
+      var noteEl = el('qibla-note');
+      if (noteEl) noteEl.textContent = 'Showing your last saved Qibla direction.';
+      btn.textContent = '↺ Refresh Qibla';
+      btn.disabled = false;
+    }
+  } catch(e) {}
+})();
+
+/* ══════════════════════════════════════════════
+   LIVE AGE BREAKDOWN + BIRTHDAY COUNTDOWN
+   Updates every second when DOB is set
+   ══════════════════════════════════════════════ */
+function updateLiveAge() {
+  if (!_birth) return;
+  var now = new Date();
+  var ms  = now - _birth;
+
+  /* Total units */
+  var totalSec  = Math.floor(ms / 1000);
+  var totalMin  = Math.floor(ms / 60000);
+  var totalHr   = Math.floor(ms / 3600000);
+  var totalDays = Math.floor(ms / 86400000);
+  var totalWeeks = Math.floor(totalDays / 7);
+
+  /* Years + months exact */
+  var yy = now.getFullYear() - _birth.getFullYear();
+  var mo = now.getMonth()    - _birth.getMonth();
+  var dd = now.getDate()     - _birth.getDate();
+  if (dd < 0) { mo--; }
+  if (mo < 0) { mo += 12; yy--; }
+  var totalMonths = yy * 12 + mo;
+
+  setText('la-years',   fmt(yy));
+  setText('la-months',  fmt(totalMonths));
+  setText('la-weeks',   fmt(totalWeeks));
+  setText('la-days',    fmt(totalDays));
+  setText('la-hours',   fmt(totalHr));
+  setText('la-minutes', fmt(totalMin));
+  setText('la-seconds', fmt(totalSec));
+
+  var subEl = el('liveage-sub');
+  if (subEl) subEl.textContent = 'Every second counts. Your age, live.';
+
+  /* Birthday countdown */
+  var bdayIcon  = el('bday-icon');
+  var bdayTitle = el('bday-title');
+  var bdayVal   = el('bday-val');
+  var bdaySub   = el('bday-sub');
+
+  var nextBday = new Date(now.getFullYear(), _birth.getMonth(), _birth.getDate());
+  if (nextBday <= now) nextBday.setFullYear(now.getFullYear() + 1);
+
+  var daysUntil = Math.ceil((nextBday - now) / 86400000);
+  var nextAge   = nextBday.getFullYear() - _birth.getFullYear();
+
+  if (daysUntil === 0 || (now.getMonth() === _birth.getMonth() && now.getDate() === _birth.getDate())) {
+    /* It's your birthday today! */
+    if (bdayIcon)  bdayIcon.textContent  = '🎉';
+    if (bdayTitle) bdayTitle.textContent = 'Happy Birthday!';
+    if (bdayVal)   bdayVal.textContent   = 'Today is your ' + nextAge + (nextAge === 1 ? 'st' : nextAge === 2 ? 'nd' : nextAge === 3 ? 'rd' : 'th') + ' birthday!';
+    if (bdaySub)   bdaySub.textContent   = 'Alhamdulillah — may Allah bless your year ahead. 🤲';
+    var bdayCard = el('birthday-card');
+    if (bdayCard) bdayCard.classList.add('birthday-today');
+  } else {
+    if (bdayIcon)  bdayIcon.textContent  = '🎂';
+    if (bdayTitle) bdayTitle.textContent = 'Next Birthday';
+    if (bdayVal)   bdayVal.textContent   = daysUntil + (daysUntil === 1 ? ' day' : ' days') + ' away';
+    var bdayDateStr = nextBday.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (bdaySub)   bdaySub.textContent   = bdayDateStr + ' — you will turn ' + nextAge;
+  }
+}
+
+/* Hook into the existing 1-second ticker */
+var _origTicker = window._ticker;
+clearInterval(window._ticker);
+window._ticker = setInterval(function () {
+  if (_birth) {
+    var t2 = getTotals(_birth);
+    setText('g-hours',   fmt(t2.hr));
+    setText('g-seconds', (t2.sec / 1e6).toFixed(1));
+    updateLiveAge();
+  }
+}, 1000);
+
+/* Also call once immediately when renderAll fires */
+var _origRenderAll = renderAll;
+renderAll = function(birth) {
+  _origRenderAll(birth);
+  updateLiveAge();
+};

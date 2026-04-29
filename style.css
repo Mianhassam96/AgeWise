@@ -2252,3 +2252,305 @@ img { max-width: 100%; }
   .hadith-translation { font-size: 0.88rem; }
   .btn-theme-toggle { width: 32px; height: 32px; font-size: 0.9rem; }
 }
+
+/* ══════════════════════════════════════════════
+   QIBLA DIRECTION SECTION
+   ══════════════════════════════════════════════ */
+.qibla-section { background: var(--bg2); }
+
+.qibla-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  align-items: center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Compass card */
+.qibla-compass-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.qibla-compass-wrap {
+  width: 220px;
+  height: 220px;
+  position: relative;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.15));
+}
+
+.qibla-compass-svg {
+  width: 100%;
+  height: 100%;
+}
+
+#qibla-needle-group {
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.qibla-degree {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.qibla-direction-label {
+  font-size: 0.78rem;
+  color: var(--text2);
+  text-align: center;
+  font-weight: 500;
+  max-width: 200px;
+  line-height: 1.5;
+}
+
+/* Info card */
+.qibla-info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.qibla-info-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.qibla-info-body {
+  font-size: 0.88rem;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.qibla-info-body strong { color: var(--gold); }
+
+.qibla-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+
+.qs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+.qs-label { color: var(--text3); font-weight: 500; }
+.qs-val   { color: var(--text);  font-weight: 700; text-align: right; }
+
+.btn-qibla {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: var(--radius-sm);
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-qibla:hover {
+  background: rgba(201,168,76,0.18);
+  box-shadow: 0 0 20px rgba(201,168,76,0.2);
+}
+.btn-qibla:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.qibla-note {
+  font-size: 0.72rem;
+  color: var(--text3);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.qibla-ayah {
+  border-top: 1px solid rgba(201,168,76,0.12);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.qibla-ayah-ar {
+  font-family: var(--font-ar);
+  font-size: 1.1rem;
+  color: var(--gold);
+  direction: rtl;
+  line-height: 1.8;
+  opacity: 0.85;
+}
+.qibla-ayah-tr {
+  font-size: 0.78rem;
+  color: var(--text3);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Light mode compass */
+[data-theme="light"] .qibla-compass-wrap {
+  filter: drop-shadow(0 0 16px rgba(138,104,32,0.2));
+}
+
+@media (max-width: 768px) {
+  .qibla-layout { grid-template-columns: 1fr; justify-items: center; gap: 24px; }
+  .qibla-info-card { width: 100%; }
+  .qibla-compass-wrap { width: 180px; height: 180px; }
+  .qibla-degree { font-size: 1.6rem; }
+}
+
+/* ══════════════════════════════════════════════
+   LIVE AGE BREAKDOWN + BIRTHDAY COUNTDOWN
+   ══════════════════════════════════════════════ */
+.liveage-section { background: var(--bg); }
+
+.liveage-sub {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text3);
+  margin-bottom: 28px;
+  margin-top: -16px;
+}
+
+.liveage-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.la-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 20px 10px;
+  text-align: center;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.la-card:hover {
+  border-color: var(--card-hover);
+  transform: translateY(-2px);
+}
+.la-card-accent {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.05);
+}
+.la-card-live {
+  border-color: rgba(34,197,94,0.3);
+  background: rgba(34,197,94,0.04);
+  animation: livePulse 1s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  50%       { box-shadow: 0 0 0 4px rgba(34,197,94,0.08); }
+}
+
+.la-val {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.la-card-accent .la-val { color: var(--gold); }
+.la-card-live   .la-val { color: var(--green2); }
+
+.la-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Birthday card */
+.birthday-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+  transition: border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.birthday-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.birthday-card:hover { border-color: var(--card-hover); }
+
+.birthday-card.birthday-today {
+  border-color: rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.06);
+  animation: bdayGlow 2s ease-in-out infinite;
+}
+@keyframes bdayGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+  50%       { box-shadow: 0 0 24px rgba(201,168,76,0.2); }
+}
+
+.bday-icon {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+.bday-title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+.bday-val {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.bday-sub {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+@media (max-width: 1100px) {
+  .liveage-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 768px) {
+  .liveage-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .la-val { font-size: 1.1rem; }
+  .la-label { font-size: 0.55rem; }
+  .la-card { padding: 14px 6px; }
+  .bday-val { font-size: 1.5rem; }
+  .birthday-card { padding: 22px 18px; }
+}
+@media (max-width: 480px) {
+  .liveage-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .la-card-live { grid-column: 1 / -1; }
+}
