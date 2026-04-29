@@ -3994,3 +3994,191 @@ img { max-width: 100%; }
   .btn-viral-caption,
   .btn-viral-link { min-width: unset; width: 100%; }
 }
+
+/* ══════════════════════════════════════════════
+   GUIDED ISLAMIC GROWTH SYSTEM
+   ══════════════════════════════════════════════ */
+.growth-system {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* ── Level Card ── */
+.growth-level-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.growth-level-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.growth-level-card:hover { border-color: var(--card-hover); }
+
+.gl-left { flex: 1; }
+.gl-label {
+  font-size: 0.6rem; font-weight: 800; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 6px;
+}
+.gl-level {
+  font-size: 0.75rem; font-weight: 800; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;
+}
+.gl-level-name {
+  font-size: 1.4rem; font-weight: 900; color: var(--gold);
+  letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px;
+}
+.gl-desc {
+  font-size: 0.78rem; color: var(--text2); line-height: 1.5;
+}
+
+.gl-right { flex-shrink: 0; text-align: center; }
+.gl-progress-wrap {
+  position: relative; width: 80px; height: 80px; margin: 0 auto 6px;
+}
+.gl-ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.gl-ring-bg {
+  fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 8;
+}
+.gl-ring-fill {
+  fill: none; stroke: var(--gold); stroke-width: 8; stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1), stroke 0.4s;
+}
+.gl-pct {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 900; color: var(--text);
+}
+.gl-next {
+  font-size: 0.62rem; color: var(--text3); line-height: 1.4;
+  max-width: 80px; margin: 0 auto;
+}
+
+/* ── Weekly Comparison ── */
+.growth-compare-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color var(--transition);
+}
+.growth-compare-card:hover { border-color: var(--card-hover); }
+.gc-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+.gc-text {
+  font-size: 0.85rem; color: var(--text2); line-height: 1.7;
+}
+.gc-text strong { color: var(--text); }
+
+/* ── End Your Day ── */
+.end-day-card {
+  background: linear-gradient(135deg, rgba(13,32,16,0.6), rgba(6,16,8,0.8));
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+}
+.ed-title {
+  font-size: 0.7rem; font-weight: 800; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;
+}
+.ed-question {
+  font-size: 0.95rem; font-weight: 700; color: var(--text);
+  line-height: 1.4; margin-bottom: 16px;
+}
+.ed-buttons { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.ed-btn {
+  padding: 9px 18px; border-radius: 999px; font-size: 0.8rem;
+  font-weight: 700; cursor: pointer; transition: all var(--transition);
+  border: none;
+}
+.ed-yes {
+  background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35);
+  color: var(--green2);
+}
+.ed-yes:hover { background: rgba(34,197,94,0.25); }
+.ed-no {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text2);
+}
+.ed-no:hover { background: rgba(255,255,255,0.09); color: var(--text); }
+.ed-response {
+  font-size: 0.82rem; color: var(--text2); line-height: 1.7;
+  margin-top: 12px; font-style: italic;
+}
+
+/* ── Return Hook ── */
+.return-hook-card {
+  grid-column: 1 / -1;
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.rh-icon { font-size: 1.4rem; flex-shrink: 0; }
+.rh-text {
+  font-size: 0.85rem; color: var(--text2); line-height: 1.6;
+}
+.rh-text strong { color: var(--gold); }
+
+/* ── Story Follow-up ── */
+.smd-followup {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+.smd-followup-q {
+  font-size: 0.88rem; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+}
+.smd-followup-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.smd-fu-btn {
+  padding: 8px 18px; border-radius: 999px; font-size: 0.8rem;
+  font-weight: 700; cursor: pointer; transition: all var(--transition);
+}
+.smd-fu-yes {
+  background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green2);
+}
+.smd-fu-yes:hover { background: rgba(34,197,94,0.22); }
+.smd-fu-later {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text2);
+}
+.smd-fu-later:hover { background: rgba(255,255,255,0.08); }
+.smd-followup-response {
+  font-size: 0.82rem; color: var(--text2); line-height: 1.7;
+  margin-top: 10px; font-style: italic;
+}
+
+/* Light mode */
+[data-theme="light"] .growth-level-card,
+[data-theme="light"] .growth-compare-card { background: rgba(255,255,255,0.75); }
+[data-theme="light"] .end-day-card { background: rgba(245,240,232,0.8); }
+[data-theme="light"] .return-hook-card { background: rgba(138,104,32,0.06); }
+[data-theme="light"] .smd-followup { background: rgba(138,104,32,0.04); }
+
+@media (max-width: 768px) {
+  .growth-system { grid-template-columns: 1fr; }
+  .growth-level-card { flex-direction: column; text-align: center; }
+  .gl-left { text-align: center; }
+}

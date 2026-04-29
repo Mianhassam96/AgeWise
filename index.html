@@ -605,12 +605,61 @@
         </div>
       </div>
 
-      <!-- Weekly Report -->
+      <!-- Weekly Report — upgraded to Consistency Timeline -->
       <div class="tracker-card tracker-report">
         <div class="tracker-card-title">📊 This Week</div>
         <div class="week-grid" id="week-grid"></div>
         <div class="week-summary" id="week-summary"></div>
         <button class="btn-reset-tracker" id="btn-reset-tracker">↺ Reset Today</button>
+      </div>
+
+    </div>
+
+    <!-- Growth System — always visible below tracker -->
+    <div class="growth-system" id="growth-system">
+
+      <!-- Level Badge -->
+      <div class="growth-level-card" id="growth-level-card">
+        <div class="gl-left">
+          <div class="gl-label">YOUR LEVEL</div>
+          <div class="gl-level" id="gl-level">Level 1</div>
+          <div class="gl-level-name" id="gl-level-name">Awareness</div>
+          <div class="gl-desc" id="gl-desc">You are beginning to notice your time.</div>
+        </div>
+        <div class="gl-right">
+          <div class="gl-progress-wrap">
+            <svg class="gl-ring" viewBox="0 0 80 80">
+              <circle class="gl-ring-bg" cx="40" cy="40" r="32"/>
+              <circle class="gl-ring-fill" id="gl-ring-fill" cx="40" cy="40" r="32"
+                stroke-dasharray="201" stroke-dashoffset="201"/>
+            </svg>
+            <div class="gl-pct" id="gl-pct">0%</div>
+          </div>
+          <div class="gl-next" id="gl-next">to next level</div>
+        </div>
+      </div>
+
+      <!-- Weekly Comparison -->
+      <div class="growth-compare-card" id="growth-compare-card">
+        <div class="gc-icon" id="gc-icon">📈</div>
+        <div class="gc-text" id="gc-text">Complete your first week to see your progress comparison.</div>
+      </div>
+
+      <!-- End Your Day -->
+      <div class="end-day-card" id="end-day-card">
+        <div class="ed-title">🌙 End Your Day</div>
+        <div class="ed-question">Did today move you closer to Allah?</div>
+        <div class="ed-buttons" id="ed-buttons">
+          <button class="ed-btn ed-yes" id="ed-yes">Yes, Alhamdulillah ✓</button>
+          <button class="ed-btn ed-no" id="ed-no">Not today — tomorrow</button>
+        </div>
+        <div class="ed-response hidden" id="ed-response"></div>
+      </div>
+
+      <!-- Return Hook -->
+      <div class="return-hook-card hidden" id="return-hook-card">
+        <div class="rh-icon">🔔</div>
+        <div class="rh-text" id="rh-text"></div>
       </div>
 
     </div>

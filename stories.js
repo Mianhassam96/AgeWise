@@ -80,6 +80,9 @@ function renderStoryModal(story, idx, total) {
   if (reflection) reflection.textContent = story.reflection;
   if (action)     action.textContent = story.action;
 
+  /* Wire follow-up accountability */
+  if (window.initStoryFollowUp) window.initStoryFollowUp(story.name, story.id);
+
   /* Nav buttons */
   var prevBtn = elS('smd-prev');
   var nextBtn = elS('smd-next');

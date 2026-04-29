@@ -2582,3 +2582,341 @@ renderAll = function(birth) {
 /* ── Add "Share This Story" button to stories page Today's Story card ── */
 /* This is handled in stories.js — openViralModal is global */
 window.openViralModal = openViralModal;
+
+/* ══════════════════════════════════════════════
+   GUIDED ISLAMIC GROWTH SYSTEM
+   ══════════════════════════════════════════════ */
+
+/* ── Level definitions ── */
+var GROWTH_LEVELS = [
+  {
+    level: 1, name: 'Awareness',
+    desc: 'You are beginning to notice your time.',
+    minScore: 0, maxScore: 25,
+    color: '#c9a84c'
+  },
+  {
+    level: 2, name: 'Action',
+    desc: 'You are turning awareness into daily deeds.',
+    minScore: 25, maxScore: 50,
+    color: '#22c55e'
+  },
+  {
+    level: 3, name: 'Consistency',
+    desc: 'Your habits are becoming part of who you are.',
+    minScore: 50, maxScore: 75,
+    color: '#60a5fa'
+  },
+  {
+    level: 4, name: 'Discipline',
+    desc: 'You are building a life that reflects your deen.',
+    minScore: 75, maxScore: 100,
+    color: '#e8c96a'
+  }
+];
+
+/* ── Calculate growth score (0–100) ── */
+function calcGrowthScore() {
+  var data = loadTrackerData();
+  var today = new Date();
+  var totalScore = 0;
+  var maxPossible = 0;
+
+  /* Look at last 30 days */
+  for (var i = 0; i < 30; i++) {
+    var d = new Date(today);
+    d.setDate(today.getDate() - i);
+    var key = d.toISOString().split('T')[0];
+    var dayData = data[key];
+    maxPossible += 10; /* 5 salah + 5 dhikr = 10 max per day */
+    if (dayData) {
+      totalScore += Math.min((dayData.salah || []).length, 5);
+      totalScore += Math.min((dayData.dhikr || []).length, 5);
+    }
+  }
+
+  if (maxPossible === 0) return 0;
+  return Math.round((totalScore / maxPossible) * 100);
+}
+
+/* ── Get current level ── */
+function getGrowthLevel(score) {
+  for (var i = GROWTH_LEVELS.length - 1; i >= 0; i--) {
+    if (score >= GROWTH_LEVELS[i].minScore) return GROWTH_LEVELS[i];
+  }
+  return GROWTH_LEVELS[0];
+}
+
+/* ── Render growth level card ── */
+function renderGrowthLevel() {
+  var score = calcGrowthScore();
+  var level = getGrowthLevel(score);
+  var nextLevel = GROWTH_LEVELS[level.level] || null; /* level.level is 1-indexed */
+
+  var glLevel    = el('gl-level');
+  var glName     = el('gl-level-name');
+  var glDesc     = el('gl-desc');
+  var glPct      = el('gl-pct');
+  var glRingFill = el('gl-ring-fill');
+  var glNext     = el('gl-next');
+
+  if (glLevel)    glLevel.textContent = 'Level ' + level.level;
+  if (glName)     glName.textContent  = level.name;
+  if (glDesc)     glDesc.textContent  = level.desc;
+
+  /* Progress within current level */
+  var levelRange = level.maxScore - level.minScore;
+  var levelProgress = Math.min(100, ((score - level.minScore) / levelRange) * 100);
+  if (glPct) glPct.textContent = Math.round(levelProgress) + '%';
+
+  /* Animate ring */
+  if (glRingFill) {
+    var circumference = 201;
+    var offset = circumference - (levelProgress / 100) * circumference;
+    setTimeout(function() {
+      glRingFill.style.strokeDashoffset = offset;
+      glRingFill.style.stroke = level.color;
+    }, 400);
+  }
+
+  if (glNext) {
+    if (nextLevel) {
+      glNext.textContent = 'to Level ' + nextLevel.level + ': ' + nextLevel.name;
+    } else {
+      glNext.textContent = 'Maximum level reached. MashaAllah.';
+    }
+  }
+
+  /* Color the level name */
+  if (glName) glName.style.color = level.color;
+}
+
+/* ── Weekly comparison engine ── */
+function renderWeeklyComparison() {
+  var data = loadTrackerData();
+  var today = new Date();
+  var gcIcon = el('gc-icon');
+  var gcText = el('gc-text');
+  if (!gcText) return;
+
+  /* This week: last 7 days */
+  var thisWeekScore = 0;
+  var lastWeekScore = 0;
+
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    var key = d.toISOString().split('T')[0];
+    var dd = data[key] || { salah: [], dhikr: [] };
+    thisWeekScore += (dd.salah || []).length + (dd.dhikr || []).length;
+  }
+  for (var j = 7; j < 14; j++) {
+    var d2 = new Date(today); d2.setDate(today.getDate() - j);
+    var key2 = d2.toISOString().split('T')[0];
+    var dd2 = data[key2] || { salah: [], dhikr: [] };
+    lastWeekScore += (dd2.salah || []).length + (dd2.dhikr || []).length;
+  }
+
+  var streak = getStreakCount();
+  var bestStreak = getBestStreak();
+
+  if (lastWeekScore === 0 && thisWeekScore === 0) {
+    if (gcIcon) gcIcon.textContent = '🌱';
+    gcText.innerHTML = 'Complete your first week to see your progress comparison. Every day counts.';
+    return;
+  }
+
+  if (lastWeekScore === 0) {
+    if (gcIcon) gcIcon.textContent = '🌟';
+    gcText.innerHTML = 'This is your first week tracking. You scored <strong>' + thisWeekScore + ' points</strong>. Keep going — next week will show your growth.';
+    return;
+  }
+
+  var diff = thisWeekScore - lastWeekScore;
+  var pct = Math.round(Math.abs(diff / lastWeekScore) * 100);
+
+  if (diff > 0) {
+    if (gcIcon) gcIcon.textContent = '📈';
+    gcText.innerHTML = 'This week you were <strong>' + pct + '% more consistent</strong> than last week. Your streak: <strong>' + streak + ' days</strong>. Best ever: <strong>' + bestStreak + ' days</strong>. Keep going.';
+  } else if (diff < 0) {
+    if (gcIcon) gcIcon.textContent = '⚠️';
+    gcText.innerHTML = 'This week was <strong>' + pct + '% lower</strong> than last week. What happened? Your streak: <strong>' + streak + ' days</strong>. Tomorrow is a fresh start.';
+  } else {
+    if (gcIcon) gcIcon.textContent = '➡️';
+    gcText.innerHTML = 'Same consistency as last week. Streak: <strong>' + streak + ' days</strong>. Push for improvement — even one more prayer makes a difference.';
+  }
+}
+
+/* ── Best streak calculation ── */
+function getBestStreak() {
+  try {
+    var data = loadTrackerData();
+    var keys = Object.keys(data).sort();
+    var best = 0;
+    var current = 0;
+    var prevDate = null;
+
+    keys.forEach(function(key) {
+      var dd = data[key];
+      if ((dd.salah || []).length >= 5) {
+        if (prevDate) {
+          var prev = new Date(prevDate);
+          var curr = new Date(key);
+          var diff = (curr - prev) / 86400000;
+          if (diff === 1) { current++; }
+          else { current = 1; }
+        } else { current = 1; }
+        if (current > best) best = current;
+        prevDate = key;
+      } else {
+        current = 0;
+        prevDate = null;
+      }
+    });
+    return best;
+  } catch(e) { return 0; }
+}
+
+/* ── Return Hook — "Yesterday you saw this…" ── */
+function renderReturnHook() {
+  var card = el('return-hook-card');
+  var text = el('rh-text');
+  if (!card || !text) return;
+
+  var GROWTH_KEY = 'waqtx_growth';
+  var stored;
+  try { stored = JSON.parse(localStorage.getItem(GROWTH_KEY) || '{}'); } catch(e) { stored = {}; }
+
+  var today = new Date().toISOString().split('T')[0];
+  var yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  var yesterdayKey = yesterday.toISOString().split('T')[0];
+
+  /* Check if user answered "not yet" yesterday */
+  if (stored.lastActionDate === yesterdayKey && stored.lastActionStatus === 'later') {
+    var storyName = stored.lastStoryName || 'a story';
+    text.innerHTML = 'Yesterday you read about <strong>' + storyName + '</strong> and said "not yet." Today is a new chance. Did you act on it?';
+    card.classList.remove('hidden');
+    return;
+  }
+
+  /* Check streak at risk */
+  var streak = getStreakCount();
+  var data = loadTrackerData();
+  var todayData = data[today] || { salah: [], dhikr: [] };
+  var todaySalah = (todayData.salah || []).length;
+
+  if (streak >= 3 && todaySalah === 0) {
+    var hour = new Date().getHours();
+    if (hour >= 14) { /* After Dhuhr time */
+      text.innerHTML = '🔥 Your streak is <strong>' + streak + ' days</strong>. You haven\'t logged any prayers today — don\'t break it now.';
+      card.classList.remove('hidden');
+    }
+  }
+}
+
+/* ── End Your Day ── */
+(function() {
+  var yesBtn = el('ed-yes');
+  var noBtn  = el('ed-no');
+  var resp   = el('ed-response');
+  var btns   = el('ed-buttons');
+  if (!yesBtn || !noBtn) return;
+
+  var GROWTH_KEY = 'waqtx_growth';
+  var today = new Date().toISOString().split('T')[0];
+
+  /* Check if already answered today */
+  try {
+    var stored = JSON.parse(localStorage.getItem(GROWTH_KEY) || '{}');
+    if (stored.endDayDate === today) {
+      if (btns) btns.classList.add('hidden');
+      if (resp) {
+        resp.classList.remove('hidden');
+        resp.textContent = stored.endDayAnswer === 'yes'
+          ? 'Alhamdulillah. See you tomorrow. ✦'
+          : 'Tomorrow is a fresh start. In Sha Allah. ✦';
+      }
+    }
+  } catch(e) {}
+
+  function saveEndDay(answer) {
+    try {
+      var stored2 = JSON.parse(localStorage.getItem(GROWTH_KEY) || '{}');
+      stored2.endDayDate = today;
+      stored2.endDayAnswer = answer;
+      localStorage.setItem(GROWTH_KEY, JSON.stringify(stored2));
+    } catch(e) {}
+  }
+
+  yesBtn.addEventListener('click', function() {
+    saveEndDay('yes');
+    if (btns) btns.classList.add('hidden');
+    if (resp) {
+      resp.classList.remove('hidden');
+      resp.innerHTML = 'Alhamdulillah. Every day you choose Allah is a day that counts. See you tomorrow. ✦';
+    }
+    renderGrowthLevel(); /* Refresh level */
+  });
+
+  noBtn.addEventListener('click', function() {
+    saveEndDay('no');
+    if (btns) btns.classList.add('hidden');
+    if (resp) {
+      resp.classList.remove('hidden');
+      resp.innerHTML = 'Tomorrow is a fresh start. The Prophet \uFDFA said: "Every son of Adam sins, and the best of sinners are those who repent." In Sha Allah. ✦';
+    }
+  });
+})();
+
+/* ── Story follow-up accountability (stories.html) ── */
+window.initStoryFollowUp = function(storyName, storyId) {
+  var yesBtn = document.getElementById('smd-fu-yes');
+  var laterBtn = document.getElementById('smd-fu-later');
+  var resp = document.getElementById('smd-followup-response');
+  if (!yesBtn || !laterBtn) return;
+
+  /* Reset state */
+  if (resp) resp.classList.add('hidden');
+  yesBtn.classList.remove('hidden');
+  laterBtn.classList.remove('hidden');
+
+  var GROWTH_KEY = 'waqtx_growth';
+
+  yesBtn.onclick = function() {
+    yesBtn.classList.add('hidden');
+    laterBtn.classList.add('hidden');
+    if (resp) {
+      resp.classList.remove('hidden');
+      resp.innerHTML = '\u2705 MashaAllah. That action is recorded with Allah. \u201CAnd whoever does an atom\'s weight of good will see it.\u201D \u2014 (Quran 99:7)';
+    }
+    try {
+      var s = JSON.parse(localStorage.getItem(GROWTH_KEY) || '{}');
+      s.lastActionDate = new Date().toISOString().split('T')[0];
+      s.lastActionStatus = 'done';
+      s.lastStoryName = storyName;
+      s.lastStoryId = storyId;
+      localStorage.setItem(GROWTH_KEY, JSON.stringify(s));
+    } catch(e) {}
+  };
+
+  laterBtn.onclick = function() {
+    yesBtn.classList.add('hidden');
+    laterBtn.classList.add('hidden');
+    if (resp) {
+      resp.classList.remove('hidden');
+      resp.innerHTML = '\u23F3 In Sha Allah. We\u2019ll remind you tomorrow. The intention is already a good deed.';
+    }
+    try {
+      var s = JSON.parse(localStorage.getItem(GROWTH_KEY) || '{}');
+      s.lastActionDate = new Date().toISOString().split('T')[0];
+      s.lastActionStatus = 'later';
+      s.lastStoryName = storyName;
+      s.lastStoryId = storyId;
+      localStorage.setItem(GROWTH_KEY, JSON.stringify(s));
+    } catch(e) {}
+  };
+};
+
+/* ── Init all growth components ── */
+renderGrowthLevel();
+renderWeeklyComparison();
+renderReturnHook();
