@@ -487,7 +487,8 @@ const WORLD_DATA = {
   2022: { pm: 'Shehbaz Sharif',          president: 'Arif Alvi',              currency: 'Pakistani Rupee (PKR)', pop: '8.0 Billion', event: 'Russia-Ukraine War',            tech: 'ChatGPT Launched' },
   2023: { pm: 'Anwaar-ul-Haq Kakar',     president: 'Arif Alvi',              currency: 'Pakistani Rupee (PKR)', pop: '8.1 Billion', event: 'Gaza Conflict',                 tech: 'AI Revolution' },
   2024: { pm: 'Shehbaz Sharif',          president: 'Asif Ali Zardari',       currency: 'Pakistani Rupee (PKR)', pop: '8.2 Billion', event: 'Global Elections Year',         tech: 'AI Everywhere' },
-  2025: { pm: 'Shehbaz Sharif',          president: 'Asif Ali Zardari',       currency: 'Pakistani Rupee (PKR)', pop: '8.2 Billion', event: 'AI Reshaping the World',        tech: 'Agentic AI Era' }
+  2025: { pm: 'Shehbaz Sharif',          president: 'Asif Ali Zardari',       currency: 'Pakistani Rupee (PKR)', pop: '8.2 Billion', event: 'AI Reshaping the World',        tech: 'Agentic AI Era' },
+  2026: { pm: 'Shehbaz Sharif',          president: 'Asif Ali Zardari',       currency: 'Pakistani Rupee (PKR)', pop: '8.3 Billion', event: 'AI Integration in Daily Life',  tech: 'Multimodal AI & Robotics' }
 };
 
 function getWorldData(year) {
@@ -644,14 +645,14 @@ function renderAll(birth) {
   setText('sp-days',  fmt(t.day));
   setText('sp-hijri', hijriBirth.year + ' AH \u2013 ' + hijriNow.year + ' AH');
   const spLogo = el('sp-logo');
-  if (spLogo) spLogo.textContent = _name ? '\u25C6 ' + _name : '\u25C6 WaqtX';
+  if (spLogo) spLogo.textContent = _name ? '\u2736 ' + _name : '\u2736 WaqtX';
 
   /* Modal card */
   setText('scdl-pct',   pctInt + '%');
   setText('scdl-days',  fmt(t.day) + ' Days Lived');
   setText('scdl-hijri', hijriBirth.year + ' AH \u2013 ' + hijriNow.year + ' AH');
   const scdlLogo = el('scdl-logo');
-  if (scdlLogo) scdlLogo.textContent = _name ? '\u25C6 ' + _name + ' \u2014 WaqtX' : '\u25C6 WaqtX';
+  if (scdlLogo) scdlLogo.textContent = _name ? '\u2736 ' + _name + ' \u2014 WaqtX' : '\u2736 WaqtX';
 
   /* ── New Features (require birth) ── */
   renderLifeStory(birth, ageYears, hijriBirth, hijriNow, ramadans, t);
@@ -1780,8 +1781,10 @@ function setQiblaCompass(bearing) {
         var dist = calcDistance(lat, lng, KAABA_LAT, KAABA_LNG);
 
         setQiblaCompass(bearing);
-        setText('q-location', lat.toFixed(3) + '°, ' + lng.toFixed(3) + '°');
-        setText('q-distance', Math.round(dist).toLocaleString() + ' km from Kaaba');
+        setText('q-location', lat.toFixed(3) + '\u00b0, ' + lng.toFixed(3) + '\u00b0');
+        setText('q-distance', t('qibla_km') !== 'qibla_km'
+          ? tr('qibla_km', { dist: Math.round(dist).toLocaleString() })
+          : Math.round(dist).toLocaleString() + ' km from Kaaba');
 
         btn.textContent = t('qibla_found') !== 'qibla_found' ? t('qibla_found') : '✓ Qibla Found';
         btn.style.background = 'rgba(22,163,74,0.15)';
@@ -1821,7 +1824,9 @@ function setQiblaCompass(bearing) {
     if (savedBearing) {
       setQiblaCompass(parseFloat(savedBearing));
       if (savedLat && savedLng) setText('q-location', parseFloat(savedLat).toFixed(3) + '°, ' + parseFloat(savedLng).toFixed(3) + '°');
-      if (savedDist) setText('q-distance', parseInt(savedDist).toLocaleString() + ' km from Kaaba');
+      if (savedDist) setText('q-distance', t('qibla_km') !== 'qibla_km'
+        ? tr('qibla_km', { dist: parseInt(savedDist).toLocaleString() })
+        : parseInt(savedDist).toLocaleString() + ' km from Kaaba');
       var noteEl = el('qibla-note');
       if (noteEl) noteEl.textContent = t('qibla_note_saved') !== 'qibla_note_saved'
         ? t('qibla_note_saved') : 'Showing your last saved Qibla direction.';
@@ -1915,7 +1920,7 @@ function updateLiveAge() {
 function startUnifiedTicker() {
   clearInterval(window._ticker);
   window._ticker = setInterval(function () {
-    if (!_birth) return;
+    if (!_birth) return; /* no-op until DOB entered */
     var t2 = getTotals(_birth);
     /* Glance live updates */
     setText('g-hours',   fmt(t2.hr));
@@ -1925,6 +1930,7 @@ function startUnifiedTicker() {
   }, 1000);
 }
 
+/* Start ticker only — it self-guards with _birth check */
 startUnifiedTicker();
 
 /* ══════════════════════════════════════════════
@@ -2212,7 +2218,7 @@ function startPrayerCountdown(timings) {
       var cachedMeta = localStorage.getItem('waqtx_prayer_meta');
       renderPrayerTimes(_prayerTimes, cachedMeta ? JSON.parse(cachedMeta) : null);
       startPrayerCountdown(_prayerTimes);
-      btn.textContent = '↺ Refresh';
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg> ↺ Refresh';
       var statusEl = document.getElementById('prayer-status');
       if (statusEl) statusEl.textContent = '';
     }
