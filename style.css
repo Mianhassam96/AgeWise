@@ -2097,15 +2097,29 @@ img { max-width: 100%; }
 
 [data-theme="light"] .story-card,
 [data-theme="light"] .insight-card,
-[data-theme="light"] .hadith-card {
-  background: rgba(255,255,255,0.8);
+[data-theme="light"] .hadith-card,
+[data-theme="light"] .wakeup-card,
+[data-theme="light"] .prayer-card,
+[data-theme="light"] .prayer-countdown-banner,
+[data-theme="light"] .birthday-card,
+[data-theme="light"] .la-card,
+[data-theme="light"] .qibla-info-card,
+[data-theme="light"] .qibla-stats {
+  background: rgba(255,255,255,0.75);
+}
+
+[data-theme="light"] .mirror-card-dl {
+  background: linear-gradient(145deg, #ede8dc, #e0d8c8);
 }
 
 [data-theme="light"] .glance-section,
 [data-theme="light"] .world-section,
 [data-theme="light"] .ms-section,
 [data-theme="light"] .insight-section,
-[data-theme="light"] .truth-section {
+[data-theme="light"] .truth-section,
+[data-theme="light"] .prayer-section,
+[data-theme="light"] .faq-section,
+[data-theme="light"] .liveage-section {
   background: var(--bg2);
 }
 
@@ -2114,6 +2128,7 @@ img { max-width: 100%; }
 [data-theme="light"] .tracker-section,
 [data-theme="light"] .story-section,
 [data-theme="light"] .hadith-section,
+[data-theme="light"] .qibla-section,
 [data-theme="light"] .step-continue,
 [data-theme="light"] .footer-ayah,
 [data-theme="light"] .start-again-wrap {
@@ -3331,3 +3346,33 @@ img { max-width: 100%; }
   .faq-q { font-size: 0.88rem; padding: 16px 4px; }
   .faq-a { font-size: 0.83rem; }
 }
+
+/* ── Light mode for new sections ── */
+[data-theme="light"] .lang-dropdown {
+  background: #f5f0e8;
+  border-color: rgba(138,104,32,0.2);
+}
+[data-theme="light"] .lang-option { color: var(--text2); }
+[data-theme="light"] .lang-option:hover { background: rgba(138,104,32,0.08); }
+[data-theme="light"] .lang-btn { color: var(--text2); }
+
+[data-theme="light"] .faq-q { color: var(--text); }
+[data-theme="light"] .faq-item { border-color: rgba(138,104,32,0.15); }
+
+[data-theme="light"] .wu-meaning { background: rgba(138,104,32,0.06); border-color: rgba(138,104,32,0.18); }
+[data-theme="light"] .wu-reality { background: rgba(200,50,50,0.04); border-color: rgba(200,50,50,0.15); }
+[data-theme="light"] .wu-action  { background: rgba(22,163,74,0.05); border-color: rgba(22,163,74,0.18); }
+
+[data-theme="light"] .prayer-placeholder { color: var(--text3); }
+[data-theme="light"] .prayer-note { color: var(--text3); }
+[data-theme="light"] .prayer-meta { color: var(--text3); }
+[data-theme="light"] .prayer-status { color: var(--text3); }
+
+[data-theme="light"] .liveage-sub { color: var(--text3); }
+[data-theme="light"] .la-card-live { background: rgba(22,163,74,0.06); }
+[data-theme="light"] .la-card-accent { background: rgba(138,104,32,0.06); }
+
+[data-theme="light"] .life-mirror { background: rgba(0,0,0,0.65); }
+[data-theme="light"] .life-mirror-inner .lm-question { color: #f5f0e8; }
+[data-theme="light"] .life-mirror-inner .lm-sub { color: rgba(245,240,232,0.6); }
+[data-theme="light"] .life-mirror-inner .lm-skip { color: rgba(245,240,232,0.45); }
