@@ -2,10 +2,26 @@
 
 A PWA built with vanilla HTML, CSS, and JavaScript.
 
-🔗 **Live:** [mianhassam96.github.io/MultiMian-WaqtX](https://mianhassam96.github.io/MultiMian-WaqtX/)  
+🔗 **Live:** [mianhassam96.github.io/WaqtX](https://mianhassam96.github.io/WaqtX/)  
+📦 **Repo:** [github.com/Mianhassam96/WaqtX](https://github.com/Mianhassam96/WaqtX)  
 👨‍💻 **Author:** [MultiMian](https://github.com/Mianhassam96/)
 
 ---
+
+## Features
+
+- 🕐 Life stats — days, hours, heartbeats, seconds (live updating)
+- 🕌 Islamic history — Hijri birth year, Ramadans, Hajj seasons
+- 🌍 World events when you were born (Pakistan + global)
+- 📊 Life progress ring (% of 75yr lifespan)
+- 📖 Life story generator
+- 📅 Upcoming milestones (10k days, 1B seconds, next Jumu'ah)
+- 🕌 Daily Ibadah tracker (Salah, Quran, Dhikr) with streak
+- 📖 Daily Hadith & Ayah (Arabic + translation + reference)
+- 🌙 Daily reflection / insight
+- 🔗 Shareable URL with encoded DOB + name
+- 🌙☀️ Dark / Light mode toggle
+- 📱 PWA — installable, works offline
 
 ## Files
 
@@ -19,7 +35,8 @@ A PWA built with vanilla HTML, CSS, and JavaScript.
 | `app.js` | All app logic |
 | `sw.js` | Service worker (PWA offline) |
 | `manifest.json` | PWA manifest |
-| `favicon.svg` | App icon |
+| `favicon.svg` | App icon (clock + mosque + crescent) |
+| `favicon-32.svg` | Navbar logo (32px) |
 
 ## Run locally
 

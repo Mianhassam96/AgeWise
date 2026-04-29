@@ -489,7 +489,7 @@ el('btn-download').addEventListener('click', function () {
 /* Copy link — now generates shareable URL with DOB + name */
 el('btn-copy-link').addEventListener('click', function () {
   const btn = this;
-  let url = 'https://mianhassam96.github.io/MultiMian-WaqtX/';
+  let url = 'https://mianhassam96.github.io/WaqtX/';
   if (_birth) {
     const dobStr = _birth.toISOString().split('T')[0];
     url += '?dob=' + dobStr;
