@@ -3438,3 +3438,15 @@ img { max-width: 100%; }
 [data-theme="light"] .life-mirror-inner .lm-question { color: #f5f0e8; }
 [data-theme="light"] .life-mirror-inner .lm-sub { color: rgba(245,240,232,0.6); }
 [data-theme="light"] .life-mirror-inner .lm-skip { color: rgba(245,240,232,0.45); }
+
+/* ── Live Age empty state ── */
+.liveage-empty {
+  text-align: center;
+  padding: 32px 24px;
+  color: var(--text3);
+  border: 1px dashed rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  margin-bottom: 0;
+}
+.le-icon { font-size: 2rem; margin-bottom: 10px; opacity: 0.5; }
+.le-text  { font-size: 0.88rem; line-height: 1.6; }

@@ -754,7 +754,7 @@
     <!-- Countdown banner -->
     <div class="prayer-countdown-banner">
       <div class="pcb-label">Next Prayer</div>
-      <div class="pcb-name" id="prayer-next-name">—</div>
+      <div class="pcb-name" id="prayer-next-name">Tap below to load</div>
       <div class="pcb-countdown" id="prayer-countdown">—</div>
     </div>
 
@@ -792,7 +792,15 @@
       <span class="sh-line"></span>
     </div>
     <div class="liveage-sub" id="liveage-sub">Enter your date of birth above to see your live age.</div>
-    <div class="liveage-grid" id="liveage-grid">
+
+    <!-- Empty state — shown before DOB -->
+    <div class="liveage-empty" id="liveage-empty">
+      <div class="le-icon">⏱</div>
+      <div class="le-text">Enter your date of birth above — your age will tick live, every second.</div>
+    </div>
+
+    <!-- Live grid — hidden until DOB entered -->
+    <div class="liveage-grid hidden" id="liveage-grid">
       <div class="la-card"><div class="la-val" id="la-years">—</div><div class="la-label">Years</div></div>
       <div class="la-card"><div class="la-val" id="la-months">—</div><div class="la-label">Months</div></div>
       <div class="la-card"><div class="la-val" id="la-weeks">—</div><div class="la-label">Weeks</div></div>
@@ -802,12 +810,12 @@
       <div class="la-card la-card-live"><div class="la-val" id="la-seconds">—</div><div class="la-label">Seconds ⚡</div></div>
     </div>
 
-    <!-- Birthday Countdown -->
-    <div class="birthday-card" id="birthday-card">
+    <!-- Birthday Countdown — hidden until DOB entered -->
+    <div class="birthday-card hidden" id="birthday-card">
       <div class="bday-icon" id="bday-icon">🎂</div>
       <div class="bday-title" id="bday-title">Next Birthday</div>
       <div class="bday-val" id="bday-val">—</div>
-      <div class="bday-sub" id="bday-sub">Enter your DOB to see your birthday countdown.</div>
+      <div class="bday-sub" id="bday-sub">—</div>
     </div>
   </div>
 </section>

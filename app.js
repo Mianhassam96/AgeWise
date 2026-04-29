@@ -1839,6 +1839,15 @@ function setQiblaCompass(bearing) {
    ══════════════════════════════════════════════ */
 function updateLiveAge() {
   if (!_birth) return;
+
+  /* Show grid, hide empty state on first call */
+  var emptyEl = el('liveage-empty');
+  var gridEl  = el('liveage-grid');
+  var bdayCard = el('birthday-card');
+  if (emptyEl) emptyEl.classList.add('hidden');
+  if (gridEl)  gridEl.classList.remove('hidden');
+  if (bdayCard) bdayCard.classList.remove('hidden');
+
   var now = new Date();
   var ms  = now - _birth;
 
@@ -1872,7 +1881,7 @@ function updateLiveAge() {
   var bdayTitle = el('bday-title');
   var bdayVal   = el('bday-val');
   var bdaySub   = el('bday-sub');
-  var bdayCard  = el('birthday-card');
+  /* bdayCard already declared above */
 
   /* Check if today IS the birthday first */
   var isToday = (now.getMonth() === _birth.getMonth() && now.getDate() === _birth.getDate());
