@@ -1,5 +1,5 @@
 'use strict';
-var CACHE = 'waqtx-v4';
+var CACHE = 'waqtx-v5';
 var ASSETS = [
   './',
   './index.html',
@@ -7,9 +7,15 @@ var ASSETS = [
   './app.js',
   './manifest.json',
   './favicon.svg',
+  './favicon-32.svg',
+  './og-image.svg',
   './about.html',
   './contact.html',
-  './privacy.html'
+  './privacy.html',
+  './lang/en.json',
+  './lang/ur.json',
+  './lang/ar.json',
+  './lang/roman.json'
 ];
 
 self.addEventListener('install', function(e) {

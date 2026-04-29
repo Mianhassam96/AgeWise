@@ -8,9 +8,15 @@
   <meta name="theme-color" content="#0d1a0f"/>
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="WaqtX — Your Life in Time &amp; History"/>
-  <meta property="og:description" content="Discover your timeline through Islamic history, world events and meaningful insights."/>
+  <meta property="og:description" content="See your life in days, heartbeats &amp; Islamic history. Qibla direction, prayer times, daily reflection. Free Islamic life awareness tool."/>
   <meta property="og:url" content="https://mianhassam96.github.io/WaqtX/"/>
+  <meta property="og:image" content="https://mianhassam96.github.io/WaqtX/og-image.svg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="WaqtX — Your Life in Time &amp; History"/>
+  <meta name="twitter:description" content="See your life in days, heartbeats &amp; Islamic history. Qibla, prayer times, daily reflection."/>
+  <meta name="twitter:image" content="https://mianhassam96.github.io/WaqtX/og-image.svg"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <script>
     /* Apply saved theme before paint to avoid flash */
@@ -729,6 +735,47 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
+     ALWAYS-VISIBLE: PRAYER TIMES
+     ═══════════════════════════════════════════════ -->
+<section class="section prayer-section" id="prayer-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line"></span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-text">TODAY'S PRAYER TIMES</span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-line"></span>
+    </div>
+
+    <!-- Countdown banner -->
+    <div class="prayer-countdown-banner">
+      <div class="pcb-label">Next Prayer</div>
+      <div class="pcb-name" id="prayer-next-name">—</div>
+      <div class="pcb-countdown" id="prayer-countdown">—</div>
+    </div>
+
+    <!-- Prayer grid -->
+    <div class="prayer-grid" id="prayer-grid">
+      <div class="prayer-placeholder">
+        <div class="pp-icon">🕌</div>
+        <div class="pp-text">Tap below to load today's prayer times based on your location.</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="prayer-controls">
+      <button class="btn-prayer" id="btn-prayer-times">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Get Prayer Times
+      </button>
+      <div class="prayer-status" id="prayer-status"></div>
+    </div>
+    <div class="prayer-meta" id="prayer-meta"></div>
+    <div class="prayer-note">Times calculated for your GPS location using the ISNA method. Nothing is stored or sent anywhere.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
      ALWAYS-VISIBLE: LIVE AGE BREAKDOWN + BIRTHDAY
      ═══════════════════════════════════════════════ -->
 <section class="section liveage-section" id="liveage-section">
@@ -768,7 +815,22 @@
     <div class="lm-question" id="lm-question"></div>
     <div class="lm-sub">Take a moment. Breathe. Reflect.</div>
     <button class="lm-btn" id="lm-close">I will reflect on this ✦</button>
+    <button class="lm-share-btn" id="lm-share-btn">📤 Share This Reflection</button>
     <div class="lm-skip" id="lm-skip">Skip for now</div>
+  </div>
+</div>
+
+<!-- ═══ MIRROR SHARE CARD MODAL ═══ -->
+<div class="share-modal hidden" id="mirror-share-modal" role="dialog" aria-modal="true" aria-label="Share your reflection">
+  <div class="share-modal-inner mirror-share-modal-inner">
+    <button class="modal-close" id="mirror-share-close" aria-label="Close">✕</button>
+    <div class="mirror-card-dl" id="mirror-card-dl">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="mirror-share-actions">
+      <button class="btn-dl-card" id="btn-mirror-dl">⬇ Download Card</button>
+      <button class="btn-mirror-copy" id="btn-mirror-copy">🔗 Copy Link</button>
+    </div>
   </div>
 </div>
 
@@ -813,6 +875,122 @@
     <button class="btn-dl-card" id="btn-dl-card">⬇ Download Card</button>
   </div>
 </div>
+
+<!-- ═══ FAQ SECTION ═══ -->
+<section class="section faq-section" id="faq-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line"></span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-text">FREQUENTLY ASKED QUESTIONS</span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-line"></span>
+    </div>
+    <div class="faq-grid">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What is WaqtX?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          WaqtX is an Islamic life awareness tool. Enter your date of birth and instantly see your life through Islamic history, world events, and meaningful reflection — all calculated in real time, entirely on your device.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Is my data safe? Is anything stored on a server?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          Completely safe. WaqtX runs 100% in your browser. Your date of birth, name, location, and prayer data are only stored in your device's localStorage — never sent to any server. We have no backend, no database, no tracking.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How is the life percentage calculated?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          Based on an average lifespan of 75 years. Your age ÷ 75 × 100 = your life percentage. This is an estimate — only Allah knows how much time remains. The number is meant to create awareness, not anxiety.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How accurate is the Hijri date?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          The Hijri conversion uses a standard astronomical algorithm accurate to approximately ±1 day. The Islamic calendar is lunar and moon-sighting based, so exact dates can vary by region. We note this clearly in the app.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How are prayer times calculated?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          Prayer times are fetched from the Aladhan API using your GPS coordinates and the ISNA calculation method. Times are accurate for your exact location. They are cached on your device so they work offline after the first load.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How does the Qibla direction work?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          WaqtX uses your GPS coordinates and calculates the great-circle bearing to the Kaaba (21.4225°N, 39.8262°E) using spherical trigonometry. This gives the most accurate Qibla direction for your exact location on Earth.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Is this app Islamic or just informational?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          Both. WaqtX is built by a Muslim, for Muslims — with the intention of creating awareness about time, akhirah, and daily ibadah. The reflection prompts, mirror questions, and wake-up system are all rooted in Quran and Sunnah. It is a tool for self-awareness, not a fatwa-issuing authority.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Can I use WaqtX offline?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          Yes. WaqtX is a Progressive Web App (PWA). Install it from your browser and it works fully offline — including all stats, tracker, Qibla (if previously loaded), and prayer times (if previously fetched). Install it on your home screen for the best experience.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How do I share my timeline with someone?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          After calculating your timeline, click "Copy Link" in the Share section. This generates a URL with your DOB and name encoded — anyone who opens it will see your full timeline automatically. You can also download a share card image.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What languages does WaqtX support?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a">
+          WaqtX supports English, Urdu (اردو), Arabic (العربية), and Roman Urdu. Switch languages using the globe icon in the navbar. Arabic Quran and Hadith text is never translated — only UI labels and reflection content are localized.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ═══ SITE FOOTER ═══ -->
 <footer class="site-footer">

@@ -2134,3 +2134,348 @@ function startUnifiedTicker() {
 }
 
 startUnifiedTicker();
+
+/* ══════════════════════════════════════════════
+   STEP A — SHAREABLE LIFE MIRROR CARDS
+   Beautiful downloadable card with question +
+   user stats + name. Works in all 4 languages.
+   ══════════════════════════════════════════════ */
+var _currentMirrorQuestion = '';
+
+function buildMirrorCard() {
+  var container = document.getElementById('mirror-card-dl');
+  if (!container) return;
+
+  var name    = _name || 'A Believer';
+  var days    = _birth ? fmt(getTotals(_birth).day) : '—';
+  var hijri   = _birth ? (function() {
+    var h = toHijri(_birth); var hn = toHijri(new Date());
+    return h.year + ' AH – ' + hn.year + ' AH';
+  })() : '— AH';
+  var pct     = _birth ? (function() {
+    var b = getBreakdown(_birth);
+    var age = b.yy + b.mo/12 + b.dd/365;
+    return Math.round(Math.min(100, (age / AVG_LIFESPAN_YEARS) * 100));
+  })() : '—';
+  var today   = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  var q       = _currentMirrorQuestion || 'What did you do today that will matter in your akhirah?';
+
+  container.innerHTML =
+    '<div class="mc-header">' +
+      '<div class="mc-logo">◆ WaqtX</div>' +
+      '<div class="mc-date">' + today + '</div>' +
+    '</div>' +
+    '<div class="mc-crescent">☽</div>' +
+    '<div class="mc-question">' + q + '</div>' +
+    '<div class="mc-divider"></div>' +
+    '<div class="mc-name">' + name + '</div>' +
+    (days !== '—' ? (
+      '<div class="mc-stats">' +
+        '<div class="mc-stat"><div class="mc-stat-val">' + days + '</div><div class="mc-stat-lbl">Days Lived</div></div>' +
+        '<div class="mc-stat-sep">·</div>' +
+        '<div class="mc-stat"><div class="mc-stat-val">' + pct + '%</div><div class="mc-stat-lbl">Life Used</div></div>' +
+        '<div class="mc-stat-sep">·</div>' +
+        '<div class="mc-stat"><div class="mc-stat-val mc-stat-hijri">' + hijri + '</div><div class="mc-stat-lbl">Islamic Timeline</div></div>' +
+      '</div>'
+    ) : '') +
+    '<div class="mc-ayah">وَمَا تَدْرِي نَفْسٌ مَّاذَا تَكْسِبُ غَدًا</div>' +
+    '<div class="mc-ayah-tr">No soul knows what it will earn tomorrow — (Quran 31:34)</div>' +
+    '<div class="mc-footer">mianhassam96.github.io/WaqtX</div>';
+}
+
+function openMirrorShareModal(question) {
+  _currentMirrorQuestion = question || _currentMirrorQuestion;
+  buildMirrorCard();
+  var modal = document.getElementById('mirror-share-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+/* Wire up mirror share button */
+(function() {
+  var shareBtn = document.getElementById('lm-share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function() {
+      var q = document.getElementById('lm-question');
+      openMirrorShareModal(q ? q.textContent : '');
+    });
+  }
+
+  var closeBtn = document.getElementById('mirror-share-close');
+  if (closeBtn) closeBtn.addEventListener('click', function() {
+    document.getElementById('mirror-share-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+
+  var modal = document.getElementById('mirror-share-modal');
+  if (modal) modal.addEventListener('click', function(e) {
+    if (e.target === modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+  });
+
+  /* Download card */
+  var dlBtn = document.getElementById('btn-mirror-dl');
+  if (dlBtn) dlBtn.addEventListener('click', function() {
+    var card = document.getElementById('mirror-card-dl');
+    if (!card) return;
+    if (typeof html2canvas === 'undefined') { alert('Please take a screenshot to save.'); return; }
+    dlBtn.textContent = 'Generating…';
+    dlBtn.disabled = true;
+    html2canvas(card, { backgroundColor: '#061008', scale: 2, useCORS: true }).then(function(canvas) {
+      var a = document.createElement('a');
+      a.download = 'waqtx-mirror-' + new Date().toISOString().split('T')[0] + '.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      dlBtn.textContent = '✓ Downloaded!';
+      setTimeout(function() { dlBtn.textContent = '⬇ Download Card'; dlBtn.disabled = false; }, 2000);
+    }).catch(function() { dlBtn.textContent = '⬇ Download Card'; dlBtn.disabled = false; });
+  });
+
+  /* Copy link with question encoded */
+  var copyBtn = document.getElementById('btn-mirror-copy');
+  if (copyBtn) copyBtn.addEventListener('click', function() {
+    var base = 'https://mianhassam96.github.io/WaqtX/';
+    var url  = _birth
+      ? base + '?dob=' + _birth.toISOString().split('T')[0] + (_name ? '&name=' + encodeURIComponent(_name) : '')
+      : base;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function() {
+        copyBtn.textContent = '✓ Copied!';
+        setTimeout(function() { copyBtn.textContent = '🔗 Copy Link'; }, 2000);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); copyBtn.textContent = '✓ Copied!'; } catch(e) {}
+      document.body.removeChild(ta);
+      setTimeout(function() { copyBtn.textContent = '🔗 Copy Link'; }, 2000);
+    }
+  });
+})();
+
+/* ══════════════════════════════════════════════
+   STEP B — PRAYER TIMES
+   Uses Aladhan API (free, no key needed)
+   Endpoint: https://api.aladhan.com/v1/timings
+   Method: 2 (ISNA) — widely accepted
+   ══════════════════════════════════════════════ */
+var _prayerTimes = null;
+var _prayerTicker = null;
+var PRAYER_NAMES = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+var PRAYER_ICONS = { Fajr: '🌙', Sunrise: '🌅', Dhuhr: '☀️', Asr: '🌤', Maghrib: '🌇', Isha: '🌃' };
+
+function fetchPrayerTimes(lat, lng) {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  var dateStr = dd + '-' + mm + '-' + yyyy;
+
+  var url = 'https://api.aladhan.com/v1/timings/' + dateStr +
+    '?latitude=' + lat + '&longitude=' + lng + '&method=2';
+
+  var statusEl = document.getElementById('prayer-status');
+  if (statusEl) statusEl.textContent = 'Fetching prayer times…';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.code === 200 && data.data && data.data.timings) {
+        _prayerTimes = data.data.timings;
+        renderPrayerTimes(_prayerTimes, data.data.meta);
+        startPrayerCountdown(_prayerTimes);
+        /* Save for offline use */
+        try {
+          localStorage.setItem('waqtx_prayer_times', JSON.stringify(_prayerTimes));
+          localStorage.setItem('waqtx_prayer_date', dateStr);
+          localStorage.setItem('waqtx_prayer_meta', JSON.stringify(data.data.meta));
+        } catch(e) {}
+      } else {
+        if (statusEl) statusEl.textContent = 'Could not load prayer times. Try again.';
+      }
+    })
+    .catch(function() {
+      if (statusEl) statusEl.textContent = 'Network error. Check your connection.';
+      /* Try cached */
+      try {
+        var cached = localStorage.getItem('waqtx_prayer_times');
+        var cachedDate = localStorage.getItem('waqtx_prayer_date');
+        var cachedMeta = localStorage.getItem('waqtx_prayer_meta');
+        if (cached) {
+          _prayerTimes = JSON.parse(cached);
+          renderPrayerTimes(_prayerTimes, cachedMeta ? JSON.parse(cachedMeta) : null, true);
+          startPrayerCountdown(_prayerTimes);
+        }
+      } catch(e2) {}
+    });
+}
+
+function timeStrToMinutes(timeStr) {
+  /* timeStr format: "05:23" or "05:23 (PKT)" */
+  var clean = timeStr.split(' ')[0];
+  var parts = clean.split(':');
+  return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+}
+
+function getNextPrayer(timings) {
+  var now = new Date();
+  var nowMin = now.getHours() * 60 + now.getMinutes();
+  var prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+  for (var i = 0; i < prayers.length; i++) {
+    var pMin = timeStrToMinutes(timings[prayers[i]]);
+    if (pMin > nowMin) return { name: prayers[i], time: timings[prayers[i]], minutes: pMin };
+  }
+  /* After Isha — next is Fajr tomorrow */
+  return { name: 'Fajr', time: timings['Fajr'], minutes: timeStrToMinutes(timings['Fajr']) + 1440, isTomorrow: true };
+}
+
+function formatCountdown(totalSeconds) {
+  if (totalSeconds < 0) totalSeconds = 0;
+  var h = Math.floor(totalSeconds / 3600);
+  var m = Math.floor((totalSeconds % 3600) / 60);
+  var s = totalSeconds % 60;
+  return (h > 0 ? h + 'h ' : '') + m + 'm ' + s + 's';
+}
+
+function renderPrayerTimes(timings, meta, fromCache) {
+  var grid = document.getElementById('prayer-grid');
+  var statusEl = document.getElementById('prayer-status');
+  var metaEl = document.getElementById('prayer-meta');
+  if (!grid) return;
+
+  var now = new Date();
+  var nowMin = now.getHours() * 60 + now.getMinutes();
+  var next = getNextPrayer(timings);
+
+  var html = '';
+  PRAYER_NAMES.forEach(function(name) {
+    if (!timings[name]) return;
+    var timeClean = timings[name].split(' ')[0];
+    var pMin = timeStrToMinutes(timings[name]);
+    var isPast = pMin < nowMin && name !== 'Isha';
+    var isNext = name === next.name && !next.isTomorrow;
+    var isSunrise = name === 'Sunrise';
+
+    html += '<div class="prayer-card' + (isNext ? ' prayer-next' : '') + (isPast ? ' prayer-past' : '') + (isSunrise ? ' prayer-sunrise' : '') + '">' +
+      '<div class="prayer-icon">' + (PRAYER_ICONS[name] || '🕌') + '</div>' +
+      '<div class="prayer-name">' + name + '</div>' +
+      '<div class="prayer-time">' + timeClean + '</div>' +
+      (isNext ? '<div class="prayer-next-badge">Next</div>' : '') +
+      (isPast && !isSunrise ? '<div class="prayer-done-badge">✓</div>' : '') +
+    '</div>';
+  });
+
+  grid.innerHTML = html;
+
+  if (statusEl) statusEl.textContent = fromCache ? '⚠ Showing cached times — connect to refresh' : '';
+  if (metaEl && meta) {
+    metaEl.textContent = 'Method: ' + (meta.method ? meta.method.name : 'ISNA') +
+      (meta.timezone ? ' · ' + meta.timezone : '');
+  }
+}
+
+function startPrayerCountdown(timings) {
+  clearInterval(_prayerTicker);
+  var countdownEl = document.getElementById('prayer-countdown');
+  var nextNameEl  = document.getElementById('prayer-next-name');
+  if (!countdownEl) return;
+
+  function tick() {
+    var now = new Date();
+    var nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    var next = getNextPrayer(timings);
+    var nextSec = next.minutes * 60;
+    if (next.isTomorrow) nextSec = next.minutes * 60; /* already +1440min */
+    var diff = nextSec - nowSec;
+    if (diff < 0) diff += 86400;
+
+    if (nextNameEl) nextNameEl.textContent = next.name + (next.isTomorrow ? ' (tomorrow)' : '');
+    countdownEl.textContent = formatCountdown(diff);
+
+    /* Re-render grid every minute to update past/next state */
+    if (now.getSeconds() === 0) renderPrayerTimes(timings, null);
+  }
+
+  tick();
+  _prayerTicker = setInterval(tick, 1000);
+}
+
+/* Prayer times section init */
+(function() {
+  var btn = document.getElementById('btn-prayer-times');
+  if (!btn) return;
+
+  /* Try to restore cached times first */
+  try {
+    var cached = localStorage.getItem('waqtx_prayer_times');
+    var cachedDate = localStorage.getItem('waqtx_prayer_date');
+    var today = (function() {
+      var d = new Date();
+      return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear();
+    })();
+    if (cached && cachedDate === today) {
+      _prayerTimes = JSON.parse(cached);
+      var cachedMeta = localStorage.getItem('waqtx_prayer_meta');
+      renderPrayerTimes(_prayerTimes, cachedMeta ? JSON.parse(cachedMeta) : null);
+      startPrayerCountdown(_prayerTimes);
+      btn.textContent = '↺ Refresh';
+      var statusEl = document.getElementById('prayer-status');
+      if (statusEl) statusEl.textContent = '';
+    }
+  } catch(e) {}
+
+  btn.addEventListener('click', function() {
+    if (!navigator.geolocation) {
+      var s = document.getElementById('prayer-status');
+      if (s) s.textContent = 'Geolocation not supported by your browser.';
+      return;
+    }
+    btn.textContent = 'Locating…';
+    btn.disabled = true;
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        btn.textContent = '↺ Refresh';
+        btn.disabled = false;
+        fetchPrayerTimes(pos.coords.latitude, pos.coords.longitude);
+        /* Save location for Qibla too */
+        try {
+          localStorage.setItem('waqtx_qibla_lat', pos.coords.latitude);
+          localStorage.setItem('waqtx_qibla_lng', pos.coords.longitude);
+        } catch(e) {}
+      },
+      function(err) {
+        btn.textContent = 'Get Prayer Times';
+        btn.disabled = false;
+        var msgs = { 1: 'Location access denied.', 2: 'Location unavailable.', 3: 'Request timed out.' };
+        var s = document.getElementById('prayer-status');
+        if (s) s.textContent = msgs[err.code] || 'Could not get location.';
+      },
+      { timeout: 10000, maximumAge: 300000 }
+    );
+  });
+})();
+
+/* ══════════════════════════════════════════════
+   STEP D — FAQ ACCORDION
+   ══════════════════════════════════════════════ */
+(function() {
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      /* Close all */
+      document.querySelectorAll('.faq-q').forEach(function(b) {
+        b.setAttribute('aria-expanded', 'false');
+        var a = b.nextElementSibling;
+        if (a) a.classList.remove('open');
+      });
+      /* Open clicked if it was closed */
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        var answer = btn.nextElementSibling;
+        if (answer) answer.classList.add('open');
+      }
+    });
+  });
+})();

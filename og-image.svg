@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#0d2a12"/>
+      <stop offset="100%" stop-color="#061008"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a07830"/>
+      <stop offset="50%" stop-color="#e8c96a"/>
+      <stop offset="100%" stop-color="#a07830"/>
+    </linearGradient>
+    <linearGradient id="greenLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="50%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="rgba(201,168,76,0.05)" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="rgba(201,168,76,0.05)" stroke-width="1"/>
+
+  <!-- Top gold line -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#gold)"/>
+
+  <!-- Mosque silhouette (right side) -->
+  <ellipse cx="950" cy="380" rx="130" ry="120" fill="none" stroke="rgba(201,168,76,0.07)" stroke-width="1.5"/>
+  <path d="M820 380 Q950 240 1080 380" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+  <rect x="870" y="260" width="20" height="160" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+  <path d="M868 260 Q880 238 892 260Z" fill="rgba(201,168,76,0.08)"/>
+  <rect x="1010" y="260" width="20" height="160" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+  <path d="M1008 260 Q1020 238 1032 260Z" fill="rgba(201,168,76,0.08)"/>
+  <path d="M940 245 Q955 232 962 245 Q955 258 940 245Z" fill="rgba(201,168,76,0.3)"/>
+  <line x1="951" y1="245" x2="951" y2="220" stroke="rgba(201,168,76,0.25)" stroke-width="1.5"/>
+
+  <!-- Logo mark -->
+  <circle cx="100" cy="80" r="28" fill="#0d2a12" stroke="#c9a84c" stroke-width="2"/>
+  <path d="M90 66h20v4L100 84 90 66v-4z" fill="#c9a84c" opacity="0.9"/>
+  <path d="M90 94h20v-4L100 84 90 94v4z" fill="#c9a84c" opacity="0.6"/>
+  <circle cx="100" cy="84" r="3" fill="#c9a84c"/>
+
+  <!-- App name -->
+  <text x="140" y="92" font-family="'Inter', 'Arial', sans-serif" font-weight="900" font-size="36" fill="white" letter-spacing="-1">Waqt</text>
+  <text x="236" y="92" font-family="'Inter', 'Arial', sans-serif" font-weight="900" font-size="36" fill="#22c55e" letter-spacing="-1">X</text>
+
+  <!-- Arabic verse -->
+  <text x="100" y="160" font-family="'Amiri', 'Arial', sans-serif" font-size="28" fill="#c9a84c" opacity="0.8" letter-spacing="2">وَمَا تَدْرِي نَفْسٌ مَّاذَا تَكْسِبُ غَدًا</text>
+  <text x="100" y="192" font-family="'Inter', 'Arial', sans-serif" font-size="15" fill="rgba(245,240,232,0.45)" font-style="italic">No soul knows what it will earn tomorrow — (Quran 31:34)</text>
+
+  <!-- Divider -->
+  <rect x="100" y="215" width="500" height="1" fill="url(#greenLine)"/>
+
+  <!-- Main headline -->
+  <text x="100" y="290" font-family="'Inter', 'Arial', sans-serif" font-weight="900" font-size="62" fill="white" letter-spacing="-2">Your Life in</text>
+  <text x="100" y="365" font-family="'Inter', 'Arial', sans-serif" font-weight="900" font-size="62" fill="#c9a84c" letter-spacing="-2">Time &amp; History</text>
+
+  <!-- Sub text -->
+  <text x="100" y="415" font-family="'Inter', 'Arial', sans-serif" font-size="20" fill="rgba(245,240,232,0.6)">Islamic history · Qibla · Prayer times · Daily reflection</text>
+
+  <!-- Feature pills -->
+  <rect x="100" y="450" width="130" height="36" rx="18" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+  <text x="165" y="473" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="13" font-weight="700" fill="#c9a84c">🕌 Qibla</text>
+
+  <rect x="244" y="450" width="160" height="36" rx="18" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+  <text x="324" y="473" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="13" font-weight="700" fill="#c9a84c">🕐 Prayer Times</text>
+
+  <rect x="418" y="450" width="150" height="36" rx="18" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+  <text x="493" y="473" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="13" font-weight="700" fill="#c9a84c">📖 Daily Hadith</text>
+
+  <rect x="582" y="450" width="130" height="36" rx="18" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+  <text x="647" y="473" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="13" font-weight="700" fill="#22c55e">🌍 4 Languages</text>
+
+  <!-- URL -->
+  <text x="100" y="570" font-family="'Inter', 'Arial', sans-serif" font-size="16" fill="rgba(245,240,232,0.35)" letter-spacing="1">mianhassam96.github.io/WaqtX</text>
+
+  <!-- Bottom gold line -->
+  <rect x="0" y="627" width="1200" height="3" fill="url(#gold)"/>
+</svg>
