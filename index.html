@@ -12,6 +12,14 @@
   <meta property="og:url" content="https://mianhassam96.github.io/MultiMian-WaqtX/"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <script>
+    /* Apply saved theme before paint to avoid flash */
+    (function(){
+      var t = localStorage.getItem('waqtx_theme') ||
+              (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      if (t === 'light') document.documentElement.setAttribute('data-theme','light');
+    })();
+  </script>
   <link rel="manifest" href="manifest.json"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -25,14 +33,9 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <span class="nav-logo-icon">
-        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" fill="#0d1a0f" stroke="#c9a84c" stroke-width="2"/>
-          <path d="M22 14h20v4L32 32l-10-14v-4z" fill="#c9a84c" opacity="0.9"/>
-          <path d="M22 50h20v-4L32 32l-10 14v4z" fill="#c9a84c" opacity="0.6"/>
-          <circle cx="32" cy="32" r="3" fill="#c9a84c"/>
-        </svg>
+        <img src="favicon-32.svg" width="32" height="32" alt="WaqtX logo"/>
       </span>
-      <span class="nav-logo-text">WaqtX</span>
+      <span class="nav-logo-text">Waqt<span class="nav-logo-x">X</span></span>
     </a>
     <div class="nav-links" id="nav-links">
       <a href="#" class="nav-link active">Home</a>
@@ -41,6 +44,11 @@
       <a href="about.html" class="nav-link">About</a>
     </div>
     <div class="nav-actions">
+      <!-- Theme toggle -->
+      <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+        <span class="theme-icon-dark">🌙</span>
+        <span class="theme-icon-light">☀️</span>
+      </button>
       <button class="btn-share-nav" id="btn-share-nav">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
         Share WaqtX
@@ -595,7 +603,35 @@
   </div>
 </section>
 
-<!-- ═══ SALAH CELEBRATION ═══ -->
+<!-- ═══════════════════════════════════════════════
+     ALWAYS-VISIBLE: DAILY HADITH / AYAH
+     ═══════════════════════════════════════════════ -->
+<section class="section hadith-section" id="hadith-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line"></span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-text">TODAY'S HADITH &amp; AYAH</span>
+      <span class="sh-icon">◆</span>
+      <span class="sh-line"></span>
+    </div>
+    <div class="hadith-grid">
+      <div class="hadith-card ayah-card" id="ayah-card">
+        <div class="hadith-card-badge">📖 Ayah of the Day</div>
+        <div class="hadith-arabic" id="ayah-arabic"></div>
+        <div class="hadith-translation" id="ayah-translation"></div>
+        <div class="hadith-reference" id="ayah-reference"></div>
+      </div>
+      <div class="hadith-card" id="hadith-card-el">
+        <div class="hadith-card-badge">🕌 Hadith of the Day</div>
+        <div class="hadith-arabic" id="hadith-arabic"></div>
+        <div class="hadith-translation" id="hadith-translation"></div>
+        <div class="hadith-reference" id="hadith-reference"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="celebration hidden" id="celebration">
   <div class="celebration-inner">
     <div class="celebration-emoji">🎉</div>

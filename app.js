@@ -486,10 +486,15 @@ el('btn-download').addEventListener('click', function () {
   document.body.style.overflow = 'hidden';
 });
 
-/* Copy link */
+/* Copy link — now generates shareable URL with DOB + name */
 el('btn-copy-link').addEventListener('click', function () {
   const btn = this;
-  const url = 'https://mianhassam96.github.io/MultiMian-WaqtX/';
+  let url = 'https://mianhassam96.github.io/MultiMian-WaqtX/';
+  if (_birth) {
+    const dobStr = _birth.toISOString().split('T')[0];
+    url += '?dob=' + dobStr;
+    if (_name) url += '&name=' + encodeURIComponent(_name);
+  }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(function () {
       btn.textContent = '\u2713 Copied!';
@@ -631,10 +636,29 @@ if (pwaDismiss) pwaDismiss.addEventListener('click', function () {
 /* Restore last DOB + name */
 (function () {
   try {
-    const saved = localStorage.getItem('waqtx_dob');
-    if (saved) { const inp = el('hero-dob'); if (inp) inp.value = saved; }
-    const savedName = localStorage.getItem('waqtx_name');
-    if (savedName) { const nameInp = el('hero-name'); if (nameInp) nameInp.value = savedName; }
+    /* Check URL params first — shareable link takes priority */
+    const params = new URLSearchParams(window.location.search);
+    const urlDob  = params.get('dob');
+    const urlName = params.get('name');
+
+    if (urlDob) {
+      const inp = el('hero-dob'); if (inp) inp.value = urlDob;
+      if (urlName) {
+        const nameInp = el('hero-name'); if (nameInp) nameInp.value = decodeURIComponent(urlName);
+        _name = decodeURIComponent(urlName);
+      }
+      /* Auto-calculate when arriving via shared link */
+      const birth = parseDOB(urlDob);
+      if (birth && birth <= new Date() && birth.getFullYear() >= 1900) {
+        showLoading(function () { renderAll(birth); });
+      }
+    } else {
+      /* Restore from localStorage */
+      const saved = localStorage.getItem('waqtx_dob');
+      if (saved) { const inp = el('hero-dob'); if (inp) inp.value = saved; }
+      const savedName = localStorage.getItem('waqtx_name');
+      if (savedName) { const nameInp = el('hero-name'); if (nameInp) nameInp.value = savedName; }
+    }
   } catch(e) {}
 })();
 
@@ -1065,3 +1089,271 @@ function renderInsightCard(container, idx, dateStr, daysLived) {
     renderInsightCard(container, _insightIndex, dateStr, daysLived);
   });
 }
+
+/* ══════════════════════════════════════════════
+   DARK / LIGHT MODE TOGGLE
+   ══════════════════════════════════════════════ */
+(function () {
+  var btn = el('btn-theme-toggle');
+  if (!btn) return;
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    try { localStorage.setItem('waqtx_theme', theme); } catch(e) {}
+  }
+
+  btn.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+})();
+
+/* ══════════════════════════════════════════════
+   DAILY HADITH & AYAH SYSTEM
+   Rotates every 24h based on day-of-year
+   ══════════════════════════════════════════════ */
+var DAILY_AYAHS = [
+  {
+    arabic: 'وَمَا تَدْرِي نَفْسٌ مَّاذَا تَكْسِبُ غَدًا',
+    translation: 'No soul knows what it will earn tomorrow.',
+    reference: 'Surah Luqman 31:34'
+  },
+  {
+    arabic: 'إِنَّ مَعَ الْعُسْرِ يُسْرًا',
+    translation: 'Indeed, with hardship will be ease.',
+    reference: 'Surah Ash-Sharh 94:6'
+  },
+  {
+    arabic: 'وَاللَّهُ يُحِبُّ الصَّابِرِينَ',
+    translation: 'And Allah loves the patient.',
+    reference: 'Surah Ali \'Imran 3:146'
+  },
+  {
+    arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',
+    translation: 'For indeed, with hardship will be ease.',
+    reference: 'Surah Ash-Sharh 94:5'
+  },
+  {
+    arabic: 'وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا',
+    translation: 'And rely upon Allah; and sufficient is Allah as Disposer of affairs.',
+    reference: 'Surah Al-Ahzab 33:3'
+  },
+  {
+    arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
+    translation: 'Indeed, Allah is with the patient.',
+    reference: 'Surah Al-Baqarah 2:153'
+  },
+  {
+    arabic: 'وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ',
+    translation: 'And do not despair of relief from Allah.',
+    reference: 'Surah Yusuf 12:87'
+  },
+  {
+    arabic: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ',
+    translation: 'Sufficient for us is Allah, and He is the best Disposer of affairs.',
+    reference: 'Surah Ali \'Imran 3:173'
+  },
+  {
+    arabic: 'وَاذْكُرُوا اللَّهَ كَثِيرًا لَّعَلَّكُمْ تُفْلِحُونَ',
+    translation: 'And remember Allah often that you may succeed.',
+    reference: 'Surah Al-Jumu\'ah 62:10'
+  },
+  {
+    arabic: 'إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ',
+    translation: 'Indeed, Allah does not allow to be lost the reward of those who do good.',
+    reference: 'Surah At-Tawbah 9:120'
+  },
+  {
+    arabic: 'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا',
+    translation: 'And whoever fears Allah — He will make for him a way out.',
+    reference: 'Surah At-Talaq 65:2'
+  },
+  {
+    arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً',
+    translation: 'Our Lord, give us in this world good and in the Hereafter good.',
+    reference: 'Surah Al-Baqarah 2:201'
+  },
+  {
+    arabic: 'وَقُل رَّبِّ زِدْنِي عِلْمًا',
+    translation: 'And say: My Lord, increase me in knowledge.',
+    reference: 'Surah Ta-Ha 20:114'
+  },
+  {
+    arabic: 'إِنَّ اللَّهَ مَعَنَا',
+    translation: 'Indeed, Allah is with us.',
+    reference: 'Surah At-Tawbah 9:40'
+  },
+  {
+    arabic: 'وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ',
+    translation: 'And He is with you wherever you are.',
+    reference: 'Surah Al-Hadid 57:4'
+  },
+  {
+    arabic: 'فَاذْكُرُونِي أَذْكُرْكُمْ',
+    translation: 'So remember Me; I will remember you.',
+    reference: 'Surah Al-Baqarah 2:152'
+  },
+  {
+    arabic: 'وَلَذِكْرُ اللَّهِ أَكْبَرُ',
+    translation: 'And the remembrance of Allah is greater.',
+    reference: 'Surah Al-\'Ankabut 29:45'
+  },
+  {
+    arabic: 'إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا',
+    translation: 'Indeed, prayer has been decreed upon the believers a decree of specified times.',
+    reference: 'Surah An-Nisa 4:103'
+  },
+  {
+    arabic: 'وَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ',
+    translation: 'And seek help through patience and prayer.',
+    reference: 'Surah Al-Baqarah 2:45'
+  },
+  {
+    arabic: 'إِنَّ الْحَسَنَاتِ يُذْهِبْنَ السَّيِّئَاتِ',
+    translation: 'Indeed, good deeds do away with misdeeds.',
+    reference: 'Surah Hud 11:114'
+  },
+  {
+    arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ',
+    translation: 'And whoever relies upon Allah — then He is sufficient for him.',
+    reference: 'Surah At-Talaq 65:3'
+  }
+];
+
+var DAILY_HADITHS = [
+  {
+    arabic: 'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ',
+    translation: 'Actions are judged by intentions.',
+    reference: 'Sahih Al-Bukhari 1 — Narrated by Umar ibn Al-Khattab (RA)'
+  },
+  {
+    arabic: 'الطَّهُورُ شَطْرُ الإِيمَانِ',
+    translation: 'Cleanliness is half of faith.',
+    reference: 'Sahih Muslim 223 — Narrated by Abu Malik Al-Ash\'ari (RA)'
+  },
+  {
+    arabic: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
+    translation: 'The best among you are those who learn the Quran and teach it.',
+    reference: 'Sahih Al-Bukhari 5027 — Narrated by Uthman ibn Affan (RA)'
+  },
+  {
+    arabic: 'الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ',
+    translation: 'A Muslim is one from whose tongue and hand other Muslims are safe.',
+    reference: 'Sahih Al-Bukhari 10 — Narrated by Abdullah ibn Amr (RA)'
+  },
+  {
+    arabic: 'لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',
+    translation: 'None of you truly believes until he loves for his brother what he loves for himself.',
+    reference: 'Sahih Al-Bukhari 13 — Narrated by Anas ibn Malik (RA)'
+  },
+  {
+    arabic: 'الدِّينُ النَّصِيحَةُ',
+    translation: 'The religion is sincere advice.',
+    reference: 'Sahih Muslim 55 — Narrated by Tamim Al-Dari (RA)'
+  },
+  {
+    arabic: 'أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ',
+    translation: 'The most beloved deeds to Allah are those done consistently, even if they are small.',
+    reference: 'Sahih Al-Bukhari 6464 — Narrated by Aisha (RA)'
+  },
+  {
+    arabic: 'ابْدَأْ بِنَفْسِكَ',
+    translation: 'Begin with yourself (in giving charity and doing good).',
+    reference: 'Sahih Muslim 1045 — Narrated by Jabir ibn Abdullah (RA)'
+  },
+  {
+    arabic: 'اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ',
+    translation: 'Fear Allah wherever you are.',
+    reference: 'Sunan At-Tirmidhi 1987 — Narrated by Abu Dharr (RA)'
+  },
+  {
+    arabic: 'الصَّمْتُ حِكْمَةٌ وَقَلِيلٌ فَاعِلُهُ',
+    translation: 'Silence is wisdom, yet few practice it.',
+    reference: 'Shu\'ab Al-Iman — Al-Bayhaqi'
+  },
+  {
+    arabic: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ',
+    translation: 'Whoever believes in Allah and the Last Day, let him speak good or remain silent.',
+    reference: 'Sahih Al-Bukhari 6018 — Narrated by Abu Hurairah (RA)'
+  },
+  {
+    arabic: 'الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ',
+    translation: 'The strong believer is better and more beloved to Allah than the weak believer.',
+    reference: 'Sahih Muslim 2664 — Narrated by Abu Hurairah (RA)'
+  },
+  {
+    arabic: 'تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ صَدَقَةٌ',
+    translation: 'Your smile in the face of your brother is charity.',
+    reference: 'Sunan At-Tirmidhi 1956 — Narrated by Abu Dharr (RA)'
+  },
+  {
+    arabic: 'مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ',
+    translation: 'Whoever takes a path in search of knowledge, Allah will ease for him a path to Paradise.',
+    reference: 'Sahih Muslim 2699 — Narrated by Abu Hurairah (RA)'
+  },
+  {
+    arabic: 'اسْتَغِلَّ خَمْسًا قَبْلَ خَمْسٍ: شَبَابَكَ قَبْلَ هَرَمِكَ',
+    translation: 'Take advantage of five before five: your youth before old age, your health before sickness, your wealth before poverty, your free time before busyness, and your life before death.',
+    reference: 'Shu\'ab Al-Iman — Al-Bayhaqi (Sahih chain)'
+  },
+  {
+    arabic: 'إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ',
+    translation: 'Indeed, Allah loves that when one of you does a deed, he does it with excellence.',
+    reference: 'Al-Mu\'jam Al-Awsat — Al-Tabarani (Sahih chain)'
+  },
+  {
+    arabic: 'الْكَيِّسُ مَنْ دَانَ نَفْسَهُ وَعَمِلَ لِمَا بَعْدَ الْمَوْتِ',
+    translation: 'The wise person is one who holds himself accountable and works for what comes after death.',
+    reference: 'Sunan At-Tirmidhi 2459 — Narrated by Shaddad ibn Aws (RA)'
+  },
+  {
+    arabic: 'مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ',
+    translation: 'Charity does not decrease wealth.',
+    reference: 'Sahih Muslim 2588 — Narrated by Abu Hurairah (RA)'
+  },
+  {
+    arabic: 'الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ',
+    translation: 'The merciful will be shown mercy by the Most Merciful.',
+    reference: 'Sunan Abu Dawud 4941 — Narrated by Abdullah ibn Amr (RA)'
+  },
+  {
+    arabic: 'مَنْ لَا يَشْكُرِ النَّاسَ لَا يَشْكُرِ اللَّهَ',
+    translation: 'Whoever does not thank people does not thank Allah.',
+    reference: 'Sunan Abu Dawud 4811 — Narrated by Abu Hurairah (RA)'
+  },
+  {
+    arabic: 'إِنَّ مِنْ أَكْمَلِ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا',
+    translation: 'The most complete of believers in faith are those with the best character.',
+    reference: 'Sunan Abu Dawud 4682 — Narrated by Abu Hurairah (RA)'
+  }
+];
+
+function renderHadithSection() {
+  var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+
+  var ayahIdx   = dayOfYear % DAILY_AYAHS.length;
+  var hadithIdx = dayOfYear % DAILY_HADITHS.length;
+
+  var ayah   = DAILY_AYAHS[ayahIdx];
+  var hadith = DAILY_HADITHS[hadithIdx];
+
+  var ayahAr  = el('ayah-arabic');
+  var ayahTr  = el('ayah-translation');
+  var ayahRef = el('ayah-reference');
+  if (ayahAr)  ayahAr.textContent  = ayah.arabic;
+  if (ayahTr)  ayahTr.textContent  = '\u201C' + ayah.translation + '\u201D';
+  if (ayahRef) ayahRef.textContent = '\u2014 ' + ayah.reference;
+
+  var hadithAr  = el('hadith-arabic');
+  var hadithTr  = el('hadith-translation');
+  var hadithRef = el('hadith-reference');
+  if (hadithAr)  hadithAr.textContent  = hadith.arabic;
+  if (hadithTr)  hadithTr.textContent  = '\u201C' + hadith.translation + '\u201D';
+  if (hadithRef) hadithRef.textContent = '\u2014 ' + hadith.reference;
+}
+
+renderHadithSection();
