@@ -2920,3 +2920,213 @@ window.initStoryFollowUp = function(storyName, storyId) {
 renderGrowthLevel();
 renderWeeklyComparison();
 renderReturnHook();
+
+/* ══════════════════════════════════════════════
+   PERSONAL PATH SYSTEM
+   "Your Current State" + "Your Focus This Week"
+   ══════════════════════════════════════════════ */
+
+var WEEKLY_GOALS = {
+  1: [ /* Level 1 — Awareness */
+    { id: 'read_reflection', label: 'Read 3 daily reflections', target: 3, unit: 'reflections' },
+    { id: 'salah_3days',     label: 'Pray all 5 Salah on 3 days', target: 3, unit: 'days' },
+    { id: 'end_day_3',       label: 'Complete End-of-Day check 3 times', target: 3, unit: 'times' }
+  ],
+  2: [ /* Level 2 — Action */
+    { id: 'salah_5days',     label: 'Pray all 5 Salah on 5 days', target: 5, unit: 'days' },
+    { id: 'dhikr_4days',     label: 'Complete Dhikr on 4 days', target: 4, unit: 'days' },
+    { id: 'story_action',    label: 'Act on 2 story reflections', target: 2, unit: 'actions' }
+  ],
+  3: [ /* Level 3 — Consistency */
+    { id: 'salah_7days',     label: 'Pray all 5 Salah every day this week', target: 7, unit: 'days' },
+    { id: 'dhikr_6days',     label: 'Complete Dhikr on 6 days', target: 6, unit: 'days' },
+    { id: 'streak_7',        label: 'Maintain a 7-day streak', target: 7, unit: 'days' }
+  ],
+  4: [ /* Level 4 — Discipline */
+    { id: 'salah_7days',     label: 'Perfect Salah — all 5 every day', target: 7, unit: 'days' },
+    { id: 'dhikr_7days',     label: 'Complete all Dhikr every day', target: 7, unit: 'days' },
+    { id: 'streak_14',       label: 'Reach a 14-day streak', target: 14, unit: 'days' }
+  ]
+};
+
+function calcWeeklyGoalProgress(goalId, level) {
+  var data = loadTrackerData();
+  var today = new Date();
+  var streak = getStreakCount();
+  var bestStreak = getBestStreak();
+
+  /* Count this week's data */
+  var salahFullDays = 0;
+  var dhikrFullDays = 0;
+  var dhikr4Days = 0;
+  var dhikr6Days = 0;
+
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    var key = d.toISOString().split('T')[0];
+    var dd = data[key] || { salah: [], dhikr: [] };
+    if ((dd.salah || []).length >= 5) salahFullDays++;
+    if ((dd.dhikr || []).length >= 5) dhikrFullDays++;
+    if ((dd.dhikr || []).length >= 4) dhikr4Days++;
+    if ((dd.dhikr || []).length >= 6) dhikr6Days++;
+  }
+
+  /* Growth data */
+  var growthData = {};
+  try { growthData = JSON.parse(localStorage.getItem('waqtx_growth') || '{}'); } catch(e) {}
+  var endDayCount = 0;
+  /* Count end-of-day completions this week */
+  for (var j = 0; j < 7; j++) {
+    var d2 = new Date(today); d2.setDate(today.getDate() - j);
+    var k = d2.toISOString().split('T')[0];
+    if (growthData['endDay_' + k]) endDayCount++;
+  }
+
+  var storyActions = parseInt(growthData.storyActionsThisWeek || 0);
+
+  switch (goalId) {
+    case 'salah_3days': return Math.min(3, salahFullDays);
+    case 'salah_5days': return Math.min(5, salahFullDays);
+    case 'salah_7days': return Math.min(7, salahFullDays);
+    case 'dhikr_4days': return Math.min(4, dhikr4Days);
+    case 'dhikr_6days': return Math.min(6, dhikr6Days);
+    case 'dhikr_7days': return Math.min(7, dhikrFullDays);
+    case 'end_day_3':   return Math.min(3, endDayCount);
+    case 'story_action':return Math.min(2, storyActions);
+    case 'streak_7':    return Math.min(7, streak);
+    case 'streak_14':   return Math.min(14, Math.max(streak, bestStreak));
+    case 'read_reflection': return Math.min(3, parseInt(growthData.reflectionsThisWeek || 0));
+    default: return 0;
+  }
+}
+
+function renderPersonalPath() {
+  var score = calcGrowthScore();
+  var level = getGrowthLevel(score);
+  var streak = getStreakCount();
+  var data = loadTrackerData();
+  var today = getTodayKey();
+  var todayData = data[today] || { salah: [], dhikr: [] };
+  var todaySalah = (todayData.salah || []).length;
+
+  /* ── Current State ── */
+  var csState = el('cs-state');
+  var csSub   = el('cs-sub');
+
+  if (csState) {
+    var stateMsg = '';
+    var subMsg   = '';
+
+    if (streak === 0 && todaySalah === 0) {
+      stateMsg = 'You are at the beginning of your journey.';
+      subMsg   = 'Every great journey starts with one step. Log your first prayer today.';
+    } else if (streak >= 7) {
+      stateMsg = 'You are building real consistency — ' + streak + ' days strong.';
+      subMsg   = 'MashaAllah. You are at Level ' + level.level + ': ' + level.name + '. Keep this momentum.';
+    } else if (streak >= 3) {
+      stateMsg = 'You are building a habit — ' + streak + ' days in a row.';
+      subMsg   = 'You are at Level ' + level.level + ': ' + level.name + '. Three more days and it becomes a pattern.';
+    } else if (todaySalah >= 3) {
+      stateMsg = 'You are showing up today — ' + todaySalah + ' of 5 prayers done.';
+      subMsg   = 'Finish the remaining ' + (5 - todaySalah) + ' prayers to complete today.';
+    } else if (score >= 50) {
+      stateMsg = 'You are consistent but not yet at your peak.';
+      subMsg   = 'Level ' + level.level + ': ' + level.name + '. Your last 30 days show ' + score + '% consistency.';
+    } else {
+      stateMsg = 'You are struggling with consistency right now.';
+      subMsg   = 'That is okay. Start with one prayer today. Just one.';
+    }
+
+    csState.textContent = stateMsg;
+    if (csSub) csSub.textContent = subMsg;
+  }
+
+  /* ── Weekly Focus Goals ── */
+  var goalsContainer = el('wf-goals');
+  var progressBar    = el('wf-progress-bar');
+  var progressText   = el('wf-progress-text');
+  if (!goalsContainer) return;
+
+  var goals = WEEKLY_GOALS[level.level] || WEEKLY_GOALS[1];
+  var totalProgress = 0;
+  var totalTarget   = 0;
+  var html = '';
+
+  goals.forEach(function(goal) {
+    var progress = calcWeeklyGoalProgress(goal.id, level.level);
+    var pct = Math.min(100, Math.round((progress / goal.target) * 100));
+    var done = progress >= goal.target;
+    totalProgress += Math.min(progress, goal.target);
+    totalTarget   += goal.target;
+
+    html +=
+      '<div class="wf-goal' + (done ? ' wf-goal-done' : '') + '">' +
+        '<div class="wf-goal-check">' + (done ? '✓' : '') + '</div>' +
+        '<div class="wf-goal-info">' +
+          '<div class="wf-goal-label">' + goal.label + '</div>' +
+          '<div class="wf-goal-bar-wrap">' +
+            '<div class="wf-goal-bar" style="width:' + pct + '%"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="wf-goal-count">' + progress + '/' + goal.target + '</div>' +
+      '</div>';
+  });
+
+  goalsContainer.innerHTML = html;
+
+  var overallPct = totalTarget > 0 ? Math.round((totalProgress / totalTarget) * 100) : 0;
+  if (progressBar) progressBar.style.width = overallPct + '%';
+  if (progressText) {
+    var doneGoals = goals.filter(function(g) {
+      return calcWeeklyGoalProgress(g.id, level.level) >= g.target;
+    }).length;
+    progressText.textContent = doneGoals + '/' + goals.length + ' goals complete this week — ' + overallPct + '%';
+  }
+}
+
+/* Track story actions for weekly goals */
+var _origInitStoryFollowUp = window.initStoryFollowUp;
+window.initStoryFollowUp = function(storyName, storyId) {
+  if (_origInitStoryFollowUp) _origInitStoryFollowUp(storyName, storyId);
+  /* Override yes button to also count weekly story actions */
+  var yesBtn = document.getElementById('smd-fu-yes');
+  if (yesBtn) {
+    var origOnClick = yesBtn.onclick;
+    yesBtn.onclick = function() {
+      if (origOnClick) origOnClick.call(this);
+      try {
+        var s = JSON.parse(localStorage.getItem('waqtx_growth') || '{}');
+        var weekKey = 'storyActionsThisWeek';
+        /* Reset weekly count on Monday */
+        var today = new Date();
+        var weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay() + 1);
+        var weekStartKey = weekStart.toISOString().split('T')[0];
+        if (s.storyActionsWeekStart !== weekStartKey) {
+          s.storyActionsThisWeek = 0;
+          s.storyActionsWeekStart = weekStartKey;
+        }
+        s.storyActionsThisWeek = (parseInt(s.storyActionsThisWeek) || 0) + 1;
+        localStorage.setItem('waqtx_growth', JSON.stringify(s));
+      } catch(e) {}
+      renderPersonalPath();
+    };
+  }
+};
+
+/* Track end-of-day per date */
+var _origEndDayYes = document.getElementById('ed-yes');
+if (_origEndDayYes) {
+  var _origYesClick = _origEndDayYes.onclick;
+  _origEndDayYes.addEventListener('click', function() {
+    try {
+      var s = JSON.parse(localStorage.getItem('waqtx_growth') || '{}');
+      var today2 = new Date().toISOString().split('T')[0];
+      s['endDay_' + today2] = true;
+      localStorage.setItem('waqtx_growth', JSON.stringify(s));
+    } catch(e) {}
+    renderPersonalPath();
+  });
+}
+
+/* Init */
+renderPersonalPath();

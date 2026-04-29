@@ -50,8 +50,8 @@
     <div class="nav-links" id="nav-links">
       <a href="#" class="nav-link active">Home</a>
       <a href="stories.html" class="nav-link">Stories</a>
-      <a href="#islamic-section" class="nav-link">Islamic History</a>
-      <a href="#features-section" class="nav-link">Features</a>
+      <a href="#tracker-section" class="nav-link">Tracker</a>
+      <a href="#reflect-gen-section" class="nav-link">Reflect</a>
       <a href="about.html" class="nav-link">About</a>
     </div>
     <div class="nav-actions">
@@ -569,6 +569,26 @@
       <span class="sh-icon">◆</span>
       <span class="sh-line"></span>
     </div>
+
+    <!-- Personal Path System -->
+    <div class="personal-path" id="personal-path">
+      <!-- Current State -->
+      <div class="current-state-card" id="current-state-card">
+        <div class="cs-label">YOUR CURRENT STATE</div>
+        <div class="cs-state" id="cs-state">Loading your journey…</div>
+        <div class="cs-sub" id="cs-sub"></div>
+      </div>
+      <!-- Weekly Focus -->
+      <div class="weekly-focus-card" id="weekly-focus-card">
+        <div class="wf-label">YOUR FOCUS THIS WEEK</div>
+        <div class="wf-goals" id="wf-goals"></div>
+        <div class="wf-progress-bar-wrap">
+          <div class="wf-progress-bar" id="wf-progress-bar"></div>
+        </div>
+        <div class="wf-progress-text" id="wf-progress-text"></div>
+      </div>
+    </div>
+
     <div class="tracker-sub-heading">Track your daily عبادات — saved on your device, private to you.</div>
     <div class="tracker-grid">
 
@@ -1006,122 +1026,6 @@
   </div>
 </div>
 
-<!-- ═══ FAQ SECTION ═══ -->
-<section class="section faq-section" id="faq-section">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line"></span>
-      <span class="sh-icon">◆</span>
-      <span class="sh-text">FREQUENTLY ASKED QUESTIONS</span>
-      <span class="sh-icon">◆</span>
-      <span class="sh-line"></span>
-    </div>
-    <div class="faq-grid">
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>What is WaqtX?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          WaqtX is an Islamic life awareness tool. Enter your date of birth and instantly see your life through Islamic history, world events, and meaningful reflection — all calculated in real time, entirely on your device.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>Is my data safe? Is anything stored on a server?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          Completely safe. WaqtX runs 100% in your browser. Your date of birth, name, location, and prayer data are only stored in your device's localStorage — never sent to any server. We have no backend, no database, no tracking.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>How is the life percentage calculated?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          Based on an average lifespan of 75 years. Your age ÷ 75 × 100 = your life percentage. This is an estimate — only Allah knows how much time remains. The number is meant to create awareness, not anxiety.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>How accurate is the Hijri date?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          The Hijri conversion uses a standard astronomical algorithm accurate to approximately ±1 day. The Islamic calendar is lunar and moon-sighting based, so exact dates can vary by region. We note this clearly in the app.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>How are prayer times calculated?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          Prayer times are fetched from the Aladhan API using your GPS coordinates and the ISNA calculation method. Times are accurate for your exact location. They are cached on your device so they work offline after the first load.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>How does the Qibla direction work?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          WaqtX uses your GPS coordinates and calculates the great-circle bearing to the Kaaba (21.4225°N, 39.8262°E) using spherical trigonometry. This gives the most accurate Qibla direction for your exact location on Earth.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>Is this app Islamic or just informational?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          Both. WaqtX is built by a Muslim, for Muslims — with the intention of creating awareness about time, akhirah, and daily ibadah. The reflection prompts, mirror questions, and wake-up system are all rooted in Quran and Sunnah. It is a tool for self-awareness, not a fatwa-issuing authority.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>Can I use WaqtX offline?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          Yes. WaqtX is a Progressive Web App (PWA). Install it from your browser and it works fully offline — including all stats, tracker, Qibla (if previously loaded), and prayer times (if previously fetched). Install it on your home screen for the best experience.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>How do I share my timeline with someone?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          After calculating your timeline, click "Copy Link" in the Share section. This generates a URL with your DOB and name encoded — anyone who opens it will see your full timeline automatically. You can also download a share card image.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          <span>What languages does WaqtX support?</span>
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">
-          WaqtX supports English, Urdu (اردو), Arabic (العربية), and Roman Urdu. Switch languages using the globe icon in the navbar. Arabic Quran and Hadith text is never translated — only UI labels and reflection content are localized.
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ═══ SITE FOOTER ═══ -->
 <footer class="site-footer">
   <div class="footer-inner">
@@ -1148,6 +1052,8 @@
     </div>
     <div class="footer-links">
       <a href="about.html">About</a>
+      <a href="stories.html">Stories</a>
+      <a href="faq.html">FAQ</a>
       <a href="privacy.html">Privacy</a>
       <a href="contact.html">Contact</a>
       <div class="footer-copy">© 2026 MultiMian. All rights reserved.</div>
