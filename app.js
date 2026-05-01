@@ -275,14 +275,14 @@ function applyLangToDOM() {
   if (mirrorSkip) mirrorSkip.textContent = t('mirror_skip');
 
   /* Re-render dynamic sections with new language */
-  renderWakeUpSystem();
+  if (typeof renderWakeUpSystem === 'function') renderWakeUpSystem();
   if (_birth) {
     var tots = getTotals(_birth);
     var ageYrs = (tots.day / 365.25);
     renderReflections(tots, (ageYrs * 0.333).toFixed(1), (tots.day * 24 * 60 * 70 / 1e9).toFixed(2), (tots.sec / 1e6).toFixed(1));
     updateLiveAge();
   }
-  renderInsight(_insightDaysLived);
+  if (typeof renderInsight === 'function') renderInsight(_insightDaysLived);
 
   /* Update lang indicator */
   var langCurrent = el('lang-current');
@@ -3104,3 +3104,177 @@ if (_origEndDayYes) {
 
 /* Init */
 renderPersonalPath();
+
+/* ══════════════════════════════════════════════
+   DAILY ISLAM DASHBOARD
+   Renders Ayah, Dua, Action from daily-islam.js
+   ══════════════════════════════════════════════ */
+(function() {
+  var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+
+  /* ── Today's Ayah ── */
+  var ayahs = window.DAILY_AYAHS;
+  if (ayahs && ayahs.length) {
+    var ayah = ayahs[dayOfYear % ayahs.length];
+    var ddAr  = el('dd-ayah-arabic');
+    var ddTr  = el('dd-ayah-translation');
+    var ddSrc = el('dd-ayah-source');
+    var ddRef = el('dd-ayah-reflection');
+    if (ddAr)  ddAr.textContent  = ayah.arabic;
+    if (ddTr)  ddTr.textContent  = '\u201C' + ayah.translation + '\u201D';
+    if (ddSrc) ddSrc.textContent = '\u2014 ' + ayah.source;
+    if (ddRef) ddRef.textContent = ayah.reflection;
+  }
+
+  /* ── Today's Dua ── */
+  var duas = window.DAILY_DUAS;
+  if (duas && duas.length) {
+    var dua = duas[dayOfYear % duas.length];
+    var ddDA   = el('dd-dua-arabic');
+    var ddDTl  = el('dd-dua-transliteration');
+    var ddDTr  = el('dd-dua-translation');
+    var ddDS   = el('dd-dua-source');
+    var ddDSit = el('dd-dua-situation');
+    if (ddDSit) ddDSit.textContent = dua.situation;
+    if (ddDA)   ddDA.textContent   = dua.arabic;
+    if (ddDTl)  ddDTl.textContent  = dua.transliteration;
+    if (ddDTr)  ddDTr.textContent  = '\u201C' + dua.translation + '\u201D';
+    if (ddDS)   ddDS.textContent   = '\u2014 ' + dua.source;
+  }
+
+  /* ── Today's Action ── */
+  var actions = window.DAILY_ACTIONS;
+  if (actions && actions.length) {
+    var action = actions[dayOfYear % actions.length];
+    var ddAT = el('dd-action-text');
+    var ddAW = el('dd-action-why');
+    if (ddAT) ddAT.textContent = action.action;
+    if (ddAW) ddAW.textContent = action.why + ' \u2014 ' + action.source;
+  }
+
+  /* ── Done button ── */
+  var doneBtn = el('dd-done-btn');
+  var doneMsg = el('dd-done-msg');
+  var DASH_KEY = 'waqtx_dashboard';
+  var today = new Date().toISOString().split('T')[0];
+
+  try {
+    var stored = JSON.parse(localStorage.getItem(DASH_KEY) || '{}');
+    if (stored.actionDate === today) {
+      if (doneBtn) doneBtn.classList.add('hidden');
+      if (doneMsg) doneMsg.classList.remove('hidden');
+    }
+  } catch(e) {}
+
+  if (doneBtn) doneBtn.addEventListener('click', function() {
+    try {
+      var s = JSON.parse(localStorage.getItem(DASH_KEY) || '{}');
+      s.actionDate = today;
+      localStorage.setItem(DASH_KEY, JSON.stringify(s));
+    } catch(e) {}
+    doneBtn.classList.add('hidden');
+    if (doneMsg) doneMsg.classList.remove('hidden');
+    try {
+      var g = JSON.parse(localStorage.getItem('waqtx_growth') || '{}');
+      var weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
+      var wsk = weekStart.toISOString().split('T')[0];
+      if (g.reflectionsWeekStart !== wsk) { g.reflectionsThisWeek = 0; g.reflectionsWeekStart = wsk; }
+      g.reflectionsThisWeek = (parseInt(g.reflectionsThisWeek) || 0) + 1;
+      localStorage.setItem('waqtx_growth', JSON.stringify(g));
+    } catch(e) {}
+    if (typeof renderPersonalPath === 'function') renderPersonalPath();
+  });
+
+  /* ── Share action button ── */
+  var shareActionBtn = el('dd-share-action-btn');
+  if (shareActionBtn && actions && actions.length) {
+    shareActionBtn.addEventListener('click', function() {
+      var act = actions[dayOfYear % actions.length];
+      var url = 'https://mianhassam96.github.io/WaqtX/';
+      var text = 'Today\'s Islamic action:\n\n' + act.action + '\n\n' + act.why + '\n\u2014 ' + act.source + '\n\nWaqtX: ' + url;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+          shareActionBtn.textContent = '\u2713 Copied!';
+          setTimeout(function() { shareActionBtn.textContent = '\uD83D\uDCE4 Share'; }, 2000);
+        });
+      }
+    });
+  }
+})();
+
+/* ══════════════════════════════════════════════
+   SITUATION-BASED ISLAM — "If You Feel..."
+   ══════════════════════════════════════════════ */
+(function() {
+  var grid = el('situation-grid');
+  if (!grid) return;
+  var situations = window.SITUATIONS;
+  if (!situations || !situations.length) return;
+
+  var html = '';
+  situations.forEach(function(sit, idx) {
+    html +=
+      '<div class="sit-card" data-idx="' + idx + '" style="--sit-color:' + sit.color + '">' +
+        '<div class="sit-emoji">' + sit.emoji + '</div>' +
+        '<div class="sit-emotion">' + sit.emotion + '</div>' +
+        '<div class="sit-preview">' + sit.ayah.translation.substring(0, 55) + '\u2026</div>' +
+      '</div>';
+  });
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.sit-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      openSituationModal(situations[parseInt(card.getAttribute('data-idx'))]);
+    });
+  });
+})();
+
+function openSituationModal(sit) {
+  var modal = el('situation-modal');
+  var body  = el('sit-modal-body');
+  if (!modal || !body) return;
+
+  body.innerHTML =
+    '<div class="sit-modal-header" style="--sit-color:' + sit.color + '">' +
+      '<div class="sit-modal-emoji">' + sit.emoji + '</div>' +
+      '<div class="sit-modal-title">When You Feel ' + sit.emotion + '</div>' +
+    '</div>' +
+    '<div class="sit-modal-section">' +
+      '<div class="sit-modal-label sit-label-ayah">\uD83D\uDCD6 What Allah Says</div>' +
+      '<div class="sit-modal-arabic">' + sit.ayah.arabic + '</div>' +
+      '<div class="sit-modal-translation">\u201C' + sit.ayah.translation + '\u201D</div>' +
+      '<div class="sit-modal-source">\u2014 ' + sit.ayah.source + '</div>' +
+    '</div>' +
+    '<div class="sit-modal-section">' +
+      '<div class="sit-modal-label sit-label-dua">\uD83E\uDD32 Dua for This Moment</div>' +
+      '<div class="sit-modal-arabic">' + sit.dua.arabic + '</div>' +
+      '<div class="sit-modal-translit">' + sit.dua.transliteration + '</div>' +
+      '<div class="sit-modal-translation">\u201C' + sit.dua.translation + '\u201D</div>' +
+      '<div class="sit-modal-source">\u2014 ' + sit.dua.source + '</div>' +
+    '</div>' +
+    '<div class="sit-modal-section">' +
+      '<div class="sit-modal-label sit-label-story">\uD83C\uDF1F Their Story</div>' +
+      '<div class="sit-modal-story-name">' + sit.story.name + '</div>' +
+      '<div class="sit-modal-story-pain">' + sit.story.pain + '</div>' +
+      '<div class="sit-modal-story-decision">\u26A1 ' + sit.story.decision + '</div>' +
+    '</div>' +
+    '<div class="sit-modal-action-box">' +
+      '<div class="sit-modal-action-label">\uD83C\uDFAF Do This Right Now</div>' +
+      '<div class="sit-modal-action">' + sit.action + '</div>' +
+    '</div>' +
+    '<div class="sit-modal-reflection">' + sit.reflection + '</div>';
+
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+(function() {
+  var closeBtn = el('situation-modal-close');
+  var modal    = el('situation-modal');
+  if (closeBtn) closeBtn.addEventListener('click', function() {
+    if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+  });
+  if (modal) modal.addEventListener('click', function(e) {
+    if (e.target === modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+  });
+})();
