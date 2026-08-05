@@ -1,4 +1,4 @@
-# ✦ WaqtX — Your Time is a Trust
+# WaqtX — Your Time is a Trust
 
 > *"By time — indeed, mankind is in loss. Except for those who have believed and done righteous deeds."*
 > — Quran 103:1- 
