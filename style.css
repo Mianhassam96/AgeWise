@@ -41,6 +41,37 @@
   --modal-border: rgba(212,160,23,0.12);
   --share-card-bg: linear-gradient(145deg, #07121B, #0b1220);
   --share-card-border: rgba(212,160,23,0.08);
+
+  /* ── Spacing scale ── */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-9:  40px;
+  --space-10: 48px;
+  --space-11: 56px;
+  --space-12: 64px;
+
+  /* ── Typography scale ── */
+  --fs-xs:   0.7rem;    /* labels, eyebrows, badges */
+  --fs-sm:   0.8rem;    /* small body, captions */
+  --fs-base: 0.9rem;    /* body text */
+  --fs-md:   1rem;      /* default / medium */
+  --fs-lg:   1.1rem;    /* slightly larger body */
+  --fs-xl:   1.25rem;   /* sub-headings */
+  --fs-2xl:  1.5rem;    /* section headings */
+  --fs-3xl:  1.875rem;  /* page headings */
+  --fs-4xl:  2.25rem;   /* hero headings */
+
+  /* ── Border radius extended ── */
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-pill: 999px;
+  --share-card-border: rgba(212,160,23,0.08);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,7 +84,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
-  padding-bottom: 96px;
+  padding-bottom: 96px; /* space for bottom nav */
   -webkit-font-smoothing: antialiased;
   /* Subtle deep texture */
   background-image:
@@ -1048,11 +1079,11 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 }
 
 /* ── 8. Sections ── */
-.section { padding: 64px 0; }
+.section { padding: var(--space-10) 0; }
 .section-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--space-6);
 }
 /* Alternating section backgrounds — deeper and more atmospheric */
 .glance-section    { background: var(--bg2); }
@@ -1074,8 +1105,8 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 .sh-line {
   flex: 1;
@@ -1086,9 +1117,9 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 .sh-line:last-of-type {
   background: linear-gradient(90deg, rgba(201,168,76,0.5), transparent);
 }
-.sh-icon { color: var(--gold); font-size: 0.65rem; opacity: 0.9; }
+.sh-icon { color: var(--gold); font-size: var(--fs-xs); opacity: 0.9; }
 .sh-text {
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   font-weight: 800;
   letter-spacing: 0.16em;
   color: var(--gold);
@@ -1099,9 +1130,9 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 .section-sub {
   text-align: center;
   max-width: 720px;
-  margin: -12px auto 28px;
+  margin: -12px auto var(--space-7);
   color: var(--text2);
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
   line-height: 1.7;
 }
 
@@ -2252,9 +2283,9 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
   .input-card-title { font-size: 0.95rem; }
 
   /* Sections */
-  .section { padding: 40px 0; }
-  .section-inner { padding: 0 16px; }
-  .section-heading { gap: 8px; margin-bottom: 28px; }
+  .section { padding: var(--space-9) 0; }
+  .section-inner { padding: 0 var(--space-4); }
+  .section-heading { gap: var(--space-2); margin-bottom: var(--space-7); }
   .sh-text { font-size: 0.62rem; letter-spacing: 0.1em; }
   .sh-line { max-width: 60px; }
 
