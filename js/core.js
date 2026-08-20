@@ -334,6 +334,47 @@ WaqtX.nav = {
     if (fridayBanner && isFriday()) {
       fridayBanner.classList.remove('hidden');
     }
+
+    /* More menu */
+    this.initMoreMenu();
+  },
+
+  initMoreMenu: function() {
+    var moreBtn  = el('btn-bottom-more');
+    var moreMenu = el('bottom-more-menu');
+    var backdrop = el('bmm-backdrop');
+    var closeBtn = el('bmm-close');
+    if (!moreBtn || !moreMenu) return;
+
+    /* Mark active item inside more menu too */
+    var path = window.location.pathname;
+    var filename = path.split('/').pop() || 'index.html';
+    moreMenu.querySelectorAll('.bmm-item').forEach(function(a) {
+      var href = (a.getAttribute('href') || '').split('/').pop();
+      a.classList.toggle('active', href === filename);
+    });
+
+    function openMenu() {
+      moreMenu.classList.remove('hidden');
+      moreBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      moreMenu.classList.add('hidden');
+      moreBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    moreBtn.addEventListener('click', function() {
+      moreMenu.classList.contains('hidden') ? openMenu() : closeMenu();
+    });
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+    /* Close on Escape */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !moreMenu.classList.contains('hidden')) closeMenu();
+    });
   }
 };
 

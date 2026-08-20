@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -28,6 +28,8 @@
       <a href="journey.html"    class="nav-link">Journey</a>
       <a href="reflection.html" class="nav-link">Reflection</a>
       <a href="calendar.html"   class="nav-link">Calendar</a>
+      <a href="stories.html"    class="nav-link">Stories</a>
+      <a href="qibla.html"      class="nav-link">Qibla</a>
       <a href="profile.html"    class="nav-link">Profile</a>
       <a href="settings.html"   class="nav-link">Settings</a>
     </div>
@@ -122,12 +124,50 @@
 </section>
 
 <!-- BOTTOM NAV -->
-<div class="bottom-nav" id="bottom-nav">
-  <a href="index.html"      class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span>Home</span></a>
-  <a href="prayers.html"    class="bottom-nav-item"><span class="bottom-nav-icon">🕌</span><span>Prayers</span></a>
-  <a href="journey.html"    class="bottom-nav-item"><span class="bottom-nav-icon">🌙</span><span>Journey</span></a>
-  <a href="reflection.html" class="bottom-nav-item"><span class="bottom-nav-icon">🪔</span><span>Reflect</span></a>
-  <a href="profile.html"    class="bottom-nav-item"><span class="bottom-nav-icon">👤</span><span>Profile</span></a>
+<!-- Bottom Nav -->
+<div class="bottom-nav" id="bottom-nav" aria-label="Bottom navigation">
+  <a href="index.html"      class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F3E0;</span><span>Home</span></a>
+  <a href="prayers.html"    class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F54C;</span><span>Prayers</span></a>
+  <a href="journey.html"    class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F319;</span><span>Journey</span></a>
+  <a href="reflection.html" class="bottom-nav-item"><span class="bottom-nav-icon">&#x1FA94;</span><span>Reflect</span></a>
+  <a href="profile.html"    class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F464;</span><span>Profile</span></a>
+  <button class="bottom-nav-item bottom-nav-more" id="btn-bottom-more" aria-label="More pages" aria-expanded="false">
+    <span class="bottom-nav-icon">&#x22EF;</span><span>More</span>
+  </button>
+</div>
+
+<!-- More Menu (slide-up) -->
+<div class="bottom-more-menu hidden" id="bottom-more-menu" role="dialog" aria-label="More pages">
+  <div class="bmm-backdrop" id="bmm-backdrop"></div>
+  <div class="bmm-panel">
+    <div class="bmm-header">
+      <span class="bmm-title">More</span>
+      <button class="bmm-close" id="bmm-close" aria-label="Close">&#x2715;</button>
+    </div>
+    <div class="bmm-grid">
+      <a href="calendar.html" class="bmm-item"><span class="bmm-icon">&#x1F4C5;</span><span>Calendar</span></a>
+      <a href="stories.html"  class="bmm-item"><span class="bmm-icon">&#x1F4D6;</span><span>Stories</span></a>
+      <a href="qibla.html"    class="bmm-item"><span class="bmm-icon">&#x1F9ED;</span><span>Qibla</span></a>
+      <a href="settings.html" class="bmm-item"><span class="bmm-icon">&#x2699;&#xFE0F;</span><span>Settings</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- More Menu (slide-up) -->
+<div class="bottom-more-menu hidden" id="bottom-more-menu" role="dialog" aria-label="More pages">
+  <div class="bmm-backdrop" id="bmm-backdrop"></div>
+  <div class="bmm-panel">
+    <div class="bmm-header">
+      <span class="bmm-title">More</span>
+      <button class="bmm-close" id="bmm-close" aria-label="Close">✕</button>
+    </div>
+    <div class="bmm-grid">
+      <a href="calendar.html"  class="bmm-item"><span class="bmm-icon">📅</span><span>Calendar</span></a>
+      <a href="stories.html"   class="bmm-item"><span class="bmm-icon">📖</span><span>Stories</span></a>
+      <a href="qibla.html"     class="bmm-item"><span class="bmm-icon">🧭</span><span>Qibla</span></a>
+      <a href="settings.html"  class="bmm-item"><span class="bmm-icon">⚙️</span><span>Settings</span></a>
+    </div>
+  </div>
 </div>
 
 <script src="js/core.js"></script>
