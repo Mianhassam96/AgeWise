@@ -542,6 +542,103 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 .bottom-nav-icon {
   font-size: 1.1rem;
 }
+
+/* ── More button (bottom nav 6th item) ── */
+.bottom-nav-more {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ── More Menu slide-up ── */
+.bottom-more-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+.bmm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.bmm-panel {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 640px);
+  background: var(--bg2);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-bottom: none;
+  border-radius: 20px 20px 0 0;
+  padding: 8px 20px 40px;
+  animation: bmmSlideUp 0.25s ease;
+}
+@keyframes bmmSlideUp {
+  from { transform: translateX(-50%) translateY(100%); }
+  to   { transform: translateX(-50%) translateY(0); }
+}
+.bmm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 4px 20px;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  margin-bottom: 20px;
+}
+.bmm-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+}
+.bmm-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: none;
+  color: var(--text2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+.bmm-close:hover { background: rgba(255,255,255,0.12); }
+.bmm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.bmm-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.bmm-item:hover,
+.bmm-item.active {
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.3);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+.bmm-icon { font-size: 1.5rem; }
 .btn-secondary {
   background: rgba(255,255,255,0.08);
   color: var(--text);
