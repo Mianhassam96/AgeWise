@@ -125,7 +125,7 @@ WaqtX/
 ```
 
 ---
-
+   
 ## Privacy
 
 All data is stored exclusively in your browser's `localStorage`. Nothing is sent to any server. No accounts, no tracking, no ads.
