@@ -78,6 +78,106 @@ img { max-width: 100%; }
 /* ── 3. Utility ── */
 .hidden { display: none !important; }
 
+/* ── Skeleton loading system ──
+   Elements start with class="skeleton-val" — JS removes it when data lands.
+   CSS makes them look like shimmer placeholders until then.
+   ─────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+.skeleton,
+.skeleton-val {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+  color: transparent !important;
+  min-height: 1em;
+  min-width: 4ch;
+  pointer-events: none;
+  user-select: none;
+}
+/* Size variants */
+.skeleton-sm  { min-width: 3ch;  height: 0.85em; }
+.skeleton-md  { min-width: 6ch;  height: 1em;    }
+.skeleton-lg  { min-width: 10ch; height: 1.1em;  }
+.skeleton-xl  { min-width: 14ch; height: 1.1em;  }
+.skeleton-num { min-width: 2ch;  height: 1.3em;  border-radius: 4px; }
+.skeleton-bar { height: 6px; width: 100%; border-radius: 999px; display: block; }
+
+/* ── Empty / no-data state ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 16px;
+  color: var(--text3);
+  font-size: 0.85rem;
+  text-align: center;
+  line-height: 1.6;
+}
+.empty-state-icon { font-size: 2rem; opacity: 0.5; }
+.empty-state a    { color: var(--gold); text-decoration: underline; }
+
+/* ── API error state ── */
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: rgba(239,68,68,0.07);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius);
+  color: #fca5a5;
+  font-size: 0.82rem;
+}
+.error-state-icon { font-size: 1.1rem; flex-shrink: 0; }
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+  color: transparent !important;
+  pointer-events: none;
+  user-select: none;
+  min-height: 1em;
+}
+.skeleton-text  { height: 0.9em; border-radius: 4px; }
+.skeleton-num   { height: 1.4em; border-radius: 6px; min-width: 2.5ch; }
+.skeleton-pill  { height: 1.6em; border-radius: 999px; min-width: 6ch; }
+.skeleton-bar   { height: 6px;   border-radius: 999px; width: 100%; }
+.skeleton-block { height: 80px;  border-radius: var(--radius); width: 100%; }
+
+/* Empty / no-data state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 16px;
+  color: var(--text3);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.empty-state-icon { font-size: 2rem; opacity: 0.5; }
+.empty-state a    { color: var(--gold); text-decoration: underline; }
+
 /* Headings use Outfit for a clean, modern look */
 h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 

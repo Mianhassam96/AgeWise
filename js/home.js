@@ -173,16 +173,25 @@ function _setPrayerSectionNoLocation() {
   var card = el('home-next-prayer-card');
   if (!card) return;
   card.innerHTML =
-    '<div class="hnp-label">Prayer Times</div>' +
-    '<div class="hnp-no-location">' +
-      '<span class="hnp-icon">📍</span>' +
-      '<span class="hnp-no-loc-text">Enable location in <a href="settings.html">Settings</a> to see your prayer times.</span>' +
+    '<div class="empty-state">' +
+      '<div class="empty-state-icon">📍</div>' +
+      '<div>Enable location in <a href="settings.html">Settings</a> to see your prayer times.</div>' +
     '</div>';
+  /* Also clear prayer time cells */
+  ['Fajr','Dhuhr','Asr','Maghrib','Isha'].forEach(function(p) {
+    var t = el('hps-time-' + p);
+    if (t) { t.textContent = '--:--'; t.classList.remove('skeleton-val','skeleton-md'); }
+  });
 }
 
 function _setPrayerSectionError() {
-  setText('hnp-name', 'Unavailable');
-  setText('hnp-countdown', 'Check connection');
+  var card = el('home-next-prayer-card');
+  if (!card) return;
+  card.innerHTML =
+    '<div class="error-state">' +
+      '<span class="error-state-icon">⚠️</span>' +
+      '<span>Could not load prayer times. Check your connection or <a href="settings.html" style="color:var(--gold)">update location</a>.</span>' +
+    '</div>';
 }
 
 function _renderPrayerTimeline(timings) {

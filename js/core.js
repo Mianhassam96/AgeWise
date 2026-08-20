@@ -46,7 +46,14 @@ var S = WaqtX.storage; /* shorthand */
    HELPERS
    ══════════════════════════════════════ */
 window.fmt = function(n) { return Number(n).toLocaleString(); };
-window.setText = function(id, v) { var e = el(id); if (e) e.textContent = v; };
+window.setText = function(id, v) {
+  var e = el(id);
+  if (!e) return;
+  e.textContent = v;
+  /* Remove skeleton shimmer once real value is set */
+  e.classList.remove('skeleton-val', 'skeleton-sm', 'skeleton-md',
+                     'skeleton-lg', 'skeleton-xl', 'skeleton-num', 'skeleton');
+};
 
 function getTodayKey() {
   var d = new Date();

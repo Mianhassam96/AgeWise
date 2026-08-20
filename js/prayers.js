@@ -403,13 +403,16 @@ function initPrayerPage() {
         }, 60000);
       }, function(e) {
         btn.textContent = 'Get Prayer Times';
-        setText('prayer-status', 'Could not load prayer times.');
+        _showPrayerError('Could not load prayer times. Check your connection.');
       });
+    } else if (!lat && !lng && !cached) {
+      /* No location saved at all */
+      _showPrayerNoLocation();
     }
 
     btn.addEventListener('click', function() {
       if (!navigator.geolocation) {
-        setText('prayer-status', 'Geolocation not supported by your browser.');
+        _showPrayerError('Geolocation is not supported by your browser.');
         return;
       }
       btn.textContent = 'Locating…';
@@ -428,14 +431,18 @@ function initPrayerPage() {
             startCountdown(timings);
             scheduleNotifications();
           }, function() {
-            setText('prayer-status', 'Could not load prayer times.');
+            _showPrayerError('Could not load prayer times. Try again.');
           });
         },
         function(err) {
           btn.textContent = 'Get Prayer Times';
           btn.disabled = false;
-          var msgs = {1:'Location access denied.',2:'Location unavailable.',3:'Request timed out.'};
-          setText('prayer-status', msgs[err.code] || 'Could not get location.');
+          var msgs = {
+            1: 'Location access denied. Enable it in browser settings.',
+            2: 'Location unavailable. Try again.',
+            3: 'Location request timed out.'
+          };
+          _showPrayerError(msgs[err.code] || 'Could not get location.');
         },
         { timeout: 10000, maximumAge: 300000 }
       );
@@ -447,6 +454,29 @@ function initPrayerPage() {
   renderConsistency();
   renderPrayerReflections();
   initNotifications();
+}
+
+function _showPrayerNoLocation() {
+  var grid = el('prayer-grid');
+  if (grid) {
+    grid.innerHTML =
+      '<div class="empty-state">' +
+        '<div class="empty-state-icon">📍</div>' +
+        '<div>Tap <strong>Get Prayer Times</strong> above to detect your location, or set it in <a href="settings.html">Settings</a>.</div>' +
+      '</div>';
+  }
+  setText('prayer-next-name', 'No location set');
+}
+
+function _showPrayerError(msg) {
+  var statusEl = el('prayer-status');
+  if (statusEl) {
+    statusEl.innerHTML =
+      '<div class="error-state" style="margin-top:12px">' +
+        '<span class="error-state-icon">⚠️</span>' +
+        '<span>' + msg + '</span>' +
+      '</div>';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initPrayerPage);

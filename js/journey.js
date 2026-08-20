@@ -382,10 +382,33 @@ function initJourneyPage() {
   var dob = S.get('dob');
   if (!dob) {
     initDOBInput();
+    /* Clear skeleton shimmer — show clean dashes, not shimmering placeholders */
     ['counter-ramadans','counter-eids-fitr','counter-eids-adha','counter-jumuahs',
      'counter-laylatul-qadr','counter-fasting-days','prayer-moments-count'].forEach(function(id) {
-      setText(id, '—');
+      var e = el(id);
+      if (e) {
+        e.textContent = '—';
+        e.classList.remove('skeleton-val', 'skeleton-num', 'skeleton');
+      }
     });
+    ['journey-dob-greg','journey-dob-hijri','journey-age','journey-days'].forEach(function(id) {
+      var e = el(id);
+      if (e) {
+        e.textContent = '—';
+        e.classList.remove('skeleton-val', 'skeleton-text', 'skeleton-xl', 'skeleton');
+      }
+    });
+    /* Show empty state prompt in the overview section */
+    var overviewInner = document.querySelector('#life-overview .section-inner');
+    if (overviewInner && !overviewInner.querySelector('.empty-state')) {
+      var prompt = document.createElement('div');
+      prompt.className = 'empty-state';
+      prompt.style.marginTop = '24px';
+      prompt.innerHTML =
+        '<div class="empty-state-icon">🌙</div>' +
+        '<div>Enter your date of birth below to see your personal Islamic journey — Ramadans, Jumu\'ahs, milestones and more.</div>';
+      overviewInner.appendChild(prompt);
+    }
     return;
   }
 
