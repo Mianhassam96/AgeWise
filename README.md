@@ -9,7 +9,7 @@ A **Muslim personal growth dashboard** built with vanilla HTML, CSS, and JavaScr
 📦 **Repo:** [github.com/Mianhassam96/WaqtX](https://github.com/Mianhassam96/WaqtX)
 
 ---
-
+ 
 ## Pages
 
 | Page | Description |
