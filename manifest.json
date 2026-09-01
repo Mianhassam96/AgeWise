@@ -1,15 +1,35 @@
 {
-  "name": "WaqtX — See Your Journey Through Time",
+  "name": "WaqtX — Your Time. Your Faith. Your History.",
   "short_name": "WaqtX",
-  "description": "An Islamic reflection dashboard that helps you live each day as part of your story, with rhythm, meaning, and quiet focus.",
+  "description": "An immersive Islamic knowledge and personal reflection experience. Explore 1400 years of Islamic civilization, track your prayer rhythm, and reflect daily.",
   "start_url": "/WaqtX/",
   "scope": "/WaqtX/",
   "display": "standalone",
   "background_color": "#0B1220",
   "theme_color": "#0B1220",
   "orientation": "portrait-primary",
+  "categories": ["education", "lifestyle", "productivity"],
   "icons": [
-    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "favicon.svg",    "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon.svg",    "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" },
+    { "src": "favicon-32.svg", "sizes": "32x32", "type": "image/svg+xml" }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Explore History",
+      "url": "/WaqtX/explore.html",
+      "description": "Open the Islamic History Explorer"
+    },
+    {
+      "name": "Prayer Times",
+      "url": "/WaqtX/prayers.html",
+      "description": "View today's prayer times"
+    },
+    {
+      "name": "Daily Reflection",
+      "url": "/WaqtX/reflection.html",
+      "description": "Open daily reflection journal"
+    }
   ]
 }
