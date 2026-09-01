@@ -28,7 +28,7 @@ Rather than competing with apps that provide every Islamic utility, WaqtX owns a
 | 🌙 **Daily Reflection** | Ayah → Hadith → Story → Lesson → Action → Muhasabah |
 
 ---
-
+ 
 ## Pages
 
 | Page | Description |
