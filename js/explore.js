@@ -560,6 +560,9 @@ document.addEventListener('DOMContentLoaded', function() {
   initSearch();
   initStatsBar();
   renderGrid();
+  renderVisTimeline();
+  renderWorldMap();
+  initPeopleExplorer();
 
   /* Modal close */
   var closeBtn = el('hm-close-btn');
@@ -570,3 +573,350 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 });
+
+/* ══════════════════════════════════════
+   VISUAL 1,400-YEAR TIMELINE
+   ══════════════════════════════════════ */
+function renderVisTimeline() {
+  var inner = el('vis-timeline-inner');
+  if (!inner || !H) return;
+
+  /* All events sorted by startDate */
+  var events = H.sortByDate(
+    H.events.concat(H.dynasties).filter(function(e) {
+      return typeof e.startDate === 'number' && e.startDate > 0;
+    })
+  );
+  if (!events.length) return;
+
+  var MIN_YEAR = 570;
+  var MAX_YEAR = 1924;
+  var SPAN     = MAX_YEAR - MIN_YEAR;
+  var WIDTH    = Math.max(inner.clientWidth || 1200, 1400);
+  var PAD      = 60;
+  var USABLE   = WIDTH - PAD * 2;
+
+  function toX(year) {
+    return PAD + ((year - MIN_YEAR) / SPAN) * USABLE;
+  }
+
+  /* Era band definitions */
+  var eraBands = [
+    { era:'seerah',    start:570,  end:632,  label:'Seerah' },
+    { era:'rashidun',  start:632,  end:661,  label:'Rashidun' },
+    { era:'umayyad',   start:661,  end:750,  label:'Umayyad' },
+    { era:'abbasid',   start:750,  end:1258, label:'Abbasid' },
+    { era:'ottoman',   start:1299, end:1924, label:'Ottoman' }
+  ];
+  var bandColors = {
+    seerah:'var(--teal)', rashidun:'#4ade80', umayyad:'#a78bfa',
+    abbasid:'#60a5fa', ottoman:'#f87171'
+  };
+
+  var html = '';
+
+  /* Era bands */
+  eraBands.forEach(function(band) {
+    var x1 = toX(band.start);
+    var x2 = toX(Math.min(band.end, MAX_YEAR));
+    var w  = x2 - x1;
+    var midX = x1 + w / 2;
+    html += '<div class="vis-era-band" style="left:' + x1 + 'px;width:' + w + 'px;background:' + (bandColors[band.era]||'var(--gold)') + ';" title="' + escHtml(band.label) + '"></div>';
+    html += '<div class="vis-era-label" style="left:' + midX + 'px;">' + escHtml(band.label) + '</div>';
+  });
+
+  /* Spine */
+  html += '<div class="vis-spine"></div>';
+
+  /* Axis year markers */
+  var axisYears = [600, 650, 700, 750, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900];
+  axisYears.forEach(function(y) {
+    if (y < MIN_YEAR || y > MAX_YEAR) return;
+    html += '<div class="vis-axis-year" style="left:' + toX(y) + 'px;">' + y + '</div>';
+  });
+
+  /* Event nodes — alternate above/below to avoid overlap */
+  events.forEach(function(evt, i) {
+    var y = evt.startDate;
+    if (y < MIN_YEAR || y > MAX_YEAR + 50) return;
+    var xPos     = toX(Math.min(y, MAX_YEAR));
+    var side     = i % 2 === 0 ? 'above' : 'below';
+    var featured = evt.certainty === 'established' ? ' featured' : '';
+    var shortTitle = evt.title.replace(/\s*[\u2014\u2013\-].*$/, '').substring(0, 20);
+
+    html += '<div class="vis-node ' + side + featured + '" data-id="' + escHtml(evt.id) + '"';
+    html += ' style="left:' + xPos + 'px;" tabindex="0" role="button"';
+    html += ' aria-label="' + escHtml(evt.title) + ' — ' + escHtml(evt.date.gregorian) + '">';
+    html += '<div class="vis-node-dot"></div>';
+    if (side === 'above') {
+      html += '<div class="vis-node-label above">' + escHtml(shortTitle) + '</div>';
+      html += '<div class="vis-node-year above">' + y + ' CE</div>';
+    } else {
+      html += '<div class="vis-node-year below">' + y + ' CE</div>';
+      html += '<div class="vis-node-label below">' + escHtml(shortTitle) + '</div>';
+    }
+    html += '</div>';
+  });
+
+  inner.innerHTML = html;
+
+  /* Tooltip */
+  var tooltip = el('vis-tooltip');
+
+  inner.querySelectorAll('.vis-node').forEach(function(node) {
+    var id = node.dataset.id;
+
+    node.addEventListener('mouseenter', function(e) {
+      var item = H.findById(id);
+      if (!item || !tooltip) return;
+      tooltip.innerHTML = '<div class="vis-tooltip-title">' + escHtml(item.title) + '</div>' +
+        '<div class="vis-tooltip-date">' + escHtml(item.date.gregorian) + '</div>';
+      tooltip.classList.add('show');
+    });
+    node.addEventListener('mousemove', function(e) {
+      if (!tooltip) return;
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top  = (e.clientY - 36) + 'px';
+    });
+    node.addEventListener('mouseleave', function() {
+      if (tooltip) tooltip.classList.remove('show');
+    });
+    node.addEventListener('click', function() { openModal(id); });
+    node.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(id); }
+    });
+  });
+
+  /* Drag-to-scroll */
+  var wrap = el('vis-timeline-wrap');
+  if (wrap) {
+    var isDown = false, startX, scrollLeft;
+    wrap.addEventListener('mousedown', function(e) {
+      if (e.target.closest('.vis-node')) return;
+      isDown = true;
+      startX = e.pageX - wrap.offsetLeft;
+      scrollLeft = wrap.scrollLeft;
+      wrap.style.cursor = 'grabbing';
+    });
+    wrap.addEventListener('mouseleave', function() { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mouseup',    function() { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mousemove',  function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x    = e.pageX - wrap.offsetLeft;
+      var walk = (x - startX) * 1.5;
+      wrap.scrollLeft = scrollLeft - walk;
+    });
+  }
+}
+
+/* ══════════════════════════════════════
+   ISLAMIC WORLD MAP
+   SVG-based clickable city map
+   ══════════════════════════════════════ */
+var MAP_CITIES = [
+  { id:'makkah',    label:'Makkah',     cx:560, cy:250, historyId:'makkah',       note:'Holiest city in Islam' },
+  { id:'madinah',   label:'Madinah',    cx:555, cy:230, historyId:'madinah',      note:'City of the Prophet ﷺ' },
+  { id:'jerusalem', label:'Jerusalem',  cx:520, cy:200, historyId:'jerusalem',    note:'Third holiest city' },
+  { id:'damascus',  label:'Damascus',   cx:525, cy:190, historyId:'umayyad-caliphate', note:'Umayyad capital' },
+  { id:'baghdad',   label:'Baghdad',    cx:565, cy:200, historyId:'baghdad',      note:'Abbasid capital' },
+  { id:'cairo',     label:'Cairo',      cx:505, cy:220, historyId:'civ-cairo-mamluk', note:'Cairo & Al-Azhar' },
+  { id:'cordoba',   label:'Córdoba',    cx:430, cy:185, historyId:'cordoba',      note:'Jewel of al-Andalus' },
+  { id:'istanbul',  label:'Istanbul',   cx:515, cy:175, historyId:'civ-istanbul-ottoman', note:'Ottoman capital' },
+  { id:'bukhara',   label:'Bukhara',    cx:625, cy:175, historyId:'civ-bukhara-scholars', note:'City of scholars' },
+  { id:'samarkand', label:'Samarkand',  cx:635, cy:168, historyId:'civ-bukhara-scholars', note:'Timur\'s capital' },
+  { id:'delhi',     label:'Delhi',      cx:665, cy:222, historyId:'abbasid-caliphate', note:'Mughal heartland' }
+];
+
+function renderWorldMap() {
+  var wrap = el('world-map-svg-wrap');
+  if (!wrap) return;
+
+  /* Simple geographic SVG — schematic, not precise */
+  var svgW = 900, svgH = 420;
+
+  var landPaths = [
+    /* Europe */
+    'M 370,100 L 440,95 L 480,105 L 490,130 L 460,145 L 440,140 L 420,150 L 400,145 L 375,130 Z',
+    /* Iberian Peninsula */
+    'M 390,140 L 440,138 L 450,155 L 430,175 L 410,178 L 395,165 L 388,150 Z',
+    /* North Africa */
+    'M 390,195 L 560,195 L 560,260 L 500,270 L 440,265 L 400,250 Z',
+    /* Arabian Peninsula */
+    'M 540,215 L 590,210 L 605,235 L 595,270 L 570,280 L 545,270 L 535,250 Z',
+    /* Turkey / Anatolia */
+    'M 495,165 L 545,160 L 570,170 L 565,185 L 535,192 L 510,188 L 495,178 Z',
+    /* Levant */
+    'M 515,185 L 535,183 L 540,210 L 525,215 L 510,205 Z',
+    /* Persia / Iran */
+    'M 565,175 L 615,170 L 625,195 L 610,215 L 580,220 L 562,205 Z',
+    /* Central Asia */
+    'M 615,155 L 670,148 L 680,175 L 655,182 L 630,178 L 614,168 Z',
+    /* South Asia */
+    'M 640,190 L 700,190 L 710,230 L 690,250 L 660,245 L 640,220 Z'
+  ];
+
+  var html = '<svg viewBox="0 0 ' + svgW + ' ' + svgH + '" xmlns="http://www.w3.org/2000/svg" class="world-map-svg" role="img" aria-label="Islamic world map">';
+
+  /* Ocean background */
+  html += '<rect width="' + svgW + '" height="' + svgH + '" fill="rgba(20,184,166,0.04)" rx="12"/>';
+
+  /* Land masses */
+  landPaths.forEach(function(d) {
+    html += '<path d="' + d + '" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>';
+  });
+
+  /* Trade/connection lines */
+  var connections = [
+    [560,240, 565,200], /* Makkah-Baghdad */
+    [560,240, 505,220], /* Makkah-Cairo */
+    [560,240, 520,200], /* Makkah-Jerusalem */
+    [565,200, 520,200], /* Baghdad-Jerusalem */
+    [520,200, 515,175], /* Jerusalem-Istanbul */
+    [565,200, 625,175], /* Baghdad-Bukhara */
+    [515,175, 430,185], /* Istanbul-Cordoba */
+    [505,220, 430,185]  /* Cairo-Cordoba */
+  ];
+  connections.forEach(function(c) {
+    html += '<line x1="' + c[0] + '" y1="' + c[1] + '" x2="' + c[2] + '" y2="' + c[3] + '"';
+    html += ' stroke="rgba(201,168,76,0.12)" stroke-width="1" stroke-dasharray="3 4"/>';
+  });
+
+  /* City markers */
+  MAP_CITIES.forEach(function(city) {
+    html += '<g class="map-city-btn" data-city-id="' + city.id + '" tabindex="0" role="button" aria-label="' + escHtml(city.label) + ' — ' + escHtml(city.note) + '">';
+    html += '<circle class="map-city-pulse" cx="' + city.cx + '" cy="' + city.cy + '" r="6" style="animation-delay:' + (Math.random()*2).toFixed(1) + 's"/>';
+    html += '<circle class="map-city-dot" cx="' + city.cx + '" cy="' + city.cy + '" r="5"/>';
+    /* Label offset to avoid overlap */
+    var lx = city.cx + 9, ly = city.cy + 4;
+    if (city.id === 'madinah')   { ly = city.cy - 7; }
+    if (city.id === 'damascus')  { lx = city.cx - 55; }
+    if (city.id === 'samarkand') { ly = city.cy - 7; }
+    if (city.id === 'cordoba')   { lx = city.cx - 52; }
+    html += '<text class="map-city-label" x="' + lx + '" y="' + ly + '">' + escHtml(city.label) + '</text>';
+    html += '</g>';
+  });
+
+  /* Scale bar */
+  html += '<text x="30" y="' + (svgH - 15) + '" font-size="8" fill="rgba(248,250,252,0.2)" font-family="Inter,sans-serif">Islamic World — schematic, not to scale</text>';
+
+  html += '</svg>';
+  wrap.innerHTML = html;
+
+  /* City click handlers */
+  wrap.querySelectorAll('.map-city-btn').forEach(function(btn) {
+    btn.addEventListener('click',   function() { showMapCity(btn.dataset.cityId); });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showMapCity(btn.dataset.cityId); }
+    });
+  });
+}
+
+function showMapCity(cityId) {
+  var city    = MAP_CITIES.find(function(c) { return c.id === cityId; });
+  if (!city) return;
+  var item    = H.findById(city.historyId);
+
+  var placeholder = el('map-placeholder');
+  var content     = el('map-info-content');
+  var titleEl     = el('map-info-title');
+  var subtitleEl  = el('map-info-subtitle');
+  var summaryEl   = el('map-info-summary');
+  var linkEl      = el('map-info-link');
+
+  if (placeholder) placeholder.style.display = 'none';
+  if (content)     content.classList.add('show');
+
+  if (titleEl)    titleEl.textContent   = item ? item.title : city.label;
+  if (subtitleEl) subtitleEl.textContent = city.note;
+  if (summaryEl)  summaryEl.textContent  = item ? item.summary.substring(0, 180) + '…' : '';
+  if (linkEl && item) {
+    linkEl.textContent = 'Read full entry →';
+    linkEl.onclick = function(e) { e.preventDefault(); openModal(city.historyId); };
+  }
+}
+
+/* ══════════════════════════════════════
+   PEOPLE EXPLORER
+   Prophets / Companions / Scholars tabs
+   ══════════════════════════════════════ */
+var PERSON_ICONS = {
+  prophets:   '☪',
+  companions: '⭐',
+  scholars:   '📜',
+  default:    '👤'
+};
+
+function renderPeopleGrid(collection, containerId) {
+  var container = el(containerId);
+  if (!container || !H) return;
+
+  var items = H[collection] || [];
+  if (!items.length) {
+    container.innerHTML = '<p style="color:var(--text3);text-align:center;padding:40px 0;">No entries yet.</p>';
+    return;
+  }
+
+  var html = '';
+  items.forEach(function(person) {
+    var icon = PERSON_ICONS[collection] || PERSON_ICONS.default;
+    var eraClass = H.eraClass(person.era);
+    var certClass = H.certClass(person.certainty);
+
+    html += '<div class="person-card" data-id="' + escHtml(person.id) + '" tabindex="0" role="button" aria-label="' + escHtml(person.title) + '">';
+    html += '<div class="person-card-header">';
+    html += '<div class="person-avatar" aria-hidden="true">' + icon + '</div>';
+    html += '<div class="person-info">';
+    html += '<div class="person-name">' + escHtml(person.title) + '</div>';
+    html += '<div class="person-subtitle">' + escHtml(person.subtitle || '') + '</div>';
+    html += '<div class="person-dates">' + escHtml(person.date.gregorian) + '</div>';
+    html += '</div></div>';
+    html += '<div class="person-summary">' + escHtml(person.summary.substring(0, 140)) + (person.summary.length > 140 ? '…' : '') + '</div>';
+
+    /* Source badges (first 2) */
+    if (person.sources && person.sources.length) {
+      html += '<div class="source-badges">';
+      person.sources.slice(0, 2).forEach(function(src) {
+        html += '<span class="ev-badge ' + H.evClass(src.type) + '"><span class="ev-badge-dot"></span>' + escHtml(H.sourceTypeLabel(src.type)) + '</span>';
+      });
+      html += '</div>';
+    }
+
+    html += '<div class="person-footer">';
+    html += '<span class="hc-certainty ' + certClass + '">' + escHtml(person.certainty) + '</span>';
+    html += '<span class="person-read">Read entry →</span>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+
+  container.querySelectorAll('.person-card').forEach(function(card) {
+    card.addEventListener('click',   function() { openModal(card.dataset.id); });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card.dataset.id); }
+    });
+  });
+}
+
+function initPeopleExplorer() {
+  renderPeopleGrid('prophets',   'people-grid-prophets');
+  renderPeopleGrid('companions', 'people-grid-companions');
+  renderPeopleGrid('scholars',   'people-grid-scholars');
+
+  var tabs = document.querySelectorAll('.people-tab');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        var panel = el('tab-' + t.dataset.tab);
+        if (panel) panel.classList.remove('active');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      var activePanel = el('tab-' + tab.dataset.tab);
+      if (activePanel) activePanel.classList.add('active');
+    });
+  });
+}

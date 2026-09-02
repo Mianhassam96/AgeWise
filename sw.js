@@ -1,13 +1,14 @@
 'use strict';
 /* ═══════════════════════════════════════════════
    WaqtX V2 — Service Worker
-   Cache: waqtx-v20
+   Cache: waqtx-v21
    ═══════════════════════════════════════════════ */
-var CACHE = 'waqtx-v20';
+var CACHE = 'waqtx-v21';
 var ASSETS = [
   './',
   './index.html',
   './explore.html',
+  './search.html',
   './prayers.html',
   './journey.html',
   './reflection.html',
@@ -23,6 +24,7 @@ var ASSETS = [
   './js/core.js',
   './js/home.js',
   './js/explore.js',
+  './js/search.js',
   './js/history-data.js',
   './js/prayers.js',
   './js/journey.js',

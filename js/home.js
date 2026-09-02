@@ -501,42 +501,54 @@ function initThisDaySection() {
 }
 
 function _renderThisDayFromHistory(entry) {
-  /* Date line */
-  var dateStr = entry.date.gregorian;
-  if (entry.date.hijri) dateStr += ' · ' + entry.date.hijri;
-  setText('td-year', dateStr);
+  var H = window.WAQTX_HISTORY;
+
+  /* Era band — inject before date */
+  var tdYear = el('td-year');
+  if (tdYear) {
+    var eraLabel = H && H.ERA_LABELS ? (H.ERA_LABELS[entry.era] || entry.era) : entry.era;
+    var eraClass = H && H.eraClass  ? H.eraClass(entry.era) : 'era-seerah';
+    var dateStr  = entry.date.gregorian;
+    if (entry.date.hijri) dateStr += ' \u00b7 ' + entry.date.hijri;
+    tdYear.innerHTML =
+      '<span class="era-band ' + _escHtml(eraClass) + '" style="display:inline-flex;margin-bottom:6px;">' +
+      _escHtml(eraLabel) + '</span><br>' + _escHtml(dateStr);
+  }
 
   /* Title + body */
   setText('td-title', entry.title);
   setText('td-body',  entry.summary);
 
-  /* Reflection prompt */
+  /* Reflection — use subtitle as teaser, then a prompt */
   var tdRefl = el('td-reflection');
   if (tdRefl) {
-    tdRefl.textContent = entry.subtitle
-      ? 'Context: ' + entry.subtitle
-      : 'What does this moment in Islamic history mean for your life today?';
+    tdRefl.textContent = entry.subtitle ||
+      'What does this moment in Islamic history mean for your life today?';
   }
 
   /* Source badges */
   var badgeContainer = el('td-sources');
-  if (badgeContainer && entry.sources && entry.sources.length) {
-    var H = window.WAQTX_HISTORY;
-    var badges = entry.sources.slice(0, 3).map(function(src) {
-      return '<span class="ev-badge ' + H.evClass(src.type) + '">' +
-             '<span class="ev-badge-dot"></span>' +
-             _escHtml(H.sourceTypeLabel(src.type)) +
-             (src.ref ? ': ' + _escHtml(src.ref.substring(0, 40)) + (src.ref.length > 40 ? '…' : '') : '') +
-             '</span>';
-    }).join('');
-    badgeContainer.innerHTML = badges;
+  if (badgeContainer && H) {
+    if (entry.sources && entry.sources.length) {
+      var badges = entry.sources.slice(0, 3).map(function(src) {
+        return '<span class="ev-badge ' + H.evClass(src.type) + '">' +
+               '<span class="ev-badge-dot"></span>' +
+               _escHtml(H.sourceTypeLabel(src.type)) +
+               (src.ref ? ': ' + _escHtml(src.ref.substring(0, 36)) + (src.ref.length > 36 ? '\u2026' : '') : '') +
+               '</span>';
+      }).join('');
+      badgeContainer.innerHTML = badges;
+    } else {
+      badgeContainer.innerHTML = '';
+    }
   }
 
-  /* Link to full entry on explore page */
+  /* CTA — links to search page pre-filled with the entry title */
   var tdCta = document.querySelector('#this-day-card .td-cta');
   if (tdCta && entry.id) {
-    tdCta.href = 'explore.html#' + entry.id;
-    tdCta.textContent = 'Read full entry →';
+    var searchQ = encodeURIComponent(entry.title.replace(/\s*[\u2014\u2013].*$/, '').trim());
+    tdCta.href = 'search.html?q=' + searchQ;
+    tdCta.textContent = 'Explore full entry \u2192';
   }
 }
 
@@ -561,7 +573,8 @@ function initSpiritualProgress() {
   var prayerPct    = _calcConsistency(30);
   var reflectPct   = _calcMuhasabahDays(30);
   var gratitudePct = _calcGratitudeDays(30);
-  var streak       = recalcStreak();
+  /* Guard: recalcStreak is defined in core.js — check it exists */
+  var streak = (typeof recalcStreak === 'function') ? recalcStreak() : getStreakCount();
 
   /* IDs match index.html: sp-prayer, sp-reflect, sp-gratitude, sp-streak */
   setText('sp-prayer',    prayerPct + '%');
@@ -591,7 +604,10 @@ function initHeroBadge() {
     weekday: 'long', month: 'long', day: 'numeric'
   });
   setText('hero-greg-date', greg);
-  /* hero-hijri-date is set by core.js updateHeroPrayerState() */
+  /* Set Hijri date directly (core.js also sets this when prayer times load) */
+  if (typeof toHijri === 'function' && typeof hijriStr === 'function') {
+    setText('hero-hijri-date', hijriStr(toHijri(now)));
+  }
 }
 
 /* ══════════════════════════════════════

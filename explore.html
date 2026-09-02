@@ -205,6 +205,90 @@
   </div>
 </section>
 
+<!-- ════════ VISUAL TIMELINE ════════ -->
+<section class="section section-alt" id="visual-timeline-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line" aria-hidden="true"></span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-text">1,400-YEAR INTERACTIVE TIMELINE</span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-line" aria-hidden="true"></span>
+    </div>
+    <p class="section-sub">Scroll and click any event to explore. Colour bands show each era.</p>
+
+    <div class="vis-timeline-wrap" id="vis-timeline-wrap" role="region" aria-label="Interactive 1400 year Islamic history timeline">
+      <div class="vis-timeline-inner" id="vis-timeline-inner">
+        <!-- Rendered by explore.js renderVisTimeline() -->
+      </div>
+    </div>
+    <div class="vis-tooltip" id="vis-tooltip" aria-live="polite" aria-atomic="true"></div>
+    <p style="text-align:center;font-size:0.75rem;color:var(--text4);margin-top:12px;">
+      &#x1F4CC; Scroll horizontally to navigate &nbsp;&#xB7;&nbsp; Click any node to open the full entry
+    </p>
+  </div>
+</section>
+
+<!-- ════════ ISLAMIC WORLD MAP ════════ -->
+<section class="section world-map-section" id="world-map-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line" aria-hidden="true"></span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-text">ISLAMIC WORLD MAP</span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-line" aria-hidden="true"></span>
+    </div>
+    <p class="section-sub">Tap any city to see its Islamic history — from Makkah to Córdoba, Baghdad to Istanbul.</p>
+
+    <div class="world-map-container" id="world-map-container">
+      <!-- SVG map rendered by explore.js renderWorldMap() -->
+      <div id="world-map-svg-wrap"></div>
+      <div class="map-info-panel" id="map-info-panel">
+        <p class="map-info-placeholder" id="map-placeholder">&#x1F4CD; Tap a city on the map to see its history</p>
+        <div class="map-info-content" id="map-info-content">
+          <div>
+            <div class="map-info-title" id="map-info-title"></div>
+            <div class="map-info-subtitle" id="map-info-subtitle"></div>
+            <div class="map-info-summary" id="map-info-summary"></div>
+            <a href="#" class="map-info-link" id="map-info-link">Read full entry &#x2192;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PEOPLE EXPLORER ════════ -->
+<section class="section" id="people-explorer-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="sh-line" aria-hidden="true"></span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-text">PEOPLE EXPLORER</span>
+      <span class="sh-icon" aria-hidden="true">◆</span>
+      <span class="sh-line" aria-hidden="true"></span>
+    </div>
+    <p class="section-sub">Prophets, Companions, and Scholars — the people who shaped Islamic civilization.</p>
+
+    <div class="people-tabs" role="tablist" aria-label="People categories">
+      <button class="people-tab active" data-tab="prophets"   role="tab" aria-selected="true"  aria-controls="tab-prophets">&#x1F9BF; Prophets</button>
+      <button class="people-tab"        data-tab="companions" role="tab" aria-selected="false" aria-controls="tab-companions">&#x2B50; Companions</button>
+      <button class="people-tab"        data-tab="scholars"   role="tab" aria-selected="false" aria-controls="tab-scholars">&#x1F4DC; Scholars</button>
+    </div>
+
+    <div class="people-panel active" id="tab-prophets"   role="tabpanel">
+      <div class="people-grid" id="people-grid-prophets"></div>
+    </div>
+    <div class="people-panel"        id="tab-companions" role="tabpanel">
+      <div class="people-grid" id="people-grid-companions"></div>
+    </div>
+    <div class="people-panel"        id="tab-scholars"   role="tabpanel">
+      <div class="people-grid" id="people-grid-scholars"></div>
+    </div>
+  </div>
+</section>
+
 <!-- SECTION 2: ALL ENTRIES (search + filter grid) -->
 <section class="section" id="explore-all">
   <div class="section-inner">
@@ -219,9 +303,9 @@
     <!-- Search + type filter -->
     <div class="explore-filter-bar" id="explore-filter-bar">
       <div class="explore-search-wrap">
-        <span class="explore-search-icon" aria-hidden="true">🔍</span>
+        <span class="explore-search-icon" aria-hidden="true">&#x1F50D;</span>
         <input type="search" class="explore-search" id="explore-search"
-          placeholder="Search Hijrah, Ibn Sina, Baghdad, Companions…"
+          placeholder="Search here, or try the full Search page&#x2026;"
           aria-label="Search Islamic history" autocomplete="off"/>
       </div>
       <button class="filter-chip active" data-type="all">All</button>
@@ -230,6 +314,7 @@
       <button class="filter-chip" data-type="dynasty">Dynasties</button>
       <button class="filter-chip" data-type="place">Places</button>
       <button class="filter-chip" data-type="civilization">Civilizations</button>
+      <a href="search.html" class="filter-chip" style="background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.25);color:var(--teal);text-decoration:none;">&#x1F50E; Full Search</a>
     </div>
 
     <!-- Stats bar -->

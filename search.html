@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>WaqtX — Search Islamic History</title>
+  <meta name="description" content="Search 80+ entries across Islamic history — events, people, dynasties, places, and civilizations. Every result sourced."/>
+  <meta name="theme-color" content="#0B1220"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style-pages.css"/>
+  <script>
+    (function(){
+      var s='dark';try{s=localStorage.getItem('waqtx_theme')||'dark';}catch(e){}
+      if(s&&s!=='dark') document.documentElement.setAttribute('data-theme',s);
+      var fs=null;try{fs=localStorage.getItem('waqtx_fontsize');}catch(e){}
+      if(fs) document.documentElement.setAttribute('data-fontsize',fs);
+    })();
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="WaqtX home">
+      <span class="nav-logo-text">Waqt<span class="nav-logo-x">X</span></span>
+    </a>
+    <div class="nav-pillars" id="nav-pillars">
+      <div class="nav-pillar">
+        <span class="nav-pillar-label">Your Time</span>
+        <a href="index.html"    class="nav-link">Home</a>
+        <a href="prayers.html"  class="nav-link">Prayers</a>
+        <a href="journey.html"  class="nav-link">Journey</a>
+        <a href="calendar.html" class="nav-link">Calendar</a>
+      </div>
+      <div class="nav-pillar">
+        <span class="nav-pillar-label">History</span>
+        <a href="explore.html"  class="nav-link">Explore</a>
+        <a href="stories.html"  class="nav-link">Stories</a>
+        <a href="qibla.html"    class="nav-link">Qibla</a>
+      </div>
+      <div class="nav-pillar">
+        <span class="nav-pillar-label">Reflection</span>
+        <a href="reflection.html" class="nav-link">Reflect</a>
+        <a href="profile.html"    class="nav-link">Profile</a>
+        <a href="settings.html"   class="nav-link">Settings</a>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn" id="lang-btn" aria-label="Change language">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          <span id="lang-current">EN</span>
+        </button>
+        <div class="lang-dropdown hidden" id="lang-dropdown" role="menu">
+          <button class="lang-option active" data-lang="en">English</button>
+          <button class="lang-option" data-lang="ur">Urdu</button>
+          <button class="lang-option" data-lang="ar">Arabic</button>
+          <button class="lang-option" data-lang="roman">Roman Urdu</button>
+        </div>
+      </div>
+      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge">Ramadan</span>
+      <div class="theme-wrapper">
+        <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Change theme">&#9728;&#65039;</button>
+        <div class="theme-dropdown hidden" id="theme-dropdown" role="menu">
+          <button class="theme-option" data-theme="dark">Dark</button>
+          <button class="theme-option" data-theme="light">Light</button>
+          <button class="theme-option" data-theme="ramadan">Ramadan</button>
+          <button class="theme-option" data-theme="friday">Friday</button>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+  <div class="nav-drawer-section">
+    <div class="nav-drawer-label">&#x1F570;&#xFE0F; Your Time</div>
+    <div class="nav-drawer-links">
+      <a href="index.html"    class="nav-link">Home</a>
+      <a href="prayers.html"  class="nav-link">Prayers</a>
+      <a href="journey.html"  class="nav-link">Journey</a>
+      <a href="calendar.html" class="nav-link">Calendar</a>
+    </div>
+  </div>
+  <div class="nav-drawer-section">
+    <div class="nav-drawer-label">&#x1F4DA; Islamic History</div>
+    <div class="nav-drawer-links">
+      <a href="explore.html"  class="nav-link">Explore</a>
+      <a href="stories.html"  class="nav-link">Stories</a>
+      <a href="qibla.html"    class="nav-link">Qibla</a>
+    </div>
+  </div>
+  <div class="nav-drawer-section">
+    <div class="nav-drawer-label">&#x1F319; Reflection</div>
+    <div class="nav-drawer-links">
+      <a href="reflection.html" class="nav-link">Reflect</a>
+      <a href="profile.html"    class="nav-link">Profile</a>
+      <a href="settings.html"   class="nav-link">Settings</a>
+    </div>
+  </div>
+</div>
+<div class="friday-banner hidden" id="friday-banner">
+  Jumu&#x27;ah Mubarak &mdash; May this Friday bring you peace.
+</div>
+
+<!-- SEARCH HERO -->
+<div class="search-hero" id="search-hero">
+  <h1 class="search-hero-title">&#x1F50E; Search Islamic History</h1>
+  <p class="search-hero-sub">Search across <span id="search-total-count">80+</span> entries — events, people, dynasties, places, and civilizations.</p>
+
+  <div class="search-main-wrap">
+    <input
+      type="search"
+      class="search-main-input"
+      id="search-main-input"
+      placeholder="Try: Hijrah, Ibn Sina, Baghdad, Karbala, Companion&#x2026;"
+      aria-label="Search Islamic history"
+      autocomplete="off"
+      autofocus
+    />
+    <button class="search-clear-btn hidden" id="search-clear-btn" aria-label="Clear search">&#x2715;</button>
+  </div>
+</div>
+
+<!-- SEARCH PAGE BODY -->
+<div class="search-page" id="search-page">
+
+  <!-- Filter bar -->
+  <div class="search-filters-bar" id="search-filters-bar">
+    <span class="search-filters-label">Filter:</span>
+    <button class="filter-chip active" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="seerah">&#x1F33F; Seerah</button>
+    <button class="filter-chip" data-filter="prophets">&#x2623;&#xFE0F; Prophets</button>
+    <button class="filter-chip" data-filter="companions">&#x2B50; Companions</button>
+    <button class="filter-chip" data-filter="scholars">&#x1F4DC; Scholars</button>
+    <button class="filter-chip" data-filter="rashidun">Rashidun</button>
+    <button class="filter-chip" data-filter="abbasid">Abbasid</button>
+    <button class="filter-chip" data-filter="ottoman">Ottoman</button>
+    <button class="filter-chip" data-filter="places">&#x1F4CD; Places</button>
+    <button class="filter-chip" data-filter="civilizations">&#x1F3DB;&#xFE0F; Civilizations</button>
+  </div>
+
+  <!-- Results meta -->
+  <div class="search-results-meta" id="search-meta" aria-live="polite"></div>
+
+  <!-- Results -->
+  <div class="search-results-grid" id="search-results" aria-live="polite"></div>
+
+  <!-- Empty / suggestions -->
+  <div class="search-empty hidden" id="search-empty">
+    <div class="search-empty-icon" aria-hidden="true">&#x1F50D;</div>
+    <div id="search-empty-msg">Start typing to search Islamic history</div>
+    <div class="search-suggestions" id="search-suggestions">
+      <button class="search-suggestion-chip" data-q="Hijrah">Hijrah</button>
+      <button class="search-suggestion-chip" data-q="Ibn Sina">Ibn Sina</button>
+      <button class="search-suggestion-chip" data-q="Baghdad">Baghdad</button>
+      <button class="search-suggestion-chip" data-q="Karbala">Karbala</button>
+      <button class="search-suggestion-chip" data-q="Abbasid">Abbasid</button>
+      <button class="search-suggestion-chip" data-q="Salahuddin">Salahuddin</button>
+      <button class="search-suggestion-chip" data-q="Quran">Quran</button>
+      <button class="search-suggestion-chip" data-q="Companion">Companion</button>
+      <button class="search-suggestion-chip" data-q="Cordoba">Córdoba</button>
+      <button class="search-suggestion-chip" data-q="Musa">Prophet Musa</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL (reused from explore) -->
+<div class="history-modal-overlay hidden" id="history-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="history-modal" id="history-modal">
+    <div class="hm-header">
+      <button class="hm-close" id="hm-close-btn" aria-label="Close">&#x2715;</button>
+      <div class="hm-date-row" id="modal-date-row"></div>
+      <h2 class="hm-modal-title" id="modal-title"></h2>
+      <p class="hm-modal-subtitle" id="modal-subtitle"></p>
+    </div>
+    <div class="hm-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Bottom navigation">
+  <a href="index.html"      class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F3E0;</span><span>Home</span></a>
+  <a href="prayers.html"    class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F54C;</span><span>Prayers</span></a>
+  <a href="explore.html"    class="bottom-nav-item"><span class="bottom-nav-icon">&#x1F4DA;</span><span>Explore</span></a>
+  <a href="reflection.html" class="bottom-nav-item"><span class="bottom-nav-icon">&#x1FA94;</span><span>Reflect</span></a>
+  <button class="bottom-nav-item bottom-nav-more" id="btn-bottom-more" aria-label="More" aria-expanded="false">
+    <span class="bottom-nav-icon">&#x22EF;</span><span>More</span>
+  </button>
+</nav>
+<div class="bottom-more-menu hidden" id="bottom-more-menu" role="dialog" aria-label="More pages">
+  <div class="bmm-backdrop" id="bmm-backdrop"></div>
+  <div class="bmm-panel">
+    <div class="bmm-header">
+      <span class="bmm-title">More</span>
+      <button class="bmm-close" id="bmm-close" aria-label="Close">&#x2715;</button>
+    </div>
+    <div class="bmm-grid">
+      <a href="journey.html"  class="bmm-item"><span class="bmm-icon">&#x1F319;</span><span>Journey</span></a>
+      <a href="calendar.html" class="bmm-item"><span class="bmm-icon">&#x1F4C5;</span><span>Calendar</span></a>
+      <a href="stories.html"  class="bmm-item"><span class="bmm-icon">&#x1F4D6;</span><span>Stories</span></a>
+      <a href="qibla.html"    class="bmm-item"><span class="bmm-icon">&#x1F9ED;</span><span>Qibla</span></a>
+      <a href="profile.html"  class="bmm-item"><span class="bmm-icon">&#x1F464;</span><span>Profile</span></a>
+      <a href="settings.html" class="bmm-item"><span class="bmm-icon">&#x2699;&#xFE0F;</span><span>Settings</span></a>
+    </div>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/history-data.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>
