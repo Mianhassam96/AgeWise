@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>WaqtX — Islamic History Explorer</title>
-  <meta name="description" content="Explore 1400 years of Islamic civilization — Prophets, Seerah, Companions, caliphates, scholars, scientists, and the places that shaped history."/>
+  <meta name="description" content="Explore 1400 years of Islamic civilization — Prophets, Seerah, Companions, caliphates, scholars, scientists, and the places that shaped history. Every claim sourced."/>
   <meta name="theme-color" content="#0B1220"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
@@ -19,10 +19,49 @@
       if(s&&s!=='dark') document.documentElement.setAttribute('data-theme',s);
       var fs=null;try{fs=localStorage.getItem('waqtx_fontsize');}catch(e){}
       if(fs) document.documentElement.setAttribute('data-fontsize',fs);
-      var hc=false;try{hc=JSON.parse(localStorage.getItem('waqtx_contrast')||'false');}catch(e){}
-      if(hc) document.documentElement.setAttribute('data-contrast','high');
     })();
   </script>
+  <style>
+    /* ── Explore-page local styles ── */
+    .ev-header { padding: 0 0 var(--sp-7); }
+    .ev-nav-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-3); margin-bottom:var(--sp-5); }
+    .ev-back-btn { font-size:var(--fs-sm); font-weight:700; color:var(--teal); background:none; border:1px solid rgba(20,184,166,0.25); border-radius:var(--radius-pill); padding:6px 14px; cursor:pointer; transition:all var(--transition); }
+    .ev-back-btn:hover { background:rgba(20,184,166,0.08); border-color:rgba(20,184,166,0.4); }
+    .ev-era-nav { display:flex; gap:var(--sp-2); flex-wrap:wrap; }
+    .ev-adj-btn { font-size:var(--fs-sm); font-weight:700; color:var(--gold); background:rgba(201,168,76,0.06); border:1px solid var(--border); border-radius:var(--radius-pill); padding:6px 14px; cursor:pointer; transition:all var(--transition); }
+    .ev-adj-btn:hover { background:rgba(201,168,76,0.14); border-color:var(--border2); }
+    .ev-era-title { font-family:var(--font-heading); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; color:var(--text); letter-spacing:-0.02em; margin-bottom:var(--sp-2); }
+    .ev-era-dates { font-size:var(--fs-base); color:var(--gold); font-weight:700; margin-bottom:var(--sp-2); }
+    .ev-section { margin-top:var(--sp-10); }
+    .ev-section-title { font-family:var(--font-heading); font-size:var(--fs-xs); font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); opacity:0.85; margin-bottom:var(--sp-5); display:flex; align-items:center; gap:var(--sp-3); }
+    .ev-section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+    .ev-civ-card { cursor:pointer; margin-bottom:var(--sp-4); }
+    .ev-civ-card:hover { transform:translateY(-2px); }
+    .ev-people-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:var(--sp-4); }
+    .ev-person-card { background:var(--card-bg); border:1px solid var(--border3); border-radius:var(--radius-lg); padding:var(--sp-5); cursor:pointer; transition:all var(--transition); }
+    .ev-person-card:hover { border-color:var(--border2); background:var(--card-bg2); transform:translateY(-2px); box-shadow:var(--shadow-gold); }
+    .ev-person-name { font-family:var(--font-heading); font-size:var(--fs-md); font-weight:700; color:var(--text); margin-bottom:4px; }
+    .ev-person-sub { font-size:var(--fs-xs); color:var(--gold); font-weight:600; margin-bottom:4px; }
+    .ev-person-dates { font-size:var(--fs-xs); color:var(--text3); margin-bottom:var(--sp-2); }
+    .ev-person-summary { font-size:var(--fs-sm); color:var(--text3); line-height:1.6; }
+    .ev-places-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:var(--sp-4); }
+    .ev-place-card { background:var(--card-bg); border:1px solid var(--border3); border-radius:var(--radius); padding:var(--sp-4); cursor:pointer; transition:all var(--transition); }
+    .ev-place-card:hover { border-color:var(--border); background:var(--card-bg2); }
+    .ev-place-name { font-weight:700; font-size:var(--fs-base); color:var(--text); margin-bottom:4px; }
+    .ev-place-loc { font-size:var(--fs-xs); color:var(--text3); margin-bottom:var(--sp-2); }
+    .ev-place-summary { font-size:var(--fs-sm); color:var(--text3); line-height:1.6; }
+    .ev-topic-row { display:flex; flex-wrap:wrap; gap:var(--sp-2); margin-top:var(--sp-3); }
+    .ev-topic-chip { padding:3px 10px; border-radius:var(--radius-pill); font-size:var(--fs-xs); font-weight:600; background:var(--card-bg2); border:1px solid var(--border3); color:var(--text3); text-transform:capitalize; }
+    /* Era cards */
+    .era-cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:var(--sp-4); margin-bottom:var(--sp-8); }
+    .era-card { display:flex; flex-direction:column; align-items:center; gap:var(--sp-2); background:var(--card-bg); border:1px solid var(--border3); border-radius:var(--radius-lg); padding:var(--sp-5) var(--sp-4); cursor:pointer; transition:all var(--transition); text-align:center; }
+    .era-card:hover { border-color:var(--border2); background:var(--card-bg2); box-shadow:var(--shadow-gold); transform:translateY(-3px); }
+    .era-card-icon { font-size:1.8rem; }
+    .era-card-dates { font-size:var(--fs-xs); color:var(--text4); }
+    .era-card-count { font-size:var(--fs-xs); color:var(--teal); font-weight:700; }
+    /* Stats bar */
+    .explore-stats-bar { font-size:var(--fs-xs); color:var(--text4); text-align:center; margin-bottom:var(--sp-7); letter-spacing:0.02em; }
+  </style>
 </head>
 <body>
 
@@ -82,10 +121,9 @@
     </div>
   </div>
 </nav>
-
 <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
   <div class="nav-drawer-section">
-    <div class="nav-drawer-label">Your Time</div>
+    <div class="nav-drawer-label">&#x1F570;&#xFE0F; Your Time</div>
     <div class="nav-drawer-links">
       <a href="index.html"    class="nav-link">Home</a>
       <a href="prayers.html"  class="nav-link">Prayers</a>
@@ -94,7 +132,7 @@
     </div>
   </div>
   <div class="nav-drawer-section">
-    <div class="nav-drawer-label">Islamic History</div>
+    <div class="nav-drawer-label">&#x1F4DA; Islamic History</div>
     <div class="nav-drawer-links">
       <a href="explore.html"  class="nav-link active">Explore</a>
       <a href="stories.html"  class="nav-link">Stories</a>
@@ -102,7 +140,7 @@
     </div>
   </div>
   <div class="nav-drawer-section">
-    <div class="nav-drawer-label">Reflection</div>
+    <div class="nav-drawer-label">&#x1F319; Reflection</div>
     <div class="nav-drawer-links">
       <a href="reflection.html" class="nav-link">Reflect</a>
       <a href="profile.html"    class="nav-link">Profile</a>
@@ -111,64 +149,69 @@
   </div>
 </div>
 <div class="friday-banner hidden" id="friday-banner">
-  Jumu&#x27;ah Mubarak &mdash; May this Friday bring you peace and blessings.
+  Jumu&#x27;ah Mubarak &mdash; May this Friday bring you peace.
 </div>
 
 <!-- PAGE HERO -->
-<div class="page-hero" style="background:var(--bg2);">
+<div class="page-hero">
   <div class="page-hero-inner">
     <div class="page-hero-icon" aria-hidden="true">📚</div>
     <h1 class="page-hero-title">Islamic History Explorer</h1>
-    <p class="page-hero-sub">1400 years of faith, knowledge, and civilization — with sources, context, and reflection.</p>
-    <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
-      <span class="ev-badge ev-quran"><span class="ev-badge-dot"></span>Quran</span>
-      <span class="ev-badge ev-hadith"><span class="ev-badge-dot"></span>Hadith</span>
-      <span class="ev-badge ev-classical"><span class="ev-badge-dot"></span>Classical Source</span>
-      <span class="ev-badge ev-academic"><span class="ev-badge-dot"></span>Academic</span>
-      <span class="ev-badge ev-disputed"><span class="ev-badge-dot"></span>Disputed</span>
+    <p class="page-hero-sub">1,400 years of faith, knowledge, and civilization — every claim sourced, every uncertainty acknowledged.</p>
+    <div style="display:flex;align-items:center;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;" aria-label="Source types">
+      <span class="ev-badge ev-quran"><span class="ev-badge-dot" aria-hidden="true"></span>Quran</span>
+      <span class="ev-badge ev-hadith"><span class="ev-badge-dot" aria-hidden="true"></span>Hadith</span>
+      <span class="ev-badge ev-classical"><span class="ev-badge-dot" aria-hidden="true"></span>Classical</span>
+      <span class="ev-badge ev-academic"><span class="ev-badge-dot" aria-hidden="true"></span>Academic</span>
+      <span class="ev-badge ev-disputed"><span class="ev-badge-dot" aria-hidden="true"></span>Disputed</span>
     </div>
   </div>
 </div>
 
-<!-- SECTION 1: INTERACTIVE TIMELINE -->
-<section class="section section-alt" id="timeline-section">
+<!-- SECTION 1: ERA CARDS -->
+<section class="section section-alt" id="eras-section">
   <div class="section-inner">
     <div class="section-heading">
       <span class="sh-line" aria-hidden="true"></span>
       <span class="sh-icon" aria-hidden="true">◆</span>
-      <span class="sh-text">ISLAMIC HISTORY TIMELINE</span>
+      <span class="sh-text">EXPLORE BY ERA</span>
       <span class="sh-icon" aria-hidden="true">◆</span>
       <span class="sh-line" aria-hidden="true"></span>
     </div>
-    <p class="section-sub">From the birth of the Prophet ﷺ to the modern era — click any event to explore.</p>
+    <p class="section-sub">Select an era for a complete view — timeline, key figures, places, civilizations, and sources.</p>
 
-    <!-- Era selector -->
-    <div class="explore-filter-bar" id="era-filter-bar" role="tablist" aria-label="Filter by era">
-      <button class="filter-chip active" data-era="all" role="tab" aria-selected="true">All Eras</button>
-      <button class="filter-chip" data-era="seerah"   role="tab" aria-selected="false">Seerah</button>
-      <button class="filter-chip" data-era="rashidun" role="tab" aria-selected="false">Rashidun</button>
-      <button class="filter-chip" data-era="umayyad"  role="tab" aria-selected="false">Umayyad</button>
-      <button class="filter-chip" data-era="abbasid"  role="tab" aria-selected="false">Abbasid</button>
-      <button class="filter-chip" data-era="ottoman"  role="tab" aria-selected="false">Ottoman</button>
+    <!-- Era filter chips (also controls grid below) -->
+    <div class="explore-filter-bar" id="era-filter-bar" role="tablist" aria-label="Filter by era" style="justify-content:center;margin-bottom:24px;">
+      <button class="filter-chip active" data-era="all"       role="tab" aria-selected="true">All Eras</button>
+      <button class="filter-chip" data-era="seerah"    role="tab" aria-selected="false">🌿 Seerah</button>
+      <button class="filter-chip" data-era="rashidun"  role="tab" aria-selected="false">⭐ Rashidun</button>
+      <button class="filter-chip" data-era="umayyad"   role="tab" aria-selected="false">🏛️ Umayyad</button>
+      <button class="filter-chip" data-era="abbasid"   role="tab" aria-selected="false">📜 Abbasid</button>
+      <button class="filter-chip" data-era="ottoman"   role="tab" aria-selected="false">🕌 Ottoman</button>
+      <button class="filter-chip" data-era="scholars"  role="tab" aria-selected="false">🔬 Scholars</button>
     </div>
 
-    <!-- Timeline visual -->
-    <div class="timeline" id="history-timeline" aria-live="polite">
-      <!-- Rendered by JS -->
-      <div class="timeline-loading" style="text-align:center;padding:40px 0;color:var(--text3);">
-        Loading timeline…
-      </div>
+    <!-- Era card buttons (rendered by JS) -->
+    <div class="era-cards-grid" id="era-cards-container" aria-label="Era overview cards"></div>
+  </div>
+</section>
+
+<!-- ERA DETAIL VIEW (hidden until era selected) -->
+<section class="section hidden" id="era-view-section">
+  <div class="section-inner">
+    <div id="era-view-panel">
+      <!-- Rendered by explore.js openEraView() -->
     </div>
   </div>
 </section>
 
-<!-- SECTION 2: EXPLORE ALL -->
+<!-- SECTION 2: ALL ENTRIES (search + filter grid) -->
 <section class="section" id="explore-all">
   <div class="section-inner">
     <div class="section-heading">
       <span class="sh-line" aria-hidden="true"></span>
       <span class="sh-icon" aria-hidden="true">◆</span>
-      <span class="sh-text">EXPLORE ISLAMIC CIVILIZATION</span>
+      <span class="sh-text">ALL ENTRIES</span>
       <span class="sh-icon" aria-hidden="true">◆</span>
       <span class="sh-line" aria-hidden="true"></span>
     </div>
@@ -177,76 +220,72 @@
     <div class="explore-filter-bar" id="explore-filter-bar">
       <div class="explore-search-wrap">
         <span class="explore-search-icon" aria-hidden="true">🔍</span>
-        <input
-          type="search"
-          class="explore-search"
-          id="explore-search"
-          placeholder="Search Hijrah, Ibn Sina, Baghdad, Abbasid…"
-          aria-label="Search Islamic history"
-          autocomplete="off"
-        />
+        <input type="search" class="explore-search" id="explore-search"
+          placeholder="Search Hijrah, Ibn Sina, Baghdad, Companions…"
+          aria-label="Search Islamic history" autocomplete="off"/>
       </div>
       <button class="filter-chip active" data-type="all">All</button>
       <button class="filter-chip" data-type="event">Events</button>
       <button class="filter-chip" data-type="person">People</button>
       <button class="filter-chip" data-type="dynasty">Dynasties</button>
       <button class="filter-chip" data-type="place">Places</button>
+      <button class="filter-chip" data-type="civilization">Civilizations</button>
     </div>
 
+    <!-- Stats bar -->
+    <div class="explore-stats-bar" id="explore-stats-bar" aria-live="polite"></div>
     <!-- Results count -->
     <div id="explore-count" style="font-size:0.8rem;color:var(--text3);margin-bottom:20px;" aria-live="polite"></div>
 
     <!-- Cards grid -->
-    <div class="history-grid" id="history-grid" aria-live="polite">
-      <!-- Rendered by JS -->
-    </div>
+    <div class="history-grid" id="history-grid" aria-live="polite"></div>
 
     <!-- Empty state -->
     <div class="explore-empty hidden" id="explore-empty" style="text-align:center;padding:60px 0;">
-      <div style="font-size:2.5rem;margin-bottom:16px;">🔍</div>
-      <div style="font-size:1rem;color:var(--text3);">No results found. Try a different search or filter.</div>
+      <div style="font-size:2.5rem;margin-bottom:16px;" aria-hidden="true">🔍</div>
+      <div style="font-size:1rem;color:var(--text3);">No results. Try a different search or filter.</div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 3: SOURCE METHODOLOGY NOTE -->
+<!-- SECTION 3: SOURCE PHILOSOPHY -->
 <section class="section section-alt" id="sources-note">
   <div class="section-inner" style="max-width:720px;">
     <div class="section-heading">
       <span class="sh-line" aria-hidden="true"></span>
       <span class="sh-icon" aria-hidden="true">◆</span>
-      <span class="sh-text">OUR APPROACH TO SOURCES</span>
+      <span class="sh-text">BEAUTIFUL ENOUGH TO EXPLORE. CAREFUL ENOUGH TO TRUST.</span>
       <span class="sh-icon" aria-hidden="true">◆</span>
       <span class="sh-line" aria-hidden="true"></span>
     </div>
     <div class="card card-gold" style="max-width:680px;margin:0 auto;">
-      <p style="font-size:0.95rem;color:var(--text2);line-height:1.85;margin-bottom:16px;">
-        WaqtX treats Islamic knowledge with honesty and care. Every item in our history database is tagged with its source type and certainty level — so you always know the basis of what you are reading.
+      <p style="font-size:0.95rem;color:var(--text2);line-height:1.85;margin-bottom:18px;">
+        WaqtX treats Islamic knowledge with honesty. Every entry is tagged with its evidence type and certainty level — so you always know the basis of what you are reading.
       </p>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
         <div style="display:flex;align-items:flex-start;gap:12px;">
           <span class="ev-badge ev-quran" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Quran</span>
-          <span style="font-size:0.85rem;color:var(--text3);">Direct verse references. The Quran is the primary source and takes precedence in all religious matters.</span>
+          <span style="font-size:0.85rem;color:var(--text3);">Direct verse references. Primary source. Takes precedence in all religious matters.</span>
         </div>
         <div style="display:flex;align-items:flex-start;gap:12px;">
           <span class="ev-badge ev-hadith" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Hadith</span>
-          <span style="font-size:0.85rem;color:var(--text3);">Referenced with collection, chapter, and hadith number. Grading (sahih/hasan/etc.) noted where relevant.</span>
+          <span style="font-size:0.85rem;color:var(--text3);">Collection + chapter + hadith number. Grading (sahih/hasan) noted where relevant.</span>
         </div>
         <div style="display:flex;align-items:flex-start;gap:12px;">
-          <span class="ev-badge ev-classical" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Classical Source</span>
-          <span style="font-size:0.85rem;color:var(--text3);">Traditional Muslim scholarship — Sirah, Tabari, Ibn Sa'd, al-Baladhuri, and others. These are our primary historical narratives.</span>
+          <span class="ev-badge ev-classical" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Classical</span>
+          <span style="font-size:0.85rem;color:var(--text3);">Ibn Hisham, al-Tabari, Ibn Sa'd, al-Baladhuri, Ibn Kathir and other major traditional sources.</span>
         </div>
         <div style="display:flex;align-items:flex-start;gap:12px;">
           <span class="ev-badge ev-academic" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Academic</span>
-          <span style="font-size:0.85rem;color:var(--text3);">Modern historical scholarship. Valuable for context and corroboration, but distinct from religious authority.</span>
+          <span style="font-size:0.85rem;color:var(--text3);">Modern historical scholarship. Valuable for context and corroboration — distinct from religious authority.</span>
         </div>
         <div style="display:flex;align-items:flex-start;gap:12px;">
           <span class="ev-badge ev-disputed" style="flex-shrink:0;"><span class="ev-badge-dot"></span>Disputed</span>
-          <span style="font-size:0.85rem;color:var(--text3);">Where different historical accounts exist, we note the disagreement rather than presenting one version as unquestionable fact.</span>
+          <span style="font-size:0.85rem;color:var(--text3);">Where different accounts exist, we say so — rather than presenting one version as unquestionable.</span>
         </div>
       </div>
       <p style="font-size:0.8rem;color:var(--text4);line-height:1.7;">
-        This approach makes WaqtX more credible, not less. Honest acknowledgment of what is established vs. debated is a sign of scholarly integrity — a value central to the Islamic tradition of &#x2018;ilm (knowledge).
+        Honest acknowledgment of what is established vs. debated is a sign of scholarly integrity — a value central to the Islamic tradition of &#x2018;ilm (knowledge).
       </p>
     </div>
   </div>
@@ -256,14 +295,12 @@
 <div class="history-modal-overlay hidden" id="history-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="history-modal" id="history-modal">
     <div class="hm-header">
-      <button class="hm-close" id="hm-close-btn" aria-label="Close detail panel">&#x2715;</button>
+      <button class="hm-close" id="hm-close-btn" aria-label="Close">&#x2715;</button>
       <div class="hm-date-row" id="modal-date-row"></div>
       <h2 class="hm-modal-title" id="modal-title"></h2>
       <p class="hm-modal-subtitle" id="modal-subtitle"></p>
     </div>
-    <div class="hm-body" id="modal-body">
-      <!-- Rendered by JS -->
-    </div>
+    <div class="hm-body" id="modal-body"></div>
   </div>
 </div>
 
