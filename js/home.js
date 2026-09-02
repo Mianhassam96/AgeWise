@@ -450,34 +450,108 @@ function _updateHomeMuhasabahStatus() {
 
 /* ══════════════════════════════════════
    THIS DAY IN ISLAMIC HISTORY
-   Rotates through a curated list by day of year
+   Pulls from WAQTX_HISTORY (history-data.js)
+   with dayOfYear matching, falling back to
+   a modulo rotation across all events.
    ══════════════════════════════════════ */
-var THIS_DAY_EVENTS = [
-  { year: '622 CE', title: 'The Hijrah — A Journey of Faith', body: 'The Prophet ﷺ and his companions departed Makkah for Madinah — sacrificing home, wealth, and comfort for the sake of Allah. This migration marked the beginning of the Islamic calendar and a new era.', reflection: 'The believer is always willing to leave behind what is comfortable for what is right.' },
-  { year: '610 CE', title: 'The First Revelation', body: 'In the Cave of Hira, the Angel Jibreel appeared to the Prophet ﷺ with the first verses of the Quran: "Recite in the name of your Lord who created." A single night that changed history forever.', reflection: 'Every great journey begins with a single moment of clarity. Be present for yours.' },
-  { year: '630 CE', title: 'The Opening of Makkah', body: 'The Prophet ﷺ entered Makkah with ten thousand companions — not as a conqueror seeking revenge, but as a mercy. He forgave those who had persecuted him for 20 years.', reflection: 'Forgiveness at the peak of power is the highest form of character.' },
-  { year: '624 CE', title: 'The Battle of Badr', body: 'A small Muslim army of 313 faced an army of 1,000. Against all odds, they were victorious — a turning point in Islamic history. Allah sent angels to aid those who stood for truth.', reflection: 'Numbers do not determine victory. Character and tawakkul do.' },
-  { year: '570 CE', title: 'The Year of the Elephant', body: 'Abraha marched toward Makkah with an army and elephants to destroy the Kaaba. Allah sent birds carrying stones that destroyed the army before they reached their goal.', reflection: 'What Allah protects cannot be harmed, no matter how powerful the opposition.' },
-  { year: '632 CE', title: 'The Farewell Sermon', body: 'The Prophet ﷺ addressed 124,000 companions on Mount Arafat — declaring the equality of all people, the sanctity of life and property, and the completion of the religion.', reflection: 'Every day is a chance to live the values the Prophet ﷺ described as the foundation of faith.' },
-  { year: '680 CE', title: 'The Day of Ashura', body: "Imam Hussain (RA), the grandson of the Prophet ﷺ, stood for justice against oppression at Karbala. His sacrifice is remembered as one of the most profound moments of courage in Islamic history.", reflection: 'Some things are worth standing for, even when the cost is everything.' },
-  { year: '711 CE', title: 'The Opening of Andalusia', body: 'Tariq ibn Ziyad led a small Muslim army across the strait to Spain, beginning 800 years of Islamic civilization in Europe. He burned the boats so his men had no choice but to move forward.', reflection: 'Commitment means removing the option to retreat.' },
-  { year: '1258 CE', title: 'The Fall of Baghdad', body: 'The Mongols destroyed the Abbasid caliphate and the House of Wisdom — but Islam survived. Within a generation, the Mongols themselves had embraced the faith they tried to destroy.', reflection: 'Institutions can fall. Iman cannot be conquered.' },
-  { year: '1187 CE', title: 'Saladin and Jerusalem', body: "Salahuddin Ayyubi recaptured Jerusalem — and unlike the Crusaders before him, he entered the city without massacre, granting safety to its people. His mercy was his greatest victory.", reflection: 'The most powerful statement is not a sword — it is the quality of your character when you win.' },
-  { year: '652 CE', title: 'The Compilation of the Quran', body: 'Caliph Uthman (RA) oversaw the compilation of the Quran into a single, standardised manuscript — ensuring the preservation of Allah\'s words for all generations until the Day of Judgment.', reflection: 'You hold in your hands a book that has been preserved for 1,400 years. How often do you open it?' },
-  { year: '615 CE', title: 'The Migration to Abyssinia', body: 'When persecution in Makkah became unbearable, the Prophet ﷺ sent his companions to seek refuge with the Christian king of Abyssinia — a king who protected Muslims for the sake of justice.', reflection: 'Justice has no religion. When it exists, it must be honoured.' }
-];
-
 function initThisDaySection() {
-  var dayOfYear = Math.floor(
-    (Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000
-  );
-  var event = THIS_DAY_EVENTS[dayOfYear % THIS_DAY_EVENTS.length];
-  if (!event) return;
+  var card = el('this-day-card');
+  if (!card) return;
 
-  setText('td-year',       event.year);
-  setText('td-title',      event.title);
-  setText('td-body',       event.body);
-  setText('td-reflection', event.reflection);
+  /* Use structured history data if available */
+  if (window.WAQTX_HISTORY && WAQTX_HISTORY.getTodayEntry) {
+    var entry = WAQTX_HISTORY.getTodayEntry();
+    if (entry) {
+      _renderThisDayFromHistory(entry);
+      return;
+    }
+  }
+
+  /* Fallback static list (shown if history-data.js not loaded) */
+  var FALLBACK = [
+    { year: '622 CE · 1 AH', title: 'The Hijrah — A Journey of Faith',
+      body: 'The Prophet ﷺ and his companions departed Makkah for Madinah — sacrificing home, wealth, and comfort for the sake of Allah. This migration marked the beginning of the Islamic calendar.',
+      reflection: 'The believer is always willing to leave behind what is comfortable for what is right.',
+      sources: [] },
+    { year: '610 CE · 13 BH', title: 'The First Revelation',
+      body: 'In the Cave of Hira, the Angel Jibreel appeared to the Prophet ﷺ with the first verses of the Quran: "Recite in the name of your Lord who created." A single night that changed history forever.',
+      reflection: 'Every great journey begins with a single moment of clarity. Be present for yours.',
+      sources: [] },
+    { year: '630 CE · 8 AH', title: 'The Opening of Makkah',
+      body: 'The Prophet ﷺ entered Makkah with ten thousand companions — not as a conqueror, but as a mercy. He forgave those who had persecuted him and his companions for over two decades.',
+      reflection: 'Forgiveness at the peak of power is the highest form of character.',
+      sources: [] },
+    { year: '624 CE · 2 AH', title: 'The Battle of Badr',
+      body: 'A Muslim army of 313 faced a Quraysh force of 1,000. Against all odds, they were victorious. The Quran calls it "Yawm al-Furqan" — the Day of Distinction.',
+      reflection: 'Numbers do not determine victory. Tawakkul and character do.',
+      sources: [] },
+    { year: '1258 CE · 656 AH', title: 'The Fall of Baghdad',
+      body: 'The Mongols destroyed the Abbasid caliphate and the House of Wisdom. But Islam survived — within a generation, the Mongols themselves had embraced the faith.',
+      reflection: 'Institutions can fall. Iman cannot be conquered.',
+      sources: [] },
+    { year: '1187 CE · 583 AH', title: 'Salahuddin Recaptures Jerusalem',
+      body: 'Salahuddin Ayyubi entered Jerusalem peacefully after defeating the Crusaders at Hattin — granting safety to its people where the Crusaders had once shown none.',
+      reflection: 'The most powerful statement is not a sword — it is your character when you win.',
+      sources: [] }
+  ];
+
+  var doy = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  var entry = FALLBACK[doy % FALLBACK.length];
+  _renderThisDayStatic(entry);
+}
+
+function _renderThisDayFromHistory(entry) {
+  /* Date line */
+  var dateStr = entry.date.gregorian;
+  if (entry.date.hijri) dateStr += ' · ' + entry.date.hijri;
+  setText('td-year', dateStr);
+
+  /* Title + body */
+  setText('td-title', entry.title);
+  setText('td-body',  entry.summary);
+
+  /* Reflection prompt */
+  var tdRefl = el('td-reflection');
+  if (tdRefl) {
+    tdRefl.textContent = entry.subtitle
+      ? 'Context: ' + entry.subtitle
+      : 'What does this moment in Islamic history mean for your life today?';
+  }
+
+  /* Source badges */
+  var badgeContainer = el('td-sources');
+  if (badgeContainer && entry.sources && entry.sources.length) {
+    var H = window.WAQTX_HISTORY;
+    var badges = entry.sources.slice(0, 3).map(function(src) {
+      return '<span class="ev-badge ' + H.evClass(src.type) + '">' +
+             '<span class="ev-badge-dot"></span>' +
+             _escHtml(H.sourceTypeLabel(src.type)) +
+             (src.ref ? ': ' + _escHtml(src.ref.substring(0, 40)) + (src.ref.length > 40 ? '…' : '') : '') +
+             '</span>';
+    }).join('');
+    badgeContainer.innerHTML = badges;
+  }
+
+  /* Link to full entry on explore page */
+  var tdCta = document.querySelector('#this-day-card .td-cta');
+  if (tdCta && entry.id) {
+    tdCta.href = 'explore.html#' + entry.id;
+    tdCta.textContent = 'Read full entry →';
+  }
+}
+
+function _renderThisDayStatic(entry) {
+  if (!entry) return;
+  setText('td-year',       entry.year);
+  setText('td-title',      entry.title);
+  setText('td-body',       entry.body);
+  setText('td-reflection', entry.reflection);
+}
+
+/* Simple HTML escaper used by This Day renderer */
+function _escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 /* ══════════════════════════════════════
@@ -489,10 +563,11 @@ function initSpiritualProgress() {
   var gratitudePct = _calcGratitudeDays(30);
   var streak       = recalcStreak();
 
-  setText('sp-prayer-pct',   prayerPct + '%');
-  setText('sp-reflect-pct',  reflectPct + '%');
-  setText('sp-gratitude-pct',gratitudePct + '%');
-  setText('sp-streak-val',   streak);
+  /* IDs match index.html: sp-prayer, sp-reflect, sp-gratitude, sp-streak */
+  setText('sp-prayer',    prayerPct + '%');
+  setText('sp-reflect',   reflectPct + '%');
+  setText('sp-gratitude', gratitudePct + '%');
+  setText('sp-streak',    streak);
 
   _setProgressBar('sp-bar-prayer',    prayerPct);
   _setProgressBar('sp-bar-reflect',   reflectPct);

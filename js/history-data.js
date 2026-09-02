@@ -719,6 +719,328 @@ WAQTX_HISTORY.certClass = function(certainty) {
   return map[certainty] || 'cert-probable';
 };
 
+/* ══════════════════════════════════════
+   PHASE 2 ADDITIONS — Events
+   ══════════════════════════════════════ */
+WAQTX_HISTORY.events.push(
+  {
+    id: 'caliphate-uthman',
+    type: 'event',
+    era: 'rashidun',
+    title: 'Caliphate of Uthman ibn Affan',
+    subtitle: 'The Quran standardised — the empire expanded',
+    date: { hijri: '23–35 AH', gregorian: '644–656 CE' },
+    location: 'Madinah',
+    summary: 'Uthman ibn Affan, the third Caliph and son-in-law of the Prophet ﷺ, oversaw the most far-reaching achievement in Islamic textual history: the standardisation of the Quranic manuscript. Under his leadership, an authoritative text was compiled and copies sent to major cities. His caliphate also saw the Islamic state expand into North Africa, Cyprus, and Central Asia.',
+    details: 'Uthman was selected as Caliph by a shura (consultative council) of six. His greatest legacy is the Uthmanic codex — establishing the single authoritative text of the Quran from the earlier compilation of Abu Bakr, and sending copies (masahif) to Kufa, Basra, Damascus, and Makkah, with the original retained in Madinah. His later years saw increasing internal dissent, and he was assassinated in 656 CE by rebels who had travelled from Egypt — a moment that precipitated the first fitna (civil strife) in the Muslim community.',
+    people: ['uthman-ibn-affan', 'zayd-ibn-thabit', 'ali-ibn-abi-talib'],
+    relatedEvents: ['caliphate-umar', 'caliphate-ali', 'compilation-of-quran'],
+    relatedPlaces: ['madinah'],
+    sources: [
+      { type: 'hadith', ref: 'Sahih al-Bukhari, Kitab Fada\'il al-Quran', note: 'Narrations about the Quran compilation, graded sahih' },
+      { type: 'classical', ref: 'Al-Tabari, Tarikh al-Rusul wal-Muluk', note: 'Primary historical source' },
+      { type: 'academic', ref: 'Hugh Kennedy, The Prophet and the Age of the Caliphates (1986)' }
+    ],
+    certainty: 'probable',
+    tags: ['rashidun', 'caliph', 'uthman', 'quran', 'madinah', 'compilation'],
+    dayOfYear: 15
+  },
+  {
+    id: 'battle-of-karbala',
+    type: 'event',
+    era: 'umayyad',
+    title: 'The Battle of Karbala',
+    subtitle: 'The martyrdom of Husayn ibn Ali — a day that shaped Islamic history',
+    date: { hijri: '10 Muharram 61 AH', gregorian: '10 October 680 CE' },
+    location: 'Karbala, modern Iraq',
+    summary: 'On the 10th of Muharram (Ashura), Husayn ibn Ali — grandson of the Prophet Muhammad ﷺ and son of Ali ibn Abi Talib — was killed along with most of his male companions near Karbala by forces loyal to Yazid ibn Muawiyah. Husayn had refused to pledge allegiance to Yazid, whom he considered an unjust ruler. His death became the defining event of Shia Islam and is mourned annually as Ashura.',
+    details: 'Husayn had left Madinah after refusing to give bay\'a (allegiance) to Yazid. He received letters from supporters in Kufa promising support, but when he arrived in Iraq with a small group of family and companions (around 72 fighters), the Kufan support failed to materialise. The Umayyad army surrounded them at Karbala and cut off their water supply. Husayn and the men with him were killed; the women and children were taken captive to Yazid\'s court in Damascus. The event is universally mourned in Islamic tradition, though its theological significance differs between Sunni and Shia Muslims. The classical sources for this event include both pro-Umayyad and pro-Alid perspectives.',
+    people: ['husayn-ibn-ali', 'yazid-ibn-muawiyah', 'ali-ibn-abi-talib', 'zaynab-bint-ali'],
+    relatedEvents: ['umayyad-caliphate', 'caliphate-ali', 'battle-of-siffin'],
+    relatedPlaces: ['karbala', 'kufa', 'madinah', 'damascus'],
+    sources: [
+      { type: 'classical', ref: 'Al-Tabari, Tarikh al-Rusul wal-Muluk, Vol. 19', note: 'Most detailed classical account, drawn from Abu Mikhnaf (pro-Alid source) — reliability debated by some scholars' },
+      { type: 'classical', ref: 'Ibn Sa\'d, Kitab al-Tabaqat al-Kabir', note: 'Biographical detail' },
+      { type: 'academic', ref: 'Heinz Halm, Shi\'a Islam: From Religion to Revolution (1997)', note: 'Academic analysis of the theological significance' },
+      { type: 'disputed', ref: 'Note: Some narrative details about the number of letters from Kufa and exact troop numbers vary between classical sources', note: 'Disputed elements in classical accounts' }
+    ],
+    certainty: 'established',
+    tags: ['umayyad', 'karbala', 'husayn', 'ashura', 'martyrdom', 'ahl-al-bayt', 'shia'],
+    dayOfYear: 10
+  },
+  {
+    id: 'conquest-of-makkah',
+    type: 'event',
+    era: 'seerah',
+    title: 'The Opening of Makkah',
+    subtitle: 'Victory without bloodshed — forgiveness at the peak of power',
+    date: { hijri: 'Ramadan 8 AH', gregorian: 'January 630 CE' },
+    location: 'Makkah',
+    summary: 'Eight years after the Hijrah, the Prophet Muhammad ﷺ returned to Makkah with an army of ten thousand. The Quraysh offered little resistance. The Prophet ﷺ entered the city peacefully, went to the Kaaba, removed the idols, and declared a general amnesty — famously forgiving those who had persecuted him and his followers for over two decades.',
+    details: 'The conquest of Makkah is one of the most celebrated events in Islamic history. The Prophet\'s declaration of amnesty — "Go, for you are free" — to the Quraysh leaders who had persecuted Muslims for years exemplified the Quranic injunction to repel evil with good. The Quran describes this as a "manifest victory." Bilal ibn Rabah, the freed Abyssinian slave, gave the adhan from the top of the Kaaba — one of history\'s most powerful symbolic moments. Abu Sufyan, who had led the opposition to Islam for years, accepted Islam on the day of the conquest.',
+    people: ['muhammad-pbuh', 'abu-bakr-al-siddiq', 'khalid-ibn-al-walid', 'bilal-ibn-rabah', 'abu-sufyan'],
+    relatedEvents: ['hijrah', 'battle-of-badr', 'farewell-pilgrimage'],
+    relatedPlaces: ['makkah', 'kaaba', 'madinah'],
+    sources: [
+      { type: 'quran', ref: 'Surah Al-Fath 48:1', note: '"Indeed We have granted you a manifest victory"' },
+      { type: 'hadith', ref: 'Sahih al-Bukhari, Kitab al-Maghazi', note: 'Multiple narrations, graded sahih' },
+      { type: 'classical', ref: 'Ibn Hisham, Sirat Rasul Allah', note: 'Primary narrative account' }
+    ],
+    certainty: 'established',
+    tags: ['seerah', 'makkah', 'victory', 'conquest', 'forgiveness', 'bilal', 'kaaba'],
+    dayOfYear: 62
+  },
+  {
+    id: 'mongol-sack-of-baghdad',
+    type: 'event',
+    era: 'abbasid',
+    title: 'The Mongol Sack of Baghdad',
+    subtitle: 'The destruction of the Abbasid Caliphate and the House of Wisdom',
+    date: { hijri: 'Safar 656 AH', gregorian: 'February 1258 CE' },
+    location: 'Baghdad, modern Iraq',
+    summary: 'Hulagu Khan\'s Mongol army sacked Baghdad, executing the Abbasid Caliph al-Musta\'sim and devastating what had been the intellectual capital of the Islamic world for five centuries. The libraries of the House of Wisdom were destroyed, the canals of Mesopotamia were wrecked, and hundreds of thousands were killed. It was one of the most catastrophic events in Islamic history.',
+    details: 'The Mongol assault on Baghdad lasted from January to February 1258. Classical sources describe the Tigris running black with the ink of destroyed books and red with blood. The exact death toll is disputed in classical and modern sources — figures ranging from 90,000 to 800,000 appear, and modern historians generally consider the highest numbers exaggerated. The event effectively ended the Abbasid Caliphate as a political power, though a puppet Abbasid caliphate continued in Cairo under the Mamluks. Islam itself survived: within a generation, the Mongols who settled in Persia and the Middle East converted to Islam, and the Ilkhanid state became a Muslim polity.',
+    people: ['hulagu-khan', 'al-mustasim', 'ibn-al-alqami'],
+    relatedEvents: ['abbasid-caliphate', 'house-of-wisdom', 'mamluk-dynasty'],
+    relatedPlaces: ['baghdad'],
+    sources: [
+      { type: 'classical', ref: 'Ibn Kathir, Al-Bidaya wal-Nihaya (The Beginning and the End)', note: 'Major classical historical source' },
+      { type: 'classical', ref: 'Ibn al-Athir, Al-Kamil fi al-Tarikh', note: 'Earlier classical source, contemporary to the events' },
+      { type: 'academic', ref: 'David Morgan, The Mongols (1986)', note: 'Standard academic history' },
+      { type: 'disputed', ref: 'Death toll figures (90,000–800,000) vary widely across sources and are debated by modern historians', note: 'Numbers disputed' }
+    ],
+    certainty: 'established',
+    tags: ['abbasid', 'baghdad', 'mongols', 'destruction', 'caliphate', 'house-of-wisdom'],
+    dayOfYear: 40
+  },
+  {
+    id: 'conquest-of-constantinople',
+    type: 'event',
+    era: 'ottoman',
+    title: 'The Ottoman Conquest of Constantinople',
+    subtitle: 'Sultan Mehmed II fulfils a prophecy — the fall of the Byzantine Empire',
+    date: { hijri: 'Jumada al-Awwal 857 AH', gregorian: '29 May 1453 CE' },
+    location: 'Constantinople (Istanbul), modern Turkey',
+    summary: 'At the age of 21, Ottoman Sultan Mehmed II conquered Constantinople — the capital of the Byzantine Empire for over a thousand years — after a 53-day siege. The Prophet Muhammad ﷺ had praised in hadith the commander who would conquer the city. The conquest ended the Byzantine Empire and marked the beginning of the Ottoman Empire\'s dominance of the eastern Mediterranean.',
+    details: 'The conquest of Constantinople had been attempted by Muslim rulers multiple times since the Umayyad period. Mehmed II employed massive cannons (including the famous Basilica cannon, designed by a Hungarian engineer) to breach the Theodosian Walls — previously considered impregnable. After the conquest, Mehmed converted the Hagia Sophia into a mosque and declared himself "Kayser-i Rum" (Caesar of Rome). The Prophet\'s hadith praising the commander of this conquest — narrated in Musnad Ahmad — has been cited by Muslim scholars for centuries as fulfilled by Mehmed, though the hadith\'s chain is discussed in hadith science.',
+    people: ['mehmed-ii', 'constantine-xi', 'khalid-ibn-al-walid'],
+    relatedEvents: ['ottoman-empire', 'fall-of-constantinople'],
+    relatedPlaces: ['istanbul', 'hagia-sophia'],
+    sources: [
+      { type: 'hadith', ref: 'Musnad Ahmad, 18957', note: '"Verily, Constantinople shall be conquered... What a wonderful commander its commander shall be, and what a wonderful army that army shall be" — graded hasan by most hadith scholars, though its chain is discussed' },
+      { type: 'academic', ref: 'Roger Crowley, 1453: The Holy War for Constantinople (2005)', note: 'Accessible narrative history' },
+      { type: 'academic', ref: 'Steven Runciman, The Fall of Constantinople 1453 (1965)', note: 'Classic academic study' }
+    ],
+    certainty: 'established',
+    tags: ['ottoman', 'istanbul', 'mehmed', 'byzantines', 'conquest', 'hagia-sophia'],
+    dayOfYear: 149
+  },
+  {
+    id: 'salahuddin-jerusalem',
+    type: 'event',
+    era: 'abbasid',
+    title: 'Salahuddin Recaptures Jerusalem',
+    subtitle: 'Victory with mercy — the exemplary conduct of an Islamic ruler',
+    date: { hijri: '27 Rajab 583 AH', gregorian: '2 October 1187 CE' },
+    location: 'Jerusalem (al-Quds)',
+    summary: 'Salahuddin Ayyubi (Saladin) recaptured Jerusalem from Crusader rule after 88 years, following his decisive victory at the Battle of Hattin. Unlike the Crusader conquest of 1099 — in which thousands of Muslims and Jews were massacred — Salahuddin entered peacefully, allowed Christian residents to ransom themselves, and protected the city\'s churches. His conduct became a byword for Islamic chivalry.',
+    details: 'The Battle of Hattin (July 1187) had destroyed the main Crusader army. Jerusalem fell without significant resistance. The contrast between the Crusader conquest of 1099 (described in graphic terms by both Muslim and Christian sources) and Salahuddin\'s entry was noted by contemporaries. He allowed the Crusader garrison and civilian population to leave safely. Salahuddin restored the al-Aqsa Mosque to its function as a mosque, and reinstated Muslim and Jewish access to their holy sites. He is remembered by both Muslim and Western historians as one of the most honourable military commanders in medieval history.',
+    people: ['salahuddin-ayyubi', 'guy-of-lusignan', 'reginald-of-chatillon'],
+    relatedEvents: ['crusades', 'battle-of-hattin', 'ayyubid-dynasty'],
+    relatedPlaces: ['jerusalem', 'damascus', 'egypt'],
+    sources: [
+      { type: 'classical', ref: 'Ibn Shaddad, Al-Nawadir al-Sultaniyya (biography of Salahuddin)', note: 'Written by Salahuddin\'s personal secretary and companion' },
+      { type: 'classical', ref: 'Imad al-Din al-Isfahani, Al-Barq al-Shami', note: 'Contemporary account by a court secretary' },
+      { type: 'academic', ref: 'Jonathan Phillips, Holy Warriors: A Modern History of the Crusades (2009)', note: 'Academic overview' },
+      { type: 'academic', ref: 'Anne-Marie Eddé, Saladin (2011, English trans. 2014)', note: 'Major academic biography' }
+    ],
+    certainty: 'established',
+    tags: ['ayyubid', 'salahuddin', 'jerusalem', 'crusades', 'mercy', 'al-aqsa'],
+    dayOfYear: 275
+  },
+  {
+    id: 'fall-of-granada',
+    type: 'event',
+    era: 'umayyad',
+    title: 'The Fall of Granada',
+    subtitle: 'The end of 800 years of Islamic civilization in Europe',
+    date: { hijri: 'Rabi\' al-Awwal 897 AH', gregorian: '2 January 1492 CE' },
+    location: 'Granada, modern Spain',
+    summary: 'Sultan Muhammad XII (Boabdil) surrendered Granada — the last Muslim kingdom in the Iberian Peninsula — to Ferdinand and Isabella of Spain, ending nearly 800 years of Muslim presence in al-Andalus. It was the culmination of the Christian Reconquista and one of the most significant geopolitical shifts of the 15th century.',
+    details: 'The fall of Granada in 1492 — the same year Columbus sailed to the Americas — marked the end of a long era. The Nasrid dynasty had ruled Granada since 1230, maintaining a sophisticated court culture. The terms of surrender initially promised religious freedom for Muslims; within a decade these promises were broken, and forced conversion or expulsion followed. The "Last Sigh of the Moor" — Boabdil allegedly weeping as he looked back at the Alhambra — is a famous story that appears in later Spanish chronicles, though its historicity is uncertain. The Alhambra palace remains one of the greatest examples of Islamic architecture in the world.',
+    people: ['muhammad-xii-boabdil', 'ferdinand-ii-of-aragon', 'isabella-i-of-castile'],
+    relatedEvents: ['andalus', 'umayyad-caliphate'],
+    relatedPlaces: ['granada', 'cordoba', 'seville'],
+    sources: [
+      { type: 'academic', ref: 'L.P. Harvey, Islamic Spain, 1250–1500 (1990)', note: 'Standard academic history of late al-Andalus' },
+      { type: 'academic', ref: 'Hugh Kennedy, Muslim Spain and Portugal (1996)' },
+      { type: 'disputed', ref: 'The "Last Sigh" story appears in later chronicles; its historicity is uncertain', note: 'Famous but disputed detail' }
+    ],
+    certainty: 'established',
+    tags: ['andalus', 'granada', 'spain', 'end', 'reconquista', 'alhambra'],
+    dayOfYear: 2
+  }
+);
+
+/* ══════════════════════════════════════
+   PHASE 2 ADDITIONS — People
+   ══════════════════════════════════════ */
+WAQTX_HISTORY.people.push(
+  {
+    id: 'uthman-ibn-affan',
+    type: 'person',
+    era: 'rashidun',
+    title: 'Uthman ibn Affan (RA)',
+    subtitle: 'Dhul-Nurayn — The one with two lights. Third Caliph of Islam',
+    date: { hijri: 'c. 576–35 AH', gregorian: 'c. 576–656 CE' },
+    location: 'Makkah, then Madinah',
+    summary: 'Uthman ibn Affan was among the earliest converts to Islam and married two daughters of the Prophet ﷺ (hence "Dhul-Nurayn" — possessor of two lights). He was known for his extraordinary generosity, equipping the Army of Hardship (Jaysh al-Usra) largely from his own wealth. As the third Caliph, his greatest achievement was the standardisation of the Quranic text.',
+    details: 'Uthman financed the expansion of the Masjid al-Nabawi and purchased the well of Ruma to provide free water to the Muslim community in Madinah. His selection as Caliph followed a consultative process after Umar\'s assassination. The standardisation of the Quran under his supervision is considered one of the most consequential acts in Islamic history, ensuring a single authoritative text across the expanding Muslim world. His later caliphate was marked by growing dissent, partly over appointments of relatives to governorships. He was killed by rebels in 656 CE while reciting the Quran — a detail attested in multiple classical sources.',
+    people: ['muhammad-pbuh', 'abu-bakr-al-siddiq', 'umar-ibn-al-khattab', 'ali-ibn-abi-talib', 'zayd-ibn-thabit'],
+    relatedEvents: ['caliphate-uthman', 'compilation-of-quran', 'death-of-prophet'],
+    relatedPlaces: ['makkah', 'madinah'],
+    sources: [
+      { type: 'hadith', ref: 'Sahih al-Bukhari, Kitab Fada\'il al-Sahabah and Kitab Fada\'il al-Quran', note: 'Multiple authentic narrations' },
+      { type: 'classical', ref: 'Ibn Sa\'d, Kitab al-Tabaqat al-Kabir, Vol. 3', note: 'Primary biographical source' },
+      { type: 'academic', ref: 'Hugh Kennedy, The Prophet and the Age of the Caliphates (1986)' }
+    ],
+    certainty: 'established',
+    tags: ['companion', 'caliph', 'rashidun', 'quran', 'madinah', 'generosity'],
+    dayOfYear: null
+  },
+  {
+    id: 'husayn-ibn-ali',
+    type: 'person',
+    era: 'umayyad',
+    title: 'Husayn ibn Ali (RA)',
+    subtitle: 'Sayyid al-Shuhada — Grandson of the Prophet ﷺ, martyr of Karbala',
+    date: { hijri: 'c. 4–61 AH', gregorian: 'c. 626–680 CE' },
+    location: 'Madinah (born), Makkah, Karbala',
+    summary: 'Husayn ibn Ali was the younger son of Ali ibn Abi Talib and Fatimah al-Zahra, and the grandson of the Prophet Muhammad ﷺ. The Prophet ﷺ said of him and his brother Hasan: "They are the masters of the youth of Paradise." His refusal to pledge allegiance to Yazid ibn Muawiyah, and his martyrdom at Karbala on 10 Muharram 61 AH, is one of the most profoundly significant events in Islamic history.',
+    details: 'The Prophet ﷺ expressed deep love for Husayn, and multiple hadith attest to his status. His martyrdom at Karbala — surrounded and outnumbered, standing for what he saw as justice against an unjust ruler — is commemorated annually as Ashura. In Sunni Islam, Husayn is honoured as a grandson of the Prophet and a martyr; in Shia Islam, his martyrdom carries deep theological significance as the central act of sacrifice for truth. The classical Sunni sources (Bukhari, Muslim, Tirmidhi) contain many narrations of the Prophet\'s love for Husayn.',
+    people: ['ali-ibn-abi-talib', 'fatimah-al-zahra', 'hasan-ibn-ali', 'muhammad-pbuh'],
+    relatedEvents: ['battle-of-karbala', 'caliphate-ali', 'umayyad-caliphate'],
+    relatedPlaces: ['madinah', 'karbala', 'makkah'],
+    sources: [
+      { type: 'hadith', ref: 'Sahih al-Bukhari, Kitab Fada\'il al-Sahabah, 3753; Sahih Muslim, Kitab Fada\'il al-Sahabah, 2422', note: 'Prophetic narrations about Husayn, graded sahih' },
+      { type: 'classical', ref: 'Al-Tabari, Tarikh al-Rusul wal-Muluk, Vol. 19', note: 'Detailed account of Karbala' },
+      { type: 'academic', ref: 'Heinz Halm, Shi\'a Islam: From Religion to Revolution (1997)' }
+    ],
+    certainty: 'established',
+    tags: ['ahl-al-bayt', 'prophet-family', 'martyr', 'karbala', 'ashura'],
+    dayOfYear: null
+  },
+  {
+    id: 'salahuddin-ayyubi',
+    type: 'person',
+    era: 'abbasid',
+    title: 'Salahuddin Ayyubi (Saladin)',
+    subtitle: 'Founder of the Ayyubid dynasty — liberator of Jerusalem',
+    date: { hijri: 'c. 532–589 AH', gregorian: 'c. 1137–1193 CE' },
+    location: 'Tikrit (born), Damascus (capital), Egypt and the Levant',
+    summary: 'Salah al-Din Yusuf ibn Ayyub — known in the West as Saladin — was a Kurdish Muslim military commander who founded the Ayyubid dynasty and united Egypt and Syria under one rule. He defeated the Crusaders at the Battle of Hattin in 1187 and recaptured Jerusalem, treating the city\'s population with a mercy that contrasted sharply with the Crusaders\' conquest of 1099.',
+    details: 'Salahuddin rose to power as vizier of Egypt under the Fatimid Caliphate, which he then replaced with Sunni Abbasid suzerainty. He is remembered for both his military genius and his personal piety and generosity — his biographer Ibn Shaddad described him spending his entire treasury on others, leaving almost nothing for his own family when he died. His conduct in warfare — ransoming prisoners, honoring agreements, protecting non-combatants — set a standard that even his Crusader opponents acknowledged. Richard I of England and Salahuddin exchanged messages during the Third Crusade that became legendary examples of chivalry across cultures.',
+    people: ['ibn-shaddad', 'nur-ad-din-zangi'],
+    relatedEvents: ['salahuddin-jerusalem', 'battle-of-hattin', 'third-crusade'],
+    relatedPlaces: ['jerusalem', 'damascus', 'cairo', 'hattin'],
+    sources: [
+      { type: 'classical', ref: 'Ibn Shaddad, Al-Nawadir al-Sultaniyya wal-Mahasin al-Yusufiyya', note: 'Primary biography by a companion and secretary' },
+      { type: 'academic', ref: 'Anne-Marie Eddé, Saladin (English trans. Jane Marie Todd, 2014)', note: 'Most thorough modern academic biography' },
+      { type: 'academic', ref: 'Jonathan Riley-Smith, The Crusades: A History (1987)' }
+    ],
+    certainty: 'established',
+    tags: ['scholar', 'commander', 'jerusalem', 'crusades', 'ayyubid', 'mercy'],
+    dayOfYear: null
+  },
+  {
+    id: 'imam-al-bukhari',
+    type: 'person',
+    era: 'abbasid',
+    title: 'Imam al-Bukhari',
+    subtitle: 'Compiler of the most authentic book after the Quran',
+    date: { hijri: '194–256 AH', gregorian: '810–870 CE' },
+    location: 'Bukhara (born), Samarkand (died)',
+    summary: 'Muhammad ibn Ismail al-Bukhari was a 9th-century Muslim scholar from Bukhara who compiled the Sahih al-Bukhari — considered by Sunni Muslims to be the most rigorously authenticated collection of hadith and the most authentic book after the Quran. He travelled extensively across the Muslim world, collecting narrations and applying meticulous standards of authentication.',
+    details: 'Al-Bukhari reportedly evaluated over 600,000 hadith reports and included approximately 7,275 in his Sahih (with repetitions; around 2,602 unique hadith). He is said to have performed ghusl and prayed two rak\'at before recording each hadith, and to have spent 16 years compiling the collection. His methodology — examining the chain of narrators (isnad) and assessing the character and memory of each narrator (rijal criticism) — established the science of hadith authentication. He died in 870 CE near Samarkand while reportedly being expelled from Bukhara due to a political dispute.',
+    people: [],
+    relatedEvents: ['abbasid-caliphate'],
+    relatedPlaces: ['bukhara', 'samarkand', 'madinah', 'baghdad'],
+    sources: [
+      { type: 'academic', ref: 'Jonathan Brown, Hadith: Muhammad\'s Legacy in the Medieval and Modern World (2009)', note: 'Best academic overview of hadith science' },
+      { type: 'academic', ref: 'Gibril Fouad Haddad, The Four Imams and Their Schools (2007)', note: 'Context of classical Islamic scholarship' }
+    ],
+    certainty: 'established',
+    tags: ['scholar', 'hadith', 'abbasid', 'bukhara', 'sunnah', 'authentication'],
+    dayOfYear: null
+  },
+  {
+    id: 'al-biruni',
+    type: 'person',
+    era: 'abbasid',
+    title: 'Al-Biruni',
+    subtitle: 'Master of geodesy, history, and comparative religion',
+    date: { hijri: 'c. 362–440 AH', gregorian: 'c. 973–1048 CE' },
+    location: 'Khwarazm (born), Ghazni (worked)',
+    summary: 'Abu Rayhan Muhammad ibn Ahmad al-Biruni was one of the most extraordinary scholars of the Islamic Golden Age — a polymath who made original contributions to mathematics, astronomy, physics, geography, history, pharmacology, and the systematic study of other cultures and religions. He accompanied Mahmud of Ghazni on his campaigns to India and produced the Kitab al-Hind — a comprehensive ethnography of Indian civilization.',
+    details: 'Al-Biruni calculated the circumference of the Earth using a method of his own devising from a single mountain observation — arriving at a figure remarkably close to the modern value. His Kitab al-Hind (Book of India) is considered a landmark in the history of ethnography and comparative religion — he learned Sanskrit and interviewed Indian scholars to produce an objective, systematic account of Indian science, religion, and culture. His Chronology of Ancient Nations examined the calendar systems of multiple civilizations. He corresponded in debate with Ibn Sina. His works on mineralogy and pharmacology were translated into Latin and influenced European scholarship.',
+    people: ['ibn-sina', 'mahmud-of-ghazni'],
+    relatedEvents: ['abbasid-golden-age', 'ghaznavid-dynasty'],
+    relatedPlaces: ['bukhara', 'ghazni', 'india'],
+    sources: [
+      { type: 'academic', ref: 'Edward Sachau, Alberuni\'s India (1888, English trans.)', note: 'Classic translation of Kitab al-Hind' },
+      { type: 'academic', ref: 'Jim Al-Khalili, The House of Wisdom (2011)', note: 'Accessible overview of Golden Age science' },
+      { type: 'academic', ref: 'S.H. Nasr, An Introduction to Islamic Cosmological Doctrines (1964)' }
+    ],
+    certainty: 'established',
+    tags: ['scholar', 'scientist', 'geographer', 'astronomer', 'abbasid', 'india', 'khwarazm'],
+    dayOfYear: null
+  },
+  {
+    id: 'al-razi',
+    type: 'person',
+    era: 'abbasid',
+    title: 'Al-Razi (Rhazes)',
+    subtitle: 'The greatest physician of the medieval world',
+    date: { hijri: 'c. 251–313 AH', gregorian: 'c. 865–925 CE' },
+    location: 'Ray (near modern Tehran), Baghdad',
+    summary: 'Muhammad ibn Zakariyya al-Razi was a Persian Muslim physician and philosopher, widely regarded as the greatest clinician of the medieval world. He was the first to distinguish smallpox from measles through systematic clinical observation. He directed major hospitals in Ray and Baghdad and produced the Kitab al-Hawi (Comprehensive Book of Medicine) — the largest medical encyclopedia of the medieval period.',
+    details: 'Al-Razi\'s Kitab al-Hawi (Liber Continens in Latin) ran to over 20 volumes and was translated into Latin in 1279, remaining a standard medical reference in Europe for centuries. He was the first physician to use animal gut for sutures, and pioneered the use of alcohol in medicine. His essay on smallpox and measles (Al-Judari wal-Hasba) was the first clinical description distinguishing these two diseases — translated into Latin and published in multiple editions in Europe through the 18th century. He was known for treating poor patients free of charge and using clinical observation rather than pure theory.',
+    people: ['ibn-sina'],
+    relatedEvents: ['abbasid-caliphate', 'house-of-wisdom'],
+    relatedPlaces: ['ray', 'baghdad'],
+    sources: [
+      { type: 'academic', ref: 'Lenn Goodman, Islamic Humanism (2003)', note: 'Analysis of al-Razi\'s philosophy and medicine' },
+      { type: 'academic', ref: 'Michael Dols, Medieval Islamic Medicine (1984)', note: 'Context of Islamic medical tradition' },
+      { type: 'academic', ref: 'Jim Al-Khalili, The House of Wisdom (2011)' }
+    ],
+    certainty: 'established',
+    tags: ['scholar', 'physician', 'scientist', 'abbasid', 'persia', 'medicine', 'baghdad'],
+    dayOfYear: null
+  },
+  {
+    id: 'ibn-rushd',
+    type: 'person',
+    era: 'umayyad',
+    title: 'Ibn Rushd (Averroes)',
+    subtitle: 'The Commentator — whose work reshaped European philosophy',
+    date: { hijri: 'c. 520–595 AH', gregorian: 'c. 1126–1198 CE' },
+    location: 'Córdoba (born), Marrakesh (died)',
+    summary: 'Abu al-Walid Muhammad ibn Ahmad ibn Rushd — known in Latin as Averroes — was an Andalusian Muslim philosopher, physician, and jurist whose extensive commentaries on Aristotle\'s works profoundly influenced both Islamic and European scholastic philosophy. He served as the chief judge (qadi) of Seville and Córdoba and as court physician.',
+    details: 'Ibn Rushd wrote commentaries on nearly all of Aristotle\'s works — earning the title "The Commentator" from European scholars including Thomas Aquinas. His rational approach to reconciling Aristotelian philosophy with Islamic theology was critiqued by al-Ghazali\'s earlier Incoherence of the Philosophers; Ibn Rushd responded with his Incoherence of the Incoherence. His medical work Al-Kulliyat (Colliget in Latin) was a standard textbook in European universities. Near the end of his life he was briefly exiled by the Almohad Caliph due to concerns about his philosophical views — a reminder of the complexity of scholars\' relationships with political power.',
+    people: ['ibn-tufayl', 'al-ghazali', 'maimonides'],
+    relatedEvents: ['andalus', 'caliphate-of-cordoba'],
+    relatedPlaces: ['cordoba', 'seville', 'marrakesh'],
+    sources: [
+      { type: 'academic', ref: 'Oliver Leaman, Averroes and His Philosophy (1988)', note: 'Standard academic study' },
+      { type: 'academic', ref: 'Dominique Urvoy, Ibn Rushd (Averroes) (1991, English trans.)' },
+      { type: 'academic', ref: 'Maria Menocal, The Ornament of the World (2002)', note: 'Cultural context in al-Andalus' }
+    ],
+    certainty: 'established',
+    tags: ['scholar', 'philosopher', 'physician', 'andalus', 'cordoba', 'aristotle', 'europe'],
+    dayOfYear: null
+  }
+);
+
 /** Get "This Day" entry by current date (approximate matching by dayOfYear) */
 WAQTX_HISTORY.getTodayEntry = function() {
   var now = new Date();
