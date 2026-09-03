@@ -170,37 +170,37 @@ WaqtX.theme = {
   _updateButton: function(theme) {
     var btn = el('btn-theme-toggle');
     if (!btn) return;
-    var map = { dark: '☀️', light: '🌙', ramadan: '🌙✦', friday: '✦' };
-    btn.textContent = map[theme] || '☀️';
+    /* Shows opposite icon — shows what clicking will switch TO */
+    var map = { light: '🌙', dark: '☀️', ramadan: '🌙✦', friday: '✦' };
+    btn.textContent = map[theme] || '🌙';
+    btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   },
   init: function() {
-    var saved = S.get('theme') || 'dark';
+    var saved = S.get('theme') || 'light';
     /* Auto-override with Ramadan theme during Ramadan (unless user picked something else) */
     if (isRamadan() && !S.get('theme_user_set')) saved = 'ramadan';
     this.apply(saved);
     var self = this;
     var btn = el('btn-theme-toggle');
-    var dropdown = el('theme-dropdown');
-    if (btn && dropdown) {
+    /* V3: Single-click toggle — light ↔ dark. No dropdown needed. */
+    if (btn) {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
-        dropdown.classList.toggle('hidden');
-        dropdown.setAttribute('aria-hidden',
-          dropdown.classList.contains('hidden') ? 'true' : 'false');
+        var current = S.get('theme') || 'light';
+        var next = (current === 'dark') ? 'light' : 'dark';
+        S.set('theme_user_set', true);
+        self.apply(next);
       });
-      document.addEventListener('click', function() {
-        if (!dropdown.classList.contains('hidden')) {
-          dropdown.classList.add('hidden');
-          dropdown.setAttribute('aria-hidden', 'true');
-        }
-      });
+    }
+    /* Keep old dropdown wiring for settings.html theme previews */
+    var dropdown = el('theme-dropdown');
+    if (dropdown) {
       dropdown.querySelectorAll('.theme-option').forEach(function(opt) {
         opt.addEventListener('click', function() {
           var theme = opt.getAttribute('data-theme');
           S.set('theme_user_set', true);
           self.apply(theme);
           dropdown.classList.add('hidden');
-          dropdown.setAttribute('aria-hidden', 'true');
         });
       });
     }
@@ -235,14 +235,20 @@ function applyDocumentDir(dir) {
 }
 
 function applyLangToNav() {
-  /* Update lang indicator */
+  /* Update lang indicator (old dropdown style) */
   var langCurrent = el('lang-current');
   if (langCurrent) {
-    var labels = { en: 'EN', ur: 'UR', ar: 'AR', roman: 'RO' };
+    var labels = { en: 'EN', ur: 'اردو', ar: 'ع', roman: 'RO' };
     langCurrent.textContent = labels[_lang] || 'EN';
   }
+  /* Old dropdown options */
   document.querySelectorAll('.lang-option').forEach(function(opt) {
     opt.classList.toggle('active', opt.getAttribute('data-lang') === _lang);
+  });
+  /* V3 pill buttons */
+  document.querySelectorAll('.lang-pill').forEach(function(pill) {
+    pill.classList.toggle('active', pill.getAttribute('data-lang') === _lang);
+    pill.setAttribute('aria-pressed', pill.getAttribute('data-lang') === _lang ? 'true' : 'false');
   });
 }
 
@@ -277,7 +283,15 @@ WaqtX.lang = {
     try { saved = S.get('lang') || 'en'; } catch(e) { saved = 'en'; }
     var self = this;
     this.load(saved);
-    /* Switcher */
+    /* V3: wire .lang-pill buttons (EN / اردو toggle) */
+    document.querySelectorAll('.lang-pill').forEach(function(pill) {
+      pill.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var lang = pill.getAttribute('data-lang');
+        if (lang) self.load(lang);
+      });
+    });
+    /* Legacy dropdown switcher (still used in settings.html) */
     var btn = el('lang-btn');
     var dropdown = el('lang-dropdown');
     if (btn && dropdown) {

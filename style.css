@@ -1,71 +1,99 @@
 /* ═══════════════════════════════════════════════
-   WaqtX V2 — Complete Stylesheet
+   WaqtX V3 — Complete Stylesheet
    Your Time. Your Faith. Your History.
+   Default: Light Theme (scholarly ivory/emerald)
    ═══════════════════════════════════════════════ */
 
-/* ── 1. Design Tokens ── */
+/* ══════════════════════════════════════
+   1. DESIGN TOKENS — LIGHT (default)
+   Palette: ivory · emerald · muted gold
+   Calm, scholarly, premium, spiritual
+   ══════════════════════════════════════ */
 :root {
-  /* Backgrounds */
-  --bg:        #0B1220;
-  --bg2:       #07121B;
-  --bg3:       #111827;
-  --bg4:       #0d1929;
+  /* ── Semantic color system ──────────────────
+     emerald  = primary action / Islamic identity
+     gold     = history / important moments
+     blue     = knowledge / scholarly
+     amber    = disputed / caution
+     red      = error / warning
+     ─────────────────────────────────────────── */
 
-  /* Gold — Islamic accent */
-  --gold:      #C9A84C;
-  --gold2:     #E8C96A;
-  --gold3:     #8B6914;
-  --gold-glow: rgba(201,168,76,0.18);
+  /* Backgrounds — warm ivory progression */
+  --bg:        #FAFAF7;   /* warm ivory — primary page background */
+  --bg2:       #F4F3EE;   /* warm off-white — alternate sections */
+  --bg3:       #FFFFFF;   /* pure white — card surface */
+  --bg4:       #EEEDE6;   /* warm gray — input backgrounds */
+  --bg-hero:   #1C3A2E;   /* deep emerald — hero section */
+
+  /* Emerald — primary / Islamic identity */
+  --emerald:    #1C6B4E;   /* deep emerald — primary */
+  --emerald2:   #2D8A65;   /* medium emerald — hover */
+  --emerald3:   #E8F5EE;   /* pale emerald — subtle bg tint */
+  --emerald-glow: rgba(28,107,78,0.12);
+
+  /* Gold — history / important moments */
+  --gold:      #8B6205;   /* warm dark gold — text on light */
+  --gold2:     #B07D10;   /* medium gold — accents */
+  --gold3:     #FDF3DC;   /* pale gold — subtle bg */
+  --gold-glow: rgba(139,98,5,0.10);
+
+  /* Blue — knowledge / scholarly */
+  --blue:      #1E4DB7;
+  --blue2:     #EFF4FF;
 
   /* Teal — prayer / time accent */
-  --teal:      #14B8A6;
-  --teal2:     #2DD4BF;
-  --teal3:     #0D9488;
+  --teal:      #0D6E63;
+  --teal2:     #15897B;
+  --teal3:     #E8F7F5;
 
-  /* Text */
-  --text:      #F8FAFC;
-  --text2:     rgba(248,250,252,0.75);
-  --text3:     rgba(248,250,252,0.45);
-  --text4:     rgba(248,250,252,0.25);
+  /* Text — dark charcoal on light */
+  --text:      #1A1A1A;   /* near-black */
+  --text2:     #4A4A4A;   /* dark gray */
+  --text3:     #7A7A7A;   /* medium gray */
+  --text4:     #AAAAAA;   /* light gray */
 
-  /* Borders */
-  --border:    rgba(201,168,76,0.10);
-  --border2:   rgba(201,168,76,0.20);
-  --border3:   rgba(201,168,76,0.06);
+  /* Borders — warm subtle */
+  --border:    rgba(28,107,78,0.12);    /* emerald-tinted border */
+  --border2:   rgba(28,107,78,0.22);   /* stronger border */
+  --border3:   rgba(28,107,78,0.06);   /* very subtle */
+  --border-warm: rgba(139,98,5,0.14);  /* gold border */
 
-  /* Cards */
-  --card-bg:   rgba(255,255,255,0.03);
-  --card-bg2:  rgba(255,255,255,0.05);
-  --card-hover: rgba(255,255,255,0.07);
+  /* Cards — white with subtle depth */
+  --card-bg:   #FFFFFF;
+  --card-bg2:  #F9F8F5;
+  --card-hover: #F4F3ED;
 
-  /* Evidence badge colors */
-  --ev-quran:     #16A34A;
-  --ev-hadith:    #2563EB;
-  --ev-classical: #7C3AED;
-  --ev-academic:  #CA8A04;
-  --ev-disputed:  #DC2626;
+  /* Evidence badge colors (same across themes — colorblind-safe) */
+  --ev-quran:     #15803D;  /* forest green */
+  --ev-hadith:    #1D4ED8;  /* royal blue */
+  --ev-classical: #6D28D9;  /* deep purple */
+  --ev-academic:  #B45309;  /* amber brown */
+  --ev-disputed:  #B91C1C;  /* deep red */
 
   /* UI */
-  --radius:    12px;
-  --radius-sm: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius:     12px;
+  --radius-sm:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
   --radius-pill: 999px;
-  --shadow:    0 6px 40px rgba(0,0,0,0.55);
-  --shadow-gold: 0 0 32px rgba(201,168,76,0.14);
-  --transition: 0.22s ease;
-  --nav-h:     60px;
+  --shadow:     0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-emerald: 0 0 0 3px rgba(28,107,78,0.15);
+  --shadow-gold: 0 0 24px rgba(139,98,5,0.10);
+  --transition: 0.20s ease;
+  --nav-h:      64px;
 
   /* Typography */
-  --font:      'Inter', system-ui, sans-serif;
+  --font:         'Inter', system-ui, sans-serif;
   --font-heading: 'Outfit', system-ui, sans-serif;
-  --font-ar:   'Amiri', serif;
-  --font-logo: 'Cinzel', 'Palatino Linotype', serif;
+  --font-ar:      'Amiri', serif;
+  --font-ur:      'Noto Nastaliq Urdu', 'Amiri', serif;
+  --font-logo:    'Cinzel', 'Palatino Linotype', serif;
 
   /* Type scale */
   --fs-xs:   0.7rem;
   --fs-sm:   0.8rem;
-  --fs-base: 0.9rem;
+  --fs-base: 0.925rem;
   --fs-md:   1rem;
   --fs-lg:   1.1rem;
   --fs-xl:   1.25rem;
@@ -80,79 +108,158 @@
   --sp-9: 40px; --sp-10: 48px; --sp-11: 56px; --sp-12: 64px;
 
   /* Navbar */
-  --navbar-bg: rgba(7,18,27,0.92);
-  --navbar-border: rgba(201,168,76,0.08);
-  --dropdown-bg: #07121B;
-  --dropdown-shadow: 0 8px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,168,76,0.06);
+  --navbar-bg:     rgba(250,250,247,0.95);
+  --navbar-border: rgba(28,107,78,0.10);
+  --dropdown-bg:   #FFFFFF;
+  --dropdown-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(28,107,78,0.08);
 
   /* Modal */
-  --modal-overlay: rgba(0,0,0,0.82);
-  --modal-bg: #0f1722;
-  --modal-border: rgba(201,168,76,0.14);
+  --modal-overlay: rgba(26,26,26,0.72);
+  --modal-bg:      #FFFFFF;
+  --modal-border:  rgba(28,107,78,0.14);
 
   /* Panel */
-  --panel-bg: #111827;
-}
-
-/* ── Light Theme ── */
-[data-theme="light"] {
-  --bg:        #F8FAFC;
-  --bg2:       #F1F5F9;
-  --bg3:       #FFFFFF;
-  --bg4:       #E2E8F0;
-  --gold:      #92670A;
-  --gold2:     #B8860B;
-  --gold3:     #D4A017;
-  --gold-glow: rgba(146,103,10,0.12);
-  --teal:      #0F766E;
-  --teal2:     #14B8A6;
-  --text:      #0F172A;
-  --text2:     rgba(15,23,42,0.72);
-  --text3:     rgba(15,23,42,0.48);
-  --text4:     rgba(15,23,42,0.28);
-  --border:    rgba(146,103,10,0.14);
-  --border2:   rgba(146,103,10,0.26);
-  --border3:   rgba(146,103,10,0.08);
-  --card-bg:   rgba(0,0,0,0.02);
-  --card-bg2:  rgba(0,0,0,0.04);
-  --card-hover: rgba(0,0,0,0.06);
-  --navbar-bg: rgba(248,250,252,0.94);
-  --navbar-border: rgba(146,103,10,0.10);
-  --dropdown-bg: #FFFFFF;
-  --dropdown-shadow: 0 8px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(146,103,10,0.08);
-  --modal-bg: #FFFFFF;
-  --modal-border: rgba(146,103,10,0.16);
   --panel-bg: #FFFFFF;
-  --shadow:    0 6px 40px rgba(0,0,0,0.12);
 }
 
-/* ── Ramadan Theme ── */
+/* ══════════════════════════════════════
+   DARK THEME — deep charcoal / emerald
+   Not an inversion — a crafted palette
+   ══════════════════════════════════════ */
+[data-theme="dark"] {
+  /* Backgrounds — charcoal with warmth */
+  --bg:        #141B14;   /* very dark olive-black */
+  --bg2:       #0F160F;   /* darker */
+  --bg3:       #1C251C;   /* dark card surface */
+  --bg4:       #222E22;   /* input/panel */
+  --bg-hero:   #0D1A11;   /* deep */
+
+  /* Emerald on dark */
+  --emerald:    #34C97A;   /* bright emerald on dark */
+  --emerald2:   #4ADB8F;
+  --emerald3:   rgba(52,201,122,0.10);
+  --emerald-glow: rgba(52,201,122,0.18);
+
+  /* Gold on dark */
+  --gold:      #D4A843;
+  --gold2:     #E8C96A;
+  --gold3:     rgba(212,168,67,0.10);
+  --gold-glow: rgba(212,168,67,0.15);
+
+  /* Blue */
+  --blue:      #60A5FA;
+  --blue2:     rgba(96,165,250,0.10);
+
+  /* Teal */
+  --teal:      #2DD4BF;
+  --teal2:     #5EEAD4;
+  --teal3:     rgba(45,212,191,0.10);
+
+  /* Text — off-white, reduced harshness */
+  --text:      #E8EDE8;
+  --text2:     rgba(232,237,232,0.78);
+  --text3:     rgba(232,237,232,0.48);
+  --text4:     rgba(232,237,232,0.28);
+
+  /* Borders */
+  --border:    rgba(52,201,122,0.12);
+  --border2:   rgba(52,201,122,0.22);
+  --border3:   rgba(52,201,122,0.06);
+  --border-warm: rgba(212,168,67,0.16);
+
+  /* Cards */
+  --card-bg:    rgba(255,255,255,0.04);
+  --card-bg2:   rgba(255,255,255,0.07);
+  --card-hover: rgba(255,255,255,0.09);
+
+  /* UI */
+  --shadow:     0 4px 24px rgba(0,0,0,0.50);
+  --shadow-md:  0 8px 40px rgba(0,0,0,0.55);
+  --shadow-emerald: 0 0 0 3px rgba(52,201,122,0.20);
+  --shadow-gold: 0 0 28px rgba(212,168,67,0.14);
+
+  /* Navbar */
+  --navbar-bg:     rgba(20,27,20,0.94);
+  --navbar-border: rgba(52,201,122,0.10);
+  --dropdown-bg:   #1C251C;
+  --dropdown-shadow: 0 8px 40px rgba(0,0,0,0.60), 0 0 0 1px rgba(52,201,122,0.08);
+
+  /* Modal */
+  --modal-overlay: rgba(0,0,0,0.80);
+  --modal-bg:      #1C251C;
+  --modal-border:  rgba(52,201,122,0.16);
+
+  /* Panel */
+  --panel-bg: #1C251C;
+}
+
+/* ══════════════════════════════════════
+   RAMADAN THEME — deep midnight / gold
+   ══════════════════════════════════════ */
 [data-theme="ramadan"] {
-  --bg:        #050E1A;
-  --bg2:       #030B14;
-  --bg3:       #091220;
+  --bg:        #05101A;
+  --bg2:       #030C14;
+  --bg3:       #091520;
+  --bg4:       #0E1E2C;
+  --bg-hero:   #03080F;
+  --emerald:    #C9A84C;
+  --emerald2:   #E8C96A;
+  --emerald3:   rgba(201,168,76,0.10);
+  --emerald-glow: rgba(201,168,76,0.20);
   --gold:      #D4A017;
   --gold2:     #FFD36A;
+  --gold3:     rgba(212,160,23,0.10);
+  --gold-glow: rgba(212,160,23,0.20);
   --teal:      #C9A84C;
   --teal2:     #E8C96A;
-  --border:    rgba(212,160,23,0.14);
+  --teal3:     rgba(201,168,76,0.08);
+  --text:      #EDE8DA;
+  --text2:     rgba(237,232,218,0.78);
+  --text3:     rgba(237,232,218,0.48);
+  --text4:     rgba(237,232,218,0.28);
+  --border:    rgba(212,160,23,0.15);
   --border2:   rgba(212,160,23,0.28);
-  --gold-glow: rgba(212,160,23,0.22);
+  --border3:   rgba(212,160,23,0.07);
+  --border-warm: rgba(212,160,23,0.20);
+  --card-bg:   rgba(255,255,255,0.03);
+  --card-bg2:  rgba(255,255,255,0.05);
+  --card-hover: rgba(255,255,255,0.07);
+  --navbar-bg: rgba(5,16,26,0.95);
+  --navbar-border: rgba(212,160,23,0.12);
+  --dropdown-bg: #091520;
+  --modal-bg:  #091520;
+  --modal-border: rgba(212,160,23,0.18);
+  --panel-bg:  #091520;
+  --shadow:    0 4px 24px rgba(0,0,0,0.60);
+  --shadow-md: 0 8px 40px rgba(0,0,0,0.65);
 }
 
-/* ── Friday Theme ── */
+/* ══════════════════════════════════════
+   FRIDAY THEME — deep night / warm green
+   ══════════════════════════════════════ */
 [data-theme="friday"] {
-  --bg:        #0A1020;
-  --bg2:       #060E18;
+  --bg:        #0A1520;
+  --bg2:       #060F18;
+  --bg3:       #0E1A28;
+  --bg-hero:   #060F18;
+  --emerald:    #22C55E;
+  --emerald2:   #4ADE80;
+  --emerald3:   rgba(34,197,94,0.10);
   --gold:      #EAB308;
   --gold2:     #FDE047;
-  --teal:      #16A34A;
-  --teal2:     #22C55E;
-  --border:    rgba(234,179,8,0.14);
-  --gold-glow: rgba(234,179,8,0.18);
+  --gold3:     rgba(234,179,8,0.10);
+  --teal:      #22C55E;
+  --teal2:     #4ADE80;
+  --border:    rgba(34,197,94,0.14);
+  --border2:   rgba(34,197,94,0.26);
+  --gold-glow: rgba(234,179,8,0.15);
+  --navbar-bg: rgba(10,21,32,0.95);
+  --navbar-border: rgba(34,197,94,0.12);
 }
 
-/* ── 2. Reset ── */
+/* ══════════════════════════════════════
+   2. RESET
+   ══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
@@ -164,10 +271,30 @@ body {
   padding-bottom: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 85% 85%, rgba(20,184,166,0.03) 0%, transparent 50%);
+  /* Light: subtle warm paper texture */
+  background-image: none;
 }
+
+/* Light mode paper texture */
+:root body {
+  background-image:
+    radial-gradient(ellipse 100% 60% at 50% -5%, rgba(28,107,78,0.04) 0%, transparent 60%);
+}
+
+/* Dark mode subtle glow */
+[data-theme="dark"] body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(52,201,122,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 85%, rgba(45,212,191,0.03) 0%, transparent 50%);
+}
+
+/* Urdu: use Noto Nastaliq for body text */
+html[lang="ur"] body {
+  font-family: var(--font-ur);
+  line-height: 2.2;  /* Nastaliq needs more leading */
+  font-size: 1.05rem;
+}
+
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 input, select, textarea { font-family: inherit; }
@@ -181,20 +308,22 @@ ul { list-style: none; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 /* ── 4. Selection ── */
-::selection { background: rgba(201,168,76,0.22); color: var(--text); }
+::selection { background: rgba(28,107,78,0.18); color: var(--text); }
 
 /* ── 5. Focus ── */
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: var(--radius-sm); }
+:focus-visible { outline: 2px solid var(--emerald); outline-offset: 3px; border-radius: var(--radius-sm); }
 
 /* ── 6. Utility classes ── */
 .hidden { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-.text-gold  { color: var(--gold); }
-.text-teal  { color: var(--teal); }
-.text-muted { color: var(--text3); }
-.font-ar    { font-family: var(--font-ar); }
-.text-right { text-align: right; }
-.text-center { text-align: center; }
+.text-gold    { color: var(--gold); }
+.text-emerald { color: var(--emerald); }
+.text-teal    { color: var(--teal); }
+.text-muted   { color: var(--text3); }
+.font-ar      { font-family: var(--font-ar); }
+.font-ur      { font-family: var(--font-ur); }
+.text-right   { text-align: right; }
+.text-center  { text-align: center; }
 .privacy-notice { font-size: var(--fs-xs); color: var(--text3); margin-top: var(--sp-3); }
 
 /* ── 7. Skeleton shimmer ── */
@@ -222,7 +351,7 @@ ul { list-style: none; }
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--emerald);
   opacity: 0.9;
 }
 .arabic-text {
@@ -299,9 +428,10 @@ ul { list-style: none; }
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text3);
+  color: var(--emerald);
   padding: 0 6px 0 4px;
   white-space: nowrap;
+  opacity: 0.8;
 }
 .nav-link {
   font-size: var(--fs-sm);
@@ -312,8 +442,8 @@ ul { list-style: none; }
   transition: color var(--transition), background var(--transition);
   white-space: nowrap;
 }
-.nav-link:hover { color: var(--text); background: var(--card-bg2); }
-.nav-link.active { color: var(--gold); background: rgba(201,168,76,0.1); }
+.nav-link:hover { color: var(--text); background: var(--emerald3); }
+.nav-link.active { color: var(--emerald); background: var(--emerald3); }
 
 /* Nav actions */
 .nav-actions {
@@ -640,7 +770,7 @@ ul { list-style: none; }
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--emerald);
   opacity: 0.9;
 }
 .section-sub {
@@ -690,7 +820,7 @@ ul { list-style: none; }
 .card:hover {
   border-color: var(--border2);
   background: var(--card-hover);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-emerald), var(--shadow);
 }
 .card-sm { padding: var(--sp-4); border-radius: var(--radius); }
 .card-xl { padding: var(--sp-9); border-radius: var(--radius-xl); }
@@ -2370,4 +2500,617 @@ ul { list-style: none; }
   .search-result-card { flex-direction: column; }
   .src-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
   .world-map-container { border-radius: var(--radius-lg); }
+}
+
+
+/* ═══════════════════════════════════════════════
+   UI V3 — NEW COMPONENTS
+   Card redesign · Hero · Nav · Badges · RTL
+   ═══════════════════════════════════════════════ */
+
+/* ── V3 FONT: Noto Nastaliq Urdu loaded via HTML <link>
+   Fallback here in CSS for completeness ── */
+@supports (font-family: 'Noto Nastaliq Urdu') {
+  html[lang="ur"] body { font-family: 'Noto Nastaliq Urdu', 'Amiri', serif; }
+}
+
+/* ══════════════════════════════════════
+   TASK 3 — CARD / SECTION / HERO
+   ══════════════════════════════════════ */
+
+/* Section heading V3: emerald underline bar */
+.section-heading { margin-bottom: var(--sp-4); }
+.sh-line { background: var(--emerald); opacity: 0.25; }
+.sh-icon { color: var(--emerald); }
+
+/* Section sub-title */
+.section-sub { color: var(--text3); }
+
+/* Card V3: clean white with left emerald accent on hover */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.card:hover {
+  border-color: var(--border2);
+  box-shadow: var(--shadow-md), inset 3px 0 0 var(--emerald);
+  transform: none; /* no lift on light — just the accent */
+}
+
+/* History cards V3 */
+.history-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  transition: all var(--transition);
+}
+.history-card:hover {
+  border-color: var(--border2);
+  border-left-color: var(--emerald);
+  background: var(--card-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Person cards V3 */
+.person-card {
+  border-left: 3px solid transparent;
+}
+.person-card:hover {
+  border-left-color: var(--emerald);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Guidance cards V3 */
+.guidance-card:hover {
+  border-color: var(--border2);
+  border-left: 3px solid var(--emerald);
+  box-shadow: var(--shadow);
+}
+.guidance-card { border-left: 3px solid transparent; }
+
+/* Era cards V3 */
+.era-card:hover {
+  border-color: var(--emerald);
+  box-shadow: 0 4px 16px var(--emerald-glow);
+  transform: translateY(-2px);
+}
+
+/* Civilization strip cards */
+.civ-card:hover {
+  border-color: var(--emerald);
+  box-shadow: 0 4px 16px var(--emerald-glow);
+  transform: translateY(-3px);
+}
+
+/* HERO V3 — dark emerald background, warm ivory text */
+.hero {
+  background: var(--bg-hero);
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--nav-h) + var(--sp-10)) var(--sp-6) var(--sp-12);
+  overflow: hidden;
+}
+/* Hero always dark regardless of theme — it's a feature */
+.hero,
+.hero .hero-headline,
+.hero .hero-sub,
+.hero .hero-pillar-label,
+.hero .hero-arabic,
+.hero .hero-arabic-trans,
+.hero .hero-trust-strip {
+  color: #E8EDE8;
+}
+.hero .hero-headline-gold { color: #D4A843; }
+.hero .hero-date-badge {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.16);
+  color: #D4A843;
+}
+.hero .hdb-sep { color: rgba(255,255,255,0.35); }
+.hero .hero-divider-icon { color: #D4A843; opacity: 0.7; }
+.hero .hero-divider-line { background: rgba(255,255,255,0.15); }
+.hero .hero-trust-strip { color: rgba(232,237,232,0.55); }
+
+/* Hero dashboard card always dark */
+.hero-dashboard-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #E8EDE8;
+}
+.hero-dashboard-card .hdc-salam { color: rgba(232,237,232,0.6); }
+.hero-dashboard-card .hdc-name { color: #E8EDE8; }
+.hero-dashboard-card .hdc-age-val { color: #D4A843; }
+.hero-dashboard-card .hdc-age-key { color: rgba(232,237,232,0.5); }
+.hero-dashboard-card .hdc-divider { background: rgba(255,255,255,0.10); }
+.hero-dashboard-card .hdc-next-label { color: rgba(232,237,232,0.5); }
+.hero-dashboard-card .hdc-next-name { color: #E8EDE8; }
+.hero-dashboard-card .hdc-next-countdown { color: #2DD4BF; }
+.hero-dashboard-card .hdc-snapshot-label { color: rgba(232,237,232,0.5); }
+.hero-dashboard-card .hdc-snap-key { color: rgba(232,237,232,0.6); }
+.hero-dashboard-card .hdc-snap-val { color: #D4A843; }
+.hero-dashboard-card .hdc-no-dob a { color: #2DD4BF; }
+.hero-dashboard-card .hdc-dob-link { color: #2DD4BF; }
+
+/* NAVBAR V3 */
+.navbar {
+  background: var(--navbar-bg);
+  border-bottom: 1px solid var(--navbar-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.navbar.scrolled {
+  box-shadow: var(--shadow);
+}
+.nav-logo-text { color: var(--text); }
+.nav-logo-x { color: var(--emerald); }
+.nav-pillar {
+  background: transparent;
+  border-color: var(--border3);
+  gap: 2px;
+}
+
+/* Theme toggle V3: simple icon button */
+.btn-theme-toggle {
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  line-height: 1;
+}
+.btn-theme-toggle:hover {
+  border-color: var(--emerald);
+  background: var(--emerald3);
+  box-shadow: var(--shadow-emerald);
+}
+
+/* Language toggle V3: EN | UR pills */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  height: 34px;
+}
+.lang-pill {
+  padding: 0 12px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text3);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  background: none;
+  font-family: var(--font);
+  white-space: nowrap;
+}
+.lang-pill:first-child { border-right: 1px solid var(--border); }
+.lang-pill:hover { color: var(--text); background: var(--card-bg2); }
+.lang-pill.active {
+  color: var(--emerald);
+  background: var(--emerald3);
+  font-weight: 800;
+}
+/* Urdu pill: use Urdu-capable font */
+.lang-pill[data-lang="ur"] { font-family: var(--font-ur); font-size: 0.85rem; }
+
+/* Bottom nav V3 */
+.bottom-nav { background: var(--navbar-bg); border-top-color: var(--navbar-border); }
+.bottom-nav-item:hover, .bottom-nav-item.active { color: var(--emerald); }
+
+/* More menu V3 */
+.bmm-panel { background: var(--bg3); border-top-color: var(--border); }
+.bmm-item:hover { border-color: var(--border); background: var(--emerald3); color: var(--emerald); }
+
+/* THIS DAY CARD V3: emerald date accent */
+.td-year { color: var(--emerald); }
+.td-reflection-label { color: var(--emerald); }
+.td-reflection { border-left-color: var(--emerald); }
+.td-cta { color: var(--emerald); border-color: var(--border); }
+.td-cta:hover { background: var(--emerald3); border-color: var(--emerald); }
+
+/* HM section heading V3 */
+.hm-section-title { color: var(--emerald); opacity: 0.85; }
+.hm-lesson { border-left-color: var(--emerald); }
+
+/* Filter chip V3: emerald active */
+.filter-chip.active {
+  color: var(--emerald);
+  border-color: var(--border2);
+  background: var(--emerald3);
+}
+.filter-chip:hover { color: var(--text); background: var(--card-bg2); }
+
+/* People tab V3 */
+.people-tab.active { color: var(--emerald); border-bottom-color: var(--emerald); }
+.person-subtitle { color: var(--emerald); }
+
+/* Primary button V3: emerald */
+.btn-primary {
+  background: var(--emerald);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px var(--emerald-glow);
+}
+.btn-primary:hover {
+  background: var(--emerald2);
+  box-shadow: 0 4px 16px var(--emerald-glow);
+  transform: translateY(-1px);
+}
+
+/* Hero buttons V3 */
+.btn-hero {
+  background: var(--emerald);
+  color: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(28,107,78,0.30);
+}
+.btn-hero:hover {
+  background: var(--emerald2);
+  box-shadow: 0 4px 20px rgba(28,107,78,0.40);
+  transform: translateY(-1px);
+}
+.btn-glass { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); color: #E8EDE8; }
+.btn-glass:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+
+/* Timeline pill V3 */
+.ht-pill.ht-next { color: var(--emerald); border-color: var(--border2); background: var(--emerald3); }
+.ht-pill.ht-past { color: var(--teal); border-color: rgba(13,110,99,0.25); background: var(--teal3); }
+
+/* Prayer card next V3 */
+.hps-card.next { border-color: var(--emerald); background: var(--emerald3); box-shadow: none; }
+
+/* Search input focus V3 */
+.explore-search:focus,
+.search-main-input:focus,
+.settings-city-input:focus,
+.jdf-input:focus,
+.gratitude-input:focus { border-color: var(--emerald); box-shadow: var(--shadow-emerald); }
+
+/* Settings radio */
+.radio-row input[type="radio"] { accent-color: var(--emerald); }
+
+/* Settings toggle V3 */
+.toggle-switch input:checked + .toggle-slider { background: rgba(28,107,78,0.25); border-color: var(--emerald); }
+.toggle-switch input:checked + .toggle-slider::before { background: var(--emerald); }
+
+/* Settings btn focus */
+.font-size-btn:hover, .font-size-btn.active { border-color: var(--emerald); color: var(--emerald); background: var(--emerald3); }
+.btn-city-lookup:hover:not(:disabled) { border-color: var(--emerald); color: var(--emerald); }
+.theme-preview-btn:hover, .theme-preview-btn.active { border-color: var(--emerald); background: var(--emerald3); }
+
+/* Journey page V3 */
+.jsn-ring-fill { stroke: var(--emerald); }
+.jsn-ring-pct { color: var(--emerald); }
+.jsn-val { color: var(--emerald); }
+.jsn-cta-link { color: var(--emerald); }
+.jsn-cta-link:hover { color: var(--emerald2); }
+.counter-value { color: var(--emerald); }
+.pm-count { color: var(--emerald); }
+.ov-stat-val { color: var(--emerald); }
+.jdf-btn { background: var(--emerald); color: #fff; }
+.jdf-btn:hover { background: var(--emerald2); }
+
+/* Spiritual progress bars V3 */
+.sp-val { color: var(--emerald); }
+.sp-bar { background: linear-gradient(90deg, var(--emerald), var(--emerald2)); }
+.hdc-bar { background: linear-gradient(90deg, var(--emerald), var(--emerald2)); }
+
+/* Stories */
+.feel-btn.active { background: var(--emerald3); border-color: var(--border2); color: var(--emerald); }
+.story-category { color: var(--emerald); }
+
+/* Calendar */
+.cal-day.today { background: var(--emerald3); color: var(--emerald); border-color: var(--border2); }
+
+/* Prayers */
+.ps-card.next { border-color: var(--emerald); }
+.ps-time { color: var(--emerald); }
+.cb-bar { background: linear-gradient(90deg, var(--emerald), var(--emerald2)); }
+.cb-pct { color: var(--emerald); }
+
+/* Exploration section */
+.hc-subtitle { color: var(--gold); }  /* history gold — intentional */
+.hc-explore { color: var(--emerald); }
+.map-city-btn:hover .map-city-dot { fill: var(--emerald2); }
+.map-city-dot { fill: var(--emerald); }
+.map-city-pulse { stroke: var(--emerald); }
+.map-info-subtitle { color: var(--gold); }
+.map-info-link { color: var(--emerald); }
+.map-info-link:hover { color: var(--emerald2); }
+
+/* Verse source */
+.verse-source { color: var(--gold); }
+.gc-reflect-quote { border-left-color: var(--gold); }
+
+/* Modal section titles */
+.hm-date { color: var(--gold); }
+
+/* Nav drawer V3 */
+.nav-drawer { background: var(--bg3); border-bottom-color: var(--navbar-border); }
+.nav-drawer-label { color: var(--emerald); opacity: 0.8; }
+.nav-drawer-links .nav-link.active { color: var(--emerald); background: var(--emerald3); }
+
+/* ══════════════════════════════════════
+   TASK 4 — SOURCE BADGE V3
+   Larger, icon+label for detail modal
+   Compact inline for cards
+   ══════════════════════════════════════ */
+
+/* Base badge — compact (cards, lists) */
+.ev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: default;
+  transition: opacity var(--transition);
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* Large badge variant — for detail modals */
+.ev-badge-lg {
+  padding: 6px 14px;
+  font-size: var(--fs-sm);
+  border-radius: var(--radius);
+  gap: 8px;
+}
+.ev-badge-lg .ev-badge-dot {
+  width: 8px;
+  height: 8px;
+}
+.ev-badge-lg .ev-badge-label-sub {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 500;
+  opacity: 0.75;
+  letter-spacing: 0;
+  margin-top: 1px;
+}
+
+/* Quran — forest green */
+.ev-quran {
+  background: rgba(21,128,61,0.10);
+  color: #14532D;
+  border-color: rgba(21,128,61,0.22);
+}
+[data-theme="dark"] .ev-quran,
+[data-theme="ramadan"] .ev-quran { color: #4ADE80; background: rgba(21,128,61,0.14); border-color: rgba(21,128,61,0.28); }
+.ev-quran .ev-badge-dot { background: #15803D; }
+
+/* Hadith — royal blue */
+.ev-hadith {
+  background: rgba(29,78,216,0.08);
+  color: #1E3A8A;
+  border-color: rgba(29,78,216,0.20);
+}
+[data-theme="dark"] .ev-hadith,
+[data-theme="ramadan"] .ev-hadith { color: #93C5FD; background: rgba(29,78,216,0.14); border-color: rgba(29,78,216,0.28); }
+.ev-hadith .ev-badge-dot { background: #1D4ED8; }
+
+/* Classical — deep purple */
+.ev-classical {
+  background: rgba(109,40,217,0.08);
+  color: #4C1D95;
+  border-color: rgba(109,40,217,0.18);
+}
+[data-theme="dark"] .ev-classical,
+[data-theme="ramadan"] .ev-classical { color: #C4B5FD; background: rgba(109,40,217,0.14); border-color: rgba(109,40,217,0.28); }
+.ev-classical .ev-badge-dot { background: #6D28D9; }
+
+/* Academic — amber brown */
+.ev-academic {
+  background: rgba(180,83,9,0.08);
+  color: #78350F;
+  border-color: rgba(180,83,9,0.18);
+}
+[data-theme="dark"] .ev-academic,
+[data-theme="ramadan"] .ev-academic { color: #FCD34D; background: rgba(180,83,9,0.14); border-color: rgba(180,83,9,0.28); }
+.ev-academic .ev-badge-dot { background: #B45309; }
+
+/* Disputed — deep red */
+.ev-disputed {
+  background: rgba(185,28,28,0.08);
+  color: #7F1D1D;
+  border-color: rgba(185,28,28,0.18);
+}
+[data-theme="dark"] .ev-disputed,
+[data-theme="ramadan"] .ev-disputed { color: #FCA5A5; background: rgba(185,28,28,0.14); border-color: rgba(185,28,28,0.28); }
+.ev-disputed .ev-badge-dot { background: #B91C1C; }
+
+/* Sources panel V3 */
+.sources-toggle { color: var(--text2); font-size: var(--fs-sm); }
+.sources-toggle:hover { background: var(--card-bg2); color: var(--text); }
+.sources-toggle.open { color: var(--emerald); }
+.source-item { border-bottom-color: var(--border3); }
+.source-item-ref { color: var(--text); font-size: var(--fs-sm); }
+.source-item-note { color: var(--text3); font-size: var(--fs-xs); }
+
+/* ══════════════════════════════════════
+   TASK 1 — RTL SYSTEM (Urdu)
+   html[lang="ur"] overrides
+   ══════════════════════════════════════ */
+
+/* Base RTL */
+html[lang="ur"] {
+  direction: rtl;
+}
+html[lang="ur"] body {
+  font-family: var(--font-ur);
+  line-height: 2.2;
+  text-align: right;
+}
+
+/* Nav RTL */
+html[lang="ur"] .nav-inner { flex-direction: row-reverse; }
+html[lang="ur"] .nav-pillars { flex-direction: row-reverse; }
+html[lang="ur"] .nav-pillar { flex-direction: row-reverse; }
+html[lang="ur"] .nav-actions { flex-direction: row-reverse; }
+html[lang="ur"] .nav-drawer-links { flex-direction: row-wrap; justify-content: flex-end; }
+html[lang="ur"] .nav-drawer-section { text-align: right; }
+
+/* Logo RTL — keep LTR so WaqtX stays readable */
+html[lang="ur"] .nav-logo-text { direction: ltr; font-family: var(--font-logo); }
+
+/* Bottom nav RTL */
+html[lang="ur"] .bottom-nav { flex-direction: row-reverse; }
+
+/* More menu RTL */
+html[lang="ur"] .bmm-grid { direction: rtl; }
+html[lang="ur"] .bmm-item { flex-direction: row-reverse; }
+html[lang="ur"] .bmm-header { flex-direction: row-reverse; }
+
+/* Cards RTL */
+html[lang="ur"] .card,
+html[lang="ur"] .guidance-card,
+html[lang="ur"] .history-card,
+html[lang="ur"] .person-card,
+html[lang="ur"] .era-card,
+html[lang="ur"] .search-result-card { text-align: right; direction: rtl; }
+
+/* Card hover left accent becomes right */
+html[lang="ur"] .history-card:hover,
+html[lang="ur"] .person-card:hover,
+html[lang="ur"] .guidance-card:hover {
+  border-left: 1px solid var(--border2);
+  border-right: 3px solid var(--emerald);
+}
+
+/* Hero RTL */
+html[lang="ur"] .hero-inner { direction: rtl; }
+html[lang="ur"] .hero-left { text-align: right; }
+html[lang="ur"] .hero-headline { text-align: right; }
+html[lang="ur"] .hero-sub { text-align: right; }
+html[lang="ur"] .hero-actions { justify-content: flex-end; }
+html[lang="ur"] .hero-trust-strip { justify-content: flex-end; }
+html[lang="ur"] .hero-divider { flex-direction: row-reverse; }
+
+/* Arabic text always RTL regardless of page direction */
+.hero-arabic,
+.gc-arabic,
+.verse-arabic-text,
+.arabic-text {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-ar);
+}
+
+/* Sections RTL */
+html[lang="ur"] .section-heading { direction: rtl; }
+html[lang="ur"] .sh-line:first-child { order: 3; }
+html[lang="ur"] .sh-line:last-child  { order: 1; }
+html[lang="ur"] .sh-text { order: 2; }
+html[lang="ur"] .section-sub { text-align: center; } /* centered captions look fine both ways */
+
+/* Grid RTL */
+html[lang="ur"] .guidance-grid { direction: rtl; }
+html[lang="ur"] .civilization-strip { direction: rtl; }
+html[lang="ur"] .journey-snapshot-grid { direction: rtl; }
+html[lang="ur"] .spiritual-progress-grid { direction: rtl; }
+html[lang="ur"] .people-grid { direction: rtl; }
+html[lang="ur"] .history-grid { direction: rtl; }
+html[lang="ur"] .search-results-grid { direction: rtl; }
+
+/* Journey section RTL */
+html[lang="ur"] .jsn-counter { flex-direction: row-reverse; }
+html[lang="ur"] .jsn-left { text-align: right; }
+html[lang="ur"] .hm-question-block { text-align: right; }
+html[lang="ur"] .hm-footer { align-items: flex-end; }
+html[lang="ur"] .mq-block { text-align: right; }
+
+/* Sidebar borders RTL */
+html[lang="ur"] .td-reflection { border-left: none; border-right: 3px solid var(--emerald); padding-left: 0; padding-right: var(--sp-4); }
+html[lang="ur"] .gc-reflection  { border-left: none; border-right: 2px solid var(--border2); padding-left: 0; padding-right: var(--sp-3); }
+html[lang="ur"] .hm-lesson { border-left: none; border-right: 3px solid var(--emerald); padding-left: 0; padding-right: var(--sp-5); }
+html[lang="ur"] .verse-reflection-txt { border-left: none; border-right: 3px solid var(--border2); padding-left: 0; padding-right: var(--sp-4); }
+
+/* Muhasabah RTL */
+html[lang="ur"] .hm-q-num,
+html[lang="ur"] .mq-num { text-align: right; }
+
+/* Settings RTL */
+html[lang="ur"] .settings-row { flex-direction: row-reverse; }
+html[lang="ur"] .settings-group { text-align: right; }
+html[lang="ur"] .radio-row { flex-direction: row-reverse; }
+
+/* Timeline RTL — horizontal timeline stays LTR (dates are always left→right) */
+html[lang="ur"] .home-timeline { direction: ltr; }
+html[lang="ur"] .vis-timeline-wrap { direction: ltr; }
+
+/* Source badges RTL */
+html[lang="ur"] .source-badges { justify-content: flex-end; }
+html[lang="ur"] .ev-badge { flex-direction: row-reverse; }
+
+/* Prayer section RTL */
+html[lang="ur"] .home-prayer-status-grid { direction: rtl; }
+html[lang="ur"] .hps-card { text-align: right; }
+html[lang="ur"] .home-next-prayer-card { flex-direction: row-reverse; }
+html[lang="ur"] .hnp-row { flex-direction: row-reverse; }
+
+/* Modal RTL */
+html[lang="ur"] .history-modal { direction: rtl; text-align: right; }
+html[lang="ur"] .hm-header { text-align: right; }
+html[lang="ur"] .hm-close { left: var(--sp-5); right: auto; }
+html[lang="ur"] .hm-date-row { flex-direction: row-reverse; }
+html[lang="ur"] .hm-people-list { justify-content: flex-end; }
+
+/* Page hero RTL */
+html[lang="ur"] .page-hero { text-align: right; }
+html[lang="ur"] .page-hero-inner { text-align: right; }
+
+/* Forms RTL */
+html[lang="ur"] .jdf-row { flex-direction: row-reverse; }
+html[lang="ur"] .gratitude-label-row { flex-direction: row-reverse; }
+
+/* Search RTL */
+html[lang="ur"] .search-hero { text-align: right; }
+html[lang="ur"] .search-filters-bar { flex-direction: row-reverse; justify-content: flex-end; }
+html[lang="ur"] .search-result-card { flex-direction: row-reverse; }
+html[lang="ur"] .src-right { align-items: flex-end; }
+
+/* Urdu: headings use Outfit (Latin) for numbers/labels, Nastaliq for prose */
+html[lang="ur"] h1,
+html[lang="ur"] h2,
+html[lang="ur"] h3,
+html[lang="ur"] .page-hero-title { font-family: var(--font-ur); }
+
+/* Counter numbers stay LTR / Latin numerals */
+html[lang="ur"] .counter-value,
+html[lang="ur"] .jsn-val,
+html[lang="ur"] .jsn-ring-pct,
+html[lang="ur"] .hdc-age-val,
+html[lang="ur"] .sp-val,
+html[lang="ur"] .pqs-val { direction: ltr; display: inline-block; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE UPDATES V3
+   ══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  html[lang="ur"] .nav-pillars { display: none; }
+  html[lang="ur"] .hamburger { display: flex; }
+}
+
+@media (max-width: 768px) {
+  html[lang="ur"] .guidance-grid { direction: rtl; }
+  html[lang="ur"] .home-prayer-status-grid { direction: rtl; }
 }

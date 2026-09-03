@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +10,10 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <script>(function(){var s='';try{s=localStorage.getItem('waqtx_theme')||'';}catch(e){}if(!s){s=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';try{localStorage.setItem('waqtx_theme',s);}catch(e){}}if(s==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
+  <script>(function(){var s='light';try{s=localStorage.getItem('waqtx_theme')||'light';}catch(e){}if(s!=='light')document.documentElement.setAttribute('data-theme',s);var fs=null;try{fs=localStorage.getItem('waqtx_font_size');}catch(e){}if(fs)document.documentElement.setAttribute('data-fontsize',fs);var hc=false;try{hc=JSON.parse(localStorage.getItem('waqtx_contrast')||'false');}catch(e){}if(hc)document.documentElement.setAttribute('data-contrast','high');})();</script>
   <style>
     .privacy-page { max-width: 700px; margin: 0 auto; padding: calc(var(--nav-h) + 60px) 24px 80px; }
     .privacy-title { font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
@@ -32,10 +33,26 @@
         <span class="nav-logo-text">Waqt<span class="nav-logo-x">X</span></span>
       </a>
       <div class="nav-actions">
-        <a href="index.html" class="btn-share-nav" style="text-decoration:none">← Back to WaqtX</a>
+      <!-- V3 Language: EN | اردو pills -->
+      <div class="lang-toggle" role="group" aria-label="Language selection">
+        <button class="lang-pill active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-pill" data-lang="ur" aria-pressed="false">&#x627;&#x631;&#x62F;&#x648;</button>
       </div>
+      <!-- V3 Theme: single-click ☀/🌙 flip -->
+      <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Switch to dark theme">&#x1F319;</button>
+      <!-- Install PWA -->
+      <button class="btn-install-app hidden" id="btn-install-app" aria-label="Install WaqtX">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/><path d="M5 19h14"/></svg>
+      </button>
+      <!-- Ramadan badge -->
+      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge" aria-live="polite">&#x1F319; Ramadan</span>
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <div class="privacy-page">
     <h1 class="privacy-title">Privacy Policy</h1>

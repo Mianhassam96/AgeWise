@@ -5,21 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>WaqtX — Reflection</title>
   <meta name="description" content="Your daily Quranic verse, reflection journal, gratitude practice, and personal notes — all private, all yours."/>
-  <meta name="theme-color" content="#0B1220"/>
+  <meta name="theme-color" content="#FAFAF7"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="style-pages.css"/>
   <script>
-    (function(){
-      var s='dark';try{s=localStorage.getItem('waqtx_theme')||'dark';}catch(e){}
-      if(s&&s!=='dark') document.documentElement.setAttribute('data-theme',s);
-      var fs=null;try{fs=localStorage.getItem('waqtx_fontsize');}catch(e){}
-      if(fs) document.documentElement.setAttribute('data-fontsize',fs);
-    })();
+    (function(){var s='light';try{s=localStorage.getItem('waqtx_theme')||'light';}catch(e){}if(s!=='light')document.documentElement.setAttribute('data-theme',s);var fs=null;try{fs=localStorage.getItem('waqtx_font_size');}catch(e){}if(fs)document.documentElement.setAttribute('data-fontsize',fs);var hc=false;try{hc=JSON.parse(localStorage.getItem('waqtx_contrast')||'false');}catch(e){}if(hc)document.documentElement.setAttribute('data-contrast','high');})();
   </script>
 </head>
 <body>
@@ -50,29 +45,21 @@
       </div>
     </div>
     <div class="nav-actions">
-      <div class="lang-switcher" id="lang-switcher">
-        <button class="lang-btn" id="lang-btn" aria-label="Change language">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <span id="lang-current">EN</span>
-        </button>
-        <div class="lang-dropdown hidden" id="lang-dropdown" role="menu">
-          <button class="lang-option active" data-lang="en">English</button>
-          <button class="lang-option" data-lang="ur">Urdu</button>
-          <button class="lang-option" data-lang="ar">Arabic</button>
-          <button class="lang-option" data-lang="roman">Roman Urdu</button>
-        </div>
+      <!-- V3 Language: EN | اردو pills -->
+      <div class="lang-toggle" role="group" aria-label="Language selection">
+        <button class="lang-pill active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-pill" data-lang="ur" aria-pressed="false">&#x627;&#x631;&#x62F;&#x648;</button>
       </div>
-      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge">Ramadan</span>
-      <div class="theme-wrapper">
-        <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Change theme">&#9728;&#65039;</button>
-        <div class="theme-dropdown hidden" id="theme-dropdown" role="menu">
-          <button class="theme-option" data-theme="dark">Dark</button>
-          <button class="theme-option" data-theme="light">Light</button>
-          <button class="theme-option" data-theme="ramadan">Ramadan</button>
-          <button class="theme-option" data-theme="friday">Friday</button>
-        </div>
-      </div>
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <!-- V3 Theme: single-click ☀/🌙 flip -->
+      <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Switch to dark theme">&#x1F319;</button>
+      <!-- Install PWA -->
+      <button class="btn-install-app hidden" id="btn-install-app" aria-label="Install WaqtX">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/><path d="M5 19h14"/></svg>
+      </button>
+      <!-- Ramadan badge -->
+      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge" aria-live="polite">&#x1F319; Ramadan</span>
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
         <span></span><span></span><span></span>
       </button>
     </div>
