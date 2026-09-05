@@ -4,530 +4,359 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>WaqtX — Your Time. Your Faith. Your History.</title>
-  <meta name="description" content="Explore Islamic history, understand your journey through time, and make today meaningful. A beautiful Islamic knowledge and reflection experience."/>
-  <meta name="theme-color" content="#FAFAF7"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="WaqtX — Your Time. Your Faith. Your History."/>
-  <meta property="og:description" content="An immersive Islamic knowledge and personal reflection experience. Explore 1400 years of Islamic civilization, track your prayer rhythm, and reflect daily."/>
-  <meta property="og:url" content="https://mianhassam96.github.io/WaqtX/"/>
-  <meta property="og:image" content="https://mianhassam96.github.io/WaqtX/og-image.svg"/>
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="WaqtX — Your Time. Your Faith. Your History."/>
-  <meta name="twitter:description" content="Explore Islamic history, understand your journey through time, and make today meaningful."/>
-  <meta name="twitter:image" content="https://mianhassam96.github.io/WaqtX/og-image.svg"/>
+  <meta name="description" content="Make today meaningful. Next prayer, daily guidance, Islamic history, and personal reflection — all in one place."/>
+  <meta name="theme-color" content="#F8F7F2"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:title"       content="WaqtX — Your Time. Your Faith. Your History."/>
+  <meta property="og:description" content="An immersive Islamic knowledge and personal reflection experience."/>
+  <meta property="og:url"         content="https://mianhassam96.github.io/WaqtX/"/>
+  <meta property="og:image"       content="https://mianhassam96.github.io/WaqtX/og-image.svg"/>
+  <meta name="twitter:card"       content="summary_large_image"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="manifest" href="manifest.json"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Cinzel:wght@600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="style-pages.css"/>
   <script>
-    (function(){var s='light';try{s=localStorage.getItem('waqtx_theme')||'light';}catch(e){}if(s!=='light')document.documentElement.setAttribute('data-theme',s);var fs=null;try{fs=localStorage.getItem('waqtx_font_size');}catch(e){}if(fs)document.documentElement.setAttribute('data-fontsize',fs);var hc=false;try{hc=JSON.parse(localStorage.getItem('waqtx_contrast')||'false');}catch(e){}if(hc)document.documentElement.setAttribute('data-contrast','high');})();
+    (function(){
+      var s='light';
+      try{s=localStorage.getItem('waqtx_theme')||'light';}catch(e){}
+      if(s!=='light') document.documentElement.setAttribute('data-theme',s);
+      var l='en';
+      try{l=localStorage.getItem('waqtx_lang')||'en';}catch(e){}
+      if(l!=='en'){ document.documentElement.setAttribute('lang',l); if(l==='ur'||l==='ar') document.documentElement.setAttribute('dir','rtl'); }
+    })();
   </script>
 </head>
 <body>
 
-<!-- ═══════════════════════════ NAV V2 ═══════════════════════════ -->
-<nav class="navbar" id="navbar">
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
+
     <a href="index.html" class="nav-logo" aria-label="WaqtX home">
       <span class="nav-logo-text">Waqt<span class="nav-logo-x">X</span></span>
     </a>
 
-    <!-- 3-pillar desktop nav -->
-    <div class="nav-pillars" id="nav-pillars" aria-label="Main navigation">
-      <!-- Pillar 1: Your Time -->
-      <div class="nav-pillar">
-        <span class="nav-pillar-label">🕰️ Your Time</span>
-        <a href="index.html"      class="nav-link active">Home</a>
-        <a href="prayers.html"    class="nav-link">Prayers</a>
-        <a href="journey.html"    class="nav-link">Journey</a>
-        <a href="calendar.html"   class="nav-link">Calendar</a>
-      </div>
-      <!-- Pillar 2: Islamic History -->
-      <div class="nav-pillar">
-        <span class="nav-pillar-label">📚 History</span>
-        <a href="explore.html"    class="nav-link">Explore</a>
-        <a href="stories.html"    class="nav-link">Stories</a>
-        <a href="qibla.html"      class="nav-link">Qibla</a>
-      </div>
-      <!-- Pillar 3: Reflection -->
-      <div class="nav-pillar">
-        <span class="nav-pillar-label">🌙 Reflection</span>
-        <a href="reflection.html" class="nav-link">Reflect</a>
-        <a href="profile.html"    class="nav-link">Profile</a>
-        <a href="settings.html"   class="nav-link">Settings</a>
-      </div>
+    <!-- Desktop links: 5 items -->
+    <div class="nav-links" role="list">
+      <a href="index.html"      class="nav-link active" role="listitem" aria-current="page">Today</a>
+      <a href="prayers.html"    class="nav-link"        role="listitem">Prayer</a>
+      <a href="journey.html"    class="nav-link"        role="listitem">Journey</a>
+      <a href="explore.html"    class="nav-link"        role="listitem">History</a>
+      <a href="reflection.html" class="nav-link"        role="listitem">Reflect</a>
     </div>
 
-    <!-- Actions -->
     <div class="nav-actions">
-      <!-- V3 Language: EN | اردو pills -->
-      <div class="lang-toggle" role="group" aria-label="Language selection">
+      <!-- Language: EN | اردو -->
+      <div class="lang-toggle" role="group" aria-label="Language">
         <button class="lang-pill active" data-lang="en" aria-pressed="true">EN</button>
-        <button class="lang-pill" data-lang="ur" aria-pressed="false">&#x627;&#x631;&#x62F;&#x648;</button>
+        <button class="lang-pill"        data-lang="ur" aria-pressed="false" style="font-family:'Noto Sans Arabic',sans-serif">اردو</button>
       </div>
-      <!-- V3 Theme: single-click ☀/🌙 flip -->
-      <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Switch to dark theme">&#x1F319;</button>
-      <!-- Install PWA -->
-      <button class="btn-install-app hidden" id="btn-install-app" aria-label="Install WaqtX">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/><path d="M5 19h14"/></svg>
+
+      <!-- Theme toggle -->
+      <button id="btn-theme-toggle" class="btn-theme" aria-label="Switch theme" title="Toggle dark/light mode">
+        <span id="theme-icon">🌙</span>
       </button>
+
+      <!-- Install PWA -->
+      <button class="btn-install-app hidden" id="btn-install-app" aria-label="Install WaqtX app">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/><path d="M5 19h14"/></svg>
+      </button>
+
       <!-- Ramadan badge -->
-      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge" aria-live="polite">&#x1F319; Ramadan</span>
-      <!-- Hamburger -->
+      <span class="mode-badge ramadan-badge hidden" id="ramadan-badge" aria-live="polite">🌙 Ramadan</span>
+
+      <!-- Hamburger (mobile) -->
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
         <span></span><span></span><span></span>
       </button>
     </div>
+
   </div>
 </nav>
 
-<!-- Mobile nav drawer -->
-<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+<!-- Mobile drawer (slides down from nav) -->
+<div class="nav-drawer" id="nav-drawer" aria-hidden="true" aria-label="Mobile navigation">
   <div class="nav-drawer-section">
-    <div class="nav-drawer-label">🕰️ Your Time</div>
+    <div class="nav-drawer-label">Navigate</div>
     <div class="nav-drawer-links">
-      <a href="index.html"    class="nav-link active">Home</a>
-      <a href="prayers.html"  class="nav-link">Prayers</a>
-      <a href="journey.html"  class="nav-link">Journey</a>
-      <a href="calendar.html" class="nav-link">Calendar</a>
-    </div>
-  </div>
-  <div class="nav-drawer-section">
-    <div class="nav-drawer-label">📚 Islamic History</div>
-    <div class="nav-drawer-links">
-      <a href="explore.html"  class="nav-link">Explore</a>
-      <a href="stories.html"  class="nav-link">Stories</a>
-      <a href="qibla.html"    class="nav-link">Qibla</a>
-    </div>
-  </div>
-  <div class="nav-drawer-section">
-    <div class="nav-drawer-label">🌙 Reflection</div>
-    <div class="nav-drawer-links">
+      <a href="index.html"      class="nav-link active">Today</a>
+      <a href="prayers.html"    class="nav-link">Prayer</a>
+      <a href="journey.html"    class="nav-link">Journey</a>
+      <a href="explore.html"    class="nav-link">History</a>
       <a href="reflection.html" class="nav-link">Reflect</a>
+    </div>
+  </div>
+  <div class="nav-drawer-section">
+    <div class="nav-drawer-label">More</div>
+    <div class="nav-drawer-links">
+      <a href="calendar.html"   class="nav-link">Calendar</a>
+      <a href="stories.html"    class="nav-link">Stories</a>
+      <a href="qibla.html"      class="nav-link">Qibla</a>
       <a href="profile.html"    class="nav-link">Profile</a>
       <a href="settings.html"   class="nav-link">Settings</a>
     </div>
   </div>
 </div>
 
-<div class="friday-banner hidden" id="friday-banner" role="status">
-  🌙 Jumu'ah Mubarak — May this Friday bring you peace and blessings.
+<!-- Friday banner -->
+<div class="hidden" id="friday-banner" style="background:var(--gold-bg);border-bottom:1px solid var(--border);text-align:center;padding:8px 16px;font-size:var(--text-sm);color:var(--gold);font-weight:600;" role="status">
+  🕌 Jumu'ah Mubarak — May this Friday bring you peace and blessings.
 </div>
-<span class="mode-badge ramadan-badge hidden" id="ramadan-badge" aria-live="polite">🌙 Ramadan</span>
 
+<!-- ═══════ TODAY HERO ═══════ -->
+<div class="page-wrap">
+<section class="today-hero" id="today-hero" aria-label="Today overview">
+  <div class="today-hero-inner">
 
-<!-- ═══════════════════════════════════════════════════════════
-     HERO — Compact, clear identity + next prayer at a glance
-     ═══════════════════════════════════════════════════════════ -->
-<!-- ═══════════════════════════════════════════════════════════
-     HERO — Compact identity + at-a-glance date
-     ═══════════════════════════════════════════════════════════ -->
-<section class="hero" id="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-bg-glow"></div>
-    <div class="hero-bg-overlay"></div>
-  </div>
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-date-badge" id="hero-date-badge">
-        <span aria-hidden="true">&#x1F319;</span>
-        <span id="hero-hijri-date" class="skeleton-val skeleton-xl">Loading&#x2026;</span>
-        <span class="hdb-sep" aria-hidden="true">&#xB7;</span>
-        <span id="hero-greg-date" class="skeleton-val skeleton-lg">Loading&#x2026;</span>
+    <!-- Date row -->
+    <div class="today-date-row">
+      <div class="today-date-badge" id="hero-greg-badge">
+        <span id="hero-day-name" class="skeleton skeleton-sm">Friday</span>
+        <span class="today-date-sep" aria-hidden="true">·</span>
+        <span id="hero-greg-date" class="skeleton skeleton-md">4 Sep 2026</span>
       </div>
-      <div class="hero-verse-block">
-        <div class="hero-arabic" lang="ar" dir="rtl">&#x648;&#x64E;&#x645;&#x64E;&#x627; &#x62A;&#x64E;&#x62F;&#x652;&#x631;&#x650;&#x64A; &#x646;&#x64E;&#x641;&#x652;&#x633;&#x61C; &#x645;&#x651;&#x64E;&#x627;&#x630;&#x64E;&#x627; &#x62A;&#x64E;&#x643;&#x652;&#x633;&#x650;&#x628;&#x64F; &#x63A;&#x64E;&#x62F;&#x64B;&#x627;</div>
-        <div class="hero-arabic-trans">&ldquo;No soul knows what it will earn tomorrow.&rdquo; &mdash; Quran 31:34</div>
-      </div>
-      <div class="hero-divider" aria-hidden="true">
-        <span class="hero-divider-line"></span>
-        <span class="hero-divider-icon">&#x2736;</span>
-        <span class="hero-divider-line"></span>
-      </div>
-      <h1 class="hero-headline">
-        Your Time. Your Faith.
-        <span class="hero-headline-gold">Your History.</span>
-      </h1>
-      <p class="hero-sub">Understand your place in Islamic time. Explore 1,400 years of civilization. Make today count.</p>
-      <div class="hero-actions">
-        <a href="explore.html" class="btn-hero">Explore Islamic History &#x2736;</a>
-        <a href="prayers.html" class="btn-hero-glass">Prayer Times</a>
-      </div>
-      <div class="hero-trust-strip" aria-label="App features">
-        <span>&#x1F512; Private First</span>
-        <span class="trust-dot" aria-hidden="true">&#xB7;</span>
-        <span>&#x1F4F1; Works Offline</span>
-        <span class="trust-dot" aria-hidden="true">&#xB7;</span>
-        <span>&#x1F54C; Built for Muslims</span>
-        <span class="trust-dot" aria-hidden="true">&#xB7;</span>
-        <span>&#x2601; No Account Needed</span>
+      <div class="today-hijri-badge" id="hero-hijri-badge">
+        <span aria-hidden="true" style="font-size:0.8rem">🌙</span>
+        <span id="hero-hijri-date" class="skeleton skeleton-md">Loading…</span>
       </div>
     </div>
-    <div class="hero-right" aria-label="Personal dashboard">
-      <div class="hero-dashboard-card" id="hero-dashboard-card">
-        <div class="hdc-greeting">
-          <span class="hdc-salam">Assalamu Alaikum</span>
-          <span class="hdc-name" id="hdc-name">&mdash; Welcome</span>
+
+    <!-- Tagline -->
+    <h1 class="today-tagline">Your time is a trust.</h1>
+    <p class="today-sub">Make today meaningful.</p>
+
+    <!-- Next prayer -->
+    <div class="next-prayer-strip" id="next-prayer-strip">
+      <div class="nps-left">
+        <div class="nps-label">Next Prayer</div>
+        <div class="nps-prayer-name skeleton skeleton-md" id="nps-name">Loading…</div>
+        <div class="nps-countdown" id="nps-countdown">—</div>
+      </div>
+      <div class="nps-time skeleton skeleton-md" id="nps-time">—</div>
+      <a href="prayers.html" class="nps-link">View Times</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ PRAYER RHYTHM ═══════ -->
+<section class="section section-sm" id="prayer-rhythm-section">
+  <div class="container">
+    <div class="section-label">Prayer Rhythm</div>
+    <div class="prayer-rhythm-wrap">
+      <div class="prayer-rhythm" id="prayer-rhythm" role="list" aria-label="Today's prayers">
+        <!-- Rendered by JS -->
+        <div class="pr-item" role="listitem">
+          <div class="pr-dot">🌙</div>
+          <div class="pr-name">Fajr</div>
+          <div class="pr-time skeleton skeleton-sm" id="pr-time-Fajr">—</div>
         </div>
-        <div class="hdc-age-journey">
-          <div class="hdc-age-label">Your Journey So Far</div>
-          <div class="hdc-age-stats" id="hdc-age-stats">
-            <div class="hdc-age-item">
-              <span class="hdc-age-val skeleton-val skeleton-num" id="hdc-ramadans">&mdash;</span>
-              <span class="hdc-age-key">Ramadans</span>
-            </div>
-            <div class="hdc-age-divider" aria-hidden="true"></div>
-            <div class="hdc-age-item">
-              <span class="hdc-age-val skeleton-val skeleton-num" id="hdc-jumuahs">&mdash;</span>
-              <span class="hdc-age-key">Jumu&apos;ahs</span>
-            </div>
-            <div class="hdc-age-divider" aria-hidden="true"></div>
-            <div class="hdc-age-item">
-              <span class="hdc-age-val skeleton-val skeleton-num" id="hdc-prayers">&mdash;</span>
-              <span class="hdc-age-key">Prayer Opps</span>
-            </div>
-          </div>
-          <div class="hdc-no-dob hidden" id="hdc-no-dob">
-            <a href="journey.html" class="hdc-dob-link">Enter birth date on Journey page &rarr;</a>
-          </div>
+        <div class="pr-item" role="listitem">
+          <div class="pr-dot">☀️</div>
+          <div class="pr-name">Dhuhr</div>
+          <div class="pr-time skeleton skeleton-sm" id="pr-time-Dhuhr">—</div>
         </div>
-        <div class="hdc-divider" aria-hidden="true"></div>
-        <div id="hdc-next-prayer-block">
-          <div class="hdc-next-label">Next Prayer</div>
-          <div class="hdc-next-row">
-            <span class="hdc-next-icon" id="hdc-prayer-icon" aria-hidden="true">&#x1F54C;</span>
-            <span class="hdc-next-name skeleton-val skeleton-lg" id="hdc-prayer-name">Loading&hellip;</span>
-            <span class="hdc-next-countdown skeleton-val skeleton-md" id="hdc-prayer-countdown">&mdash;</span>
-          </div>
+        <div class="pr-item" role="listitem">
+          <div class="pr-dot">🌤️</div>
+          <div class="pr-name">Asr</div>
+          <div class="pr-time skeleton skeleton-sm" id="pr-time-Asr">—</div>
         </div>
-        <div class="hdc-divider" aria-hidden="true"></div>
-        <div class="hdc-snapshot">
-          <div class="hdc-snapshot-label">Spiritual Snapshot</div>
-          <div class="hdc-snapshot-row">
-            <span class="hdc-snap-key">Prayer Consistency</span>
-            <span class="hdc-snap-val skeleton-val skeleton-sm" id="hdc-prayer-consistency">&mdash;</span>
-          </div>
-          <div class="hdc-bar-wrap" aria-hidden="true"><div class="hdc-bar" id="hdc-bar-prayer"></div></div>
-          <div class="hdc-snapshot-row">
-            <span class="hdc-snap-key">Muhasabah Streak</span>
-            <span class="hdc-snap-val skeleton-val skeleton-sm" id="hdc-muhasabah-streak">&mdash;</span>
-          </div>
-          <div class="hdc-bar-wrap" aria-hidden="true"><div class="hdc-bar hdc-bar-teal" id="hdc-bar-muhasabah"></div></div>
-          <div class="hdc-snapshot-row">
-            <span class="hdc-snap-key">Gratitude Streak</span>
-            <span class="hdc-snap-val skeleton-val skeleton-sm" id="hdc-gratitude-streak">&mdash;</span>
-          </div>
-          <div class="hdc-bar-wrap" aria-hidden="true"><div class="hdc-bar hdc-bar-green" id="hdc-bar-gratitude"></div></div>
+        <div class="pr-item" role="listitem">
+          <div class="pr-dot">🌇</div>
+          <div class="pr-name">Maghrib</div>
+          <div class="pr-time skeleton skeleton-sm" id="pr-time-Maghrib">—</div>
+        </div>
+        <div class="pr-item" role="listitem">
+          <div class="pr-dot">🌃</div>
+          <div class="pr-name">Isha</div>
+          <div class="pr-time skeleton skeleton-sm" id="pr-time-Isha">—</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ 1. NEXT PRAYER ════ -->
-<section class="section section-alt" id="todays-waqt">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">TODAY&apos;S WAQT</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
+<!-- ═══════ TODAY'S GUIDANCE ═══════ -->
+<section class="section" id="guidance-section" style="background:var(--surface-alt)">
+  <div class="container">
+    <div class="section-label">Today's Guidance</div>
+
+    <div class="guidance-card" id="guidance-card">
+      <div class="gc-eyebrow" id="gc-source-label">Ayah of the Day</div>
+      <div class="gc-arabic" id="gc-arabic" lang="ar" dir="rtl"></div>
+      <div class="gc-translation" id="gc-translation"></div>
+      <div class="gc-source" id="gc-source"></div>
+      <div class="gc-reflection" id="gc-reflection"></div>
     </div>
-    <p class="section-sub">The day is structured by prayer. Five times, every day, a call from Allah.</p>
-    <div class="home-timeline" id="home-timeline" aria-label="Prayer timeline">
-      <span class="ht-pill" id="ht-Fajr">Fajr</span><span class="ht-connector" aria-hidden="true"></span>
-      <span class="ht-pill" id="ht-Sunrise">Sunrise</span><span class="ht-connector" aria-hidden="true"></span>
-      <span class="ht-pill" id="ht-Dhuhr">Dhuhr</span><span class="ht-connector" aria-hidden="true"></span>
-      <span class="ht-pill" id="ht-Asr">Asr</span><span class="ht-connector" aria-hidden="true"></span>
-      <span class="ht-pill" id="ht-Maghrib">Maghrib</span><span class="ht-connector" aria-hidden="true"></span>
-      <span class="ht-pill" id="ht-Isha">Isha</span>
-    </div>
-    <div class="home-prayer-status-grid" id="home-prayer-status-grid">
-      <div class="hps-card" id="hps-card-Fajr">
-        <div class="hps-icon" aria-hidden="true">&#x1F319;</div><div class="hps-name">Fajr</div>
-        <div class="hps-time skeleton-val skeleton-md" id="hps-time-Fajr">&mdash;</div>
-        <div class="hps-badge hps-upcoming" id="hps-badge-Fajr">Upcoming</div>
+
+    <!-- Action today -->
+    <div class="card card-accent" style="margin-top:var(--sp-4)" id="action-card">
+      <div class="section-label" style="margin-bottom:var(--sp-3)">One Action Today</div>
+      <div style="font-size:var(--text-md);font-weight:600;color:var(--text);margin-bottom:var(--sp-2);line-height:var(--leading-snug)" id="action-text"></div>
+      <div style="font-size:var(--text-sm);color:var(--text-3);line-height:var(--leading-relaxed);margin-bottom:var(--sp-4)" id="action-why"></div>
+      <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" id="btn-action-done">✓ Done for today</button>
+        <button class="btn btn-ghost btn-sm" id="btn-action-share">Share</button>
       </div>
-      <div class="hps-card" id="hps-card-Dhuhr">
-        <div class="hps-icon" aria-hidden="true">&#x2600;&#xFE0F;</div><div class="hps-name">Dhuhr</div>
-        <div class="hps-time skeleton-val skeleton-md" id="hps-time-Dhuhr">&mdash;</div>
-        <div class="hps-badge hps-upcoming" id="hps-badge-Dhuhr">Upcoming</div>
-      </div>
-      <div class="hps-card" id="hps-card-Asr">
-        <div class="hps-icon" aria-hidden="true">&#x1F324;&#xFE0F;</div><div class="hps-name">Asr</div>
-        <div class="hps-time skeleton-val skeleton-md" id="hps-time-Asr">&mdash;</div>
-        <div class="hps-badge hps-upcoming" id="hps-badge-Asr">Upcoming</div>
-      </div>
-      <div class="hps-card" id="hps-card-Maghrib">
-        <div class="hps-icon" aria-hidden="true">&#x1F307;</div><div class="hps-name">Maghrib</div>
-        <div class="hps-time skeleton-val skeleton-md" id="hps-time-Maghrib">&mdash;</div>
-        <div class="hps-badge hps-upcoming" id="hps-badge-Maghrib">Upcoming</div>
-      </div>
-      <div class="hps-card" id="hps-card-Isha">
-        <div class="hps-icon" aria-hidden="true">&#x1F303;</div><div class="hps-name">Isha</div>
-        <div class="hps-time skeleton-val skeleton-md" id="hps-time-Isha">&mdash;</div>
-        <div class="hps-badge hps-upcoming" id="hps-badge-Isha">Upcoming</div>
-      </div>
-    </div>
-    <div class="home-next-prayer-card" id="home-next-prayer-card">
-      <div>
-        <div class="hnp-label">Next Prayer</div>
-        <div class="hnp-row">
-          <span class="hnp-icon" id="hnp-icon" aria-hidden="true">&#x1F54C;</span>
-          <span class="hnp-name skeleton-val skeleton-lg" id="hnp-name">Loading&hellip;</span>
-          <span class="hnp-countdown skeleton-val skeleton-md" id="hnp-countdown">&mdash;</span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:24px;">
-      <a href="prayers.html" class="btn-timeline-full">Full Prayer Tracker &rarr;</a>
+      <div class="hidden" id="action-done-msg" style="margin-top:var(--sp-3);font-size:var(--text-sm);color:var(--success);font-weight:600">Alhamdulillah. See you tomorrow.</div>
     </div>
   </div>
 </section>
 
-<!-- ════ 2. TODAY'S GUIDANCE ════ -->
-<section class="section" id="todays-guidance">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">TODAY&apos;S GUIDANCE</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
-    </div>
-    <p class="section-sub">One Ayah. One Dua. One action. One reflection.</p>
-    <div class="guidance-grid">
-      <div class="guidance-card gc-ayah">
-        <div class="gc-badge"><span aria-hidden="true">&#x1F4D6;</span> Ayah of the Day</div>
-        <div class="gc-arabic" id="dd-ayah-arabic" lang="ar" dir="rtl"></div>
-        <div class="gc-translation" id="dd-ayah-translation"></div>
-        <div class="gc-source" id="dd-ayah-source"></div>
-        <div class="gc-reflection" id="dd-ayah-reflection"></div>
-        <a href="reflection.html" class="gc-link-btn">Reflect on this &rarr;</a>
-      </div>
-      <div class="guidance-card gc-dua">
-        <div class="gc-badge"><span aria-hidden="true">&#x1F932;</span> Dua of the Day</div>
-        <div class="gc-situation" id="dd-dua-situation"></div>
-        <div class="gc-arabic" id="dd-dua-arabic" lang="ar" dir="rtl"></div>
-        <div class="gc-transliteration" id="dd-dua-transliteration"></div>
-        <div class="gc-translation" id="dd-dua-translation"></div>
-        <div class="gc-source" id="dd-dua-source"></div>
-      </div>
-      <div class="guidance-card gc-action">
-        <div class="gc-badge"><span aria-hidden="true">&#x1F3AF;</span> One Action Today</div>
-        <div class="gc-action-text" id="dd-action-text"></div>
-        <div class="gc-action-why" id="dd-action-why"></div>
-        <div class="gc-action-btns">
-          <button class="gc-done-btn" id="dd-done-btn">&#x2713; Done for Today</button>
-          <button class="gc-share-btn" id="dd-share-action-btn">&#x1F4E4; Share</button>
-        </div>
-        <div class="gc-done-msg hidden" id="dd-done-msg">Alhamdulillah. See you tomorrow. &#x2736;</div>
-      </div>
-      <div class="guidance-card gc-reflect-card">
-        <div class="gc-badge"><span aria-hidden="true">&#x1FA94;</span> Tonight&apos;s Reflection</div>
-        <div class="gc-reflect-quote" id="daily-reflect-quote">
-          Time passes whether we use it wisely or not. The believer measures success not by years lived, but by what was done within them.
-        </div>
-        <a href="reflection.html" class="gc-link-btn">Write Your Reflection &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══════ THIS DAY IN HISTORY ═══════ -->
+<section class="section" id="this-day-section">
+  <div class="container">
+    <div class="section-label">This Day in Islamic History</div>
 
-<!-- ════ 3. THIS DAY IN ISLAMIC HISTORY ════ -->
-<section class="section section-alt" id="this-day-section">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">THIS DAY IN ISLAMIC HISTORY</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
-    </div>
-    <p class="section-sub">You are living in the 15th Islamic century. Here is what happened on this day.</p>
     <div class="this-day-card" id="this-day-card">
-      <div class="td-year" id="td-year">622 CE &middot; 1 AH</div>
-      <h2 class="td-title" id="td-title">The Hijrah &mdash; A Journey of Faith</h2>
-      <p class="td-body" id="td-body">The Prophet &#xFDFA; and his companions migrated from Makkah to Madinah, marking the beginning of the Islamic calendar and a new era in Islamic history.</p>
-      <div class="td-reflection-label">Reflection</div>
-      <p class="td-reflection" id="td-reflection">The believer is always willing to leave behind what is comfortable for what is right.</p>
-      <div class="source-badges" style="margin-bottom:16px;" id="td-sources">
-        <span class="ev-badge ev-quran"><span class="ev-badge-dot" aria-hidden="true"></span>Quran 9:40</span>
-        <span class="ev-badge ev-classical"><span class="ev-badge-dot" aria-hidden="true"></span>Ibn Hisham, Sirah</span>
+      <div class="tdc-date-col" aria-label="Date">
+        <div class="tdc-day"   id="td-day">4</div>
+        <div class="tdc-month" id="td-month">Sep</div>
+        <div class="tdc-year"  id="td-year">622 CE</div>
       </div>
-      <a href="explore.html" class="td-cta">Explore full entry &rarr;</a>
-    </div>
-  </div>
-</section>
-
-<!-- ════ 4. TONIGHT'S MUHASABAH ════ -->
-<section class="section" id="home-muhasabah">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">BEFORE TODAY ENDS</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
-    </div>
-    <p class="section-sub">Three questions. A few honest minutes with yourself.</p>
-    <div class="home-muhasabah-card">
-      <div class="hm-question-block">
-        <div class="hm-q-num">01</div>
-        <div class="hm-q-text">What blessing am I grateful for today?</div>
-        <textarea class="hm-textarea" id="hm-q1" placeholder="Write something you are grateful for&#x2026;" rows="3" aria-label="Gratitude"></textarea>
-      </div>
-      <div class="hm-question-block">
-        <div class="hm-q-num">02</div>
-        <div class="hm-q-text">What should I improve tomorrow?</div>
-        <textarea class="hm-textarea" id="hm-q2" placeholder="One honest thing to work on&#x2026;" rows="3" aria-label="Improvement"></textarea>
-      </div>
-      <div class="hm-question-block">
-        <div class="hm-q-num">03</div>
-        <div class="hm-q-text">What good deed brought me closer to Allah today?</div>
-        <textarea class="hm-textarea" id="hm-q3" placeholder="Even something small counts&#x2026;" rows="3" aria-label="Good deed"></textarea>
-      </div>
-      <div class="hm-footer">
-        <div class="hm-save-status" id="hm-save-status" aria-live="polite"></div>
-        <p class="privacy-notice">&#x1F512; Stored only on your device.</p>
-        <a href="reflection.html" class="hm-full-link">Open Full Reflection Journal &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════ 5. YOUR JOURNEY ════ -->
-<section class="section section-alt" id="home-quick-overview">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">YOUR JOURNEY SNAPSHOT</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
-    </div>
-    <p class="section-sub">A quiet look at where you are &mdash; and where you are headed.</p>
-    <div class="journey-snapshot-grid">
-      <div class="jsn-left">
-        <div class="jsn-left-title">My Islamic Journey</div>
-        <div class="jsn-counter-list">
-          <div class="jsn-counter"><span class="jsn-icon" aria-hidden="true">&#x1F319;</span><span class="jsn-label">Ramadans Witnessed</span><span class="jsn-val skeleton-val skeleton-num" id="hov-ramadans">&mdash;</span></div>
-          <div class="jsn-counter"><span class="jsn-icon" aria-hidden="true">&#x1F54C;</span><span class="jsn-label">Jumu&apos;ahs Lived</span><span class="jsn-val skeleton-val skeleton-num" id="hov-jumuahs">&mdash;</span></div>
-          <div class="jsn-counter"><span class="jsn-icon" aria-hidden="true">&#x1F4FF;</span><span class="jsn-label">Prayer Opportunities</span><span class="jsn-val skeleton-val skeleton-num" id="hov-prayer-opps">&mdash;</span></div>
-          <div class="jsn-counter"><span class="jsn-icon" aria-hidden="true">&#x2728;</span><span class="jsn-label">Laylat al-Qadr Opportunities</span><span class="jsn-val skeleton-val skeleton-num" id="hov-laylatul">&mdash;</span></div>
+      <div class="tdc-body">
+        <div class="tdc-eyebrow" id="td-era">Seerah</div>
+        <div class="tdc-title"   id="td-title">The Hijrah — A Journey of Faith</div>
+        <div class="tdc-summary" id="td-summary">
+          The Prophet ﷺ and his companions migrated from Makkah to Madinah, marking the beginning of the Islamic calendar and a new era in Islamic history.
         </div>
-        <a href="journey.html" class="jsn-cta-link">See Full Journey &rarr;</a>
-      </div>
-      <div class="jsn-right">
-        <div class="jsn-right-title">Your Time With Allah</div>
-        <div class="jsn-ring-wrap">
-          <svg class="jsn-ring-svg" viewBox="0 0 160 160" aria-hidden="true">
-            <circle class="jsn-ring-bg" cx="80" cy="80" r="66"/>
-            <circle class="jsn-ring-fill" cx="80" cy="80" r="66" id="jsn-ring-fill" stroke-dasharray="414.69" stroke-dashoffset="414.69"/>
-          </svg>
-          <div class="jsn-ring-inner">
-            <div class="jsn-ring-pct skeleton-val skeleton-sm" id="jsn-ring-pct">&mdash;</div>
-            <div class="jsn-ring-label">Journey<br>Completed</div>
-          </div>
+        <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap;margin-bottom:var(--sp-3)" id="td-sources">
+          <span class="ev-badge ev-quran"><span class="ev-badge-dot" aria-hidden="true"></span>Quran 9:40</span>
+          <span class="ev-badge ev-classical"><span class="ev-badge-dot" aria-hidden="true"></span>Ibn Hisham</span>
         </div>
-        <div class="jsn-remaining-stats">
-          <div class="jsn-rem-item"><span class="jsn-rem-val skeleton-val skeleton-num" id="jsn-rem-ramadans">&mdash;</span><span class="jsn-rem-key">Est. Ramadans Remaining</span></div>
-          <div class="jsn-rem-item"><span class="jsn-rem-val skeleton-val skeleton-num" id="jsn-rem-jumuahs">&mdash;</span><span class="jsn-rem-key">Est. Jumu&apos;ahs Remaining</span></div>
+        <a href="search.html" class="tdc-link" id="td-link">Explore this entry →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--sp-5);text-align:center">
+      <a href="explore.html" class="btn btn-ghost">Explore Islamic History</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ REFLECTION ═══════ -->
+<section class="section" id="reflection-section" style="background:var(--surface-alt)">
+  <div class="container">
+    <div class="section-label">Before Today Ends</div>
+
+    <div class="reflection-prompt-card">
+      <div class="rpc-eyebrow">Daily Muhasabah</div>
+      <div class="rpc-title">Take a quiet moment.</div>
+      <div class="rpc-sub">Three questions. Honest answers. Stored only on your device.</div>
+
+      <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+        <div>
+          <label class="form-label" for="mq-1">What blessing am I grateful for today?</label>
+          <textarea class="form-textarea" id="mq-1" placeholder="Write freely…" rows="2" aria-label="Gratitude"></textarea>
         </div>
-        <p class="jsn-reflection-line">Every remaining Ramadan is a gift not yet guaranteed.</p>
+        <div>
+          <label class="form-label" for="mq-2">What should I improve tomorrow?</label>
+          <textarea class="form-textarea" id="mq-2" placeholder="Be honest…" rows="2" aria-label="Improvement"></textarea>
+        </div>
+        <div>
+          <label class="form-label" for="mq-3">What good deed brought me closer to Allah today?</label>
+          <textarea class="form-textarea" id="mq-3" placeholder="Even something small…" rows="2" aria-label="Good deed"></textarea>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--sp-4);flex-wrap:wrap;gap:var(--sp-2)">
+        <span style="font-size:var(--text-xs);color:var(--text-3)">🔒 Stored on your device only</span>
+        <div style="display:flex;gap:var(--sp-2)">
+          <span id="mq-save-status" style="font-size:var(--text-xs);color:var(--success);font-weight:600" aria-live="polite"></span>
+          <a href="reflection.html" style="font-size:var(--text-sm);font-weight:600;color:var(--primary)">Full Journal →</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ 6. EXPLORE ISLAMIC CIVILIZATION ════ -->
-<section class="section" id="explore-strip">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">EXPLORE ISLAMIC CIVILIZATION</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
+<!-- ═══════ JOURNEY SNAPSHOT ═══════ -->
+<section class="section" id="journey-snapshot-section">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-5)">
+      <div class="section-label" style="margin-bottom:0">Your Journey</div>
+      <a href="journey.html" style="font-size:var(--text-sm);font-weight:600;color:var(--primary)">See all →</a>
     </div>
-    <p class="section-sub">1,400 years of faith, knowledge, and civilization &mdash; every claim sourced.</p>
-    <div class="civilization-strip">
-      <a href="explore.html?filter=seerah" class="civ-card"><span class="civ-icon" aria-hidden="true">&#x1F33F;</span><span class="civ-label">Seerah</span><span class="civ-count">Life of the Prophet &#xFDFA;</span></a>
-      <a href="explore.html?filter=companions" class="civ-card"><span class="civ-icon" aria-hidden="true">&#x2B50;</span><span class="civ-label">Companions</span><span class="civ-count">The Sahabah</span></a>
-      <a href="explore.html?filter=abbasid" class="civ-card"><span class="civ-icon" aria-hidden="true">&#x1F3DB;&#xFE0F;</span><span class="civ-label">Golden Age</span><span class="civ-count">Baghdad &amp; Beyond</span></a>
-      <a href="explore.html?filter=scholars" class="civ-card"><span class="civ-icon" aria-hidden="true">&#x1F4DC;</span><span class="civ-label">Scholars</span><span class="civ-count">Scientists &amp; Thinkers</span></a>
-      <a href="explore.html?filter=ottoman" class="civ-card"><span class="civ-icon" aria-hidden="true">&#x1F54C;</span><span class="civ-label">Ottoman Era</span><span class="civ-count">500 Years of Empire</span></a>
+
+    <div class="journey-stat-grid">
+      <div class="jstat">
+        <div class="jstat-val skeleton skeleton-num" id="js-ramadans">—</div>
+        <div class="jstat-key">Ramadans</div>
+      </div>
+      <div class="jstat">
+        <div class="jstat-val skeleton skeleton-num" id="js-jumuahs">—</div>
+        <div class="jstat-key">Jumu'ahs</div>
+      </div>
+      <div class="jstat">
+        <div class="jstat-val skeleton skeleton-num" id="js-prayers">—</div>
+        <div class="jstat-key">Prayer Opps</div>
+      </div>
+      <div class="jstat">
+        <div class="jstat-val skeleton skeleton-num" id="js-laylatul">—</div>
+        <div class="jstat-key">Laylat al-Qadr</div>
+      </div>
     </div>
-    <div style="text-align:center;margin-top:32px;">
-      <a href="explore.html" class="btn btn-primary btn-lg">Open Islamic History Explorer &rarr;</a>
+
+    <div id="js-no-dob" style="text-align:center;padding:var(--sp-5) 0;font-size:var(--text-sm);color:var(--text-3)" class="hidden">
+      <a href="journey.html" style="color:var(--primary);font-weight:600">Enter your birth date to see your journey →</a>
     </div>
   </div>
 </section>
 
-<!-- ════ 7. SPIRITUAL PROGRESS ════ -->
-<section class="section section-alt" id="spiritual-progress-section">
-  <div class="section-inner">
-    <div class="section-heading">
-      <span class="sh-line" aria-hidden="true"></span><span class="sh-icon" aria-hidden="true">&#x25C6;</span>
-      <span class="sh-text">SPIRITUAL PROGRESS</span>
-      <span class="sh-icon" aria-hidden="true">&#x25C6;</span><span class="sh-line" aria-hidden="true"></span>
-    </div>
-    <p class="section-sub">Your consistency, tracked quietly. No judgment, only growth.</p>
-    <div class="spiritual-progress-grid">
-      <div class="sp-card">
-        <div class="sp-icon" aria-hidden="true">&#x1F54C;</div>
-        <div class="sp-label">Prayer Consistency</div>
-        <div class="sp-val skeleton-val skeleton-sm" id="sp-prayer">&mdash;</div>
-        <div class="sp-bar-wrap" aria-hidden="true"><div class="sp-bar" id="sp-bar-prayer"></div></div>
-      </div>
-      <div class="sp-card">
-        <div class="sp-icon" aria-hidden="true">&#x1F4D3;</div>
-        <div class="sp-label">Reflection Consistency</div>
-        <div class="sp-val skeleton-val skeleton-sm" id="sp-reflect">&mdash;</div>
-        <div class="sp-bar-wrap" aria-hidden="true"><div class="sp-bar" id="sp-bar-reflect" style="background:linear-gradient(90deg,var(--teal),var(--teal2))"></div></div>
-      </div>
-      <div class="sp-card">
-        <div class="sp-icon" aria-hidden="true">&#x1F33F;</div>
-        <div class="sp-label">Gratitude Practice</div>
-        <div class="sp-val skeleton-val skeleton-sm" id="sp-gratitude">&mdash;</div>
-        <div class="sp-bar-wrap" aria-hidden="true"><div class="sp-bar" id="sp-bar-gratitude" style="background:linear-gradient(90deg,#16a34a,#4ade80)"></div></div>
-      </div>
-      <div class="sp-card">
-        <div class="sp-icon" aria-hidden="true">&#x1F525;</div>
-        <div class="sp-label">Current Streak</div>
-        <div class="sp-val skeleton-val skeleton-sm" id="sp-streak">&mdash;</div>
-        <div class="sp-streak-val">Days</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="loading-overlay hidden" id="loading-overlay" aria-live="polite" role="status">
-  <div class="loading-inner">
-    <div class="loading-crescent" aria-hidden="true">&#x263D;</div>
-    <div class="loading-text" id="loading-text">Loading&hellip;</div>
-    <div class="loading-bar" aria-hidden="true"><div class="loading-bar-fill" id="loading-bar-fill"></div></div>
-  </div>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav" id="bottom-nav" aria-label="Bottom navigation">
-  <a href="index.html"      class="bottom-nav-item active"><span class="bottom-nav-icon" aria-hidden="true">&#x1F3E0;</span><span>Home</span></a>
-  <a href="prayers.html"    class="bottom-nav-item"><span class="bottom-nav-icon" aria-hidden="true">&#x1F54C;</span><span>Prayers</span></a>
-  <a href="explore.html"    class="bottom-nav-item"><span class="bottom-nav-icon" aria-hidden="true">&#x1F4DA;</span><span>Explore</span></a>
-  <a href="reflection.html" class="bottom-nav-item"><span class="bottom-nav-icon" aria-hidden="true">&#x1FA94;</span><span>Reflect</span></a>
-  <button class="bottom-nav-item bottom-nav-more" id="btn-bottom-more" aria-label="More pages" aria-expanded="false" aria-controls="bottom-more-menu">
-    <span class="bottom-nav-icon" aria-hidden="true">&#x22EF;</span><span>More</span>
-  </button>
+<!-- ═══════ BOTTOM NAV (mobile) ═══════ -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Mobile navigation">
+  <a href="index.html"      class="bnav-item active"   aria-current="page"><span class="bnav-icon" aria-hidden="true">☀️</span><span class="bnav-label">Today</span></a>
+  <a href="prayers.html"    class="bnav-item"           ><span class="bnav-icon" aria-hidden="true">🕌</span><span class="bnav-label">Prayer</span></a>
+  <a href="journey.html"    class="bnav-item"           ><span class="bnav-icon" aria-hidden="true">🌙</span><span class="bnav-label">Journey</span></a>
+  <a href="explore.html"    class="bnav-item"           ><span class="bnav-icon" aria-hidden="true">📚</span><span class="bnav-label">History</span></a>
+  <button                   class="bnav-item" id="btn-more" aria-expanded="false" aria-controls="more-sheet"><span class="bnav-icon" aria-hidden="true">⋯</span><span class="bnav-label">More</span></button>
 </nav>
-<div class="bottom-more-menu hidden" id="bottom-more-menu" role="dialog" aria-modal="true" aria-label="More pages">
-  <div class="bmm-backdrop" id="bmm-backdrop"></div>
-  <div class="bmm-panel">
-    <div class="bmm-header"><span class="bmm-title">More</span><button class="bmm-close" id="bmm-close" aria-label="Close menu">&#x2715;</button></div>
-    <div class="bmm-grid">
-      <a href="journey.html"  class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x1F319;</span><span>Journey</span></a>
-      <a href="calendar.html" class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x1F4C5;</span><span>Calendar</span></a>
-      <a href="stories.html"  class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x1F4D6;</span><span>Stories</span></a>
-      <a href="qibla.html"    class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x1F9ED;</span><span>Qibla</span></a>
-      <a href="profile.html"  class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x1F464;</span><span>Profile</span></a>
-      <a href="settings.html" class="bmm-item"><span class="bmm-icon" aria-hidden="true">&#x2699;&#xFE0F;</span><span>Settings</span></a>
+
+<!-- ═══════ MORE BOTTOM SHEET ═══════ -->
+<div class="more-overlay" id="more-overlay" aria-hidden="true"></div>
+<div class="more-sheet"   id="more-sheet"   role="dialog" aria-modal="true" aria-label="More navigation" aria-hidden="true">
+  <div class="more-sheet-handle" aria-hidden="true"></div>
+  <div class="more-sheet-header">
+    <span>More</span>
+    <button class="more-close" id="more-close" aria-label="Close menu">✕</button>
+  </div>
+
+  <div class="more-group">
+    <div class="more-group-label">Explore</div>
+    <div class="more-grid">
+      <a href="explore.html"    class="more-item"><span class="more-item-icon" aria-hidden="true">🏛️</span>Explore</a>
+      <a href="stories.html"    class="more-item"><span class="more-item-icon" aria-hidden="true">📖</span>Stories</a>
+      <a href="calendar.html"   class="more-item"><span class="more-item-icon" aria-hidden="true">📅</span>Calendar</a>
+      <a href="qibla.html"      class="more-item"><span class="more-item-icon" aria-hidden="true">🧭</span>Qibla</a>
+    </div>
+  </div>
+
+  <div class="more-group">
+    <div class="more-group-label">Personal</div>
+    <div class="more-grid">
+      <a href="profile.html"    class="more-item"><span class="more-item-icon" aria-hidden="true">👤</span>Profile</a>
+      <a href="journey.html"    class="more-item"><span class="more-item-icon" aria-hidden="true">🌙</span>Journey</a>
+      <a href="reflection.html" class="more-item"><span class="more-item-icon" aria-hidden="true">🪔</span>Reflect</a>
+      <a href="search.html"     class="more-item"><span class="more-item-icon" aria-hidden="true">🔍</span>Search</a>
+    </div>
+  </div>
+
+  <div class="more-group">
+    <div class="more-group-label">App</div>
+    <div class="more-grid">
+      <a href="settings.html"   class="more-item"><span class="more-item-icon" aria-hidden="true">⚙️</span>Settings</a>
+      <a href="privacy.html"    class="more-item"><span class="more-item-icon" aria-hidden="true">🔒</span>Privacy</a>
     </div>
   </div>
 </div>
+
+<!-- ═══════ TOAST ═══════ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</div><!-- end page-wrap -->
 
 <script src="js/core.js"></script>
 <script src="daily-islam.js"></script>

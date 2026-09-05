@@ -158,31 +158,33 @@ window.daysToNextRamadan = function() {
 WaqtX.theme = {
   apply: function(theme) {
     try {
-      if (!theme || theme === 'dark') {
+      /* V3: :root is light. dark needs data-theme="dark". */
+      if (!theme || theme === 'light') {
         document.documentElement.removeAttribute('data-theme');
       } else {
         document.documentElement.setAttribute('data-theme', theme);
       }
-      S.set('theme', theme || 'dark');
+      S.set('theme', theme || 'light');
     } catch(e) {}
-    this._updateButton(theme || 'dark');
+    this._updateButton(theme || 'light');
   },
   _updateButton: function(theme) {
-    var btn = el('btn-theme-toggle');
-    if (!btn) return;
-    /* Shows opposite icon — shows what clicking will switch TO */
+    /* Support both old #btn-theme-toggle textContent and new #theme-icon span */
+    var icon = el('theme-icon');
+    var btn  = el('btn-theme-toggle');
+    /* Icon shows what clicking will switch TO */
     var map = { light: '🌙', dark: '☀️', ramadan: '🌙✦', friday: '✦' };
-    btn.textContent = map[theme] || '🌙';
-    btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    var next = map[theme] || '🌙';
+    if (icon) { icon.textContent = next; }
+    else if (btn) { btn.textContent = next; }
+    if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   },
   init: function() {
     var saved = S.get('theme') || 'light';
-    /* Auto-override with Ramadan theme during Ramadan (unless user picked something else) */
     if (isRamadan() && !S.get('theme_user_set')) saved = 'ramadan';
     this.apply(saved);
     var self = this;
     var btn = el('btn-theme-toggle');
-    /* V3: Single-click toggle — light ↔ dark. No dropdown needed. */
     if (btn) {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -192,18 +194,28 @@ WaqtX.theme = {
         self.apply(next);
       });
     }
-    /* Keep old dropdown wiring for settings.html theme previews */
+    /* Settings page theme option buttons */
     var dropdown = el('theme-dropdown');
     if (dropdown) {
       dropdown.querySelectorAll('.theme-option').forEach(function(opt) {
         opt.addEventListener('click', function() {
-          var theme = opt.getAttribute('data-theme');
+          var t = opt.getAttribute('data-theme');
           S.set('theme_user_set', true);
-          self.apply(theme);
+          self.apply(t);
           dropdown.classList.add('hidden');
         });
       });
     }
+    /* Settings page preview buttons (data-theme on .theme-preview-btn) */
+    document.querySelectorAll('.theme-preview-btn').forEach(function(btn2) {
+      btn2.addEventListener('click', function() {
+        var t = btn2.getAttribute('data-theme');
+        S.set('theme_user_set', true);
+        self.apply(t);
+        document.querySelectorAll('.theme-preview-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn2.classList.add('active');
+      });
+    });
   }
 };
 
@@ -267,7 +279,9 @@ WaqtX.lang = {
         window._langData = data;
         _lang = lang;
         window._lang = lang;
-        try { S.set('lang', lang); } catch(e) {}
+        try { S.set('lang', lang); S.set('lang', lang); /* also as waqtx_lang for flash script */
+          localStorage.setItem('waqtx_lang', lang);
+        } catch(e) {}
         var meta = data._meta || {};
         applyDocumentDir(meta.dir);
         applyLangToNav();
@@ -324,13 +338,17 @@ WaqtX.nav = {
     var filename = path.split('/').pop() || 'index.html';
     if (filename === '' || filename === 'WaqtX') filename = 'index.html';
 
-    document.querySelectorAll('.nav-link, .bottom-nav-item').forEach(function(link) {
+    document.querySelectorAll('.nav-link, .bottom-nav-item, .bnav-item').forEach(function(link) {
       var href = link.getAttribute('href') || '';
       var linkFile = href.split('/').pop();
       link.classList.remove('active');
-      if (linkFile === filename ||
-          (filename === 'index.html' && (href === '#' || linkFile === 'index.html'))) {
+      /* Remove aria-current */
+      if (link.hasAttribute('aria-current')) link.removeAttribute('aria-current');
+      var match = linkFile === filename ||
+        (filename === 'index.html' && (href === '#' || linkFile === 'index.html'));
+      if (match) {
         link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
       }
     });
 
@@ -391,8 +409,53 @@ WaqtX.nav = {
       fridayBanner.classList.remove('hidden');
     }
 
-    /* More menu */
+    /* V3 More sheet (new bottom nav) */
+    this.initMoreSheet();
+
+    /* Legacy more menu fallback */
     this.initMoreMenu();
+  },
+
+  initMoreSheet: function() {
+    var moreBtn  = el('btn-more');
+    var sheet    = el('more-sheet');
+    var overlay  = el('more-overlay');
+    var closeBtn = el('more-close');
+    if (!moreBtn || !sheet) return;
+
+    function openSheet() {
+      sheet.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      sheet.setAttribute('aria-hidden', 'false');
+      if (overlay) overlay.setAttribute('aria-hidden', 'false');
+      moreBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSheet() {
+      sheet.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      sheet.setAttribute('aria-hidden', 'true');
+      if (overlay) overlay.setAttribute('aria-hidden', 'true');
+      moreBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    moreBtn.addEventListener('click', function() {
+      sheet.classList.contains('open') ? closeSheet() : openSheet();
+    });
+    if (overlay) overlay.addEventListener('click', closeSheet);
+    if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sheet.classList.contains('open')) closeSheet();
+    });
+
+    /* Mark active item in more sheet */
+    var path = window.location.pathname;
+    var filename = path.split('/').pop() || 'index.html';
+    sheet.querySelectorAll('.more-item').forEach(function(a) {
+      var href = (a.getAttribute('href') || '').split('/').pop();
+      if (href === filename) a.style.color = 'var(--primary)';
+    });
   },
 
   initMoreMenu: function() {

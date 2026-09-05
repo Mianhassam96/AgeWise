@@ -1,9 +1,9 @@
 'use strict';
 /* ═══════════════════════════════════════════════
-   WaqtX V2 — Service Worker
-   Cache: waqtx-v21
+   WaqtX V3 — Service Worker
+   Cache: waqtx-v22
    ═══════════════════════════════════════════════ */
-var CACHE = 'waqtx-v21';
+var CACHE = 'waqtx-v22';
 var ASSETS = [
   './',
   './index.html',
