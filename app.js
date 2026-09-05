@@ -30,7 +30,7 @@ function tr(key, vars) {
   var str = t(key);
   if (vars) {
     Object.keys(vars).forEach(function(k) {
-      str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), vars[k]);
+      str = str.split('{' + k + '}').join(vars[k]);
     });
   }
   return str;
@@ -351,6 +351,8 @@ function applyLangToDOM() {
 }
 
 function loadLanguage(lang, callback) {
+  var allowedLangs = ['en', 'ur', 'ar', 'roman'];
+  if (allowedLangs.indexOf(lang) === -1) lang = 'en';
   fetch('lang/' + lang + '.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
